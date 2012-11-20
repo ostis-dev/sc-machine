@@ -24,7 +24,9 @@ HEADERS += \
     src/sc-store/sc_event.h \
     src/sc-store/sc_iterator3.h \
     src/sc-store/sc_iterator5.h \
-    src/sc-store/sc_iterator.h
+    src/sc-store/sc_iterator.h \
+    src/sc-store/sc_task_manager.h \
+    src/sc-store/sc_thread.h
 
 SOURCES += \
     src/sc_memory.c \
@@ -38,14 +40,17 @@ SOURCES += \
     src/sc-store/sc_stream_memory.c \
     src/sc-store/sc_event.c \
     src/sc-store/sc_iterator3.c \
-    src/sc-store/sc_iterator5.c
+    src/sc-store/sc_iterator5.c \
+    src/sc-store/sc_task_manager.c \
+    src/sc-store/sc_thread.c
 
 win32 {
-    INCLUDEPATH += "../glib/include/glib-2.0"
-    INCLUDEPATH += "../glib/lib/glib-2.0/include"
+    GLIB_PATH = "c:/glib2.0"
+    INCLUDEPATH += "$$GLIB_PATH/include/glib-2.0"
+    INCLUDEPATH += "$$GLIB_PATH/lib/glib-2.0/include"
 
-    POST_TARGETDEPS += ../glib/lib/glib-2.0.lib
-    LIBS += ../glib/lib/glib-2.0.lib
+    POST_TARGETDEPS += "$$GLIB_PATH/lib/glib-2.0.lib"
+    LIBS += "$$GLIB_PATH/lib/glib-2.0.lib"
 }
 
 unix {
