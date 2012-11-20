@@ -29,6 +29,8 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #define SEGMENT_EMPTY_BUFFER_SIZE 8 // number of empty slot buffer for segment
 #define SEGMENT_EMPTY_MAX_UPDATE_THREADS 8 // number of maximum threads to update empty slots
 
+#define TASK_MUTEX_QUEUE 16 // amount of mutex for locking task
+
 #define SEGS_QUEUE_SIZE 24
 #define MAX_PATH_LENGTH 1024
 
