@@ -79,6 +79,12 @@ void sc_task_manager_shutdown();
 sc_task* sc_task_manager_new(TaskFunc func, sc_task_type type, sc_int8 count, ...);
 
 /**
+  * @brief Create empty task
+  * @return Empty task
+  */
+sc_task* sc_task_manager_private_create_empty();
+
+/**
  * @brief Free memmory block of task
  * @param task
  */

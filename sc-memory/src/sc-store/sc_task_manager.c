@@ -37,7 +37,8 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 sc_bool sc_task_manager_need_shutdown = SC_FALSE;
 sc_bool task_manager_is_initialized = SC_FALSE;
 static GAsyncQueue* sc_task_g_queue;
-static GAsyncQueue* sc_task_mutex_queue;
+static GAsyncQueue* sc_task_free;
+
 
 /**
  * @brief Thread handler for task
@@ -48,38 +49,24 @@ sc_bool sc_task_manager_initialize()
 {
     if(task_manager_is_initialized)
     {
-        #if DEBUG
-        printf("Trying reinit task manager");
-        #endif
+        g_error("Trying reinit task manager");
         return SC_FALSE;
     }
     SC_THREAD_INIT();
     SC_THREAD_NEW(sc_task_handler);
 
+    // TODO
     sc_task_g_queue = g_async_queue_new();
-    if(sc_task_g_queue == NULL)
-    {
-        #if DEBUG
-        printf("Error: NULL value for task queue!");
-        #endif
-        return SC_FALSE;
-    }
+    g_assert(sc_task_g_queue != NULL);
 
-    sc_task_mutex_queue = g_async_queue_new();
-    if(sc_task_mutex_queue == NULL)
-    {
-        #if DEBUG
-        printf("Error: NULL value for mutex queue!");
-        #endif
-        return SC_FALSE;
-    }
+    // TODO
+    sc_task_free = g_async_queue_new();
+    g_assert(sc_task_free != NULL);
 
-    sc_mutex* mutex;
     int i = 0;
-    for(i = 0; i< TASK_MUTEX_QUEUE; i++)
+    for(i = 0; i< TASK_QUEUE_SIZE; i++)
     {
-        SC_MUTEX_NEW(mutex);
-        g_async_queue_push(sc_task_mutex_queue, mutex);
+        g_async_queue_push(sc_task_free, sc_task_manager_private_create_empty());
     }
 
     task_manager_is_initialized = SC_TRUE;
@@ -102,42 +89,36 @@ void sc_task_handler()
 {
     while(!sc_task_manager_need_shutdown)
     {
-        sc_task* task = (sc_task*) g_async_queue_pop(sc_task_g_queue);
+        SC_TASK_QUEUE_POP(task)
 
         SC_MUTEX_LOCK(task->mutex);
+
         (task->func)(task->data);
+
         SC_MUTEX_COMPLITE_WAIT(task->mutex);
+
         SC_MUTEX_UNLOCK(task->mutex);
     }
 
-    sc_mutex* mutex = (sc_mutex*) g_async_queue_try_pop(sc_task_mutex_queue);
-    while(mutex != NULL)
-    {
-        SC_MUTEX_FREE(mutex);
-        mutex = (sc_mutex*) g_async_queue_try_pop(sc_task_mutex_queue);
-    }
+//    sc_mutex* mutex = (sc_mutex*) g_async_queue_try_pop(sc_task_mutex_queue);
+//    while(mutex != NULL)
+//    {
+//        SC_MUTEX_FREE(mutex);
+//        mutex = (sc_mutex*) g_async_queue_try_pop(sc_task_mutex_queue);
+//    }
 
-    sc_task* task = (sc_task*) g_async_queue_try_pop(sc_task_g_queue);
-    while(task != NULL)
-    {
-        SC_MUTEX_FREE(task->mutex);
-        sc_task_manager_free(task);
-        task = (sc_task*) g_async_queue_try_pop(sc_task_g_queue);
-    }
+//    sc_task* task = (sc_task*) g_async_queue_try_pop(sc_task_g_queue);
+//    while(task != NULL)
+//    {
+//        SC_MUTEX_FREE(task->mutex);
+//        sc_task_manager_free(task);
+//        task = (sc_task*) g_async_queue_try_pop(sc_task_g_queue);
+//    }
 }
 
 sc_task* sc_task_manager_new(TaskFunc func, sc_task_type type, sc_int8 count, ...)
 {
-    sc_task* task;
-    task = g_malloc(sizeof(sc_task) + count*sizeof(void*));
-
-    if(task == NULL)
-    {
-        #if DEBUG
-        printf("Warning: Can'not allocate memmory for task");
-        #endif
-        return NULL;
-    }
+    SC_TASK_QUEUE_CREATE(task);
 
     task->func = func;
     task->type = type;
@@ -150,39 +131,44 @@ sc_task* sc_task_manager_new(TaskFunc func, sc_task_type type, sc_int8 count, ..
       task->data[i] = va_arg(args, void*);
     va_end(args);
 
-    task->mutex = (sc_mutex*) g_async_queue_pop(sc_task_mutex_queue);
+    return task;
+}
+
+sc_task* sc_task_manager_private_create_empty()
+{
+    sc_task* task;
+    task = g_malloc(sizeof(sc_task) + TASK_MAXIMUM_AMOUNT*sizeof(void*));
+
+    if(task == NULL)
+    {
+        g_error("Warning: Can'not allocate memmory for task");
+        return NULL;
+    }
+
+    SC_MUTEX_NEW(task->mutex);
 
     return task;
+
 }
 
 void sc_task_manager_free(sc_task* task)
 {
-    if(task == NULL)
-    {
-        #if DEBUG
-        printf("Warning: Trying free NULL task");
-        #endif
-        return;
-    }
+    g_assert(task != NULL);
 
-    g_free(task);
+    SC_TASK_QUEUE_FREE(task);
 }
 
 void sc_task_manager_execute(sc_task* task)
 {
-    sc_mutex* mutex = task->mutex;
+    SC_MUTEX_LOCK(task->mutex);
 
-    SC_MUTEX_LOCK(mutex);
+    SC_TASK_QUEUE_ADD(task);
 
-    g_async_queue_push(sc_task_g_queue, task);
+    SC_MUTEX_WAIT(task->mutex);
 
-    SC_MUTEX_WAIT(mutex);
+    SC_MUTEX_UNLOCK(task->mutex);
 
-    SC_MUTEX_UNLOCK(mutex);
-
-    SC_MUTEX_CLEAR(mutex);
-
-    g_async_queue_push(sc_task_mutex_queue, mutex);
+    SC_MUTEX_CLEAR(task->mutex);
 }
 
 void sc_task_wrapper_is_element(void* args[])

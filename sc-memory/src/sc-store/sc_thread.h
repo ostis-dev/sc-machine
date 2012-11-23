@@ -43,29 +43,37 @@ typedef struct _sc_mutex
     sc_private_cond*    cnd;
 } sc_mutex;
 
-#define  SC_MUTEX_LOCK(mutex)   g_mutex_lock(mutex->mtx);
+#define  SC_MUTEX_LOCK(mutex)   g_mutex_lock(mutex->mtx)
 
-#define  SC_MUTEX_UNLOCK(mutex) g_mutex_unlock(mutex->mtx);
+#define  SC_MUTEX_UNLOCK(mutex) g_mutex_unlock(mutex->mtx)
 
 #define  SC_MUTEX_FREE(mutex)   g_mutex_free(mutex->mtx); \
                                 g_cond_free(mutex->cnd); \
                                 g_free(mutex);
 
+#define  SC_MUTEX_TRY_LOCK(mutex) g_mutex_trylock(mutex->mtx)
+
 #define  SC_MUTEX_CLEAR(mutex)  mutex->is_waiting = SC_TRUE;
-#define  SC_MUTEX_WAIT(mutex)   while(mutex->is_waiting) \
+#define  SC_MUTEX_WAIT(mutex)   g_atomic_int_set(&mutex->is_waiting, SC_TRUE); \
+                                while(g_atomic_int_get(&mutex->is_waiting)) \
                                 { \
                                     g_cond_wait (mutex->cnd, mutex->mtx);\
                                 }
 
 
-#define  SC_MUTEX_COMPLITE_WAIT(mutex)  g_cond_signal(mutex->cnd); \
-                                        mutex->is_waiting = SC_FALSE; \
 
+#define  SC_MUTEX_COMPLITE_WAIT(mutex)  g_cond_signal(mutex->cnd); \
+                                        g_atomic_int_set(&mutex->is_waiting, SC_FALSE);
+
+#define SC_TASK_QUEUE_FREE(task)        g_async_queue_push(sc_task_free, task);
+#define SC_TASK_QUEUE_CREATE(task)      sc_task* task = (sc_task*) g_async_queue_pop(sc_task_free);
+#define SC_TASK_QUEUE_POP(task)         sc_task* task = (sc_task*) g_async_queue_pop(sc_task_g_queue);
+#define SC_TASK_QUEUE_ADD(task)         g_async_queue_push(sc_task_g_queue, task);
 
 #ifdef G_OS_WIN32
     #define SC_THREAD_NEW(func) g_thread_create((GThreadFunc) func, NULL, FALSE, NULL);
 
-    #define SC_THREAD_INIT()    g_thread_init(NULL);
+    #define SC_THREAD_INIT()    g_thread_init(NULL)
 
     #define SC_MUTEX_NEW(mutex) mutex = g_malloc(sizeof(sc_mutex)); \
                                 mutex->mtx = g_mutex_new(); \

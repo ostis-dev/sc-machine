@@ -41,8 +41,5 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 //! Use task manager
 #define USE_TASK_MANAGER 1
 
-//! Debug mode
-#define DEBUG 0
-
 #endif
 
