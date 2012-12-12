@@ -38,5 +38,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 //! Use two oriented arc list
 #define USE_TWO_ORIENTED_ARC_LIST 0
 
-#endif
+//! Use task manager
+#define USE_TASK_MANAGER 1
 
+#endif

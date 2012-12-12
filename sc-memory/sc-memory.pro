@@ -27,7 +27,11 @@ HEADERS += \
     src/sc-store/sc_iterator.h \
     src/sc_helper.h \
     src/sc_memory_headers.h \
-    src/sc_memory_ext.h
+    src/sc_memory_ext.h \
+    src/sc-store/sc_thread.h \
+    src/sc-store/sc_task_manager.h \
+    src/sc-store/sc_static_async_queue.h
+
 
 SOURCES += \
     src/sc_memory.c \
@@ -43,14 +47,18 @@ SOURCES += \
     src/sc-store/sc_iterator3.c \
     src/sc-store/sc_iterator5.c \
     src/sc_helper.c \
-    src/sc_memory_ext.c
+    src/sc_memory_ext.c \
+    src/sc-store/sc_thread.c \
+    src/sc-store/sc_task_manager.c \
+    src/sc-store/sc_static_async_queue.c
 
 win32 {
-    INCLUDEPATH += "../glib/include/glib-2.0"
-    INCLUDEPATH += "../glib/lib/glib-2.0/include"
+    GLIB_PATH = "c:/glib2.0"
+    INCLUDEPATH += "$$GLIB_PATH/include/glib-2.0"
+    INCLUDEPATH += "$$GLIB_PATH/lib/glib-2.0/include"
 
-    POST_TARGETDEPS += ../glib/lib/glib-2.0.lib
-    LIBS += ../glib/lib/glib-2.0.lib
+    POST_TARGETDEPS += "$$GLIB_PATH/lib/glib-2.0.lib"
+    LIBS += "$$GLIB_PATH/lib/glib-2.0.lib"
 }
 
 unix {

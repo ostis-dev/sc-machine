@@ -28,13 +28,13 @@ unix {
     LIBS += $$quote(-L$$DESTDIR) -lsc_memory
 }
 
-
 win32 {
-    INCLUDEPATH += "../../glib/include/glib-2.0"
-    INCLUDEPATH += "../../glib/lib/glib-2.0/include"
+    GLIB_PATH = "c:/glib2.0"
+    INCLUDEPATH += "$$GLIB_PATH/include/glib-2.0"
+    INCLUDEPATH += "$$GLIB_PATH/lib/glib-2.0/include"
 
-    #POST_TARGETDEPS += "../glib/lib/glib-2.0.lib"
-    LIBS += "../../glib/lib/glib-2.0.lib"
+    #POST_TARGETDEPS += "$$GLIB_PATH/lib/glib-2.0.lib"
+    LIBS += "$$GLIB_PATH/lib/glib-2.0.lib"
     LIBS += $$quote(-L$$DESTDIR) -lsc_memoryd
 }
 
