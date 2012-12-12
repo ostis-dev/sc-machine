@@ -10,9 +10,9 @@ extern "C"
 #include <limits>
 #include <glib.h>
 
-#define nodes_append_count 5000000
-#define nodes_remove_count 5000000
-#define arcs_append_count  5000000
+#define nodes_append_count 5000
+#define nodes_remove_count 5000
+#define arcs_append_count  5000
 #define arcs_remove_count  0
 #define link_append_count 200
 #define iterator_alloc_count 10000000
@@ -64,6 +64,8 @@ bool is_sc_addr_in_segment_node_vector(sc_addr addr)
 
     return false;
 }
+
+#include "task_manager_test.cpp"
 
 void test1()
 {
@@ -529,6 +531,7 @@ int main(int argc, char *argv[])
                "5 - test contents\n"
                "6 - test content finding\n"
                "7 - test events\n"
+               "8 - task manager test\n"
                "\nCommand: ");
         scanf("%d", &item);
 
@@ -562,6 +565,9 @@ int main(int argc, char *argv[])
 
         case 7:
             test7();
+            break;
+        case 8:
+            task_manager_test();
             break;
         };
 

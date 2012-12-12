@@ -2,6 +2,7 @@ TEMPLATE = app
 DESTDIR = ../../bin
 
 INCLUDEPATH += ../../sc-memory/src/sc-store
+INCLUDEPATH += ../../sc-memory/src
 unix {
     LIBS += $$quote(-L$$DESTDIR) -lsc_memory
     CONFIG += link_pkgconfig
@@ -11,14 +12,16 @@ unix {
 DEFINES += QT_COMPILATION
 
 SOURCES += \
-    test.cpp
+    test.cpp \
+    task_manager_test.cpp
 
 win32 {
     CONFIG += qt console
-    INCLUDEPATH += "../../glib/include/glib-2.0"
-    INCLUDEPATH += "../../glib/lib/glib-2.0/include"
+    GLIB_PATH = "c:/glib2.0"
+    INCLUDEPATH += "$$GLIB_PATH/include/glib-2.0"
+    INCLUDEPATH += "$$GLIB_PATH/lib/glib-2.0/include"
 
-    POST_TARGETDEPS += ../../glib/lib/glib-2.0.lib
-    LIBS += ../../glib/lib/glib-2.0.lib
+    POST_TARGETDEPS += "$$GLIB_PATH/lib/glib-2.0.lib"
+    LIBS += "$$GLIB_PATH/lib/glib-2.0.lib"
     LIBS += $$quote(-L$$DESTDIR) -lsc_memoryd
 }

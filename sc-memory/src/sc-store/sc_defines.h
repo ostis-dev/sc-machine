@@ -32,4 +32,8 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #define SEGS_QUEUE_SIZE 24
 #define MAX_PATH_LENGTH 1024
 
+#define TASK_QUEUE_SIZE 1024 // amount of mutex for locking task
+#define TASK_MAXIMUM_AMOUNT 5 // amount of args for task
+
+
 #endif
