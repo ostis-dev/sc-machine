@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1286</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>SC Store Inspector</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -22,8 +22,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>25</height>
+     <width>1286</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -67,7 +67,7 @@
     <string>Save as</string>
    </property>
    <property name="shortcut">
-    <string>Meta+Ctrl+Alt+Shift+垿, Ctrl+Shift+S</string>
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionExit">

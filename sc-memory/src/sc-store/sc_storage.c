@@ -148,35 +148,27 @@ sc_bool sc_storage_is_initialized()
     return is_initialized;
 }
 
-sc_segment* sc_storage_get_segment(sc_addr_seg seg, sc_bool force_load)
-{
-    //! TODO: Make support of force loading
-    g_assert( seg < SC_ADDR_SEG_MAX );
-    return segments[seg];
+sc_segment* sc_storage_get_segment(sc_addr_seg seg, sc_bool force_load) {
+  //! TODO: Make support of force loading
+  g_assert(seg < SC_ADDR_SEG_MAX);
+  return segments[seg];
 }
 
-sc_element* sc_storage_get_element(sc_addr addr, sc_bool force_load)
-{
-    sc_segment *segment = 0;
-    sc_element *res = 0;
+sc_element* sc_storage_get_element(sc_addr addr, sc_bool force_load) {
+  sc_segment *segment = 0;
 
-    if (addr.seg >= SC_ADDR_SEG_MAX) return (sc_element*)0;
+  if (addr.seg >= SC_ADDR_SEG_MAX) return (sc_element*) 0;
 
-    segment = segments[addr.seg];
+  segment = segments[addr.seg];
 
-    if (segment == 0)
-    {
-        if (force_load)
-        {
-            //! TODO: make force load
-        }else
-            return (sc_element*)0;
-    }else
-    {
-        res = sc_segment_get_element(segment, addr.offset);
-    }
+  if (segment == 0) {
+    if (!force_load) return (sc_element*) 0;
 
-    return res;//sc_segment_get_element(segment, uri.id);
+    segments[addr.seg] = (gpointer) sc_fs_storage_load_segment(addr.seg);
+    return sc_storage_get_element(addr, SC_FALSE);
+  }
+
+  return sc_segment_get_element(segment, addr.offset);
 }
 
 sc_bool sc_storage_is_element(sc_addr addr)

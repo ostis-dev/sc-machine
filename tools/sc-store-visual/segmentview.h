@@ -1,20 +1,23 @@
 #ifndef SEGMENTVIEW_H
 #define SEGMENTVIEW_H
 
+#include "definition.h"
+
+#include <QTreeWidget>
 #include <QGraphicsView>
 #include <QVector>
-
-class SegmentItem;
+#include <QMouseEvent>
 
 // Number of segment items in one row
 #define SEGMENT_ITEMS_IN_ROW    64
 #define SEGMENT_ITEMS_OFFSET    2
 
-class SegmentView : public QGraphicsView
-{
+class SegmentItem;
+
+class SegmentView : public QGraphicsView {
     Q_OBJECT
-public:
-    explicit SegmentView(QWidget *parent = 0);
+  public:
+    explicit SegmentView(QTreeWidget *tree, QWidget *parent = 0);
     virtual ~SegmentView();
 
     //! Setup id of segment to visualize
@@ -25,21 +28,26 @@ public:
     //! Reset view
     void reset();
 
-protected:
+    void activateItem(SegmentItem *csi);
+
+  protected:
     //! Updates segment items
     void updateSegmentItems();
-    
- private:
+
+  private:
     //! Id of visualized segment
     quint32 mSegmentId;
     //! Vector of segment items
     typedef QVector<SegmentItem*> tSegmentItemsVector;
     tSegmentItemsVector mSegmentItems;
 
-signals:
-    
-public slots:
-    
+    QTreeWidget *mSegmentInfo;
+    QGraphicsRectItem *mCurrentItem;
+
+  signals:
+  public slots:
+    void mousePressEvent(QMouseEvent *e);
+    void infoItemClicked(QTreeWidgetItem *item, int row);
 };
 
 #endif // SEGMENTVIEW_H

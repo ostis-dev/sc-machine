@@ -1,43 +1,31 @@
 #ifndef SEGMENTITEM_H
 #define SEGMENTITEM_H
 
-extern "C"
-{
-#include "sc-store/sc_types.h"
-}
+#include "definition.h"
+
 #include <QGraphicsRectItem>
 
-class SegmentItem : public QGraphicsRectItem
-{
+class SegmentItem :
+    public QObject,
+    public QGraphicsRectItem {
 
-public:
+  public:
     explicit SegmentItem();
     virtual ~SegmentItem();
 
-    //! Setup sc-type of showed sc-element
-    void setScType(const sc_type &type);
-    //! Returns sc-type of showed sc-element
-    const sc_type& scType() const;
+    void element(sc_addr addr, sc_element *e);
 
-    //! Setup sc-addr of showed sc-element
-    void setScAddr(const sc_addr &addr);
-    //! Return sc-add of showed sc-element
-    const sc_addr& scAddr() const;
+    sc_element* getElement();
+    sc_addr getAddr();
 
-    void setDeletionTimeStamp(quint32 value);
-    quint32 deletionTimeStamp() const;
+  private:
+    void update();
 
-private:
-    //! Sc-type of element showed with item
-    sc_type mScType;
-    //! Sc-addr of element showed with this item
-    sc_addr mScAddr;
-    //! Deletion time stamp
-    quint32 mDeleteTimeStamp;
-    
-signals:
-    
-public slots:
+    sc_addr addr;
+    sc_element *el;
+
+  protected:
+  public slots:
     
 };
 

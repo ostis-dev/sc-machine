@@ -1,22 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "definition.h"
+
 #include <QMainWindow>
+#include <QTreeWidget>
 
 class QListWidget;
 class QLabel;
 class SegmentView;
 
-namespace Ui
-{
-    class MainWindow;
+namespace Ui {
+  class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
     
-public:
+  public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -26,16 +27,16 @@ public:
     //! Setup action slots
     void setupMenuActions();
 
-private:
+  private:
     void updateSegmentsList();
 
 
-protected slots:
+  protected slots:
     void openRepository();
 
     void segmentSelectionChanged(QString strId);
 
-private:
+  private:
 
     Ui::MainWindow *ui;
 
@@ -48,6 +49,7 @@ private:
     QLabel *mLabelArcsCount;
     QLabel *mLabelEmptyCount;
 
+    QTreeWidget *mSegmentInfo;
 };
 
 #endif // MAINWINDOW_H

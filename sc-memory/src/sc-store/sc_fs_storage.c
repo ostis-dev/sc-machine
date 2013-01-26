@@ -125,7 +125,7 @@ sc_bool sc_fs_storage_read_from_path(sc_segment **segments, sc_uint16 *segments_
     to_load = MIN(files_count, sc_config_get_max_loaded_segments());
     // load segments
     for (idx = 0; idx < to_load; idx++)
-        segments[idx] = (gpointer)sc_fs_storage_load_segment(idx);
+        segments[idx] = (gpointer) sc_fs_storage_load_segment(idx);
 
     g_message("Segments loaded: %u", idx);
 

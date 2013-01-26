@@ -19,13 +19,18 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     segmentview.h \
     segmentscene.h \
-    segmentitem.h
+    segmentitem.h \
+    definition.h
 
 FORMS    += mainwindow.ui
 
 INCLUDEPATH += ../../sc-memory/src
 unix {
-    LIBS += $$quote(-L$$DESTDIR) -lsc_memory
+  CONFIG += link_pkgconfig
+  PKGCONFIG += glib-2.0
+  PKGCONFIG += gmodule-2.0
+  PKGCONFIG += glib-2.0
+  LIBS += $$quote(-L$$DESTDIR) -lsc_memory
 }
 
 

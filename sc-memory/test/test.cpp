@@ -1,11 +1,12 @@
 #include <stdio.h>
-extern "C"
-{
-#include "sc_store.h"
-#include "sc_segment.h"
-#include "sc_iterator.h"
-#include "sc_event.h"
+extern "C" {
+  #include "sc_store.h"
+  #include "sc_segment.h"
+  #include "sc_iterator.h"
+  #include "sc_event.h"
+  #include "sc_fs_storage.h"
 }
+
 #include <vector>
 #include <limits>
 #include <glib.h>
@@ -497,6 +498,19 @@ void test7()
     g_timer_destroy(timer);
 }
 
+void test8() {
+  sc_addr n0 = sc_storage_node_new(sc_type_node);
+  sc_addr n1 = sc_storage_node_new(sc_type_node);
+
+  sc_addr l0 = sc_storage_link_new();
+
+  sc_stream *stream = sc_stream_memory_new("Content", 1, SC_STREAM_READ, SC_FALSE);
+  sc_storage_set_link_content(l0, stream);
+  sc_stream_free(stream);
+
+  sc_addr a0 = sc_storage_arc_new(sc_type_arc_common, n0, n1);
+}
+
 int main(int argc, char *argv[])
 {
     sc_uint item = -1;
@@ -505,13 +519,13 @@ int main(int argc, char *argv[])
     timer = g_timer_new();
     g_timer_start(timer);
 
-    printf("MD5: %d\n", g_checksum_type_get_length(G_CHECKSUM_MD5) );
-    printf("SHA1: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA1) );
-    printf("SHA256: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA256) );
+    g_message("MD5: %d\n", g_checksum_type_get_length(G_CHECKSUM_MD5) );
+    g_message("SHA1: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA1) );
+    g_message("SHA256: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA256) );
 
     sc_storage_initialize("repo");
     g_timer_stop(timer);
-    printf("Segment loading speed: %f seg/sec\n", sc_storage_get_segments_count() / g_timer_elapsed(timer, 0));
+    g_message("Segment loading speed: %f seg/sec\n", sc_storage_get_segments_count() / g_timer_elapsed(timer, 0));
 
     //test5();
     //test6();
@@ -520,7 +534,7 @@ int main(int argc, char *argv[])
 
     while (item != 0)
     {
-        printf("Commands:\n"
+        g_message("Commands:\n"
                "0 - exit\n"
                "1 - test allocation\n"
                "2 - test sc-addr utilities\n"
@@ -529,10 +543,11 @@ int main(int argc, char *argv[])
                "5 - test contents\n"
                "6 - test content finding\n"
                "7 - test events\n"
+               "8 - initialize watcher test repo\n"
                "\nCommand: ");
         scanf("%d", &item);
 
-        printf("\n----- Test %d -----\n", item);
+        g_message("\n----- Test %d -----\n", item);
 
         switch(item)
         {
@@ -563,9 +578,13 @@ int main(int argc, char *argv[])
         case 7:
             test7();
             break;
+
+        case 8:
+            test8();
+            break;
         };
 
-        printf("\n----- Finished -----\n");
+        g_message("\n----- Finished -----\n");
     }
 
     timer = g_timer_new();
