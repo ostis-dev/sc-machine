@@ -47,7 +47,7 @@ class MainWindow : public QMainWindow {
 
     QLabel *mLabelNodeCount;
     QLabel *mLabelArcsCount;
-    QLabel *mLabelEmptyCount;
+    QLabel *mLabelOtherCount;
 
     QTreeWidget *mSegmentInfo;
 };

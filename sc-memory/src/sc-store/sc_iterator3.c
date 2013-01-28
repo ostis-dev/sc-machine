@@ -20,7 +20,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 -----------------------------------------------------------------------------
 */
 
-#include "sc_iterator3.h"
+#include "sc_iterator.h"
 #include "sc_element.h"
 #include "sc_storage.h"
 
@@ -102,11 +102,15 @@ sc_iterator3* sc_iterator3_new(sc_iterator_type type, sc_iterator_param p1, sc_i
     it->type = type;
     it->time_stamp = sc_storage_get_time_stamp();
 
+    sc_iterator_add_used_timestamp(it->time_stamp);
+
     return it;
 }
 
 void sc_iterator3_free(sc_iterator3 *it)
 {
+    g_assert(it != 0);
+    sc_iterator_remove_used_timestamp(it->time_stamp);
     g_free(it);
 }
 
@@ -152,8 +156,8 @@ sc_bool _sc_iterator3_f_a_a_next(sc_iterator3 *it)
         sc_storage_get_element_type(arc_addr, &arc_type);
         sc_storage_get_element_type(arc_element->arc.end, &el_type);
 
-        if ((arc_element->create_time_stamp < it->time_stamp) &&
-            (arc_element->delete_time_stamp == 0 || arc_element->delete_time_stamp > it->time_stamp) &&
+        if ((arc_element->create_time_stamp <= it->time_stamp) &&
+            (arc_element->delete_time_stamp == 0 || arc_element->delete_time_stamp >= it->time_stamp) &&
             (sc_iterator_compare_type(arc_type, it->params[1].type)) &&
             (sc_iterator_compare_type(el_type, it->params[2].type))
            )
@@ -202,8 +206,8 @@ sc_bool _sc_iterator3_f_a_f_next(sc_iterator3 *it)
         arc_element = sc_storage_get_element(arc_addr, SC_TRUE);
         sc_storage_get_element_type(arc_addr, &arc_type);
 
-        if ((arc_element->create_time_stamp < it->time_stamp) &&
-            (arc_element->delete_time_stamp == 0 || arc_element->delete_time_stamp > it->time_stamp) &&
+        if ((arc_element->create_time_stamp <= it->time_stamp) &&
+            (arc_element->delete_time_stamp == 0 || arc_element->delete_time_stamp >= it->time_stamp) &&
             SC_ADDR_IS_EQUAL(it->params[2].addr, arc_element->arc.end) &&
             (sc_iterator_compare_type(arc_type, it->params[1].type))
            )
@@ -250,8 +254,8 @@ sc_bool _sc_iterator3_a_a_f_next(sc_iterator3 *it)
         sc_storage_get_element_type(arc_addr, &arc_type);
         sc_storage_get_element_type(arc_element->arc.begin, &el_type);
 
-        if ((arc_element->create_time_stamp < it->time_stamp) &&
-            (arc_element->delete_time_stamp == 0 || arc_element->delete_time_stamp > it->time_stamp) &&
+        if ((arc_element->create_time_stamp <= it->time_stamp) &&
+            (arc_element->delete_time_stamp == 0 || arc_element->delete_time_stamp >= it->time_stamp) &&
             (sc_iterator_compare_type(arc_type, it->params[1].type)) &&
             (sc_iterator_compare_type(el_type, it->params[0].type))
             )

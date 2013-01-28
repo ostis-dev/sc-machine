@@ -29,6 +29,7 @@ class SegmentView : public QGraphicsView {
     void reset();
 
     void activateItem(SegmentItem *csi);
+    quint32 getCount(sc_type type);
 
   protected:
     //! Updates segment items

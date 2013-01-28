@@ -29,7 +29,6 @@ unix {
   CONFIG += link_pkgconfig
   PKGCONFIG += glib-2.0
   PKGCONFIG += gmodule-2.0
-  PKGCONFIG += glib-2.0
   LIBS += $$quote(-L$$DESTDIR) -lsc_memory
 }
 

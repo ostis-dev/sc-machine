@@ -43,7 +43,6 @@ void SegmentView::updateSegmentItems() {
     }
   }
 
-  //! @todo update segment items info
   SegmentItem *item = 0;
   quint32 i = 0;
   foreach (item, mSegmentItems) {
@@ -65,6 +64,18 @@ void SegmentView::setSegmentId(quint32 segId) {
 
 quint32 SegmentView::segmentId() const {
   return mSegmentId;
+}
+
+quint32 SegmentView::getCount(sc_type type) {
+  quint32 count = 0;
+  SegmentItem *item = 0;
+
+  foreach (item, mSegmentItems) {
+    sc_element *el = item->getElement();
+    if (el != nullptr && (el->type & type)) count++;
+  }
+
+  return count;
 }
 
 void SegmentView::reset() {}
@@ -106,7 +117,7 @@ static void itemSelected(SegmentItem *item, QTreeWidget *info) {
     }
   }
 
-  if (type & sc_type_arc_common) {
+  if (type & sc_type_edge_common) {
     twi = einfoRow(info, "From", QString("%1 :: %2").arg(el->arc.begin.seg).arg(el->arc.begin.offset));
     twi->setData(1, Qt::UserRole, QVariant::fromValue((void *) &(el->arc.begin)));
     items.append(twi);

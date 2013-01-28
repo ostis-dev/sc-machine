@@ -28,6 +28,8 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include "sc_fs_storage.h"
 #include "sc_link_helpers.h"
 #include "sc_event.h"
+#include "sc_config.h"
+#include "sc_iterator.h"
 
 #include <memory.h>
 #include <glib.h>
@@ -36,11 +38,13 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 sc_segment **segments = 0;
 // number of segments
 sc_uint16 segments_num = 0;
+// number of stored sc-elements
+sc_uint32 stored_elements_count = 0;
 
 sc_uint seg_id = 0;
 sc_uint seg_queue[SEGS_QUEUE_SIZE];
 gint seg_queue_heap = -1;
-sc_uint time_stamp = 1;
+sc_uint storage_time_stamp = 1;
 sc_bool is_initialized = SC_FALSE;
 
 GStaticMutex seg_queue_mutex = G_STATIC_MUTEX_INIT;
@@ -96,6 +100,40 @@ void _sc_storage_update_segment_queue_impl(gpointer data,
 
 // -----------------------------------------------------------------------------
 
+/* Updates segment information:
+ * - Calculate number of stored sc-elements
+ * - Free unused cells in segments
+ */
+void sc_storage_update_segments()
+{
+    sc_uint32 idx = 0;
+    sc_uint32 elements_count = 0;
+    sc_uint32 element_free_count = 0;
+    sc_uint32 oldest_time_stamp = 0;
+    sc_segment *seg = 0;
+
+    stored_elements_count = 0;
+
+    oldest_time_stamp = sc_iterator_get_oldest_timestamp();
+    if (oldest_time_stamp == 0)
+        oldest_time_stamp = sc_storage_get_time_stamp();
+
+    for (idx = 0; idx < segments_num; ++idx)
+    {
+        seg = segments[idx];
+        if (seg == 0) continue; // @todo segments load
+        elements_count = sc_segment_get_elements_count(seg);
+        stored_elements_count += elements_count;
+        // @todo oldest timestamp
+        element_free_count = sc_segment_free_garbage(seg, oldest_time_stamp);
+
+        if (elements_count < SEGMENT_SIZE || element_free_count > 0)
+            _sc_storage_append_segment_to_queue(idx);
+    }
+}
+
+// -----------------------------------------------------------------------------
+
 
 sc_bool sc_storage_initialize(const char *path)
 {
@@ -107,7 +145,7 @@ sc_bool sc_storage_initialize(const char *path)
     sc_fs_storage_initialize(path);
     sc_fs_storage_read_from_path(segments, &segments_num);
 
-    time_stamp = 1;
+    storage_time_stamp = 1;
 
     /*  seg_queue_update_pool = g_thread_pool_new(_sc_storage_update_segment_queue_impl,
                         (gpointer)0,
@@ -116,6 +154,7 @@ sc_bool sc_storage_initialize(const char *path)
                         (GError**)0);
   */
     is_initialized = SC_TRUE;
+    sc_storage_update_segments();
 
     return SC_TRUE;
 }
@@ -148,27 +187,35 @@ sc_bool sc_storage_is_initialized()
     return is_initialized;
 }
 
-sc_segment* sc_storage_get_segment(sc_addr_seg seg, sc_bool force_load) {
-  //! TODO: Make support of force loading
-  g_assert(seg < SC_ADDR_SEG_MAX);
-  return segments[seg];
+sc_segment* sc_storage_get_segment(sc_addr_seg seg, sc_bool force_load)
+{
+    //! TODO: Make support of force loading
+    g_assert( seg < SC_ADDR_SEG_MAX );
+    return segments[seg];
 }
 
-sc_element* sc_storage_get_element(sc_addr addr, sc_bool force_load) {
-  sc_segment *segment = 0;
+sc_element* sc_storage_get_element(sc_addr addr, sc_bool force_load)
+{
+    sc_segment *segment = 0;
+    sc_element *res = 0;
 
-  if (addr.seg >= SC_ADDR_SEG_MAX) return (sc_element*) 0;
+    if (addr.seg >= SC_ADDR_SEG_MAX) return (sc_element*)0;
 
-  segment = segments[addr.seg];
+    segment = segments[addr.seg];
 
-  if (segment == 0) {
-    if (!force_load) return (sc_element*) 0;
+    if (segment == 0)
+    {
+        if (force_load)
+        {
+            //! TODO: make force load
+        }else
+            return (sc_element*)0;
+    }else
+    {
+        res = sc_segment_get_element(segment, addr.offset);
+    }
 
-    segments[addr.seg] = (gpointer) sc_fs_storage_load_segment(addr.seg);
-    return sc_storage_get_element(addr, SC_FALSE);
-  }
-
-  return sc_segment_get_element(segment, addr.offset);
+    return res;//sc_segment_get_element(segment, uri.id);
 }
 
 sc_bool sc_storage_is_element(sc_addr addr)
@@ -193,6 +240,13 @@ sc_element* sc_storage_append_el_into_segments(sc_element *element, sc_addr *add
     g_assert( addr != 0 );
     SC_ADDR_MAKE_EMPTY(*addr);
 
+    if (sc_iterator_has_any_timestamp())
+        storage_time_stamp++;
+
+    // try to collect and delete garbage
+    if (segments_num >= sc_config_get_max_loaded_segments())
+        sc_storage_update_segments();
+
     if (_sc_storage_get_segment_from_queue(&addr->seg) == SC_TRUE)
     {
         segment = sc_storage_get_segment(addr->seg, SC_TRUE);
@@ -213,12 +267,14 @@ sc_addr sc_storage_element_new(sc_type type)
 {
     sc_element el;
     sc_addr addr;
+    sc_element *res = 0;
 
     memset(&el, 0, sizeof(el));
     el.type = type;
-    el.create_time_stamp = time_stamp;
+    el.create_time_stamp = storage_time_stamp;
 
-    g_assert( sc_storage_append_el_into_segments(&el, &addr) != 0);
+    res = sc_storage_append_el_into_segments(&el, &addr);
+    g_assert(res != 0);
     return addr;
 }
 
@@ -234,6 +290,9 @@ sc_result sc_storage_element_free(sc_addr addr)
 
     if (sc_storage_is_element(addr) == SC_FALSE)
         return SC_RESULT_ERROR;
+
+    if (sc_iterator_has_any_timestamp())
+        storage_time_stamp++;
 
     remove_list = g_slist_append(remove_list, GUINT_TO_POINTER(SC_ADDR_LOCAL_TO_INT(addr)));
 
@@ -253,7 +312,7 @@ sc_result sc_storage_element_free(sc_addr addr)
         // remove registered events before deletion
         sc_event_notify_element_deleted(_addr);
 
-        el->delete_time_stamp = time_stamp;
+        el->delete_time_stamp = storage_time_stamp;
 
         if (el->type & sc_type_arc_mask)
         {
@@ -325,6 +384,9 @@ sc_addr sc_storage_arc_new(sc_type type,
 {
     sc_addr addr;
     sc_element el, *beg_el, *end_el, *tmp_el;
+#if USE_TWO_ORIENTED_ARC_LIST
+    sc_element *tmp_arc;
+#endif
 
     memset(&el, 0, sizeof(el));
     g_assert( !(sc_type_node & type) );
@@ -519,7 +581,7 @@ void sc_storage_get_elements_stat(sc_elements_stat *stat)
 
 sc_uint sc_storage_get_time_stamp()
 {
-    return time_stamp;
+    return storage_time_stamp;
 }
 
 unsigned int sc_storage_get_segments_count()

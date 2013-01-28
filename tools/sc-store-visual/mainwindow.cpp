@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     mSegmentView(0),
     mLabelNodeCount(0),
     mLabelArcsCount(0),
-    mLabelEmptyCount(0) {
+    mLabelOtherCount(0) {
   ui->setupUi(this);
 
   createMainWidgets();
@@ -46,12 +46,12 @@ void MainWindow::createMainWidgets() {
 
   mLabelNodeCount = new QLabel(tr("Nodes: "), segmentInfoGroup);
   mLabelArcsCount = new QLabel(tr("Arcs: "), segmentInfoGroup);
-  mLabelEmptyCount = new QLabel(tr("Empty: "), segmentInfoGroup);
+  mLabelOtherCount = new QLabel(tr("Other: "), segmentInfoGroup);
   QLabel *mal0 = new QLabel(tr(""), segmentInfoGroup);
 
   infoLayout->addWidget(mLabelNodeCount, 0);
   infoLayout->addWidget(mLabelArcsCount, 0);
-  infoLayout->addWidget(mLabelEmptyCount, 0);
+  infoLayout->addWidget(mLabelOtherCount, 0);
   infoLayout->addWidget(mal0, 1);
 
   segmentInfoGroup->setLayout(infoLayout);
@@ -127,4 +127,11 @@ void MainWindow::segmentSelectionChanged(QString strId) {
 
     item->setBackgroundColor(color);
   }
+
+  quint32 node = mSegmentView->getCount(sc_type_node);
+  quint32 arc = mSegmentView->getCount(sc_type_arc_common);
+
+  mLabelNodeCount->setText(QString("Nodes: %1").arg(node));
+  mLabelArcsCount->setText(QString("Arcs: %1").arg(arc));
+  mLabelOtherCount->setText(QString("Others: %1").arg(SEGMENT_SIZE - node - arc));
 }

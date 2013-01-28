@@ -1,12 +1,11 @@
 #include <stdio.h>
-extern "C" {
-  #include "sc_store.h"
-  #include "sc_segment.h"
-  #include "sc_iterator.h"
-  #include "sc_event.h"
-  #include "sc_fs_storage.h"
+extern "C"
+{
+#include "sc_store.h"
+#include "sc_segment.h"
+#include "sc_iterator.h"
+#include "sc_event.h"
 }
-
 #include <vector>
 #include <limits>
 #include <glib.h>
@@ -498,17 +497,94 @@ void test7()
     g_timer_destroy(timer);
 }
 
-void test8() {
-  sc_addr n0 = sc_storage_node_new(sc_type_node);
-  sc_addr n1 = sc_storage_node_new(sc_type_node);
+void test8()
+{
+    sc_addr node[10], arc[10][10], addr_arc;
+    sc_uint32 i, j;
+    sc_iterator3 *it = 0;
 
-  sc_addr l0 = sc_storage_link_new();
+    printf("Segments count: %d\n", sc_storage_get_segments_count());
+    print_storage_statistics();
 
-  sc_stream *stream = sc_stream_memory_new("Content", 1, SC_STREAM_READ, SC_FALSE);
-  sc_storage_set_link_content(l0, stream);
-  sc_stream_free(stream);
+    timer = g_timer_new();
 
-  sc_addr a0 = sc_storage_arc_new(sc_type_arc_common, n0, n1);
+    printf("Create 10 nodes and 100 arcs, that connect nodes each other\n");
+    for (i = 0; i < 10; i++)
+        node[i] = sc_storage_element_new(sc_type_node);
+
+    for (i = 0; i < 10; i++)
+        for (j = 0; j < 10; j++)
+            arc[i][j] = sc_storage_arc_new(0, node[i], node[j]);
+
+    printf("Segments count: %d\n", sc_storage_get_segments_count());
+    print_storage_statistics();
+
+    printf("Delete 5 nodes\n");
+    for (i = 0; i < 5; i++)
+        sc_storage_element_free(node[i]);
+
+    // iterate element for check
+    it = sc_iterator3_f_a_a_new(node[9], 0, 0);
+    while (sc_iterator3_next(it) == SC_TRUE)
+    {
+        addr_arc = sc_iterator3_value(it, 1);
+        printf("Arc: %d, %d\n", addr_arc.seg, addr_arc.offset);
+    }
+    sc_iterator3_free(it);
+
+    printf("Segments count: %d\n", sc_storage_get_segments_count());
+    print_storage_statistics();
+
+    g_timer_stop(timer);
+
+    printf("Collect and delete garbage...\n");
+    g_timer_reset(timer);
+    g_timer_start(timer);
+
+    sc_storage_update_segments();
+
+    g_timer_stop(timer);
+
+    // iterate element for check
+    it = sc_iterator3_f_a_a_new(node[9], 0, 0);
+    while (sc_iterator3_next(it) == SC_TRUE)
+    {
+        addr_arc = sc_iterator3_value(it, 1);
+        printf("Arc: %d, %d\n", addr_arc.seg, addr_arc.offset);
+    }
+    sc_iterator3_free(it);
+
+    printf("Elapsed time: %f\n", g_timer_elapsed(timer, 0));
+    printf("Segments count: %d\n", sc_storage_get_segments_count());
+    print_storage_statistics();
+
+    g_timer_destroy(timer);
+
+}
+
+void test9()
+{
+    printf("Segments count: %d\n", sc_storage_get_segments_count());
+    print_storage_statistics();
+
+    timer = g_timer_new();
+
+    printf("Collect and delete garbage...\n");
+    g_timer_reset(timer);
+    g_timer_start(timer);
+
+    sc_storage_update_segments();
+
+    g_timer_stop(timer);
+
+
+
+    printf("Elapsed time: %f\n", g_timer_elapsed(timer, 0));
+    printf("Segments count: %d\n", sc_storage_get_segments_count());
+    print_storage_statistics();
+
+    g_timer_destroy(timer);
+
 }
 
 int main(int argc, char *argv[])
@@ -519,22 +595,24 @@ int main(int argc, char *argv[])
     timer = g_timer_new();
     g_timer_start(timer);
 
-    g_message("MD5: %d\n", g_checksum_type_get_length(G_CHECKSUM_MD5) );
-    g_message("SHA1: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA1) );
-    g_message("SHA256: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA256) );
+    printf("MD5: %d\n", g_checksum_type_get_length(G_CHECKSUM_MD5) );
+    printf("SHA1: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA1) );
+    printf("SHA256: %d\n", g_checksum_type_get_length(G_CHECKSUM_SHA256) );
+    printf("Element size: %d\n", sizeof(sc_element));
 
     sc_storage_initialize("repo");
     g_timer_stop(timer);
-    g_message("Segment loading speed: %f seg/sec\n", sc_storage_get_segments_count() / g_timer_elapsed(timer, 0));
+    printf("Segment loading speed: %f seg/sec\n", sc_storage_get_segments_count() / g_timer_elapsed(timer, 0));
 
     //test5();
     //test6();
 
     //test7();
+    //test8();
 
     while (item != 0)
     {
-        g_message("Commands:\n"
+        printf("Commands:\n"
                "0 - exit\n"
                "1 - test allocation\n"
                "2 - test sc-addr utilities\n"
@@ -543,11 +621,12 @@ int main(int argc, char *argv[])
                "5 - test contents\n"
                "6 - test content finding\n"
                "7 - test events\n"
-               "8 - initialize watcher test repo\n"
+               "8 - test garbage deletion\n"
+               "9 - run grabage collection\n"
                "\nCommand: ");
         scanf("%d", &item);
 
-        g_message("\n----- Test %d -----\n", item);
+        printf("\n----- Test %d -----\n", item);
 
         switch(item)
         {
@@ -582,9 +661,13 @@ int main(int argc, char *argv[])
         case 8:
             test8();
             break;
+
+        case 9:
+            test9();
+            break;
         };
 
-        g_message("\n----- Finished -----\n");
+        printf("\n----- Finished -----\n");
     }
 
     timer = g_timer_new();
