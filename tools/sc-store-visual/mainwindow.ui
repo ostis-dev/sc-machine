@@ -10,6 +10,12 @@
     <height>551</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>SC Store Inspector</string>
   </property>
@@ -23,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>1286</width>
-     <height>27</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

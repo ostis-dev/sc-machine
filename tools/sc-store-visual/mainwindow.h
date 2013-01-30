@@ -9,6 +9,7 @@
 class QListWidget;
 class QLabel;
 class SegmentView;
+class SegmentArea;
 
 namespace Ui {
   class MainWindow;
@@ -42,8 +43,9 @@ class MainWindow : public QMainWindow {
 
     //! List of segments
     QListWidget *mSegmentsList;
-    //! Widget that visualize segment
-    SegmentView *mSegmentView;
+//    ! Widget that visualize segment
+//    SegmentView *mSegmentView;
+    SegmentArea *mSegmentArea;
 
     QLabel *mLabelNodeCount;
     QLabel *mLabelArcsCount;

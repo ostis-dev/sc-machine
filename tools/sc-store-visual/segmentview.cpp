@@ -23,6 +23,7 @@ void SegmentView::updateSegmentItems() {
       item->setPos(i % SEGMENT_ITEMS_IN_ROW * (item->boundingRect().width() + SEGMENT_ITEMS_OFFSET),
                    i / SEGMENT_ITEMS_IN_ROW * (item->boundingRect().height() + SEGMENT_ITEMS_OFFSET));
       scene()->addItem(item);
+
       mSegmentItems.push_back(item);
     }
 
@@ -117,7 +118,7 @@ static void itemSelected(SegmentItem *item, QTreeWidget *info) {
     }
   }
 
-  if (type & sc_type_edge_common) {
+  if (type & (sc_type_edge_common | sc_type_arc_common)) {
     twi = einfoRow(info, "From", QString("%1 :: %2").arg(el->arc.begin.seg).arg(el->arc.begin.offset));
     twi->setData(1, Qt::UserRole, QVariant::fromValue((void *) &(el->arc.begin)));
     items.append(twi);
@@ -165,3 +166,49 @@ void SegmentView::infoItemClicked(QTreeWidgetItem *item, int row) {
   setSegmentId(link->seg);
   activateItem(mSegmentItems.at(link->offset));
 }
+
+
+
+
+//#include "segmentarea.h"
+
+//SegmentArea::SegmentArea(QWidget *parent) :
+//    QWidget(parent) {
+//}
+
+//void SegmentArea::setSegment(quint32 segment) {
+//  if (mSegment == segment) return;
+//  mSegment = segment;
+
+//  mSegmentElements.clear();
+
+//  for (quint32 i = 0; i < SEGMENT_SIZE; ++i) {
+//    sc_addr addr;
+//    addr.seg = mSegment;
+//    addr.offset = i;
+
+//    sc_element *el = sc_storage_get_element(addr, SC_TRUE);
+
+//    sc_element_ex *element = g_new0(sc_element_ex, 1);
+//    element->element = el;
+//    element->address = addr;
+
+//    mSegmentElements.push_back(element);
+//  }
+//}
+
+//void SegmentArea::paintEvent(QPaintEvent *) {
+//  QPainter painter(this);
+//  painter.setRenderHint(QPainter::Antialiasing);
+//  painter.setPen(Qt::darkGreen);
+////  painter.drawRect(1, 2, 100, 200);
+
+////  sc_element_ex *e;
+////  quint32 i = 0;
+//  for (quint32 i = 0; i < SEGMENT_SIZE; ++i) {
+//    quint32 x = i % SEGMENT_ITEMS_IN_ROW * (10 + SEGMENT_ITEMS_OFFSET);
+//    quint32 y = i / SEGMENT_ITEMS_IN_ROW * (10 + SEGMENT_ITEMS_OFFSET);
+
+//    painter.drawRect(x, y, 10, 10);
+//  }
+//}

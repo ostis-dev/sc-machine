@@ -14,13 +14,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     segmentview.cpp \
     segmentscene.cpp \
-    segmentitem.cpp
+    segmentitem.cpp \
+    segmentarea.cpp
 
 HEADERS  += mainwindow.h \
     segmentview.h \
     segmentscene.h \
     segmentitem.h \
-    definition.h
+    definition.h \
+    segmentarea.h
 
 FORMS    += mainwindow.ui
 

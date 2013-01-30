@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     mSegmentsList(0),
-    mSegmentView(0),
+//    mSegmentView(0),
+    mSegmentArea(0),
     mLabelNodeCount(0),
     mLabelArcsCount(0),
     mLabelOtherCount(0) {
@@ -38,8 +39,8 @@ void MainWindow::createMainWidgets() {
   hls << QString("Value");
 
   mSegmentInfo->setHeaderLabels(hls);
-  mSegmentView = new SegmentView(mSegmentInfo, central);
-  connect(mSegmentInfo, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), mSegmentView, SLOT(infoItemClicked(QTreeWidgetItem*, int)));
+//  mSegmentView = new SegmentView(mSegmentInfo, central);
+//  connect(mSegmentInfo, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), mSegmentView, SLOT(infoItemClicked(QTreeWidgetItem*, int)));
 
   QGroupBox *segmentInfoGroup = new QGroupBox(tr("Segment info"), central);
   QVBoxLayout *infoLayout = new QVBoxLayout(central);
@@ -60,9 +61,14 @@ void MainWindow::createMainWidgets() {
   rightLayout->addWidget(segmentInfoGroup);
   rightLayout->addWidget(mSegmentInfo);
 
+  QScrollArea * scroll = new QScrollArea(central);
+  mSegmentArea = new SegmentArea(scroll);
+  scroll->setWidget(mSegmentArea);
+//  mSegmentArea->setFixedSize(10000, 10000);
+
   QHBoxLayout *mainLayout = new QHBoxLayout();
   mainLayout->addWidget(mSegmentsList, 1);
-  mainLayout->addWidget(mSegmentView, 6);
+  mainLayout->addWidget(scroll, 6);
   mainLayout->addLayout(rightLayout, 2);
 
   central->setLayout(mainLayout);
@@ -79,7 +85,8 @@ MainWindow::~MainWindow() {
   delete ui;
 
   delete mSegmentsList;
-  delete mSegmentView;
+//  delete mSegmentView;
+//  delete mSegmentArea;
   delete mSegmentInfo;
 }
 
@@ -113,12 +120,13 @@ void MainWindow::openRepository() {
 
 void MainWindow::segmentSelectionChanged(QString strId) {
   if (strId.isEmpty()) {
-    mSegmentView->reset();
+//    mSegmentView->reset();
     return;
   }
 
   int id = strId.toInt();
-  mSegmentView->setSegmentId(id);
+//  mSegmentView->setSegmentId(id);
+  mSegmentArea->setSegment(id);
 
   QListWidgetItem *item = mSegmentsList->item(id);
   if (item != nullptr) {
@@ -128,10 +136,10 @@ void MainWindow::segmentSelectionChanged(QString strId) {
     item->setBackgroundColor(color);
   }
 
-  quint32 node = mSegmentView->getCount(sc_type_node);
-  quint32 arc = mSegmentView->getCount(sc_type_arc_common);
+//  quint32 node = mSegmentView->getCount(sc_type_node);
+//  quint32 arc = mSegmentView->getCount(sc_type_arc_common);
 
-  mLabelNodeCount->setText(QString("Nodes: %1").arg(node));
-  mLabelArcsCount->setText(QString("Arcs: %1").arg(arc));
-  mLabelOtherCount->setText(QString("Others: %1").arg(SEGMENT_SIZE - node - arc));
+//  mLabelNodeCount->setText(QString("Nodes: %1").arg(node));
+//  mLabelArcsCount->setText(QString("Arcs: %1").arg(arc));
+//  mLabelOtherCount->setText(QString("Others: %1").arg(SEGMENT_SIZE - node - arc));
 }
