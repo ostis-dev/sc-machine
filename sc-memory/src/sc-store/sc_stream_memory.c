@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -44,22 +44,23 @@ sc_result sc_stream_memory_read(const sc_stream *stream, sc_char *data, sc_uint3
     g_assert(buffer != 0);
 
     if (buffer->size == 0)
-        return SC_ERROR;
+        return SC_RESULT_ERROR;
 
     if (length > (buffer->size - buffer->pos))
-    {
         *bytes_read = buffer->size - buffer->pos;
-        memcpy(data, buffer->data, *bytes_read);
-        buffer->pos += *bytes_read;
-    }else
-        return SC_ERROR;
+    else
+        *bytes_read = length;
 
-    return SC_OK;
+    memcpy(data, &(buffer->data[buffer->pos]), *bytes_read);
+    buffer->pos += *bytes_read;
+
+
+    return SC_RESULT_OK;
 }
 
 sc_result sc_stream_memory_write(const sc_stream *stream, sc_char *data, sc_uint32 length, sc_uint32 *bytes_written)
 {
-    return SC_ERROR;
+    return SC_RESULT_ERROR;
 }
 
 sc_result sc_stream_memory_seek(const sc_stream *stream, sc_stream_seek_origin origin, sc_uint32 offset)
@@ -71,24 +72,24 @@ sc_result sc_stream_memory_seek(const sc_stream *stream, sc_stream_seek_origin o
     {
     case SC_STREAM_SEEK_END:
         if (offset > buffer->size)
-            return SC_ERROR_INVALID_PARAMS;
+            return SC_RESULT_ERROR_INVALID_PARAMS;
         buffer->pos = buffer->size - offset;
         break;
 
     case SC_STREAM_SEEK_CUR:
         if (offset > (buffer->size - buffer->pos))
-            return SC_ERROR_INVALID_PARAMS;
+            return SC_RESULT_ERROR_INVALID_PARAMS;
         buffer->pos += offset;
         break;
 
     case SC_STREAM_SEEK_SET:
         if (offset > buffer->size)
-            return SC_ERROR_INVALID_PARAMS;
+            return SC_RESULT_ERROR_INVALID_PARAMS;
         buffer->pos = offset;
         break;
     };
 
-    return SC_OK;
+    return SC_RESULT_OK;
 }
 
 sc_result sc_stream_memory_tell(const sc_stream *stream, sc_uint32 *position)
@@ -98,7 +99,7 @@ sc_result sc_stream_memory_tell(const sc_stream *stream, sc_uint32 *position)
 
     *position = buffer->pos;
 
-    return SC_OK;
+    return SC_RESULT_OK;
 }
 
 sc_result sc_stream_memory_free_handler(const sc_stream *stream)
@@ -114,7 +115,7 @@ sc_result sc_stream_memory_free_handler(const sc_stream *stream)
 
     g_free(buffer);
 
-    return SC_OK;
+    return SC_RESULT_OK;
 }
 
 sc_bool sc_stream_memory_eof(const sc_stream *stream)
@@ -129,7 +130,7 @@ sc_bool sc_stream_memory_eof(const sc_stream *stream)
 }
 
 
-sc_stream* sc_stream_memory_new(sc_char *buffer, sc_uint buffer_size, sc_uint8 flags, sc_bool data_owner)
+sc_stream* sc_stream_memory_new(const sc_char *buffer, sc_uint buffer_size, sc_uint8 flags, sc_bool data_owner)
 {
     if (flags & SC_STREAM_WRITE || flags & SC_STREAM_APPEND)
     {

@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -23,7 +23,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef _sc_types_h_
 #define _sc_types_h_
 
-#include "sc_config.h"
+#include "sc_defines.h"
 
 #define nullptr ((void*)0)
 
@@ -118,13 +118,13 @@ typedef sc_uint16 sc_type;
 #define sc_type_arc_perm        0x800
 
 // struct node types
-#define sc_type_node_tuple       0x80
-#define sc_type_node_struct      0x100
-#define sc_type_node_role        0x200
-#define sc_type_node_norole      0x400
-#define sc_type_node_class       0x800
-#define sc_type_node_abstract    0x1000
-#define sc_type_node_material    0x2000
+#define sc_type_node_tuple       (0x80 | sc_type_node)
+#define sc_type_node_struct      (0x100 | sc_type_node)
+#define sc_type_node_role        (0x200 | sc_type_node)
+#define sc_type_node_norole      (0x400 | sc_type_node)
+#define sc_type_node_class       (0x800 | sc_type_node)
+#define sc_type_node_abstract    (0x1000 | sc_type_node)
+#define sc_type_node_material    (0x2000 | sc_type_node)
 
 #define sc_type_arc_pos_const_perm (sc_type_arc_access | sc_type_const | sc_type_arc_pos | sc_type_arc_perm)
 
@@ -139,11 +139,12 @@ typedef sc_uint16 sc_type;
 // results
 enum _sc_result
 {
-    SC_ERROR = 0,               // unknown error
-    SC_OK = 1,                  // no any error
-    SC_ERROR_INVALID_PARAMS,    // invalid function parameters error
-    SC_ERROR_INVALID_TYPE,      // invalied type error
-    SC_ERROR_IO                 // input/output error
+    SC_RESULT_ERROR = 0,               // unknown error
+    SC_RESULT_OK = 1,                  // no any error
+    SC_RESULT_ERROR_INVALID_PARAMS,    // invalid function parameters error
+    SC_RESULT_ERROR_INVALID_TYPE,      // invalied type error
+    SC_RESULT_ERROR_IO,                // input/output error
+    SC_RESULT_ERROR_INVALID_STATE      // invalid state of processed object
 };
 
 // contents
@@ -158,11 +159,11 @@ struct _sc_check_sum
 // events
 enum _sc_event_type
 {
-    SC_EVENT_ADD_OUTPUT_ARC,        // calls after adding
+    SC_EVENT_ADD_OUTPUT_ARC = 0,        // calls after adding
     SC_EVENT_ADD_INPUT_ARC,         // calls after adding
     SC_EVENT_REMOVE_OUTPUT_ARC,     // calls before removing
     SC_EVENT_REMOVE_INPUT_ARC,      // calls before removing
-    SC_EVENT_CHANGE_LINK_CONTENT    // calls after adding
+    SC_EVENT_CHANGE_LINK_CONTENT
 };
 
 typedef struct _sc_check_sum sc_check_sum;

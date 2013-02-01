@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #define _sc_storage_h_
 
 #include "sc_types.h"
-#include "sc_config.h"
+#include "sc_defines.h"
 #include "sc_stream.h"
 
 struct _sc_elements_stat
@@ -142,18 +142,32 @@ sc_result sc_storage_get_arc_end(sc_addr addr, sc_addr *result);
  * returns on of error codes:
  * <ul>
  * <li>SC_INVALID_TYPE - element with \p addr isn't a sc-link</li>
+ * <li>SC_ERROR_INVALID_PARAMS - element with specifed \p addr doesn't exist
  * <li>SC_ERROR - unknown error</li>
  * </ul>
  */
 sc_result sc_storage_set_link_content(sc_addr addr, const sc_stream *stream);
 
+/*! Returns content data from specified sc-link
+ * @param addr sc-addr of sc-link to get content data
+ * @param stream Pointer to returned data stream
+ * @return If content of specified link returned without any errors, then return SC_OK; otherwise
+ * returns on of error codes:
+ * <ul>
+ * <li>SC_INVALID_TYPE - element with \p addr isn't a sc-link</li>
+ * <li>SC_ERROR_INVALID_PARAMS - element with specifed \p addr doesn't exist
+ * <li>SC_ERROR - unknown error</li>
+ * </ul>
+ */
+sc_result sc_storage_get_link_content(sc_addr addr, sc_stream **stream);
+
 /*! Search sc-link addrs by specified data
  * @param stream Pointert to stream that contains data for search
  * @param result Pointer to result container
  * @param result_count Container for results count
- * @return If sc-links with specified checksum founded, then sc-addrs of founded link
+ * @return If sc-links with specified checksum found, then sc-addrs of found link
  * writes into \p result array and function returns SC_OK; otherwise \p result will contain
- * empty sc-addr and function returns SC_OK. In any case \p result_count contains number of founded
+ * empty sc-addr and function returns SC_OK. In any case \p result_count contains number of found
  * sc-addrs
  * @attention \p result array need to be free after usage
  */
@@ -169,6 +183,12 @@ void sc_storage_get_elements_stat(sc_elements_stat *stat);
 
 //! Returns time stamp value
 sc_uint sc_storage_get_time_stamp();
+
+/*! Updates segments.
+ * Calculate empty slots. Delete garbage
+ * @note Only for internal usage
+ */
+void sc_storage_update_segments();
 
 #endif
 

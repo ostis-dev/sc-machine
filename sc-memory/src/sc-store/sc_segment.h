@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -36,7 +36,7 @@ struct _sc_segment
 #if USE_SEGMENT_EMPTY_SLOT_BUFFER
     sc_uint empty_slot_buff[SEGMENT_EMPTY_BUFFER_SIZE]; // works like a stack
     sc_uint empty_slot_buff_head;
-    sc_boolean have_empty_slots;
+    sc_bool have_empty_slots;
 #else
     sc_uint empty_slot; // index empty slot in segment
 #endif
@@ -78,6 +78,17 @@ sc_element* sc_segment_get_element(sc_segment *seg, sc_uint id);
  */
 void sc_segment_remove_element(sc_segment *segment,
                                sc_uint el_id);
+
+//! Returns number of stored sc-elements in segment
+sc_uint32 sc_segment_get_elements_count(sc_segment *seg);
+
+/*! Deletes garbage in specified segment
+ * @param oldet_time_stamp Oldest timestamp, that can be used
+ * @param seg Poitnet to segment to delete garbage
+ * @returns Returns number of freed cells
+ */
+sc_uint32 sc_segment_free_garbage(sc_segment *seg, sc_uint32 oldest_time_stamp);
+
 
 //! Update information in segment about first empty slot
 void sc_segment_update_empty_slot(sc_segment *segment);

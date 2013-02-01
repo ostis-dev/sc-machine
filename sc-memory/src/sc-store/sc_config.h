@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -23,20 +23,21 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef _sc_config_h_
 #define _sc_config_h_
 
-/*! Bound empty slot serach
- *
- * Can be used just with USE_SEGMENT_EMPTY_SLOT_BUFFER = 0
+#include "sc_types.h"
+
+/*! Iniitalize sc-memory configuration from specified configuration file
+ * @param file_path Path to configuration file
  */
-#define BOUND_EMPTY_SLOT_SEARCH 0
+void sc_config_initialize(const sc_char *file_path);
 
-//! Use empty slots buffering for segment
-#define USE_SEGMENT_EMPTY_SLOT_BUFFER 0
+/*! Shutdown sc-memory configuration. Free allocated data.
+ */
+void sc_config_shutdown();
 
-//! Enable network scaling
-#define USE_NETWORK_SCALE 0
+/*! Return number of segments, that can be loaded into memory at one moment
+ */
+sc_uint32 sc_config_get_max_loaded_segments();
 
-//! Use two oriented arc list
-#define USE_TWO_ORIENTED_ARC_LIST 1
 
 #endif
 

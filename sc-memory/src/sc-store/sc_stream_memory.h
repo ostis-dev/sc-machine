@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -34,6 +34,6 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
  * @remarks The returned stream pointer should be freed with sc_stream_free function, when done using it.
  * @return Returns stream pointer if the stream was successfully created, or NULL if an error occurred
  */
-sc_stream* sc_stream_memory_new(sc_char *buffer, sc_uint buffer_size, sc_uint8 flags, sc_bool data_owner);
+sc_stream* sc_stream_memory_new(const sc_char *buffer, sc_uint buffer_size, sc_uint8 flags, sc_bool data_owner);
 
 #endif // SC_STREAM_MEMORY_H

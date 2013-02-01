@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +26,6 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include "sc_types.h"
 #include "sc_defines.h"
 #include "sc_stream.h"
-#include <glib.h>
 
 
 /*! Initialize file system storage in specified path
@@ -37,7 +36,7 @@ sc_bool sc_fs_storage_initialize(const char *path);
 
 /*! Shutdown file system storage
  */
-sc_bool sc_fs_storage_shutdown(GPtrArray *segments);
+sc_bool sc_fs_storage_shutdown(sc_segment **segments);
 
 /*! Load segment from file system
  *
@@ -51,15 +50,16 @@ sc_segment* sc_fs_storage_load_segment(sc_uint id);
 /*! Load segments from file system storage
  *
  * @param segments Pointer to segments array.
+ * @param segments_num Pointer to container for number of segments
  * It will be contain pointers to loaded segments.
  */
-sc_bool sc_fs_storage_read_from_path(GPtrArray *segments);
+sc_bool sc_fs_storage_read_from_path(sc_segment **segments, sc_uint16 *segments_num);
 
 /*! Save segments to file system
  *
  * @param segments Pointer to array that contains segment pointers to save.
  */
-sc_bool sc_fs_storage_write_to_path(GPtrArray *segments);
+sc_bool sc_fs_storage_write_to_path(sc_segment **segments);
 
 /*! Write specified stream as content
  * @param addr sc-addr of sc-link that contains data
@@ -80,13 +80,21 @@ sc_result sc_fs_storage_add_content_addr(sc_addr addr, const sc_check_sum *check
  * @param check_sum Checksum for search
  * @param result Pointer to result container
  * @param result_count Container for results count
- * @return If sc-links with specified checksum founded, then sc-addrs of founded link
+ * @return If sc-links with specified checksum found, then sc-addrs of found link
  * writes into \p result array and function returns SC_OK; otherwise \p result will contain
- * empty sc-addr and function returns SC_OK. In any case \p result_count contains number of founded
+ * empty sc-addr and function returns SC_OK. In any case \p result_count contains number of found
  * sc-addrs
  * @attention \p result array need to be free after usage
  */
 sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, sc_addr **result, sc_uint32 *result_count);
+
+/*! Returns stream that contains content with specified checksum
+ * @param check_sum Pointer to checksum for content data returning
+ * @param stream Pointer to returned stream
+ * @attention Returned pointer to stream need to be free after usage
+ * @return If data by specified checksum found, then return SC_OK; otherwise return SC_ERROR
+ */
+sc_result sc_fs_storage_get_checksum_content(const sc_check_sum *check_sum, sc_stream **stream);
 
 /*! Make directory path from checksum
  * @param check_sum Checksum pointer to make path

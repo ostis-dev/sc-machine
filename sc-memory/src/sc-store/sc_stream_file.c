@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -32,7 +32,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
     if (fd == 0) \
     { \
         g_message("File handler is null"); \
-        return SC_ERROR; \
+        return SC_RESULT_ERROR; \
     }
 
 sc_result sc_stream_file_read(const sc_stream *stream, sc_char *data, sc_uint32 length, sc_uint32 *bytes_read)
@@ -40,7 +40,7 @@ sc_result sc_stream_file_read(const sc_stream *stream, sc_char *data, sc_uint32 
     SC_STREAM_FILE_FD_CHECK;
 
     *bytes_read = fread(data, 1, length, fd);
-    return SC_OK;
+    return SC_RESULT_OK;
 }
 
 sc_result sc_stream_file_write(const sc_stream *stream, sc_char *data, sc_uint32 length, sc_uint32 *bytes_written)
@@ -48,7 +48,7 @@ sc_result sc_stream_file_write(const sc_stream *stream, sc_char *data, sc_uint32
     SC_STREAM_FILE_FD_CHECK;
 
     *bytes_written = fwrite(data, 1, length, fd);
-    return SC_OK;
+    return SC_RESULT_OK;
 }
 
 sc_result sc_stream_file_seek(const sc_stream *stream, sc_stream_seek_origin origin, sc_uint32 offset)
@@ -72,25 +72,25 @@ sc_result sc_stream_file_seek(const sc_stream *stream, sc_stream_seek_origin ori
     };
 
     if (fseek(fd, offset, whence) == 0)
-        return SC_OK;
+        return SC_RESULT_OK;
 
-    return SC_ERROR;
+    return SC_RESULT_ERROR;
 }
 
 sc_result sc_stream_file_tell(const sc_stream *stream, sc_uint32 *position)
 {
     SC_STREAM_FILE_FD_CHECK;
     *position = ftell(fd);
-    return SC_OK;
+    return SC_RESULT_OK;
 }
 
 sc_result sc_stream_file_free_handler(const sc_stream *stream)
 {
     SC_STREAM_FILE_FD_CHECK;
     if (fclose(fd) == 0)
-        return SC_OK;
+        return SC_RESULT_OK;
 
-    return SC_ERROR;
+    return SC_RESULT_ERROR;
 }
 
 sc_bool sc_stream_file_eof(const sc_stream *stream)
@@ -111,8 +111,9 @@ sc_stream* sc_stream_file_new(sc_char *file_name, sc_uint8 flags)
 
     if (flags & SC_STREAM_READ)
     {
-        g_assert(!(flags & SC_STREAM_APPEND)); // coldn't support append in read mode
+        g_assert(!(flags & SC_STREAM_APPEND)); // couldn't support append in read mode
         fd = fopen(file_name, "r");
+        g_assert(fd != 0);
     }else
     {
         if (flags & SC_STREAM_WRITE)

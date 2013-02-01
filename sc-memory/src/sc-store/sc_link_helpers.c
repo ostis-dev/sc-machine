@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -43,7 +43,7 @@ sc_bool sc_link_calculate_checksum(const sc_stream *stream, sc_check_sum *check_
 
     while (sc_stream_eof(stream) == SC_FALSE)
     {
-        if (sc_stream_read_data(stream, buffer, 1024, &data_read) == SC_ERROR)
+        if (sc_stream_read_data(stream, buffer, 1024, &data_read) == SC_RESULT_ERROR)
         {
             g_checksum_free(checksum);
             return SC_FALSE;

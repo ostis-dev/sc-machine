@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -150,7 +150,7 @@ void sc_segment_update_empty_slot_buffer(sc_segment *segment)
     if (idx > 0)
     {
         // backward search
-        v = (segment->num == 0) ? 1 : G_MAXUINT);
+        v = (segment->num == 0) ? 1 : G_MAXUINT;
         while ((idx != v) && (segment->empty_slot_buff_head < SEGMENT_EMPTY_BUFFER_SIZE))
         {
             if (segment->elements[idx].type == 0)
@@ -205,5 +205,124 @@ void sc_segment_update_empty_slot_value(sc_segment *segment)
 
     segment->empty_slot = SEGMENT_SIZE;
 }
-
 #endif // USE_SEGMENT_EMPTY_SLOT_BUFFER
+
+sc_uint32 sc_segment_get_elements_count(sc_segment *seg)
+{
+    sc_uint32 count = 0;
+    sc_uint32 idx = 0;
+
+    for (idx = 0; idx < SEGMENT_SIZE; ++idx)
+    {
+        if (seg->elements[idx].type != 0)
+            count++;
+    }
+
+    return count;
+}
+
+sc_uint32 sc_segment_free_garbage(sc_segment *seg, sc_uint32 oldest_time_stamp)
+{
+    sc_uint32 free_count = 0;
+    sc_uint32 idx = 0;
+    //sc_uint32 newest_time_stamp = sc_storage_get_time_stamp();
+#if USE_TWO_ORIENTED_ARC_LIST
+    sc_element *el = 0, *el2 = 0, *el_arc = 0, *next_el_arc = 0, *prev_el_arc = 0;
+    sc_addr prev_arc, next_arc;
+    sc_addr self_addr;
+#else
+    sc_element *el = 0, *el2 = 0, *el_arc = 0, *prev_el_arc = 0;
+    sc_addr prev_arc, current_arc;
+    sc_addr self_addr;
+#endif
+
+#if USE_SEGMENT_EMPTY_SLOT_BUFFER
+    seg->empty_slot_buff_head = 0;
+#endif
+    self_addr.seg = seg->num;
+
+    for (idx = 0; idx < SEGMENT_SIZE; ++idx)
+    {
+        el = &(seg->elements[idx]);
+        self_addr.offset = idx;
+
+        // skip element that wasn't deleted
+        if (el->delete_time_stamp <= oldest_time_stamp && el->delete_time_stamp != 0)
+        {
+            // delete arcs from output and intpu lists
+            // @todo two oriented lists support
+            if (el->type & sc_type_arc_mask)
+            {
+#if USE_TWO_ORIENTED_ARC_LIST
+                prev_arc = el->arc.prev_out_arc;
+                next_arc = el->arc.next_out_arc;
+
+                if (SC_ADDR_IS_NOT_EMPTY(prev_arc))
+                {
+                    prev_el_arc = sc_storage_get_element(prev_arc, SC_TRUE);
+                    prev_el_arc->arc.next_out_arc = next_arc;
+                }
+
+                if (SC_ADDR_IS_NOT_EMPTY(next_arc))
+                {
+                    next_el_arc = sc_storage_get_element(next_arc, SC_TRUE);
+                    next_el_arc->arc.prev_out_arc = prev_arc;
+                }
+#else
+                SC_ADDR_MAKE_EMPTY(prev_arc);
+                // output list
+                el2 = sc_storage_get_element(el->arc.begin, SC_TRUE);
+                current_arc = el2->first_out_arc;
+                while (SC_ADDR_IS_NOT_EMPTY(current_arc) && SC_ADDR_IS_NOT_EQUAL(self_addr, current_arc))
+                {
+                    prev_arc = current_arc;
+                    prev_el_arc = el_arc;
+                    el_arc = sc_storage_get_element(current_arc, SC_TRUE);
+                    current_arc = el->arc.next_out_arc;
+                }
+
+                if (SC_ADDR_IS_NOT_EMPTY(prev_arc) && SC_ADDR_IS_NOT_EMPTY(current_arc))
+                    prev_el_arc->arc.next_out_arc = el_arc->arc.next_out_arc;
+
+                prev_el_arc = 0;
+                el_arc = 0;
+                SC_ADDR_MAKE_EMPTY(prev_arc);
+
+                // input list
+                el2 = sc_storage_get_element(el->arc.end, SC_TRUE);
+                current_arc = el2->first_in_arc;
+                while (SC_ADDR_IS_NOT_EMPTY(current_arc) && SC_ADDR_IS_NOT_EQUAL(self_addr, current_arc))
+                {
+                    prev_arc = current_arc;
+                    prev_el_arc = el_arc;
+
+                    el_arc = sc_storage_get_element(current_arc, SC_TRUE);
+                    current_arc = el->arc.next_in_arc;
+                }
+
+                if (SC_ADDR_IS_NOT_EMPTY(prev_arc) && SC_ADDR_IS_NOT_EMPTY(current_arc))
+                    prev_el_arc->arc.next_in_arc = el_arc->arc.next_in_arc;
+#endif
+            }
+
+            el->type = 0;
+            free_count ++;
+        }
+
+
+        // collect empty cells
+        if (el->type == 0 && !(idx == 0 && seg->num == 0))
+        {
+#if USE_SEGMENT_EMPTY_SLOT_BUFFER
+            if (seg->empty_slot_buff_head < SEGMENT_EMPTY_BUFFER_SIZE)
+                seg->empty_slot_buff[seg->empty_slot_buff_head++] = idx;
+#else
+            seg->empty_slot = idx;
+#endif
+        }
+    }
+
+    return free_count;
+}
+
+

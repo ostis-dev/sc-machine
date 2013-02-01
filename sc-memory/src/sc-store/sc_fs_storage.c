@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2012 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -23,9 +23,11 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include "sc_fs_storage.h"
 #include "sc_segment.h"
 #include "sc_stream_file.h"
+#include "sc_config.h"
 
 #include <stdlib.h>
 #include <memory.h>
+#include <glib.h>
 
 gchar *repo_path = 0;
 
@@ -57,7 +59,7 @@ sc_bool sc_fs_storage_initialize(const gchar *path)
     return SC_TRUE;
 }
 
-sc_bool sc_fs_storage_shutdown(GPtrArray *segments)
+sc_bool sc_fs_storage_shutdown(sc_segment **segments)
 {
     g_message("Shutdown sc-storage\n");
     g_message("Write storage into %s", repo_path);
@@ -87,13 +89,10 @@ sc_segment* sc_fs_storage_load_segment(sc_uint id)
     return segment;
 }
 
-sc_bool sc_fs_storage_read_from_path(GPtrArray *segments)
+sc_bool sc_fs_storage_read_from_path(sc_segment **segments, sc_uint16 *segments_num)
 {
     const gchar *fname = 0;
-    gchar file_name[MAX_PATH_LENGTH + 1];
-    gsize length = 0;
-    sc_uint files_count = 0, idx;
-    sc_segment *segment = 0;
+    sc_uint files_count = 0, idx, to_load;
     GDir *dir = 0;
 
     if (!g_file_test(repo_path, G_FILE_TEST_IS_DIR))
@@ -120,23 +119,24 @@ sc_bool sc_fs_storage_read_from_path(GPtrArray *segments)
         fname = g_dir_read_name(dir);
     }
 
-    g_message("Segments founded: %u", files_count);
+    g_message("Segments found: %u", files_count);
+    *segments_num = files_count;
 
+    to_load = MIN(files_count, sc_config_get_max_loaded_segments());
     // load segments
-    for (idx = 0; idx < files_count; idx++)
-        g_ptr_array_add( segments, (gpointer)sc_fs_storage_load_segment(idx) );
+    for (idx = 0; idx < to_load; idx++)
+        segments[idx] = (gpointer)sc_fs_storage_load_segment(idx);
 
-    g_message("Segments loaded: %u", segments->len);
+    g_message("Segments loaded: %u", idx);
 
     g_dir_close(dir);
     return SC_TRUE;
 }
 
-sc_bool sc_fs_storage_write_to_path(GPtrArray *segments)
+sc_bool sc_fs_storage_write_to_path(sc_segment **segments)
 {
     sc_uint idx = 0;
-    sc_segment *segment = 0;
-    GMappedFile *file = 0;
+    const sc_segment *segment = 0;
     gchar file_name[MAX_PATH_LENGTH + 1];
     gchar segments_path[MAX_PATH_LENGTH + 1];
 
@@ -154,9 +154,11 @@ sc_bool sc_fs_storage_write_to_path(GPtrArray *segments)
             return SC_FALSE;
     }
 
-    for (idx = 0; idx < segments->len; idx++)
+    for (idx = 0; idx < SC_ADDR_SEG_MAX; idx++)
     {
-        segment = (sc_segment*)g_ptr_array_index(segments, idx);
+        segment = segments[idx];
+        if (segment == nullptr) continue; // skip null segments
+
         _get_segment_path(segments_path, idx, MAX_PATH_LENGTH, file_name);
         g_file_set_contents(file_name, (gchar*)segment, sizeof(sc_segment), 0);
     }
@@ -192,7 +194,7 @@ sc_result sc_fs_storage_write_content(sc_addr addr, const sc_check_sum *check_su
         //g_message("Content data file '%s' already exist", data_path);
         sc_fs_storage_add_content_addr(addr, check_sum);
         free(path);
-        return SC_OK; // do nothing, file saved
+        return SC_RESULT_OK; // do nothing, file saved
     }
 
     // file doesn't exist, so we need to save it
@@ -200,7 +202,7 @@ sc_result sc_fs_storage_write_content(sc_addr addr, const sc_check_sum *check_su
     {
         g_message("Eorror while creating '%s' directory", abs_path);
         free(path);
-        return SC_ERROR_IO;
+        return SC_RESULT_ERROR_IO;
     }
 
     // write content into file
@@ -212,22 +214,22 @@ sc_result sc_fs_storage_write_content(sc_addr addr, const sc_check_sum *check_su
 
         while (sc_stream_eof(stream) == SC_FALSE)
         {
-            if (sc_stream_read_data(stream, buffer, 1024, &data_read) == SC_ERROR)
+            if (sc_stream_read_data(stream, buffer, 1024, &data_read) == SC_RESULT_ERROR)
             {
                 sc_stream_free(out_stream);
-                return SC_ERROR;
+                return SC_RESULT_ERROR;
             }
 
-            if (sc_stream_write_data(out_stream, buffer, data_read, &data_write) == SC_ERROR)
+            if (sc_stream_write_data(out_stream, buffer, data_read, &data_write) == SC_RESULT_ERROR)
             {
                 sc_stream_free(out_stream);
-                return SC_ERROR;
+                return SC_RESULT_ERROR;
             }
 
             if (data_read != data_write)
             {
                 sc_stream_free(out_stream);
-                return SC_ERROR;
+                return SC_RESULT_ERROR;
             }
         }
         sc_stream_free(out_stream);
@@ -235,7 +237,7 @@ sc_result sc_fs_storage_write_content(sc_addr addr, const sc_check_sum *check_su
         return sc_fs_storage_add_content_addr(addr, check_sum);
     }
 
-    return SC_ERROR_IO;
+    return SC_RESULT_ERROR_IO;
 }
 
 sc_result sc_fs_storage_add_content_addr(sc_addr addr, const sc_check_sum *check_sum)
@@ -260,7 +262,7 @@ sc_result sc_fs_storage_add_content_addr(sc_addr addr, const sc_check_sum *check
             if (content != 0)
                 free(content);
             free(path);
-            return SC_ERROR_IO;
+            return SC_RESULT_ERROR_IO;
         }
     }
 
@@ -293,13 +295,13 @@ sc_result sc_fs_storage_add_content_addr(sc_addr addr, const sc_check_sum *check
         g_free(content);
         free(path);
 
-        return SC_OK;
+        return SC_RESULT_OK;
     }
 
     g_free(content);
     free(path);
 
-    return SC_ERROR;
+    return SC_RESULT_ERROR;
 }
 
 sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, sc_addr **result, sc_uint32 *result_count)
@@ -308,7 +310,7 @@ sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, s
     sc_uint8 *path = sc_fs_storage_make_checksum_path(check_sum);
     gchar abs_path[MAX_PATH_LENGTH];
     gchar addr_path[MAX_PATH_LENGTH];
-    gchar *content, *content2 = 0;
+    gchar *content = 0, *content2 = 0;
     gsize content_len = 0;
 
     // make absolute path to content directory
@@ -318,6 +320,8 @@ sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, s
     // must be a null pointer
     g_assert(*result == 0);
 
+    *result_count = 0;
+
     // try to load existing file
     if (g_file_test(addr_path, G_FILE_TEST_EXISTS))
     {
@@ -326,7 +330,7 @@ sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, s
             if (content != 0)
                 free(content);
             free(path);
-            return SC_ERROR_IO;
+            return SC_RESULT_ERROR_IO;
         }
 
     }
@@ -350,7 +354,29 @@ sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, s
         g_free(content);
     free(path);
 
-    return SC_OK;
+    return SC_RESULT_OK;
+}
+
+sc_result sc_fs_storage_get_checksum_content(const sc_check_sum *check_sum, sc_stream **stream)
+{
+    sc_uint8 *path = sc_fs_storage_make_checksum_path(check_sum);
+    gchar abs_path[MAX_PATH_LENGTH];
+    gchar data_path[MAX_PATH_LENGTH];
+
+    // make absolute path to content directory
+    g_snprintf(abs_path, MAX_PATH_LENGTH, "%s/%s", contents_path, path);
+    g_snprintf(data_path, MAX_PATH_LENGTH, "%sdata", abs_path);
+
+    // check if specified path exist
+    if (g_file_test(data_path, G_FILE_TEST_EXISTS))
+    {
+        *stream = sc_stream_file_new(data_path, SC_STREAM_READ);
+        g_assert(*stream != nullptr);
+        free(path);
+        return SC_RESULT_OK; // do nothing, file saved
+    }
+
+    return SC_RESULT_ERROR;
 }
 
 sc_uint8* sc_fs_storage_make_checksum_path(const sc_check_sum *check_sum)
