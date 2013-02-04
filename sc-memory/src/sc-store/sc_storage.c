@@ -207,7 +207,8 @@ sc_element* sc_storage_get_element(sc_addr addr, sc_bool force_load)
     {
         if (force_load)
         {
-            //! TODO: make force load
+          segments[addr.seg] = (gpointer) sc_fs_storage_load_segment(addr.seg);
+          return sc_storage_get_element(addr, SC_FALSE);
         }else
             return (sc_element*)0;
     }else

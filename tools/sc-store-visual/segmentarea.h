@@ -17,6 +17,8 @@ class SegmentArea : public QWidget {
   private:
     quint32 mSegment;
     QVector<sc_element_ex *> mSegmentElements;
+    quint32 dw;
+    quint32 dh;
 
   signals:
     

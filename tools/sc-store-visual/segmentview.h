@@ -9,8 +9,10 @@
 #include <QMouseEvent>
 
 // Number of segment items in one row
-#define SEGMENT_ITEMS_IN_ROW    64
-#define SEGMENT_ITEMS_OFFSET    2
+#define SEGMENT_ITEMS_IN_ROW     64
+#define SEGMENT_ITEMS_OFFSET     5
+#define SEGMENT_GRID_OFFSET_PXX  60
+#define SEGMENT_GRID_OFFSET_PXY  5
 
 class SegmentItem;
 

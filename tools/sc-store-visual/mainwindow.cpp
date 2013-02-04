@@ -68,7 +68,7 @@ void MainWindow::createMainWidgets() {
 
   QHBoxLayout *mainLayout = new QHBoxLayout();
   mainLayout->addWidget(mSegmentsList, 1);
-  mainLayout->addWidget(scroll, 6);
+  mainLayout->addWidget(scroll, 10);
   mainLayout->addLayout(rightLayout, 2);
 
   central->setLayout(mainLayout);
