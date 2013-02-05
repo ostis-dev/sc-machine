@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -47,7 +47,15 @@ gint seg_queue_heap = -1;
 sc_uint storage_time_stamp = 1;
 sc_bool is_initialized = SC_FALSE;
 
-GStaticMutex seg_queue_mutex = G_STATIC_MUTEX_INIT;
+#if SC_INTERNAL_THREADS_SUPPORT
+    GStaticMutex seg_queue_mutex = G_STATIC_MUTEX_INIT;
+    #define LOCK_SEG_QUEUE g_static_mutex_lock(&seg_queue_mutex);
+    #define UNLOCK_SEG_QUEUE g_static_mutex_unlock(&seg_queue_mutex);
+#else
+    #define LOCK_SEG_QUEUE
+    #define UNLOCK_SEG_QUEUE
+#endif
+
 
 // ----------------------------------- SEGMENTS QUEUE --------------------------
 sc_bool _sc_storage_get_segment_from_queue(sc_addr_seg *seg)
@@ -55,7 +63,7 @@ sc_bool _sc_storage_get_segment_from_queue(sc_addr_seg *seg)
     sc_bool res = SC_FALSE;
     sc_segment *segment = 0;
 
-    g_static_mutex_lock(&seg_queue_mutex);
+    LOCK_SEG_QUEUE;
 
     if (seg_queue_heap > -1)
     {
@@ -63,24 +71,24 @@ sc_bool _sc_storage_get_segment_from_queue(sc_addr_seg *seg)
         segment = sc_storage_get_segment(*seg, SC_TRUE);
         g_assert( segment != 0 );
 
-        if (sc_segment_have_empty_slot(segment) == SC_TRUE)
+        if (sc_segment_has_empty_slot(segment) == SC_TRUE)
             res = SC_TRUE;
         else
             seg_queue_heap--;
     }
 
-    g_static_mutex_unlock(&seg_queue_mutex);
+    UNLOCK_SEG_QUEUE;
 
     return res;
 }
 
 void _sc_storage_append_segment_to_queue(sc_addr_seg seg)
 {
-    g_static_mutex_lock( &seg_queue_mutex );
+    LOCK_SEG_QUEUE;
     if (seg_queue_heap < (SEGS_QUEUE_SIZE - 1))
         seg_queue[++seg_queue_heap] = seg;
 
-    g_static_mutex_unlock( &seg_queue_mutex );
+    UNLOCK_SEG_QUEUE;
 }
 
 void _sc_storage_update_segment_queue_impl(gpointer data,
@@ -252,6 +260,10 @@ sc_element* sc_storage_append_el_into_segments(sc_element *element, sc_addr *add
         segment = sc_storage_get_segment(addr->seg, SC_TRUE);
         return sc_segment_append_element(segment, element, &addr->offset);
     }
+
+    //! @todo maximum segments reached
+    if (segments_num >= sc_config_get_max_loaded_segments())
+        return nullptr;
 
     // if element still not added, then create new segment and append element into it
     segment = sc_segment_new(segments_num);
@@ -436,7 +448,6 @@ sc_addr sc_storage_arc_new(sc_type type,
 
 #endif
 
-
     // set our arc as first output/input at begin/end elements
     beg_el->first_out_arc = addr;
     end_el->first_in_arc = addr;
@@ -500,7 +511,10 @@ sc_result sc_storage_set_link_content(sc_addr addr, const sc_stream *stream)
         memcpy(el->content.data, check_sum.data, check_sum.len);
         el->content.len = check_sum.len;
 
+        g_assert(check_sum.len > 0);
+
         sc_event_emit(addr, SC_EVENT_CHANGE_LINK_CONTENT, addr);
+        result = SC_RESULT_OK;
     }
 
     g_assert(result == SC_RESULT_OK);
@@ -538,15 +552,15 @@ sc_result sc_storage_find_links_with_content(const sc_stream *stream, sc_addr **
 }
 
 
-void sc_storage_get_elements_stat(sc_elements_stat *stat)
+sc_result sc_storage_get_elements_stat(sc_stat *stat)
 {
     sc_uint s_idx, e_idx;
     sc_segment *segment;
     sc_type type;
     sc_uint32 delete_stamp;
-    g_assert( stat != (sc_elements_stat*)0 );
+    g_assert( stat != (sc_stat*)0 );
 
-    memset(stat, 0, sizeof(sc_elements_stat));
+    memset(stat, 0, sizeof(sc_stat));
 
     //! TODO: add loading of segment
 
@@ -560,21 +574,35 @@ void sc_storage_get_elements_stat(sc_elements_stat *stat)
             type = segment->elements[e_idx].type;
             delete_stamp = segment->elements[e_idx].delete_time_stamp;
             if (type == 0)
+            {
                 stat->empty_count++;
+            }
             else
+            {
                 if (type & sc_type_node)
                 {
                     stat->node_count++;
-                    if (delete_stamp > 0)
-                        stat->node_deleted++;
+                    if (delete_stamp == 0)
+                        stat->node_live_count++;
                 }
                 else
+                {
                     if (type & sc_type_arc_mask)
                     {
                         stat->arc_count++;
-                        if (delete_stamp > 0)
-                            stat->arc_deleted++;
+                        if (delete_stamp == 0)
+                            stat->arc_live_count++;
+                    }else
+                    {
+                        if (type & sc_type_link)
+                        {
+                            stat->link_count++;
+                            if (delete_stamp == 0)
+                                stat->link_live_count++;
+                        }
                     }
+                }
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -25,18 +25,22 @@ along with OSTIS. If not, see <http://www.gnu.org/licenses/>.
 
 #include "sc_memory.h"
 
-extern sc_addr search_keynode_question_all_output_const_pos_arc;
-extern sc_addr search_keynode_question_all_input_const_pos_arc;
-extern sc_addr search_keynode_question_all_output_const_pos_arc_with_rel;
-extern sc_addr search_keynode_question_all_input_const_pos_arc_with_rel;
-extern sc_addr search_keynode_question_full_semantic_neighborhood;
-extern sc_addr search_keynode_question_decomposition;
+extern sc_addr keynode_question_all_output_const_pos_arc;
+extern sc_addr keynode_question_all_input_const_pos_arc;
+extern sc_addr keynode_question_all_output_const_pos_arc_with_rel;
+extern sc_addr keynode_question_all_input_const_pos_arc_with_rel;
+extern sc_addr keynode_question_full_semantic_neighborhood;
+extern sc_addr keynode_question_decomposition;
+extern sc_addr keynode_question_all_identifiers;
 
-extern sc_addr search_keynode_nrel_answer;
-extern sc_addr search_keynode_nrel_decomposition;
-extern sc_addr search_keynode_question_finished;
-extern sc_addr search_keynode_question_initiated;
-extern sc_addr search_keynode_quasybinary_relation;
+extern sc_addr keynode_nrel_answer;
+extern sc_addr keynode_nrel_decomposition;
+extern sc_addr keynode_question_finished;
+extern sc_addr keynode_question_initiated;
+extern sc_addr keynode_quasybinary_relation;
+extern sc_addr keynode_hypermedia_nrel_identification;
+extern sc_addr keynode_set_nrel_inclusion;
+extern sc_addr keynode_system_element;
 
 //! Initialie keynodes that used by search module
 sc_result search_keynodes_initialize();

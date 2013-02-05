@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -30,7 +30,6 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 
 uiSc2SCgJsonTranslator::uiSc2SCgJsonTranslator()
 {
-
 }
 
 uiSc2SCgJsonTranslator::~uiSc2SCgJsonTranslator()
@@ -118,7 +117,7 @@ sc_result uiSc2SCgJsonTranslator::ui_translate_sc2scg_json(sc_event *event, sc_a
     if (ui_translate_command_resolve_arguments(cmd_addr, &format_addr, &input_addr) != SC_RESULT_OK)
         return SC_RESULT_ERROR;
 
-    if (format_addr == ui_keynode_format_scg_json)
+    if (format_addr == keynode_format_scg_json)
     {
         uiSc2SCgJsonTranslator translator;
         translator.translate(input_addr, format_addr);

@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -22,26 +22,48 @@ along with OSTIS. If not, see <http://www.gnu.org/licenses/>.
 
 #include "search_utils.h"
 #include "search_keynodes.h"
+#include "search_defines.h"
 
 #include <sc_helper.h>
 #include <sc_memory_headers.h>
+
+sc_addr create_answer_node()
+{
+    sc_addr res = sc_memory_node_new(sc_type_const);
+    SYSTEM_ELEMENT(res);
+    return res;
+}
 
 void connect_answer_to_question(sc_addr question, sc_addr answer)
 {
     sc_addr arc;
 
     arc = sc_memory_arc_new(sc_type_arc_common | sc_type_const, question, answer);
-    sc_memory_arc_new(sc_type_arc_pos_const_perm, search_keynode_nrel_answer, arc);
+    SYSTEM_ELEMENT(arc);
+    arc = sc_memory_arc_new(sc_type_arc_pos_const_perm, keynode_nrel_answer, arc);
+    SYSTEM_ELEMENT(arc);
+}
+
+void appendIntoAnswer(sc_addr answer, sc_addr el)
+{
+    sc_addr arc;
+    if (sc_helper_check_arc(answer, el, sc_type_arc_pos_const_perm) == SC_TRUE)
+        return;
+
+    arc = sc_memory_arc_new(sc_type_arc_pos_const_perm, answer, el);
+    SYSTEM_ELEMENT(arc);
 }
 
 void finish_question(sc_addr question)
 {
     sc_iterator3 *it = nullptr;
+    sc_addr arc;
 
-    it = sc_iterator3_f_a_f_new(search_keynode_question_initiated, sc_type_arc_pos_const_perm, question);
+    it = sc_iterator3_f_a_f_new(keynode_question_initiated, sc_type_arc_pos_const_perm, question);
     while (sc_iterator3_next(it))
         sc_memory_element_free(sc_iterator3_value(it, 1));
     sc_iterator3_free(it);
 
-    sc_memory_arc_new(sc_type_arc_pos_const_perm, search_keynode_question_finished, question);
+    arc = sc_memory_arc_new(sc_type_arc_pos_const_perm, keynode_question_finished, question);
+    SYSTEM_ELEMENT(arc);
 }

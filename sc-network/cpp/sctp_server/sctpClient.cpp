@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "sctpClient.h"
 #include "sctpCommand.h"
+#include "sctpStatistic.h"
 
 #include <QTcpSocket>
 #include <QHostAddress>
@@ -50,6 +51,9 @@ void sctpClient::setSocketDescriptor(int socketDescriptor)
     mSocket->setSocketDescriptor(socketDescriptor);
 
     qDebug() << "Connected client from address: " << mSocket->peerAddress().toString();
+
+    // collect statistics information about clients
+    sctpStatistic::getInstance()->clientConnected();
 }
 
 void sctpClient::connected()
@@ -69,7 +73,10 @@ void sctpClient::readyRead()
         if (errCode != SCTP_ERROR_NO)
         {
             qDebug() << "Error: " << errCode << "; while process request from clien " << mSocket->peerAddress().toString();
-//            mSocket->close();
+            sctpStatistic::getInstance()->commandProcessed(true);
+        }else
+        {
+            sctpStatistic::getInstance()->commandProcessed(false);
         }
 
         mSocket->flush();

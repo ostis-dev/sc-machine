@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -46,7 +46,7 @@ void sc_config_initialize(const sc_char *file_path)
     }else
     {
         // setup default values
-        config_max_loaded_segments = 10;
+        config_max_loaded_segments = G_MAXUINT16;
     }
 
     g_key_file_free(key_file);

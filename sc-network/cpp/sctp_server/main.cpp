@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
         config = argv[1];
 
     sctpServer server;
-    server.start(config);
+    if (!server.start(config))
+        exit(0);
 
     QObject::connect(&a, SIGNAL(aboutToQuit()), &server, SLOT(stop()));
     

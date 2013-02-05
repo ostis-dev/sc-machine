@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -60,14 +60,19 @@ void uiSc2ScsTranslator::runImpl()
     //! TODO logging sc-element, that can't be translated
 
     // iterate all arcs and translate them
-    tScAddrToScTypeMap::iterator it, itEnd = mArcs.end();
+    tScAddrToScTypeMap::iterator it, itEnd = mObjects.end();
 
     mOutputData = "[";
+    bool first = true;
 
-    for (it = mArcs.begin(); it != itEnd; ++it)
+    for (it = mObjects.begin(); it != itEnd; ++it)
     {
         const sc_addr &arc_addr = it->first;
         sc_type arc_type = it->second;
+
+        // skip non arc objects
+        if (!(arc_type & sc_type_arc_mask))
+            continue;
 
         sc_addr arc_beg, arc_end;
         // get begin and end arc elements
@@ -83,15 +88,37 @@ void uiSc2ScsTranslator::runImpl()
         if (isNeedToTranslate(arc_end) == false)
             continue; //! TODO logging
 
+        sc_type beg_type, end_type;
+        tScAddrToScTypeMap::iterator itTmp = mObjects.find(arc_beg);
+        if (itTmp != mObjects.end())
+            beg_type = itTmp->second;
+        else
+            sc_memory_get_element_type(arc_beg, &beg_type);
+        itTmp = mObjects.find(arc_end);
+        if (itTmp != mObjects.end())
+            end_type = itTmp->second;
+        else
+            sc_memory_get_element_type(arc_end, &end_type);
+
         // determine arc type
         String arc_connector = "<>";
         tScTypeToSCsConnectorMap::const_iterator itCon = mTypeToConnector.find(arc_type);
         if (itCon != mTypeToConnector.end())
             arc_connector = itCon->second;
 
-        if (it != mArcs.begin())
+
+        if (!first)
             mOutputData += ",";
-        mOutputData += "[\"" + buildId(arc_beg) + "\", \"" + arc_connector + "\", \"" + buildId(arc_end) + "\"]";
+        else
+            first = false;
+
+        StringStream s1, s2;
+        s1 << beg_type;
+        s2 << end_type;
+        String beg_str = "{ \"addr\": \"" + buildId(arc_beg) +"\", \"type\":" + s1.str() + "}";
+        String end_str = "{ \"addr\": \"" + buildId(arc_end) +"\", \"type\":" + s2.str() + "}";
+
+        mOutputData += "[" + beg_str + ", \"" + arc_connector + "\"," + end_str + "]";
     }
 
     mOutputData += "]";
@@ -123,7 +150,7 @@ sc_result uiSc2ScsTranslator::ui_translate_sc2scs(sc_event *event, sc_addr arg)
     if (ui_translate_command_resolve_arguments(cmd_addr, &format_addr, &input_addr) != SC_RESULT_OK)
         return SC_RESULT_ERROR;
 
-    if (format_addr == ui_keynode_format_scs_json)
+    if (format_addr == keynode_format_scs_json)
     {
         uiSc2ScsTranslator translator;
         translator.translate(input_addr, format_addr);

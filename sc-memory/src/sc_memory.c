@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -187,6 +187,15 @@ sc_result sc_memory_find_links_with_content(const sc_stream *stream, sc_addr **r
     sc_result res;
     LOCK;
     res = sc_storage_find_links_with_content(stream, result, result_count);
+    UNLOCK;
+    return res;
+}
+
+sc_result sc_memory_stat(sc_stat *stat)
+{
+    sc_result res;
+    LOCK;
+    res = sc_storage_get_elements_stat(stat);
     UNLOCK;
     return res;
 }

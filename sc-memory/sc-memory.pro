@@ -60,3 +60,4 @@ unix {
     PKGCONFIG += glib-2.0
     PKGCONFIG += gmodule-2.0
 }
+

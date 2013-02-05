@@ -18,13 +18,15 @@ TEMPLATE = app
 SOURCES += main.cpp \
     sctpClient.cpp \
     sctpServer.cpp  \
-    sctpCommand.cpp
+    sctpCommand.cpp \
+    sctpStatistic.cpp
 
 HEADERS += \
     sctpClient.h \
     sctpServer.h \
     sctpCommand.h \
-    sctpTypes.h
+    sctpTypes.h \
+    sctpStatistic.h
 
 CONFIG (debug, debug|release) {
     DESTDIR = ../../../bin
@@ -35,8 +37,6 @@ CONFIG (debug, debug|release) {
 INCLUDEPATH += ../../../sc-memory/src
 
 unix {
-
-    POST_TARGETDEPS += $$DESTDIR/libsc_memory.so
     LIBS += $$DESTDIR/libsc_memory.so
 }
 

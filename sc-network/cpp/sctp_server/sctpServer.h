@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include <QList>
 
 class sctpClient;
+class sctpStatistic;
 
 class sctpServer : public QTcpServer
 {
@@ -36,7 +37,7 @@ public:
     virtual ~sctpServer();
 
     //! Starts server
-    void start(const QString &config);
+    bool start(const QString &config);
 
 protected:
     //! Parse configuration file
@@ -47,8 +48,6 @@ protected:
     void incomingConnection(int socketDescriptor);
 
 private:
-    //! List of connected clients
-    QList<sctpClient*> mClientsList;
     //! Port number
     quint16 mPort;
     //! Path to repository
@@ -56,8 +55,14 @@ private:
     //! Path to extensions directory
     QString mExtPath;
 
+    QString mStatPath;
+    quint32 mStatUpdatePeriod;
+    sctpStatistic *mStatistic;
+
+
 signals:
-    
+
+
 public slots:
     void stop();
 
