@@ -1,10 +1,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "definition.h"
+#include "ui_mainwindow.h"
+#include "segmentarea.h"
 
 #include <QMainWindow>
 #include <QTreeWidget>
+#include <QHBoxLayout>
+#include <QListWidget>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QLabel>
+#include <QScrollArea>
+
 
 class QListWidget;
 class QLabel;
@@ -41,10 +49,7 @@ class MainWindow : public QMainWindow {
 
     Ui::MainWindow *ui;
 
-    //! List of segments
     QListWidget *mSegmentsList;
-//    ! Widget that visualize segment
-//    SegmentView *mSegmentView;
     SegmentArea *mSegmentArea;
 
     QLabel *mLabelNodeCount;

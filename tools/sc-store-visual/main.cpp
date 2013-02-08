@@ -1,7 +1,7 @@
 #include <QtGui/QApplication>
 #include <QLayout>
 
-#include "definition.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
