@@ -8,9 +8,10 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QScrollArea>
+#include <QScrollBar>
 
 #define SEGMENT_ITEMS_IN_ROW     64
-#define SEGMENT_ITEMS_OFFSET     5
+#define SEGMENT_ITEMS_OFFSET     4
 #define SEGMENT_GRID_OFFSET_PXX  60
 #define SEGMENT_GRID_OFFSET_PXY  5
 
@@ -28,6 +29,7 @@ class SegmentArea : public QWidget {
     quint32 mSegment;
     QVector<sc_element_ex *> mSegmentElements;
     QTreeWidget *mSegmentInfo;
+    QScrollArea *mScrollArea;
     quint32 dw;
     quint32 dh;
     quint32 mCurrentItem;
