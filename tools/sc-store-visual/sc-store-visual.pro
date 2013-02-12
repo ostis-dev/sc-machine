@@ -12,20 +12,20 @@ DESTDIR = ../../bin
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    segmentview.cpp \
-    segmentscene.cpp \
-    segmentitem.cpp
+    segmentarea.cpp
 
 HEADERS  += mainwindow.h \
-    segmentview.h \
-    segmentscene.h \
-    segmentitem.h
+    definition.h \
+    segmentarea.h
 
 FORMS    += mainwindow.ui
 
 INCLUDEPATH += ../../sc-memory/src
 unix {
-    LIBS += $$quote(-L$$DESTDIR) -lsc_memory
+  CONFIG += link_pkgconfig
+  PKGCONFIG += glib-2.0
+  PKGCONFIG += gmodule-2.0
+  LIBS += $$quote(-L$$DESTDIR) -lsc_memory
 }
 
 
