@@ -49,6 +49,11 @@ struct sStatItem
     {
         return mTime < other.mTime;
     }
+
+    static quint32 realSize()
+    {
+        return sizeof(quint64) * 11 + sizeof(mIsInitStat);
+    }
 };
 
 typedef QVector<sStatItem> tStatItemVector;
@@ -69,7 +74,7 @@ struct sStat
     ~sStat()
     {
         if (mItems)
-            delete mItems;
+            delete []mItems;
     }
 };
 

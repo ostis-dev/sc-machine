@@ -26,6 +26,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QSettings>
 #include <QDebug>
+#include <QThreadPool>
 
 extern "C"
 {
@@ -39,6 +40,7 @@ sctpServer::sctpServer(QObject *parent)
   : QTcpServer(parent)
   , mPort(0)
   , mStatistic(0)
+  , mThreadPool(0)
 {
 }
 
@@ -46,6 +48,9 @@ sctpServer::~sctpServer()
 {
     if (mStatistic)
         delete mStatistic;
+
+    if (mThreadPool)
+        delete mThreadPool;
 }
 
 bool sctpServer::start(const QString &config)
@@ -56,12 +61,6 @@ bool sctpServer::start(const QString &config)
     {
         qCritical() << QObject::tr("Unable to start the server: %1").arg(errorString());
         return false;
-    }
-
-    if (mStatUpdatePeriod > 0)
-    {
-        mStatistic = new sctpStatistic(this);
-        mStatistic->initialize(mStatPath, mStatUpdatePeriod);
     }
 
     QString ipAddress;
@@ -90,6 +89,14 @@ bool sctpServer::start(const QString &config)
         return false;
     if (sc_memory_initialize_ext(mExtPath.toStdString().c_str()) != SC_TRUE)
         return false;
+
+    if (mStatUpdatePeriod > 0)
+    {
+        mStatistic = new sctpStatistic(this);
+        mStatistic->initialize(mStatPath, mStatUpdatePeriod);
+    }
+
+    mThreadPool = new QThreadPool(this);
 
     return true;
 }
@@ -133,9 +140,9 @@ void sctpServer::parseConfig(const QString &config_path)
 
 void sctpServer::incomingConnection(int socketDescriptor)
 {
-    // store client in clients list
-    sctpClient *client = new sctpClient(this);
-    client->setSocketDescriptor(socketDescriptor);
+    sctpClient *client = new sctpClient(socketDescriptor);
+    client->setAutoDelete(true);
+    mThreadPool->start(client);
 }
 
 void sctpServer::stop()

@@ -481,6 +481,8 @@ sctpErrorCode sctpCommand::processIterateElements(quint32 cmdFlags, quint32 cmdI
         if (results_count > 0)
             outDevice->write((const char*)results.constData(), results.size());
 
+        sc_iterator3_free(it);
+
     }else
     {
         // 5-elements iterators
@@ -571,6 +573,8 @@ sctpErrorCode sctpCommand::processIterateElements(quint32 cmdFlags, quint32 cmdI
         outDevice->write((const char*)&results_count, sizeof(results_count));
         if (results_count > 0)
             outDevice->write((const char*)results.constData(), results.size());
+
+        sc_iterator5_free(it);
     }
 
     return SCTP_ERROR_NO;
@@ -622,12 +626,12 @@ sctpErrorCode sctpCommand::processStatistics(quint32 cmdFlags, quint32 cmdId, QD
     tStatItemVector stat;
     sctpStatistic::getInstance()->getStatisticsInTimeRange(begin_time, end_time, stat);
 
-    writeResultHeader(SCTP_CMD_STATISTICS, cmdId, SCTP_RESULT_OK, sizeof(quint32) + sizeof(sStatItem) * stat.size(), outDevice);
+    writeResultHeader(SCTP_CMD_STATISTICS, cmdId, SCTP_RESULT_OK, sizeof(quint32) + sStatItem::realSize() * stat.size(), outDevice);
     // write result
     quint32 res_count = stat.size();
     outDevice->write((const char*)&res_count, sizeof(res_count));
     for (quint32 idx = 0; idx < res_count; ++idx)
-        outDevice->write((const char*)&(stat[idx]), sizeof(sStatItem));
+        outDevice->write((const char*)&(stat[idx]), sStatItem::realSize());
 
     return SCTP_ERROR_NO;
 }
