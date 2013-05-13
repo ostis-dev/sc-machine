@@ -5,8 +5,9 @@ SegmentArea::SegmentArea(QTreeWidget *tree, QWidget *parent) :
     mSegment(-1),
     mSegmentElements(0),
     mSegmentInfo(tree),
-    dw(12),
-    dh(12),
+    mScrollArea(dynamic_cast<QScrollArea *>(parent)),
+    dw(10),
+    dh(10),
     mCurrentItem(-1) {
 }
 
@@ -176,6 +177,8 @@ void SegmentArea::mousePressEvent(QMouseEvent *e) {
 }
 
 void SegmentArea::infoItemClicked(QTreeWidgetItem *item, int row) {
+  Q_UNUSED(row);
+
   QVariant data = item->data(1, Qt::UserRole);
   if (data.isNull()) return;
 
@@ -187,6 +190,6 @@ void SegmentArea::infoItemClicked(QTreeWidgetItem *item, int row) {
 
   QRect rect = buildRect(link->offset);
 
-  QScrollArea *area = dynamic_cast<QScrollArea *>(parent());
-  if (area != nullptr) area->scroll(rect.x(), rect.y());
+  mScrollArea->verticalScrollBar()->setValue(rect.y() - dh * 2);
+  mScrollArea->horizontalScrollBar()->setValue(rect.x() - dw * 2);
 }
