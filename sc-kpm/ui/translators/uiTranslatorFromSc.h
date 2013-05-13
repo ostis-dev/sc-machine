@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,9 @@ protected:
     //! Check if sc-element need to be translated
     bool isNeedToTranslate(const sc_addr &addr) const;
 
+    //! Build id from specified sc-addr
+    String buildId(const sc_addr &addr) const;
+
 protected:
     //! Sc-addr of input construction
     sc_addr mInputConstructionAddr;
@@ -57,9 +60,7 @@ protected:
     sc_addr mOutputFormatAddr;
 
     // Maps of elements to translate
-    tScAddrToScTypeMap mArcs;
-    tScAddrToScTypeMap mNodes;
-    tScAddrToScTypeMap mLinks;
+    tScAddrToScTypeMap mObjects;
 
     //! Output scs
     String mOutputData;

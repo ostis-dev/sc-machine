@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include "uiTranslators.h"
 #include "uiKeynodes.h"
 
-#include "translators/uiSc2ScsTranslator.h"
+#include "translators/uiSc2ScsJsonTranslator.h"
 #include "translators/uiSc2SCgJsonTranslator.h"
 #include "translators/uiSc2SCnJsonTranslator.h"
 
@@ -34,9 +34,9 @@ sc_event *ui_translator_sc2scn_json_event = (sc_event*)nullptr;
 
 void ui_initialize_translators()
 {
-    ui_translator_sc2scs_event = sc_event_new(ui_keynode_command_translate_from_sc, SC_EVENT_ADD_OUTPUT_ARC, 0, uiSc2ScsTranslator::ui_translate_sc2scs, 0);
-    ui_translator_sc2scg_json_event = sc_event_new(ui_keynode_command_translate_from_sc, SC_EVENT_ADD_OUTPUT_ARC, 0, uiSc2SCgJsonTranslator::ui_translate_sc2scg_json, 0);
-    ui_translator_sc2scn_json_event = sc_event_new(ui_keynode_command_translate_from_sc, SC_EVENT_ADD_OUTPUT_ARC, 0, uiSc2SCnJsonTranslator::ui_translate_sc2scn, 0);
+    ui_translator_sc2scs_event = sc_event_new(keynode_command_translate_from_sc, SC_EVENT_ADD_OUTPUT_ARC, 0, uiSc2ScsTranslator::ui_translate_sc2scs, 0);
+    ui_translator_sc2scg_json_event = sc_event_new(keynode_command_translate_from_sc, SC_EVENT_ADD_OUTPUT_ARC, 0, uiSc2SCgJsonTranslator::ui_translate_sc2scg_json, 0);
+    ui_translator_sc2scn_json_event = sc_event_new(keynode_command_translate_from_sc, SC_EVENT_ADD_OUTPUT_ARC, 0, uiSc2SCnJsonTranslator::ui_translate_sc2scn, 0);
 }
 
 void ui_shutdown_translators()
@@ -57,7 +57,7 @@ sc_result ui_translate_command_resolve_arguments(sc_addr cmd_addr, sc_addr *outp
                                     sc_type_arc_pos_const_perm,
                                     sc_type_node | sc_type_const,
                                     sc_type_arc_pos_const_perm,
-                                    ui_keynode_rrel_output_format);
+                                    keynode_rrel_output_format);
 
     while (sc_iterator5_next(it) == SC_TRUE)
     {
@@ -75,7 +75,7 @@ sc_result ui_translate_command_resolve_arguments(sc_addr cmd_addr, sc_addr *outp
                                     sc_type_arc_pos_const_perm,
                                     sc_type_node | sc_type_const,
                                     sc_type_arc_pos_const_perm,
-                                    ui_keynode_rrel_source_sc_construction);
+                                    keynode_rrel_source_sc_construction);
 
     while (sc_iterator5_next(it) == SC_TRUE)
     {
@@ -108,7 +108,7 @@ sc_bool ui_translate_resolve_system_identifier(sc_addr el, String &sys_idtf)
             sc_stream_get_length(idtf_stream, &idtf_length);
             while (sc_stream_eof(idtf_stream) == SC_FALSE)
             {
-                sc_stream_read_data(idtf_stream, buffer, idtf_length, &read_bytes);
+                sc_stream_read_data(idtf_stream, buffer, 32, &read_bytes);
                 sys_idtf.append(buffer, read_bytes);
             }
             sc_stream_free(idtf_stream);

@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -200,7 +200,7 @@ sc_result sc_fs_storage_write_content(sc_addr addr, const sc_check_sum *check_su
     // file doesn't exist, so we need to save it
     if (g_mkdir_with_parents(abs_path, SC_DIR_PERMISSIONS) < 0)
     {
-        g_message("Eorror while creating '%s' directory", abs_path);
+        g_message("Error while creating '%s' directory", abs_path);
         free(path);
         return SC_RESULT_ERROR_IO;
     }
@@ -387,6 +387,8 @@ sc_uint8* sc_fs_storage_make_checksum_path(const sc_check_sum *check_sum)
     sc_uint8 *result = malloc(sizeof(sc_uint8) * len);
     sc_uint idx = 0;
     sc_uint j = 0;
+
+    g_assert(check_sum->len == 32);
 
     g_assert(check_sum != 0);
     g_assert(check_sum->len != 0);

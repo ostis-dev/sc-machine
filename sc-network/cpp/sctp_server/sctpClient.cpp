@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2010 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,46 +22,53 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "sctpClient.h"
 #include "sctpCommand.h"
+#include "sctpStatistic.h"
 
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QDebug>
 
-sctpClient::sctpClient(QObject *parent)
-    : QObject(parent)
-    , mSocket(0)
+sctpClient::sctpClient(int socketDescriptor)
+    : mSocket(0)
+    , mSocketDescriptor(socketDescriptor)
+    , mCommand(0)
 {
-    mCommand = new sctpCommand(this);
 }
 
 sctpClient::~sctpClient()
 {
+}
+
+void sctpClient::run()
+{
+    mSocket = new QTcpSocket();
+    if (!mSocket->setSocketDescriptor(mSocketDescriptor))
+    {
+        qDebug() << "Can't process socket descriptor " << mSocketDescriptor;
+        delete mSocket;
+        return;
+    }
+
+    sctpStatistic::getInstance()->clientConnected();
+
+    mCommand = new sctpCommand();
+
+    while (mSocket->waitForReadyRead())
+    {
+        processCommands();
+    }
+    mSocket->waitForBytesWritten();
+    mSocket->waitForDisconnected();
+    mSocket->close();
+
+    delete mSocket;
+    mSocket = 0;
+
     delete mCommand;
+    mCommand = 0;
 }
 
-void sctpClient::setSocketDescriptor(int socketDescriptor)
-{
-    mSocket = new QTcpSocket(this);
-
-    connect(mSocket, SIGNAL(connected()), this, SLOT(connected()));
-    connect(mSocket, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    connect(mSocket, SIGNAL(readyRead()), this, SLOT(readyRead()));
-
-    mSocket->setSocketDescriptor(socketDescriptor);
-
-    qDebug() << "Connected client from address: " << mSocket->peerAddress().toString();
-}
-
-void sctpClient::connected()
-{
-}
-
-void sctpClient::disconnected()
-{
-    qDebug() << "Disconnected client with adress: " << mSocket->peerAddress().toString();
-}
-
-void sctpClient::readyRead()
+void sctpClient::processCommands()
 {
     while (mSocket->bytesAvailable() >= mCommand->cmdHeaderSize())
     {
@@ -69,7 +76,10 @@ void sctpClient::readyRead()
         if (errCode != SCTP_ERROR_NO)
         {
             qDebug() << "Error: " << errCode << "; while process request from clien " << mSocket->peerAddress().toString();
-//            mSocket->close();
+            sctpStatistic::getInstance()->commandProcessed(true);
+        }else
+        {
+            sctpStatistic::getInstance()->commandProcessed(false);
         }
 
         mSocket->flush();

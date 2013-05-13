@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -30,7 +30,6 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 
 uiSc2SCgJsonTranslator::uiSc2SCgJsonTranslator()
 {
-
 }
 
 uiSc2SCgJsonTranslator::~uiSc2SCgJsonTranslator()
@@ -41,10 +40,8 @@ uiSc2SCgJsonTranslator::~uiSc2SCgJsonTranslator()
 void uiSc2SCgJsonTranslator::runImpl()
 {
     bool first = true;
-    bool idtf_exist = false;
     sc_type el_type = 0;
     sc_addr addr;
-    String sys_idtf;
     tStringStringMap attrs;
 
     mOutputData = "[";
@@ -61,16 +58,12 @@ void uiSc2SCgJsonTranslator::runImpl()
 
         attrs.clear();
 
-        idtf_exist = ui_translate_resolve_system_identifier(addr, sys_idtf);
-
         attrs["id"] = buildId(addr);
-        if (idtf_exist)
-            attrs["identifier"] = sys_idtf;
+        StringStream ss;
+        ss << el_type;
+        attrs["el_type"] = ss.str();
         if (el_type & sc_type_node)
-        {
             attrs["type"] = "node";
-            attrs["el_type"] = "node/const/general_node";
-        }
 
         if (el_type & sc_type_arc_mask)
         {
@@ -85,7 +78,6 @@ void uiSc2SCgJsonTranslator::runImpl()
 
             attrs["begin"] = buildId(beg_addr);
             attrs["end"] = buildId(end_addr);
-            attrs["el_type"] = "arc/const/pos";
         }
 
         if (el_type & sc_type_link)
@@ -114,13 +106,6 @@ void uiSc2SCgJsonTranslator::runImpl()
     mOutputData += "]";
 }
 
-String uiSc2SCgJsonTranslator::buildId(const sc_addr &addr) const
-{
-    StringStream ss;
-    ss << addr.seg << "_" << addr.offset;
-    return ss.str();
-}
-
 // ------------------------------------------------------------------------------
 sc_result uiSc2SCgJsonTranslator::ui_translate_sc2scg_json(sc_event *event, sc_addr arg)
 {
@@ -132,7 +117,7 @@ sc_result uiSc2SCgJsonTranslator::ui_translate_sc2scg_json(sc_event *event, sc_a
     if (ui_translate_command_resolve_arguments(cmd_addr, &format_addr, &input_addr) != SC_RESULT_OK)
         return SC_RESULT_ERROR;
 
-    if (format_addr == ui_keynode_format_scg_json)
+    if (format_addr == keynode_format_scg_json)
     {
         uiSc2SCgJsonTranslator translator;
         translator.translate(input_addr, format_addr);

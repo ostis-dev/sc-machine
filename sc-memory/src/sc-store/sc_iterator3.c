@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -162,7 +162,7 @@ sc_bool _sc_iterator3_f_a_a_next(sc_iterator3 *it)
             (sc_iterator_compare_type(el_type, it->params[2].type))
            )
         {
-            // store founderesult
+            // store found result
             it->results[1] = arc_addr;
             it->results[2] = arc_element->arc.end;
 

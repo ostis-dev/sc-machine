@@ -5,4 +5,6 @@ DESTDIR = ./bin
 
 SUBDIRS = ui \
         questions \
-        utils
+        utils \
+        search \
+        garbage

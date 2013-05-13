@@ -3,7 +3,7 @@
 This source file is part of OSTIS (Open Semantic Technology for Intelligent Systems)
 For the latest info, see http://www.ostis.net
 
-Copyright (c) 2012 OSTIS
+Copyright (c) 2010-2013 OSTIS
 
 OSTIS is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -49,5 +49,6 @@ typedef std::map<String, String> tStringStringMap;
 // --- operators ---
 bool operator < (const sc_addr &addr1, const sc_addr &addr2);
 bool operator == (const sc_addr &addr1, const sc_addr &addr2);
+bool operator != (const sc_addr &addr1, const sc_addr &addr2);
 
 #endif
