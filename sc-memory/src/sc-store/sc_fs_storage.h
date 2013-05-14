@@ -27,6 +27,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include "sc_defines.h"
 #include "sc_stream.h"
 
+
 /*! Initialize file system storage in specified path
  *
  * @param path Path to store on file system.
