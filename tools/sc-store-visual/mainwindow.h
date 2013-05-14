@@ -1,22 +1,32 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "ui_mainwindow.h"
+#include "segmentarea.h"
+
 #include <QMainWindow>
+#include <QTreeWidget>
+#include <QHBoxLayout>
+#include <QListWidget>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QLabel>
+#include <QScrollArea>
+
 
 class QListWidget;
 class QLabel;
 class SegmentView;
+class SegmentArea;
 
-namespace Ui
-{
-    class MainWindow;
+namespace Ui {
+  class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+  Q_OBJECT
     
-public:
+  public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -26,28 +36,27 @@ public:
     //! Setup action slots
     void setupMenuActions();
 
-private:
+  private:
     void updateSegmentsList();
 
 
-protected slots:
+  protected slots:
     void openRepository();
 
     void segmentSelectionChanged(QString strId);
 
-private:
+  private:
 
     Ui::MainWindow *ui;
 
-    //! List of segments
     QListWidget *mSegmentsList;
-    //! Widget that visualize segment
-    SegmentView *mSegmentView;
+    SegmentArea *mSegmentArea;
 
     QLabel *mLabelNodeCount;
     QLabel *mLabelArcsCount;
-    QLabel *mLabelEmptyCount;
+    QLabel *mLabelOtherCount;
 
+    QTreeWidget *mSegmentInfo;
 };
 
 #endif // MAINWINDOW_H

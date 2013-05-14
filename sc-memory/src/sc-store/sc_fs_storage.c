@@ -40,6 +40,34 @@ gchar contents_path[MAX_PATH_LENGTH + 1];
 
 #define SC_DIR_PERMISSIONS -1
 
+gboolean _sc_file_read(const char *filename,
+                       gchar **content,
+                       gsize *length) {
+  GIOChannel* channel = g_io_channel_new_file(filename, "r", 0);
+  g_assert(channel != nullptr);
+
+  g_io_channel_set_encoding(channel, nullptr, 0);
+
+  g_assert( G_IO_STATUS_NORMAL == g_io_channel_read_to_end(channel, content, length, 0) );
+  g_assert( G_IO_STATUS_NORMAL == g_io_channel_shutdown(channel, TRUE, 0) );
+
+  return TRUE;
+}
+
+gboolean _sc_file_write(const gchar *filename,
+                        const gchar *content,
+                        gssize length) {
+  GIOChannel* channel = g_io_channel_new_file(filename, "w", 0);
+  g_assert(channel != nullptr);
+
+  g_io_channel_set_encoding(channel, nullptr, 0);
+
+  g_assert( G_IO_STATUS_NORMAL == g_io_channel_write_chars(channel, content, length, 0, 0) );
+  g_assert( G_IO_STATUS_NORMAL == g_io_channel_shutdown(channel, TRUE, 0) );
+
+  return TRUE;
+}
+
 sc_bool sc_fs_storage_initialize(const gchar *path)
 {
     g_message("Initialize sc-storage from path: %s\n", path);
@@ -83,7 +111,7 @@ sc_segment* sc_fs_storage_load_segment(sc_uint id)
     sc_uint length;
 
     _get_segment_path(segments_path, id, MAX_PATH_LENGTH, file_name);
-    g_assert( g_file_get_contents(file_name, (gchar**)(&segment), &length, 0) );
+    g_assert( _sc_file_read(file_name, (gchar**)(&segment), &length) );
     g_assert( length == sizeof(sc_segment) );
 
     return segment;
@@ -160,7 +188,7 @@ sc_bool sc_fs_storage_write_to_path(sc_segment **segments)
         if (segment == nullptr) continue; // skip null segments
 
         _get_segment_path(segments_path, idx, MAX_PATH_LENGTH, file_name);
-        g_file_set_contents(file_name, (gchar*)segment, sizeof(sc_segment), 0);
+        _sc_file_write(file_name, (gchar*) segment, sizeof(sc_segment));
     }
 
     _get_segment_path(segments_path, idx, MAX_PATH_LENGTH, file_name);
@@ -257,7 +285,7 @@ sc_result sc_fs_storage_add_content_addr(sc_addr addr, const sc_check_sum *check
     // try to load existing file
     if (g_file_test(addr_path, G_FILE_TEST_EXISTS))
     {
-        if (g_file_get_contents(addr_path, &content, &content_len, 0) == FALSE)
+        if (_sc_file_read(addr_path, &content, &content_len) == FALSE)
         {
             if (content != 0)
                 free(content);
@@ -290,7 +318,7 @@ sc_result sc_fs_storage_add_content_addr(sc_addr addr, const sc_check_sum *check
     }
 
     // write content to file
-    if (g_file_set_contents(addr_path, content, content_len, 0) == TRUE)
+    if (_sc_file_write(addr_path, content, content_len) == TRUE)
     {
         g_free(content);
         free(path);
@@ -325,7 +353,7 @@ sc_result sc_fs_storage_find_links_with_content(const sc_check_sum *check_sum, s
     // try to load existing file
     if (g_file_test(addr_path, G_FILE_TEST_EXISTS))
     {
-        if (g_file_get_contents(addr_path, &content, &content_len, 0) == FALSE)
+        if (_sc_file_read(addr_path, &content, &content_len) == FALSE)
         {
             if (content != 0)
                 free(content);
