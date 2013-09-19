@@ -27,6 +27,7 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include <QSettings>
 #include <QDebug>
 #include <QThreadPool>
+#include <iostream>
 
 extern "C"
 {
@@ -130,6 +131,7 @@ void sctpServer::parseConfig(const QString &config_path)
         qWarning() << "Statistics update period is very short, it would be take much processor time. Recomend to make it more long";
 
     mStatPath = settings.value("Stat/Path").toString();
+
     if (mStatPath.isEmpty() && mStatUpdatePeriod > 0)
     {
         qDebug() << "Path to store statistics is empty\n";
