@@ -1,0 +1,5 @@
+/bin/
+Makefile
+*.o
+*.so
+*.user*
