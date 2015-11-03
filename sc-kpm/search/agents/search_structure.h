@@ -24,4 +24,9 @@ sc_result agent_search_all_subclasses_in_quasybinary_relation(const sc_event *ev
  */
 sc_result agent_search_all_superclasses_in_quasybinary_relation(const sc_event *event, sc_addr arg);
 
+/*!
+ * Function, that implements sc-agent to search all atomic ui commands, which can be applied to given argument set
+ */
+sc_result agent_search_command_decomposition(const sc_event *event, sc_addr arg);
+
 #endif

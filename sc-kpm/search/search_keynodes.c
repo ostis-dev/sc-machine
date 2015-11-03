@@ -1,3 +1,4 @@
+
 /*
  * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
  * Distributed under the MIT License
@@ -27,6 +28,7 @@ sc_addr keynode_question_search_all_superclasses_in_quasybinary_relation;
 sc_addr keynode_question_search_all_subclasses_in_quasybinary_relation;
 sc_addr keynode_question_search_links_of_relation_connected_with_element;
 sc_addr keynode_question_search_full_pattern;
+sc_addr keynode_question_command_decomposition;
 
 sc_addr keynode_question;
 sc_addr keynode_question_initiated;
@@ -47,6 +49,17 @@ sc_addr keynode_nrel_main_idtf;
 sc_addr keynode_rrel_key_sc_element;
 sc_addr keynode_nrel_key_sc_element_base_order;
 sc_addr keynode_nrel_inclusion;
+sc_addr keynode_nrel_strict_inclusion;
+
+sc_addr keynode_nrel_argument_type;
+sc_addr keynode_nrel_first_argument_type;
+sc_addr keynode_nrel_second_argument_type;
+sc_addr keynode_ui_user_command_class_atom;
+sc_addr keynode_ui_main_menu;
+sc_addr keynode_nrel_ui_commands_decomposition;
+sc_addr keynode_ui_one_argument_command_class;
+sc_addr keynode_ui_two_argument_command_class;
+
 sc_addr keynode_system_element;
 sc_addr keynode_languages;
 
@@ -62,6 +75,8 @@ const char keynode_question_decomposition_str[] = "question_search_decomposition
 const char keynode_question_all_identifiers_str[] = "question_search_all_identifiers";
 const char keynode_question_all_identified_elements_str[] = "question_search_all_identified_elements";
 const char keynode_question_search_full_pattern_str[] = "question_full_pattern_search";
+
+const char keynode_question_command_decomposition_str[] = "question_search_command_decomposition";
 
 const char keynode_question_search_all_subclasses_in_quasybinary_relation_str[] = "question_search_all_subclasses_in_quasybinary_relation";
 const char keynode_question_search_all_superclasses_in_quasybinary_relation_str[] = "question_search_all_superclasses_in_quasybinary_relation";
@@ -81,10 +96,20 @@ const char keynode_order_relation_str[] = "order_relation";
 const char keynode_nonbinary_relation_str[] = "nonbinary_relation";
 const char keynode_typical_sc_neighborhood_str[] = "typical_sc_neighborhood";
 
+const char keynode_nrel_argument_type_str[] = "nrel_argument_type";
+const char keynode_nrel_first_argument_type_str[] = "nrel_first_argument_type";
+const char keynode_nrel_second_argument_type_str[] = "nrel_second_argument_type";
+const char keynode_ui_user_command_class_atom_str[] = "ui_user_command_class_atom";
+const char keynode_nrel_ui_commands_decomposition_str[] = "nrel_ui_commands_decomposition";
+const char keynode_ui_main_menu_str[] = "ui_main_menu";
+const char keynode_ui_one_argument_command_class_str[] = "ui_one_argument_command_class";
+const char keynode_ui_two_argument_command_class_str[] = "ui_two_argument_command_class";
+
 const char keynode_nrel_identification_str[] = "nrel_identification";
 const char keynode_nrel_translation_str[] = "nrel_sc_text_translation";
 const char keynode_nrel_main_idtf_str[] = "nrel_main_idtf";
 const char keynode_nrel_inclusion_str[] = "nrel_inclusion";
+const char keynode_nrel_strict_inclusion_str[] = "nrel_strict_inclusion";
 const char keynode_rrel_key_sc_element_str[] = "rrel_key_sc_element";
 const char keynode_nrel_key_sc_element_base_order_str[] = "nrel_key_sc_element_base_order";
 const char keynode_system_element_str[] = "system_element";
@@ -100,6 +125,7 @@ sc_result search_keynodes_initialize()
     RESOLVE_KEYNODE(s_default_ctx, keynode_question_all_input_const_pos_arc_with_rel);
     RESOLVE_KEYNODE(s_default_ctx, keynode_question_full_semantic_neighborhood);
     RESOLVE_KEYNODE(s_default_ctx, keynode_question_decomposition);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_question_command_decomposition);
     RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_answer);
     RESOLVE_KEYNODE(s_default_ctx, keynode_question_all_identifiers);
     RESOLVE_KEYNODE(s_default_ctx, keynode_question_all_identified_elements);
@@ -123,12 +149,22 @@ sc_result search_keynodes_initialize()
     RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_1);
     RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_2);
 
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_argument_type);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_first_argument_type);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_second_argument_type);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_ui_user_command_class_atom);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_ui_commands_decomposition);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_ui_main_menu);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_ui_one_argument_command_class);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_ui_two_argument_command_class);
+
     RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_identification);
     RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_translation);
     RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_main_idtf);
     RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_key_sc_element);
     RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_key_sc_element_base_order);
     RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_inclusion);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_strict_inclusion);
     RESOLVE_KEYNODE(s_default_ctx, keynode_system_element);
     RESOLVE_KEYNODE(s_default_ctx, keynode_languages);
 

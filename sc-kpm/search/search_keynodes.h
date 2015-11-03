@@ -21,6 +21,7 @@ extern sc_addr keynode_question_search_all_superclasses_in_quasybinary_relation;
 extern sc_addr keynode_question_search_all_subclasses_in_quasybinary_relation;
 extern sc_addr keynode_question_search_links_of_relation_connected_with_element;
 extern sc_addr keynode_question_search_full_pattern;
+extern sc_addr keynode_question_command_decomposition;
 
 extern sc_addr keynode_nrel_answer;
 extern sc_addr keynode_quasybinary_relation;
@@ -38,10 +39,20 @@ extern sc_addr keynode_nrel_identification;
 extern sc_addr keynode_nrel_translation;
 extern sc_addr keynode_nrel_main_idtf;
 extern sc_addr keynode_nrel_inclusion;
+extern sc_addr keynode_nrel_strict_inclusion;
 extern sc_addr keynode_rrel_key_sc_element;
 extern sc_addr keynode_nrel_key_sc_element_base_order;
 extern sc_addr keynode_system_element;
 extern sc_addr keynode_languages;
+
+extern sc_addr keynode_nrel_argument_type;
+extern sc_addr keynode_nrel_first_argument_type;
+extern sc_addr keynode_nrel_second_argument_type;
+extern sc_addr keynode_ui_user_command_class_atom;
+extern sc_addr keynode_nrel_ui_commands_decomposition;
+extern sc_addr keynode_ui_main_menu;
+extern sc_addr keynode_ui_one_argument_command_class;
+extern sc_addr keynode_ui_two_argument_command_class;
 
 extern sc_addr keynode_rrel_1;
 extern sc_addr keynode_rrel_2;
