@@ -94,7 +94,7 @@ const char keynode_taxonomy_relation_str[] = "taxonomy_relation";
 const char keynode_identification_relation_str[] = "identification_relation";
 const char keynode_order_relation_str[] = "order_relation";
 const char keynode_nonbinary_relation_str[] = "nonbinary_relation";
-const char keynode_typical_sc_neighborhood_str[] = "typical_sc_neighborhood";
+const char keynode_typical_sc_neighborhood_str[] = "typical_semantic_neighbourhood";
 
 const char keynode_nrel_argument_type_str[] = "nrel_argument_type";
 const char keynode_nrel_first_argument_type_str[] = "nrel_first_argument_type";
@@ -113,7 +113,7 @@ const char keynode_nrel_strict_inclusion_str[] = "nrel_strict_inclusion";
 const char keynode_rrel_key_sc_element_str[] = "rrel_key_sc_element";
 const char keynode_nrel_key_sc_element_base_order_str[] = "nrel_key_sc_element_base_order";
 const char keynode_system_element_str[] = "system_element";
-const char keynode_sc_neighborhood_str[] = "sc_neighborhood";
+const char keynode_sc_neighborhood_str[] = "semantic_neighbourhood";
 const char keynode_languages_str[] = "languages";
 
 sc_result search_keynodes_initialize()
