@@ -219,7 +219,7 @@ void search_typical_sc_neighborhood(sc_addr elem, sc_addr answer, sc_bool sys_of
                                          sc_type_arc_common | sc_type_const,
                                          sc_iterator3_value(it0, 0),
                                          sc_type_arc_pos_const_perm,
-                                         keynode_nrel_inclusion);
+                                         keynode_nrel_strict_inclusion);
         if (sc_iterator5_next(it5) == SC_TRUE)
         {
             if (sys_off == SC_TRUE && (IS_SYSTEM_ELEMENT(sc_iterator5_value(it5, 1)) || IS_SYSTEM_ELEMENT(sc_iterator5_value(it5, 3))))
