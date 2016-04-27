@@ -271,7 +271,7 @@ scp_result scp_keynodes_init()
     resolve_keynode(question_initiated.addr, "question_initiated");
     resolve_keynode(question_finished_successfully.addr, "question_finished_successfully");
     resolve_keynode(question_finished_unsuccessfully.addr, "question_finished_unsuccessfully");
-    resolve_keynode(useless_scp_process.addr, "useless_scp_process");
+    resolve_keynode(useless_scp_process.addr, "last_entity");
     resolve_keynode(scp_process.addr, "scp_process");
     resolve_keynode(nrel_scp_process.addr, "nrel_scp_process");
     resolve_keynode(nrel_authors.addr, "nrel_authors");
