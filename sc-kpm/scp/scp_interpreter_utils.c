@@ -57,9 +57,8 @@ scp_result resolve_operator_type(sc_memory_context *context, scp_operand *oper, 
     {
         //! TODO Remove temporary check
         if (SCP_RESULT_TRUE != ifVarAssign(context, type))
-        {
             continue;
-        }
+
         type->param_type = SCP_FIXED;
         if (SCP_RESULT_TRUE == searchElStr3(context, &scp_operator_atomic_type, &arc, type))
         {
