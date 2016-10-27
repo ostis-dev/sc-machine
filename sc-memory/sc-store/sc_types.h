@@ -123,6 +123,7 @@ typedef sc_uint16 sc_type;
 #define sc_type_node_material    (sc_type)(0x2000)
 
 #define sc_type_arc_pos_const_perm (sc_type)(sc_type_arc_access | sc_type_const | sc_type_arc_pos | sc_type_arc_perm)
+#define sc_type_arc_pos_var_perm (sc_type)(sc_type_arc_access | sc_type_var | sc_type_arc_pos | sc_type_arc_perm)
 
 // type mask
 #define sc_type_element_mask     (sc_type)(sc_type_node | sc_type_link | sc_type_edge_common | sc_type_arc_common | sc_type_arc_access)
@@ -196,7 +197,7 @@ enum _sc_event_type
     SC_EVENT_REMOVE_OUTPUT_ARC = 2,
     SC_EVENT_REMOVE_INPUT_ARC = 3,
     SC_EVENT_REMOVE_ELEMENT = 4,
-	SC_EVENT_CONTENT_CHANGED = 5
+    SC_EVENT_CONTENT_CHANGED = 5
 };
 
 // structure to store statistics info

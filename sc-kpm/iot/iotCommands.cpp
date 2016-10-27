@@ -35,7 +35,7 @@ namespace iot
 				// check if device doesn't already exists in enabled devices set and then append it
 				if (!ctx.helperCheckArc(Keynodes::device_enabled, addr, sc_type_arc_pos_const_perm))
 				{
-					ctx.createArc(sc_type_arc_pos_const_perm, Keynodes::device_enabled, addr);
+					ctx.createEdge(sc_type_arc_pos_const_perm, Keynodes::device_enabled, addr);
 				}
 			}
 			else
@@ -52,7 +52,7 @@ namespace iot
 	{
         ScMemoryContext ctx(sc_access_lvl_make_min, "handler_device_group_enable_command");
 
-        ScAddr commandInstance = ctx.getArcEnd(ScAddr(arg));
+        ScAddr commandInstance = ctx.getEdgeTarget(ScAddr(arg));
 		if (!commandInstance.isValid())
 			return SC_RESULT_ERROR;
 

@@ -26,6 +26,42 @@ struct ContextMutexLock
 	~ContextMutexLock() { g_mutex_unlock(&gContextMutex); }
 };
 
+bool gIsLogMuted = false;
+
+void _logPrintHandler(gchar const * log_domain, GLogLevelFlags log_level,
+	gchar const * message, gpointer user_data)
+{
+	if (gIsLogMuted)
+		return;
+
+	std::string stype;
+	switch (log_level)
+	{
+	case G_LOG_LEVEL_CRITICAL:
+		stype = "Critial";
+		break;
+
+	case G_LOG_LEVEL_ERROR:
+		stype = "Error";
+		break;
+
+	case G_LOG_LEVEL_WARNING:
+		stype = "Warning";
+		break;
+
+	case G_LOG_LEVEL_INFO:
+	case G_LOG_LEVEL_MESSAGE:
+		stype = "Info";
+		break;
+
+	case G_LOG_LEVEL_DEBUG:
+		stype = "Debug";
+		break;
+	};
+
+	std::cout << "[" << stype << "] " << message << std::endl;
+}
+
 unsigned int gContextGounter;
 
 // ------------------
@@ -36,6 +72,8 @@ ScMemory::tMemoryContextList ScMemory::msContexts;
 bool ScMemory::initialize(sc_memory_params const & params)
 {
     gContextGounter = 0;
+
+	g_log_set_default_handler(_logPrintHandler, nullptr);	
 
     msGlobalContext = sc_memory_initialize(&params);
     return msGlobalContext != null_ptr;
@@ -56,6 +94,18 @@ void ScMemory::shutdown(bool saveState /* = true */)
 
     sc_memory_shutdown(SC_BOOL(saveState));
     msGlobalContext = 0;
+
+	g_log_set_default_handler(g_log_default_handler, nullptr);
+}
+
+void ScMemory::logMute()
+{
+	gIsLogMuted = true;
+}
+
+void ScMemory::logUnmute()
+{
+	gIsLogMuted = false;
 }
 
 void ScMemory::registerContext(ScMemoryContext const * ctx)
@@ -159,6 +209,11 @@ ScAddr ScMemoryContext::createLink()
 
 ScAddr ScMemoryContext::createArc(sc_type type, ScAddr const & addrBeg, ScAddr const & addrEnd)
 {
+	return createEdge(type, addrBeg, addrEnd);
+}
+
+ScAddr ScMemoryContext::createEdge(sc_type type, ScAddr const & addrBeg, ScAddr const & addrEnd)
+{
     check_expr(isValid());
 	return ScAddr(sc_memory_arc_new(mContext, type, addrBeg.mRealAddr, addrEnd.mRealAddr));
 }
@@ -176,24 +231,48 @@ bool ScMemoryContext::setElementSubtype(ScAddr const & addr, sc_type subtype)
     return sc_memory_change_element_subtype(mContext, addr.mRealAddr, subtype) == SC_RESULT_OK;
 }
 
+ScAddr ScMemoryContext::getEdgeSource(ScAddr const & edgeAddr) const
+{
+	check_expr(isValid());
+	ScAddr addr;
+	if (sc_memory_get_arc_begin(mContext, edgeAddr.mRealAddr, &addr.mRealAddr) != SC_RESULT_OK)
+		addr.reset();
+
+	return addr;
+}
+
+ScAddr ScMemoryContext::getEdgeTarget(ScAddr const & edgeAddr) const
+{
+	check_expr(isValid());
+	ScAddr addr;
+	if (sc_memory_get_arc_end(mContext, edgeAddr.mRealAddr, &addr.mRealAddr) != SC_RESULT_OK)
+		addr.reset();
+
+	return addr;
+}
+
+bool ScMemoryContext::getEdgeInfo(ScAddr const & edgeAddr, ScAddr & outSourceAddr, ScAddr & outTargetAddr) const
+{
+	check_expr(isValid());
+	if (sc_memory_get_arc_info(mContext, *edgeAddr, &outSourceAddr.mRealAddr, &outTargetAddr.mRealAddr) != SC_RESULT_OK)
+	{
+		outSourceAddr.reset();
+		outTargetAddr.reset();
+
+		return false;
+	}
+		
+	return true;
+}
+
 ScAddr ScMemoryContext::getArcBegin(ScAddr const & arcAddr) const
 {
-    check_expr(isValid());
-	ScAddr addr;
-    if (sc_memory_get_arc_begin(mContext, arcAddr.mRealAddr, &addr.mRealAddr) != SC_RESULT_OK)
-        addr.reset();
-
-    return addr;
+	return getEdgeSource(arcAddr);
 }
 
 ScAddr ScMemoryContext::getArcEnd(ScAddr const & arcAddr) const
 {
-    check_expr(isValid());
-	ScAddr addr;
-    if (sc_memory_get_arc_end(mContext, arcAddr.mRealAddr, &addr.mRealAddr) != SC_RESULT_OK)
-        addr.reset();
-
-    return addr;
+	return getEdgeTarget(arcAddr);
 }
 
 bool ScMemoryContext::setLinkContent(ScAddr const & addr, ScStream const & stream)
@@ -299,11 +378,10 @@ bool ScMemoryContext::helperFindBySystemIdtf(std::string const & sysIdtf, ScAddr
 	return (sc_helper_find_element_by_system_identifier(mContext, sysIdtf.c_str(), (sc_uint32)sysIdtf.size(), &outAddr.mRealAddr) == SC_RESULT_OK);
 }
 
-bool ScMemoryContext::helperGenTemplate(ScTemplate const & templ, ScTemplateGenResult & result)
+bool ScMemoryContext::helperGenTemplate(ScTemplate const & templ, ScTemplateGenResult & result, ScTemplateGenParams const & params, ScTemplateResultCode * resultCode)
 {
-	return templ.generate(*this, result);
+	return templ.generate(*this, result, params, resultCode);
 }
-
 
 bool ScMemoryContext::helperSearchTemplate(ScTemplate const & templ, ScTemplateSearchResult & result)
 {

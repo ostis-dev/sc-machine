@@ -26,6 +26,8 @@ along with OSTIS.  If not, see <http://www.gnu.org/licenses/>.
 #include "string.h"
 #include "stdio.h"
 
+#include "sc_helper.h"
+
 scp_operand scp_program;
 scp_operand agent_scp_program;
 scp_operand platform_independent_abstract_sc_agent;
@@ -142,7 +144,7 @@ sc_memory_context *s_default_ctx;
     {\
         g_warning("Can't find element with system identifier: %s", keynode_str); \
         keynode = sc_memory_node_new(s_default_ctx, 0); \
-        if (sc_helper_set_system_identifier(s_default_ctx, keynode, keynode_str, strlen(keynode_str)) != SC_RESULT_OK) \
+        if (sc_helper_set_system_identifier(s_default_ctx, keynode, keynode_str, (sc_uint32)(strlen(keynode_str))) != SC_RESULT_OK) \
             return SCP_RESULT_ERROR; \
         g_message("Created element with system identifier: %s", keynode_str); \
     }

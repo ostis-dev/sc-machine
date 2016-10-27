@@ -160,6 +160,8 @@ bool SCsTranslator::buildScText(pANTLR3_BASE_TREE tree)
             if (type != 0)
             {
                 el->ignore = true;
+				el->arc_src->ignore = true;
+
                 sc_type newType = el->arc_trg->type | type;
                 // TODO check conflicts in sc-type
                 if ((type & sc_type_constancy_mask) != 0)
@@ -383,6 +385,7 @@ void SCsTranslator::processSentenceAssign(pANTLR3_BASE_TREE node)
     {
         String left_idtf = (GET_NODE_TEXT(node_left));
         sElement *el = parseElementTree(node_right, &left_idtf);
+        assert(el != nullptr);
     }
 }
 
@@ -669,7 +672,8 @@ sElement* SCsTranslator::parseElementTree(pANTLR3_BASE_TREE tree, const String *
         res = _addNode(assignIdtf ? *assignIdtf : "", sc_type_node_struct);
 
         String content = GET_NODE_TEXT(tree);
-        content = content.substr(1, content.size() - 2);
+		bool isVar = StringUtil::startsWith(content, "_", false);
+        content = content.substr(isVar ? 2 : 1, content.size() - (isVar ? 3 : 2));
 
         if (StringUtil::startsWith(content, "*", false) && StringUtil::endsWith(content, "*", false))
         {
@@ -682,7 +686,6 @@ sElement* SCsTranslator::parseElementTree(pANTLR3_BASE_TREE tree, const String *
             if (StringUtil::startsWith(data, "^\"", false))
             {
                 String name;
-                bool result = false;
 				if (_getAbsFilePath(trimContentData(data), name))
                 {
                     fileName = name;
@@ -691,8 +694,9 @@ sElement* SCsTranslator::parseElementTree(pANTLR3_BASE_TREE tree, const String *
                     {
                         data = String((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
                         ifs.close();
-                        result = true;
-                    } else {
+                    }
+                    else
+                    {
                         THROW_EXCEPT(Exception::ERR_PARSE,
                                      "Can't open file " << name,
                                      mParams.fileName,
@@ -713,14 +717,15 @@ sElement* SCsTranslator::parseElementTree(pANTLR3_BASE_TREE tree, const String *
                 tElementSet::iterator it, itEnd = translator.mElementSet.end();
                 for (it = translator.mElementSet.begin(); it != itEnd; ++it)
                 {
-                    if ((*it)->ignore) continue;
+                    if ((*it)->ignore)
+						continue;
 
                     sElement *el = new sElement();
                     el->ignore = true;
                     el->addr = (*it)->addr;
 
                     mElementSet.insert(el);
-                    _addEdge(res, el, sc_type_arc_pos_const_perm, false, "");
+					_addEdge(res, el, isVar ? sc_type_arc_pos_var_perm : sc_type_arc_pos_const_perm, false, "");
                 }
 
                 // merge identifiers map
@@ -749,8 +754,6 @@ sElement* SCsTranslator::parseElementTree(pANTLR3_BASE_TREE tree, const String *
             }
             else
             {
-                content = StringUtil::replaceAll(content, "\\[", "[");
-                content = StringUtil::replaceAll(content, "\\]", "]");
                 CHECK_LINK_DATA(content);
                 res = _addLinkString("", content);
             }
