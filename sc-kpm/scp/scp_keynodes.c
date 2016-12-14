@@ -244,13 +244,10 @@ scp_result scp_keynodes_init()
     MAKE_DEFAULT_OPERAND_FIXED(order_role_relation);
     MAKE_DEFAULT_OPERAND_FIXED(ordinal_set_rrel);
     for (i = 1; i <= ORDINAL_RRELS_COUNT; i++)
-    {
         MAKE_DEFAULT_OPERAND_FIXED(ordinal_rrels[i]);
-    }
+
     for (i = 1; i <= ORDINAL_SET_RRELS_COUNT; i++)
-    {
         MAKE_DEFAULT_OPERAND_FIXED(ordinal_set_rrels[i]);
-    }
 
     resolve_keynode(scp_program.addr, "scp_program");
     resolve_keynode(abstract_scp_machine.addr, "abstract_scp_machine");
@@ -273,13 +270,15 @@ scp_result scp_keynodes_init()
     resolve_keynode(question_initiated.addr, "question_initiated");
     resolve_keynode(question_finished_successfully.addr, "question_finished_successfully");
     resolve_keynode(question_finished_unsuccessfully.addr, "question_finished_unsuccessfully");
-    resolve_keynode(useless_scp_process.addr, "useless_scp_process");
+    resolve_keynode(useless_scp_process.addr, "last_entity");
     resolve_keynode(scp_process.addr, "scp_process");
     resolve_keynode(nrel_scp_process.addr, "nrel_scp_process");
     resolve_keynode(nrel_authors.addr, "nrel_authors");
     resolve_keynode(nrel_system_identifier.addr, "nrel_system_identifier");
     resolve_keynode(active_scp_operator.addr, "active_scp_operator");
     resolve_keynode(active_sc_agent.addr, "active_sc_agent");
+
+    // Relationship nodes
     resolve_keynode(nrel_then.addr, "nrel_then");
     resolve_keynode(nrel_else.addr, "nrel_else");
     resolve_keynode(nrel_goto.addr, "nrel_goto");
@@ -350,5 +349,6 @@ scp_result scp_keynodes_init()
         g_snprintf(name, 12, "rrel_set_%d", i);
         resolve_keynode(ordinal_set_rrels[i].addr, name);
     }
+
     return init_operator_keynodes();
 }
