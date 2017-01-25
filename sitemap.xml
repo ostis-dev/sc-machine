@@ -45,6 +45,12 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>/dev/test/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     

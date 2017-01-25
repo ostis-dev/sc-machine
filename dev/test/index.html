@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Git-workflow - SC-machine</title>
+  <title>Unit tests - SC-machine</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Git-workflow";
-    var mkdocs_page_input_path = "dev\\git-workflow.md";
-    var mkdocs_page_url = "/dev/git-workflow/";
+    var mkdocs_page_name = "Unit tests";
+    var mkdocs_page_input_path = "dev\\test.md";
+    var mkdocs_page_url = "/dev/test/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -81,24 +81,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Git-workflow</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#initialize">Initialize</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#update">Update</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#rebase">Rebase</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#common-rules">Common rules</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../git-workflow/">Git-workflow</a>
         
     </li>
 
@@ -118,8 +102,15 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../test/">Unit tests</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Unit tests</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#carete-unit-test">Carete unit test</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -225,7 +216,7 @@
         
       
     
-    <li>Git-workflow</li>
+    <li>Unit tests</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -235,44 +226,46 @@
           <div role="main">
             <div class="section">
               
-                <h3 id="initialize">Initialize</h3>
-<p>To initialize your repo do:
- * make fork from <code>https://github.com/ostis-dev/sc-machine</code>
- * clone your fork to your machine and prepare</p>
-<pre><code class="sh">git clone git@github.com:yourlogin/sc-machine.git
-cd sc-machine
-git config --global user.name &quot;Your Name&quot;
-git config --global user.email youremail@example.com
-git remote add upstream git@github.com:ostis-dev/sc-machine.git
+                <h1 id="carete-unit-test">Carete unit test</h1>
+<p>To append new unit test, you should create file <code>sc-memory/test/wrap/units/test_my.cpp</code> with base content</p>
+<pre><code class="cpp">/*
+* This source file is part of an OSTIS project. For the latest info, see http://ostis.net
+* Distributed under the MIT License
+* (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
+*/
+
+#include &quot;sc-memory/cpp/utils/sc_test.hpp&quot;
+
+UNIT_TEST(my_test_name)
+{
+  ScMemoryContext ctx(sc_access_lvl_make_min, &quot;my_test_name&quot;);
+
+  /* There you should implement your test logic.
+   * Use SC_CHECK_.. functions for check test results
+   */
+
+   SUBTEST_START(my_subtest_name)
+   {
+     /* There you can implement simple subtest.
+      * For example check the same data, but with some another logic.
+      */
+   }
+   SUBTEST_END()
+
+   SUBTEST_START(my_subtest_name_2)
+   {
+     // You can implement as many as you want subtests
+   }
+   SUBTEST_END()
+}
+
+UNIT_TEST(me_test_name_2)
+{
+  // You can implement as many as you want tests
+}
 </code></pre>
 
-<h3 id="update">Update</h3>
-<p>To update your master from <code>upstream</code> use:</p>
-<pre><code class="sh">git fetch upstream
-git checkout master
-git merge upstream/master
-git push origin master
-</code></pre>
-
-<h3 id="rebase">Rebase</h3>
-<p>To rebase your branch to master:</p>
-<pre><code class="sh">git checkout yourbranch
-git rebase master
-</code></pre>
-
-<p>If you have any problems, then:
-* redo</p>
-<pre><code class="sh">git rebase --abort
-</code></pre>
-
-<ul>
-<li>ask in 
-<a href="https://gitter.im/ostis-dev/sc-machine?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img alt="Join the chat at https://gitter.im/ostis-dev/sc-machine" src="https://badges.gitter.im/ostis-dev/sc-machine.svg" /></a></li>
-</ul>
-<h3 id="common-rules">Common rules</h3>
-<ul>
-<li>use <code>git rebase</code> instead of <code>merge</code>. <a href="https://git-scm.com/docs/git-rebase">More documentation about this command</a> This command just try to apply your commits (from current branch to commits in specified branch)</li>
-</ul>
+<p>For example you can see any test in <code>sc-memory/test/wrap/units/</code> folder.</p>
               
             </div>
           </div>
@@ -280,10 +273,10 @@ git rebase master
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../pr/" class="btn btn-neutral float-right" title="Pull requets">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../cpp/cpp-meta/" class="btn btn-neutral float-right" title="Meta programming">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../build/windows-build/" class="btn btn-neutral" title="Build on Windows"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../codestyle/" class="btn btn-neutral" title="Codestyle"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -309,10 +302,10 @@ git rebase master
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../build/windows-build/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../codestyle/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../pr/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../cpp/cpp-meta/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
