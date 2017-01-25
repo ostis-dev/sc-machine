@@ -232,15 +232,17 @@
 [cpp][test] Add unit test for ScEvent class
 [kpm][search] Relation type check added
 </pre></p>
-<p>Possible tags:
-<em> <code>[cpp]</code> - use, when you made changes in cpp wrapper code
-</em> <code>[memory]</code> - use, when you made changes in c core code
-<em> <code>[tests]</code> or <code>[test]</code> - use, when you made changes in tests
-</em> <code>[tools]</code> - use, when you made changes in tools
-<em> <code>[builder]</code> - use, when you made changes in builder tools
-</em> <code>[codegen]</code> - use, when you made changes in code generator
-<em> <code>[review]</code> - use, when you made commit with review fixes
-</em> <code>[refactor]</code> - use, when you made commit with some code refactoring</p>
+<p>Possible tags:</p>
+<ul>
+<li><code>[cpp]</code> - use, when you made changes in cpp wrapper code</li>
+<li><code>[memory]</code> - use, when you made changes in c core code</li>
+<li><code>[tests]</code> or <code>[test]</code> - use, when you made changes in tests</li>
+<li><code>[tools]</code> - use, when you made changes in tools</li>
+<li><code>[builder]</code> - use, when you made changes in builder tools</li>
+<li><code>[codegen]</code> - use, when you made changes in code generator</li>
+<li><code>[review]</code> - use, when you made commit with review fixes</li>
+<li><code>[refactor]</code> - use, when you made commit with some code refactoring</li>
+</ul>
 <hr />
 <p>Each commit in Pull request should be an atomic. Another word implement or fix one feature. For example:
 <pre>
@@ -253,10 +255,12 @@ Init commit
 </pre></p>
 <p>In this example we add class to work with console (where implemented colored output), then <strong>in another commit</strong> we had implementation of colored log output</p>
 <hr />
-<p>Each commit should have not much differences excluding cases, with:
-<em> CodeStyle changes;
-</em> Renames;
-* Code formating;</p>
+<p>Each commit should have not much differences excluding cases, with:</p>
+<ul>
+<li>CodeStyle changes;</li>
+<li>Renames;</li>
+<li>Code formating;</li>
+</ul>
 <p><strong>Do atomic commits for each changes.</strong> For example if you rename some members in <code>ClassX</code> and <code>ClassY</code>, then do two commits:
 <pre>
 [refactor] Rename members in ClassX according to codestyle
