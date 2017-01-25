@@ -18,7 +18,7 @@
   <script>
     // Current page data
     var mkdocs_page_name = "Sctp-protocol";
-    var mkdocs_page_input_path = "net/sctp.md";
+    var mkdocs_page_input_path = "net\\sctp.md";
     var mkdocs_page_url = "/net/sctp/";
   </script>
   
@@ -226,7 +226,7 @@
  </tr>
 </table></p>
 <p>После выполнения каждой sctp-команды возвращается результат, который привязан к id команды. Так как команда выполняется асинхронно, то результат может может быть возвращен в любой момент. Схема выполнения команды выглядит следующим образом:</p>
-<p><img alt="Структура sc-машины" src="http://github.com/deniskoronchik/sc-machine/wiki/images/sctp/command_cycle.png" /></p>
+<p><img alt="Структура sc-машины" src="http://github.com/deniskoronchik/sc-machine/wiki../../images/sctp/command_cycle.png" /></p>
 <p><strong>Важно</strong>: протокол является двусторонним. Другими словами часть команд может быть отправлена сервером клиенту, в тот момент, когда клиент ожидает ответ на запрос. Сервер гарантирует целостность сообщений, но не гарантирует порядок их прихода.</p>
 <p><strong>sctp-результат</strong></p>
 <p>SCTP-результат состоит из двух частей:
