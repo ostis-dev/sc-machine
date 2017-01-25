@@ -28,6 +28,28 @@
     
         
     <url>
+     <loc>/dev/git-workflow/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/dev/pr/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/dev/codestyle/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
      <loc>/cpp/cpp-meta/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
