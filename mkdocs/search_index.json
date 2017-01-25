@@ -17,7 +17,7 @@
         }, 
         {
             "location": "/build/windows-build/", 
-            "text": "Build with Visual Studio 2013:\n * install \njre\n\n * downlaod source code of \nsc-machine\n.\n * Run cmake for Visual Studio 2013 with param \nCMAKE_PREFIX_PATH=\npath to QT\n. For example: \nCMAKE_PREFIX_PATH=D:\\Qt\\5.5\\msvc2013_64\\)\n\n * Setup redis for Windows: \nhttps://github.com/MSOpenTech/redis/releases", 
+            "text": "Build with Visual Studio 2013:\n\n\n\n\ninstall \njre\n\n\ndownlaod source code of \nsc-machine\n.\n\n\nRun cmake for Visual Studio 2013 with param \nCMAKE_PREFIX_PATH=\npath to QT\n. For example: \nCMAKE_PREFIX_PATH=D:\\Qt\\5.5\\msvc2013_64\\)\n\n\nSetup redis for Windows: \nhttps://github.com/MSOpenTech/redis/releases", 
             "title": "Build on Windows"
         }, 
         {
