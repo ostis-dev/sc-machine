@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Template - SC-machine</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Template";
+    var mkdocs_page_input_path = "cpp/templates.md";
+    var mkdocs_page_url = "/cpp/templates/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> SC-machine</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Build</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/linux-build/">Build on Linux</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/windows-build/">Build on Windows</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../cpp-meta/">Meta programming</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../kpm/">Agents</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Template</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#sctemplate">ScTemplate</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#search">Search</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#search-in-construction">Search in construction</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#generate">Generate</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Common</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../el_types/">Element types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../other/config/">Configuration files</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../net/sctp/">Sctp-protocol</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../license/">License</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../changelog/">Changelog</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">SC-machine</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>Template</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Templates is a very powerful mechanism to work with semantic network (graph). You can search and generate any constructions using templates.
+There are list of available classes to work with templates:
+<em> <code>ScTemplate</code> - class that represents template in C++ code;
+</em> <code>ScTemplateGenParams</code> - parameters that contains values of variables in template. This class usually used when you generate construction by template;
+<em> <code>ScTemplateSearchResult</code> - contains result of search by template (list of found constructions);
+</em> <code>ScTemplateSearchResultItem</code> - represents on search result item;
+* <code>ScTemplateGenResult</code> - represent result of generation by template.</p>
+<h2 id="sctemplate">ScTemplate</h2>
+<p>Class to work with templates in c++. Before reading this paragraph you need to read common <a href="../el_types/">information about types</a>.</p>
+<p>Let use <code>f</code> symbols for constant parameter of template. Let use <code>a</code> symbol for a variable parameter of template. Then template to search all output edges from specified sc-element will be a triple:
+<em> where first element is known <code>f</code>;
+</em> second and third elements need to be found <code>a</code>.</p>
+<p>There are possible 3 types of simple templates:
+<em> <code>f_a_a</code> - template to find all outgoing edges from a specified sc-element;
+</em> <code>f_a_f</code> - template to find all edges between two specified sc-elements;
+* <code>a_a_f</code> - template to find all ingoing edges to a specified sc-element.</p>
+<p>There are some methods available for <code>ScTemplate</code> class:
+* <code>triple</code> - method that adds triple construction into template. There are some examples of using this function to produce simple templates:</p>
+<table>
+  <tr>
+    <th>Template</th>
+    <th>Description</th>
+  </tr>
+
+  <tr>
+    <td>f_a_a</td>
+    <td>
+      <strong>Graphical representation</strong>
+      <br/><img src="/images/templates/template_triple_f_a_a_example.png"></img>
+      <br/><strong>Equal C++ code</strong>
+      <br/>
+<pre><code class="cpp hljs">
+ScTemplate templ;
+templ.triple(
+  param1,
+  ScType::EDGE_ACCESS_VAR_POS_PERM,
+  ScType::NODE_VAR
+);
+</code></pre>
+
+      <br/>This triple template using to traverse output edges from specified sc-element.
+      <br/>There <code>param1</code> is a known <code>ScAddr</code> of sc-element. It must be a valid (use <code>ScAddr::IsValid</code> method to check). Where <code>_param2</code> and <code>_param3</code> are <code>ScType</code> for compare by search engine. When search engine will traverse output edges from <code>param1</code>. Construction will be added into traverse result, where output edge from <code>param1</code>, will suitable to specified type <code>_param2</code>, and type of target element of this edge will be sutable for a type <code>_param3</code>.
+      <br/>You can use any type of <code>_param3</code> (including edges) depending on construction you want to find. But <code>_param2</code> should be any type of variable edge.
+    </td>
+  </tr>
+
+  <tr>
+    <td>f_a_f</td>
+    <td><strong>Graphical representation</strong>
+    <br/><img src="/images/templates/template_triple_f_a_f_example.png"></img>
+    <br/><strong>Equal C++ code</strong>
+    <br/>
+<pre><code class="cpp hljs">
+ScTemplate templ;
+templ.triple(
+  param1,
+  ScType::EDGE_ACCESS_VAR_POS_PERM,
+  param3
+);
+</code></pre>
+    <br/>This triple template using to find edge between <code>param1</code> and <code>param3</code>.
+    <br/>There are <code>param1</code> and <code>param3</code> a known <code>ScAddr</code> of sc-elements. Edge type <code>_param2</code> should be variable.
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>a_a_f</td>
+    <td><strong>Graphical representation</strong>
+    <br/><img src="/images/templates/template_triple_a_a_f_example.png"></img>
+    <br/><strong>Equal C++ code</strong>
+    <br/>
+<pre><code class="cpp hljs">
+ScTemplate templ;
+templ.triple(
+  ScType::NODE_VAR,
+  ScType::EDGE_ACCESS_VAR_POS_PERM,
+  param3
+);
+</code></pre>
+    <br/>This triple template using to traverse input edges from specified sc-element.
+    <br/>There <code>param3</code> is a known <code>ScAddr</code> of sc-element. You can use any type of <code>_param1</code> (including edges) depending on construction you want to find. But <code>_param2</code> should be any type of variable edge.
+    </td>
+  </tr>
+</table>
+
+<p>When template search engine works, it tries to traverse graph by simple (triple) template in order they specified. For example we need to check if specified sc-element (<code>_device</code>) is included into <code>device</code> set and <code>device_enabled</code> set:</p>
+<p><img alt="Template example" src="../images/templates/template_example_2.png" /></p>
+<p><strong>Code</strong> that generates equal template</p>
+<pre><code class="cpp">ScAddr device_addr, device_enabled_addr;
+...
+
+ScTemplate templ;
+templ.triple(
+  device_addr,    // sc-addr of device node
+  ScType::EDGE_ACCESS_VAR_POS_PERM,
+  ScType::NODE_VAR &gt;&gt; &quot;_device_instance&quot;
+);
+templ.triple(
+  device_enabled_addr,    // sc-addr of device_enabled node
+  ScType::EDGE_ACCESS_VAR_POS_PERM,
+  &quot;_device_instance&quot;
+);
+</code></pre>
+
+<p>In code you can see a construction <code>ScType::NODE_VAR &gt;&gt; "_device_instance"</code> - this is a naming for a template element. It allows to set name for a specified sc-element in template, and use it many times in different triples. You can see, that in the second triple we use this name <code>"_device_instance"</code>. That means, that we need to place search result from a first triple into the second. So the second triple is a <code>f_a_f</code> style triple.</p>
+<p>So if you want to use the same element <code>_x</code> in different triples, and you doesn't know it <code>ScAddr</code>, then just use two main rules:
+<em> set name of this element in a first occurrence of this element in template triples. You need to use <code>&gt;&gt;</code> operator to do this (see code below, last element of first triple);
+</em> when you need to use named element in next triples, then just use it name instread of <code>ScType</code> or <code>ScAddr</code> (see code below, first element if second triple).</p>
+<p><strong>Example code with naming</strong></p>
+<pre><code class="cpp">ScTemplateTempl;
+templ.triple(
+  any_addr, // sc-addr of known sc-element
+  ScType::EDGE_ACCESS_VAR_POS_PERM,  // type of unknown edge
+  ScType::NODE_VAR &gt;&gt; &quot;_x&quot;  // type and name for an unknown sc-element
+);
+templ.triple(
+  &quot;_x&quot;,  // say that is the same element as the last on in a previous triple
+  ScType::EDGE_ACCESS_VAR_POS_PERM,  // type of unknown edge
+  ScType::NODE_VAR  // type of unknown sc-element
+);
+</code></pre>
+
+<h2 id="search">Search</h2>
+<p>Search algorithm trying to find all possible variants of specified construction.</p>
+<h2 id="search-in-construction">Search in construction</h2>
+<h2 id="generate">Generate</h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../el_types/" class="btn btn-neutral float-right" title="Element types">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../kpm/" class="btn btn-neutral" title="Agents"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../kpm/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../el_types/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

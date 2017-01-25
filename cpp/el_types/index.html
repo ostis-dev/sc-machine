@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Element types - SC-machine</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Element types";
+    var mkdocs_page_input_path = "cpp/el_types.md";
+    var mkdocs_page_url = "/cpp/el_types/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> SC-machine</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Build</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/linux-build/">Build on Linux</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/windows-build/">Build on Windows</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../cpp-meta/">Meta programming</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../kpm/">Agents</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../templates/">Template</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Common</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Element types</a>
+        
+            <ul>
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../other/config/">Configuration files</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../net/sctp/">Sctp-protocol</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../license/">License</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../changelog/">Changelog</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">SC-machine</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Common &raquo;</li>
+        
+      
+    
+    <li>Element types</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p>TODO: Describe types there</p>
+<p>TODO: Types compare during search</p>
+</blockquote>
+<table>
+  <tr>
+    <th>Graphical (SCg)</th>
+    <th>C</th>
+    <th>C++</th>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node.png"></img></td>
+    <td>sc_type_node</td>
+    <td>ScType::Node</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const.png"></img></td>
+    <td>sc_type_node | sc_type_const</td>
+    <td>ScType::NodeConst</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var.png"></img></td>
+    <td>sc_type_node | sc_type_var</td>
+    <td>ScType::NodeVar</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_tuple.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_tuple</td>
+    <td>ScType::NodeConstTuple</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_tuple.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_tuple</td>
+    <td>ScType::NodeVarTuple</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_struct.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_struct</td>
+    <td>ScType::NodeConstStruct</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_struct.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_struct</td>
+    <td>ScType::NodeVarStruct</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_role.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_role</td>
+    <td>ScType::NodeConstRole</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_role.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_role</td>
+    <td>ScType::NodeVarRole</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_norole.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_norole</td>
+    <td>ScType::NodeConstNorole</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_norole.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_norole</td>
+    <td>ScType::NodeVarNorole</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_class.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_class</td>
+    <td>ScType::NodeConstClass</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_class.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_class</td>
+    <td>ScType::NodeVarClass</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_abstract.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_abstract</td>
+    <td>ScType::NodeConstAbstract</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_abstract.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_abstract</td>
+    <td>ScType::NodeVarAbstract</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_const_material.png"></img></td>
+    <td>sc_type_node | sc_type_const | sc_type_node_material</td>
+    <td>ScType::NodeConstMaterial</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_node_var_material.png"></img></td>
+    <td>sc_type_node | sc_type_var | sc_type_node_material</td>
+    <td>ScType::NodeVarMaterial</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_common.png"></img></td>
+    <td>sc_type_edge_common</td>
+    <td>ScType::EdgeUCommon</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_common_orient.png"></img></td>
+    <td>sc_type_arc_common</td>
+    <td>ScType::EdgeDCommon</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_common.png"></img></td>
+    <td>sc_type_edge_common | sc_type_const</td>
+    <td>ScType::EdgeUCommonConst</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_common.png"></img></td>
+    <td>sc_type_edge_common | sc_type_var</td>
+    <td>ScType::EdgeUCommonVar</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_common_orient.png"></img></td>
+    <td>sc_type_arc_common | sc_type_const</td>
+    <td>ScType::EdgeDCommonConst</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_common_orient.png"></img></td>
+    <td>sc_type_arc_common | sc_type_var</td>
+    <td>ScType::EdgeDCommonVar</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_access.png"></img></td>
+    <td>sc_type_arc_access</td>
+    <td>ScType::EdgeAccess</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_pos_perm.png"></img></td>
+    <td>sc_type_arc_access | sc_type_const | sc_type_arc_pos | sc_type_arc_perm</td>
+    <td>ScType::EdgeAccessConstPosPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_pos_perm.png"></img></td>
+    <td>sc_type_arc_access | sc_type_var | sc_type_arc_pos | sc_type_arc_perm</td>
+    <td>ScType::EdgeAccessVarPosPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_neg_perm.png"></img></td>
+    <td>sc_type_arc_access | sc_type_const | sc_type_arc_neg | sc_type_arc_perm</td>
+    <td>ScType::EdgeAccessConstNegPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_neg_perm.png"></img></td>
+    <td>sc_type_arc_access | sc_type_var | sc_type_arc_neg | sc_type_arc_perm</td>
+    <td>ScType::EdgeAccessVarNegPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_fuz_perm.png"></img></td>
+    <td>sc_type_arc_access | sc_type_const | sc_type_arc_fuz | sc_type_arc_perm</td>
+    <td>ScType::EdgeAccessConstFuzPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_fuz_perm.png"></img></td>
+    <td>sc_type_arc_access | sc_type_var | sc_type_arc_fuz | sc_type_arc_perm</td>
+    <td>ScType::EdgeAccessVarFuzPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_pos_temp.png"></img></td>
+    <td>sc_type_arc_access | sc_type_const | sc_type_arc_pos | sc_type_arc_temp</td>
+    <td>ScType::EdgeAccessConstPosTemp</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_pos_temp.png"></img></td>
+    <td>sc_type_arc_access | sc_type_var | sc_type_arc_pos | sc_type_arc_temp</td>
+    <td>ScType::EdgeAccessVarPosPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_neg_temp.png"></img></td>
+    <td>sc_type_arc_access | sc_type_const | sc_type_arc_neg | sc_type_arc_temp</td>
+    <td>ScType::EdgeAccessConstNegTemp</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_neg_temp.png"></img></td>
+    <td>sc_type_arc_access | sc_type_var | sc_type_arc_neg | sc_type_arc_temp</td>
+    <td>ScType::EdgeAccessVarNegPerm</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_const_fuz_temp.png"></img></td>
+    <td>sc_type_arc_access | sc_type_const | sc_type_arc_fuz | sc_type_arc_temp</td>
+    <td>ScType::EdgeAccessConstFuzTemp</td>
+  </tr>
+
+  <tr>
+    <td><img src="/images/scg/scg_edge_var_fuz_temp.png"></img></td>
+    <td>sc_type_arc_access | sc_type_var | sc_type_arc_fuz | sc_type_arc_temp</td>
+    <td>ScType::EdgeAccessVarFuzPerm</td>
+  </tr>
+
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../other/config/" class="btn btn-neutral float-right" title="Configuration files">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../templates/" class="btn btn-neutral" title="Template"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../templates/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../other/config/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>

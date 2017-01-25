@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Meta programming - SC-machine</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Meta programming";
+    var mkdocs_page_input_path = "cpp/cpp-meta.md";
+    var mkdocs_page_url = "/cpp/cpp-meta/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> SC-machine</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Build</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/linux-build/">Build on Linux</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/windows-build/">Build on Windows</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Meta programming</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#syntax">Syntax</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#classes">Classes</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#members">Members</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../kpm/">Agents</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../templates/">Template</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Common</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../el_types/">Element types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../other/config/">Configuration files</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../net/sctp/">Sctp-protocol</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../license/">License</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../changelog/">Changelog</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">SC-machine</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>Meta programming</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>There is a code generator that allows to create some common code by using metadata. It runs before code compilation and generate files with a name <code>&lt;header_name&gt;.generated.&lt;header_extension&gt;</code>.
+For example if you run it for a file <code>text.h</code> it would produce a file <code>text.generated.h</code></p>
+<p>To make a metadata for you code you can use this set of macros:
+<em> <strong>SC_CLASS</strong> - allows you to specify metadata for a class;
+</em> <strong>SC_GENERATED_BODY</strong> - macros that need to be used after <strong>SC_CLASS</strong>, because it would be replaced in during compilation time with generated declaration for this class;
+* <strong>SC_PROPERTY</strong> - allows to specify metadata for members of a class (including static members).</p>
+<blockquote>
+<p>You should to specify <strong>SC_CLASS</strong> and <strong>SC_GENERATED_BODY</strong> for all child classes of <em>ScObject</em></p>
+</blockquote>
+<h2 id="syntax">Syntax</h2>
+<p>There is a syntax rule that used for a metadata specification:</p>
+<pre><code>[&lt;PropertyName&gt; [ (&lt;PropertyValue&gt;, &lt;PropertyValue&gt;, ...) ] ], …
+</code></pre>
+
+<p>For example:</p>
+<pre><code class="cpp">SC_CLASS(Agent, CmdClass(&quot;command_update_power_usage&quot;))
+</code></pre>
+
+<pre><code class="cpp">SC_CLASS(CmdClass(&quot;command_generate_text_from_template&quot;), Agent)
+</code></pre>
+
+<pre><code class="cpp">SC_PROPERTY(Keynode(&quot;nrel_real_energy_usage&quot;), ForceCreate)
+</code></pre>
+
+<pre><code class="cpp">SC_CLASS(Agent, Event(ActionManager::msActionPeriodical, SC_EVENT_ADD_OUTPUT_ARC))
+</code></pre>
+
+<p>You should to use <strong>SC_CLASS</strong> and <strong>SC_GENERATED_BODY</strong> in class declaration:</p>
+<pre><code class="cpp">class AWhoAreYouAgent : public ScAgentAction
+{
+ SC_CLASS(Agent, CmdClass(&quot;command_who_are_you&quot;))
+ SC_GENERATED_BODY()
+};
+</code></pre>
+
+<h2 id="classes">Classes</h2>
+<p>Table of available properties of class metadata (<strong>SC_CLASS</strong>):</p>
+<table>
+  <tr>
+    <th>Property</td>
+    <th>Description</td>
+  </tr>
+  <tr>
+    <td><strong>Agent</strong></td>
+    <td><strong>Parent class:</strong> ScAgent and all childs
+      <br/>You should always use it for all <strong>ScAgent</strong> child classes
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>CmdClass</strong></td>
+    <td>Determine system identifier of command class that implemented by sc-agent.
+    <br/><strong>Parent class:</strong> ScAgentAction
+    <br/><strong>Arguments:</strong>
+    <ul>
+      <li>System identifier of command class.</li>
+    </ul>
+    <hr/>
+    <pre><code class="cpp hljs">
+class AAddContentAgent : public ScAgentAction
+{
+ SC_CLASS(Agent, CmdClass("command_add_content"))
+ SC_GENERATED_BODY()
+};
+    </code></pre>
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>Event</strong></td>
+    <td>Specify condition to start sc-agent implementation.<br/>
+      <br/><strong>Parent class:</strong> ScAgent
+      <br/><strong>Arguments:</strong>
+      <ul>
+        <li><strong>ScAddr</strong> of element which will be used to subscribe for an event;</li>
+        <li><strong>ScEventType</strong> type of event to subscribe.</li>
+      </ul>
+      Another words, we specify sc-element and event on it, that runs implementation of sc-agent. Possible event types:
+      <ul>
+        <li>SC_EVENT_ADD_OUTPUT_ARC</li>
+        <li>SC_EVENT_ADD_INPUT_ARC</li>
+        <li>SC_EVENT_REMOVE_OUTPUT_ARC</li>
+        <li>SC_EVENT_REMOVE_INPUT_ARC</li>
+        <li>SC_EVENT_REMOVE_ELEMENT</li>
+        <li>SC_EVENT_CONTENT_CHANGED</li>
+      </ul>
+      <hr/>
+      <pre><code class="cpp hljs">
+class ANewPeriodicalActionAgent : public ScAgent
+{
+ SC_CLASS(Agent, Event(msActionPeriodical, SC_EVENT_ADD_OUTPUT_ARC))
+ SC_GENERATED_BODY()
+};
+      </code></pre>
+    </td>
+  </tr>
+
+  <tr>
+    <td><strong>LoadOrder</strong></td>
+    <td>Specify order (priority) of module loading. Can be used just in ScModule child classes.
+      <br/><strong>Parent class:</strong> ScModule
+      <br/><strong>Arguments:</strong>
+      <ul>
+        <li>Priority as <i>unsigned int</i> number</li>
+      </ul>
+      System loads modules by ascending order. If two module has an equal load order, then they can load in any order (relative to each other).
+      <hr/>
+      <pre><code class="cpp hljs">
+class nlModule : public ScModule
+{
+ SC_CLASS(LoadOrder(11))
+ SC_GENERATED_BODY()
+
+ sc_result initializeImpl();
+ sc_result shutdownImpl();
+};
+      </code></pre>
+    </td>
+  </tr>
+</table>
+
+<h2 id="members">Members</h2>
+<p>Table of available properties of class members metadata (<strong>SC_PROPERTY</strong>):
+<table></p>
+<p><tr>
+    <th>Property</th>
+    <th>Description</th>
+  </tr></p>
+<p><tr>
+    <td><strong>Keynode</strong></td>
+    <td>
+      <strong>Arguments:</strong>
+      <ul>
+        <li>String with system identifier of sc-element.</li>
+      </ul>
+      Specify that this member is a keynode. After module starts, this member will contains <strong>ScAddr</strong> of specified sc-element or invalid <strong>ScAddr</strong> if sc-element not found. Just add <strong>ForceCreate</strong> to create sc-element in case when it didn't found.
+      <br/>You can use this property just for members that has <strong>ScAddr</strong> type.
+      <hr/>
+      <pre><code class="cpp hljs">
+SC_PROPERTY(Keynode("device"), ForceCreate)
+static ScAddr device;
+      </code></pre>
+    </td>
+  </tr></p>
+<p><tr>
+    <td><strong>Template</strong></td>
+    <td>
+      <strong>Arguments:</strong>
+      <ul>
+        <li>String system identifier of template sc-structure in sc-memory</li>
+      </ul>
+      Specify that this member is a template. After module starts, this template will be parsed from sc-memory. So you will be able use it to search/generate constructions.
+      <br/>You can use this property just for members that has <strong>ScTemplate</strong> type.
+      <hr/>
+      <pre><code class="cpp hljs">
+SC_PROPERTY(Template("test_template"))
+ScTemplate mTestTemplate;
+      </code></pre>
+    </td>
+  </tr></p>
+<p><tr>
+    <td><strong>ForceCreate</strong></td>
+    <td>
+      <strong>Arguments:</strong> none
+      <br/>Used just with <strong>Keynode</strong> property. Using of this property force sc-element creation, if it didn't found by system identifier.
+    </td>
+  </tr></p>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../kpm/" class="btn btn-neutral float-right" title="Agents">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../build/windows-build/" class="btn btn-neutral" title="Build on Windows"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../build/windows-build/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../kpm/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
