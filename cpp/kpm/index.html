@@ -350,24 +350,44 @@ namespace nl
 <em> <code>requestAddr</code> - <code>ScAddr</code> of command (action) instance that was initiated;
 </em> <code>resultAddr</code> - <code>ScAddr</code> of sc-structure that designate command (action) result;
 * <code>mMemoryCtx</code> - memory context that can be used to work with <code>ScMemory</code>.</p>
-<p>If sc-agent finished work without any errors, then it must return <code>SC_RESULT_OK</code>, otherwise - one of code error <code>SC_RESULT_ERROR_...</code></p>
-<p><strong>It's important:</strong>
-<em> All sc-agents class names must to be started with A symbol;
-</em> You can implement more than one <code>ScAgent</code> class in on source/header file;
-<em> Don't use any other memory contexts instead of <code>mMemoryCtx</code> in <code>ScAgent</code> implementation;
-</em> You need always include <code>&lt;you_header&gt;.generated.hpp</code> file into your header, if you have any metadata. This include must be a last one in a file.</p>
+<p>If sc-agent finished work without any errors, then it must return <code>SC_RESULT_OK</code>, otherwise - one of code error <code>SC_RESULT_ERROR_...</code>.
+Result of agent will be automaticaly added into specified set:</p>
+<p><img alt="Example of succesfully finished command" src="../images/sc_result_ok_example.png" /></p>
+<p>Possible result sets:</p>
+<ul>
+<li><code>sc_result_error</code> - unknown error;</li>
+<li><code>sc_result_ok</code> - no any errors (successfull finish);</li>
+<li><code>sc_result_error_invalid_params</code> - invalid parameters of agent;</li>
+<li><code>sc_result_error_invalid_type</code> - invalid type error (invalid type of data of something else);</li>
+<li><code>sc_result_error_io</code> - input/output error (can't read/write something from/to any source);</li>
+<li><code>sc_result_invalid_state</code> - invalid state of processing data;</li>
+<li><code>sc_result_error_not_found</code> - something wasn't found (for example: can't resolve element by identifier);</li>
+<li><code>sc_result_error_no_write_rights</code> - agent hasn't rights to write something;</li>
+<li><code>sc_result_error_no_read_rights</code> - agent hans't rights to read something.</li>
+</ul>
+<p><strong>It's important:</strong></p>
+<ul>
+<li>All sc-agents class names must to be started with A symbol;</li>
+<li>You can implement more than one <code>ScAgent</code> class in on source/header file;</li>
+<li>Don't use any other memory contexts instead of <code>mMemoryCtx</code> in <code>ScAgent</code> implementation;</li>
+<li>You need always include <code>&lt;you_header&gt;.generated.hpp</code> file into your header, if you have any metadata. This include must be a last one in a file.</li>
+</ul>
 <h2 id="scevent">ScEvent</h2>
-<p>This type of objects allows you to subscribe to any events in <code>ScMemory</code>. There are c++ classes that correspond to specified event types:
-<em> <code>ScEventAddOutputEdge</code> - emits each time, when output (outgoing) edge (from specified element) added;
-</em> <code>ScEventAddInputEdge</code> - emits each time, when input (ingoing) edge (into specified element) added;
-<em> <code>ScEventRemoveOutputEdge</code> - emits each time, when output (outgoing) edge (from specified element) removed;
-</em> <code>ScEventRemoveInputEdge</code> - emits each time, when input (ingoing) edge (into specified element) removed;
-<em> <code>ScEventEraseElement</code> - emits, when specified element removed;
-</em> <code>ScEventContentChanged</code> - emits each time, when content of specified sc-link changed.</p>
-<p>Each event constructor takes 3 parameters:
-<em> <code>ctx</code> - <code>ScMemoryContext</code> that will be used to work with event;
-</em> <code>addr</code> - <code>ScAddr</code> of element that need to be listen for a specified event;
-* <code>func</code> - delegate to a callback function, that will be called on each event emit (<code>bool func(ScAddr const &amp; listenAddr, ScAddr const &amp; edgeAddr, ScAddr const &amp; otherAddr)</code>). Description of parameters for this function you can see in table below (for each event type). <strong>Note: callback function will be called in another thread!</strong></p>
+<p>This type of objects allows you to subscribe to any events in <code>ScMemory</code>. There are c++ classes that correspond to specified event types:</p>
+<ul>
+<li><code>ScEventAddOutputEdge</code> - emits each time, when output (outgoing) edge (from specified element) added;</li>
+<li><code>ScEventAddInputEdge</code> - emits each time, when input (ingoing) edge (into specified element) added;</li>
+<li><code>ScEventRemoveOutputEdge</code> - emits each time, when output (outgoing) edge (from specified element) removed;</li>
+<li><code>ScEventRemoveInputEdge</code> - emits each time, when input (ingoing) edge (into specified element) removed;</li>
+<li><code>ScEventEraseElement</code> - emits, when specified element removed;</li>
+<li><code>ScEventContentChanged</code> - emits each time, when content of specified sc-link changed.</li>
+</ul>
+<p>Each event constructor takes 3 parameters:</p>
+<ul>
+<li><code>ctx</code> - <code>ScMemoryContext</code> that will be used to work with event;</li>
+<li><code>addr</code> - <code>ScAddr</code> of element that need to be listen for a specified event;</li>
+<li><code>func</code> - delegate to a callback function, that will be called on each event emit (<code>bool func(ScAddr const &amp; listenAddr, ScAddr const &amp; edgeAddr, ScAddr const &amp; otherAddr)</code>). Description of parameters for this function you can see in table below (for each event type). <strong>Note: callback function will be called in another thread!</strong></li>
+</ul>
 <p>Table of description (parameters of callback function named on pictures, if there are no parameter name on picture, then it's would have an empty value):
 <table width="95%">
   <tr>
@@ -518,10 +538,12 @@ ScEventContentChanged evt(ctx, addr, callback);
   </tr>
 </table></p>
 <h2 id="scwait">ScWait</h2>
-<p>This type of objects used to wait until some event emits. It usually used, when on of an <code>ScAgent</code> want to wait result of another one. There are next kind of <code>ScWait</code> objects:
-<em> <code>ScWait</code>- lock run flow until simple event emits. You can see the list of this events in the Class propertires table (Event property);
-</em> <code>ScWaitCondition</code> - lock run flow until simple event emits and specified conditional check returns true. Another words, this works like an <code>ScWait</code>, but returns to run flow if special condition function returns true. Condition function receive 3 parameters (see <a href="#scevent">ScEvent</a> for more details about them);
-* <code>ScWaitConstruction</code> - wait object, that wait until specified construction would be appeared in a memory. <strong>(Not implemented yet)</strong></p>
+<p>This type of objects used to wait until some event emits. It usually used, when on of an <code>ScAgent</code> want to wait result of another one. There are next kind of <code>ScWait</code> objects:</p>
+<ul>
+<li><code>ScWait</code>- lock run flow until simple event emits. You can see the list of this events in the Class propertires table (Event property);</li>
+<li><code>ScWaitCondition</code> - lock run flow until simple event emits and specified conditional check returns true. Another words, this works like an <code>ScWait</code>, but returns to run flow if special condition function returns true. Condition function receive 3 parameters (see <a href="#scevent">ScEvent</a> for more details about them);</li>
+<li><code>ScWaitConstruction</code> - wait object, that wait until specified construction would be appeared in a memory. <strong>(Not implemented yet)</strong></li>
+</ul>
 <p>There are some examples of usage for specified <code>ScWait</code> objects:</p>
 <p><strong>Wait input edge into addr</strong></p>
 <pre><code class="cpp">ScWait&lt;ScEventAddInputEdge&gt; waiter(ctx, addr);
