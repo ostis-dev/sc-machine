@@ -167,6 +167,7 @@ typedef sc_uint16 sc_type;
 // results
 enum _sc_result
 {
+  SC_RESULT_UNKNOWN = -2,             // result unknown
   SC_RESULT_NO = -1,                  // no any result
   SC_RESULT_ERROR = 0,                // unknown error
   SC_RESULT_OK = 1,                   // no any error
