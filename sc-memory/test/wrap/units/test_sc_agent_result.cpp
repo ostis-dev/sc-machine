@@ -45,8 +45,6 @@ UNIT_TEST(ATestResultOk)
     ctxLocal.CreateEdge(ScType::EdgeAccessConstPosPerm, ScAgentAction::GetCommandInitiatedAddr(), cmdAddr);
   });
 
-  work_thread.join();
-
   ScWaitActionFinished waiter(ctx, cmdAddr);
   SC_CHECK(waiter.Wait(), ());
 
@@ -66,6 +64,8 @@ UNIT_TEST(ATestResultOk)
     it5->Get(2));
 
   SC_CHECK(it->Next(), ());
+
+  work_thread.join();
 
   SC_AGENT_UNREGISTER(ATestResultOk);
 }
