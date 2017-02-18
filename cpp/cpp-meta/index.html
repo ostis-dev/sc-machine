@@ -183,6 +183,29 @@
 <li>
           
             <li>
+    <ul class="subnav">
+    <li><span>Modules</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Natural language</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../modules/nl/AApiAiParseUserTextAgent/">AApiAiParseUserTextAgent</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+            <li>
     <li class="toctree-l1 ">
         <a class="" href="../../license/">License</a>
         
@@ -192,6 +215,13 @@
             <li>
     <li class="toctree-l1 ">
         <a class="" href="../../changelog/">Changelog</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../thirdparty/">Thirdparty</a>
         
     </li>
 <li>
@@ -372,7 +402,7 @@ class nlModule : public ScModule
       <hr/>
       <pre><code class="cpp hljs">
 SC_PROPERTY(Keynode("device"), ForceCreate)
-static ScAddr device;
+static ScAddr m_device;
       </code></pre>
     </td>
   </tr></p>
@@ -388,15 +418,25 @@ static ScAddr device;
       <hr/>
       <pre><code class="cpp hljs">
 SC_PROPERTY(Template("test_template"))
-ScTemplate mTestTemplate;
+ScTemplate m_testTemplate;
       </code></pre>
     </td>
   </tr></p>
 <p><tr>
     <td><strong>ForceCreate</strong></td>
     <td>
-      <strong>Arguments:</strong> none
+      <strong>Arguments:</strong>
+      <ul>
+        <li>[<strong>optional</strong>] type of sc-element. Any value from <code>ScType::Node...</code></li>
+      </ul>
       <br/>Used just with <strong>Keynode</strong> property. Using of this property force sc-element creation, if it didn't found by system identifier.
+      <hr/>
+      <pre><code class="cpp hljs">
+SC_PROPERTY(Keynode("device"), ForceCreate(ScType::NodeConstClass))
+static ScAddr m_device;</p>
+<p>SC_PROPERTY(Keynode("device"), ForceCreate) // default value ScType::Node
+static ScAddr m_node;
+      </code></pre>
     </td>
   </tr></p>
 </table>
