@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>SCs language - SC-machine</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "SCs language";
+    var mkdocs_page_input_path = "other\\scs.md";
+    var mkdocs_page_url = "/other/scs/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> SC-machine</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Build</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/linux-build/">Build on Linux</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../build/windows-build/">Build on Windows</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Development</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dev/git-workflow/">Git-workflow</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dev/pr/">Pull requets</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dev/codestyle/">Codestyle</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../dev/test/">Unit tests</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../cpp/cpp-meta/">Meta programming</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../cpp/kpm/">Agents</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../cpp/templates/">Template</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Common</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../cpp/el_types/">Element types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../config/">Configuration files</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../net/sctp/">Sctp-protocol</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">SCs language</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#common">Common</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#scs-level-1">SCs level 1</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#scs-level-2">SCs level 2</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#scs-level-3">SCs level 3</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#scs-level-4">SCs level 4</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#scs-level-5">SCs level 5</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#scs-level-6">SCs level 6</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Modules</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Natural language</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../modules/nl/AApiAiParseUserTextAgent/">AApiAiParseUserTextAgent</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../license/">License</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../changelog/">Changelog</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../thirdparty/">Thirdparty</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">SC-machine</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Common &raquo;</li>
+        
+      
+    
+    <li>SCs language</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h3 id="common">Common</h3>
+<p>SCs-code - is a text representation of SC-code. Whole text consist of sentences, that
+separated by <code>;;</code> symbols.</p>
+<p>You can use C-style comments in SCs text:</p>
+<pre><code class="cpp">// one line comment
+fruit -&gt; apple;
+/* Multiline
+ * comment
+ */
+</code></pre>
+
+<p>To make an sc-link into specified file you can use special type identifier:</p>
+<pre><code>&quot;file://&lt;file name&gt;&quot;
+</code></pre>
+
+<ul>
+<li><code>"file://&lt;file name&gt;"</code> - is a relative path to a file. According to a file, where it used;</li>
+<li><code>"file:///&lt;file_name&gt;"</code> - is an absolute path to a file.</li>
+</ul>
+<p>There are some tricks with object names:</p>
+<ul>
+<li><code>...</code> - is an unnamed object;</li>
+<li><code>_&lt;object name&gt;</code> - all object names, that starts with symbol <code>_</code> represents a variable objects.</li>
+</ul>
+<p>Objects identifier visibility. By default all objects with name <code>x</code> are visible anywhere.
+After translating it into memory this object will have a <strong>system identifier</strong> equal to <code>x</code>.
+So if you use <code>x</code> in different <em>scs</em> files, then you designate the same object in them
+(would be the same element in a knowledge base).</p>
+<p>Sometimes you need to designate the same objects in different files, but do not generate a
+<strong>system identifier</strong> in memory for it. In this case you should to prefix it name with a <code>.</code> symbol.
+For example: <code>.x</code>.</p>
+<p>In case, when you need to make a named object just local for a <em>scs</em> file,
+then you should to use <code>..</code> prefix (example: <code>..x</code>).</p>
+<div class="note">
+SCs-code is splitted into levels. Each level allows to minimize number
+of string symbols to represent the same structures.
+</div>
+
+<h3 id="scs-level-1">SCs level 1</h3>
+<p>SCs-code level 1 - is a simple representation of SC-code. It represents it
+with just simple triples. Each triple contains <code>subject</code>, <code>predicate</code>, <code>object</code>
+that are splitted by <code>|</code> symbol. Line <code>subject | predicate | object;;</code> is a sentence.</p>
+<p>Identifier of <code>subject</code>, <code>predicate</code>, <code>object</code> build with rule:</p>
+<pre><code>&lt;type&gt;#&lt;identifier&gt;
+</code></pre>
+
+<p>Where <code>type</code> - is an element type specification. It can be one of possible values:</p>
+<ul>
+<li><code>sc_node</code> - equal to <img alt="SCg-node" src="../../images/scg/scg_node.png" />;</li>
+<li><code>sc_link</code> - equal to <img alt="SCg-link" src="../../images/scg/scg_link.png" />;</li>
+<li><code>sc_edge_dcommon</code> - equal to <img alt="SCg-edge" src="../../images/scg/scg_edge_common_orient.png" />;</li>
+<li><code>sc_edge_ucommon</code> - equal to <img alt="SCg-edge" src="../../images/scg/scg_edge_common.png" />;</li>
+<li><code>sc_edge_main</code> - equal to <img alt="SCg-edge" src="../../images/scg/scg_edge_const_pos_perm.png" />;</li>
+<li><code>sc_edge_access</code> - equal to <img alt="SCg-edge" src="../../images/scg/scg_edge_access.png" />.</li>
+</ul>
+<hr/>
+
+<p><strong>Examples</strong></p>
+<table>
+  <tr>
+    <th>SCg construction</th>
+    <th>Equal SCs-level 1 text</th>
+  </tr>
+
+  <tr>
+    <td><img src="../../images/scs/scs_example_level_1.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+// append set of apples into fruit set
+sc_node#fruit | sc_edge_main#... | sc_node#apple;;
+// append set of bananas into fruit set
+sc_node#fruit | sc_edge_main#... | sc_node#banana;;
+        </code>
+      </pre>
+    </td>
+  </tr>
+
+  <tr>
+    <td width="50%"><img src="../../images/scs/scs_example_level_1_2.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+sc_node#apple | sc_edge_dcommon#..e | "file://apple.png";;
+/*append edge from nrel_image relation into
+  edge between apple set and it's image*/
+sc_node#nrel_image | sc_edge_main#... | sc_edge_dcommon#..e;;
+        </code>
+      </pre>
+    </td>
+  </tr>
+</table>
+
+<p>SCs-level 1 allows you to represent any kind of SC-code construction. It's a low-level
+representation and commonly used as a transport format, that is very simple for parsing.</p>
+<h3 id="scs-level-2">SCs level 2</h3>
+<p>This level of SCs-text add two new features:</p>
+<ul>
+<li>using of extended alphabet of edges;</li>
+<li>using of compound identifiers of an edges.</li>
+</ul>
+<p>On this level you can make sentences by rule:</p>
+<pre><code>&lt;element&gt; &lt;edge&gt; &lt;element&gt;;;
+</code></pre>
+
+<p>Where <code>&lt;edge&gt;</code> can be on of values:
+<table>
+  <tr>
+    <th>SCs</th>
+    <th>SCg equivalent</th>
+  </tr>
+  <tr>
+    <td><code>&lt;</code> or <code>&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_common_orient.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_common.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;..</code> or <code>..&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_access.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;=&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_common.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;=&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_common.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;=</code> or <code>=&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_common_orient.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;=</code> or <code>_=&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_common_orient.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;-</code> or <code>-&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_pos_perm.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;-</code> or <code>_-&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_pos_perm.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;|-</code> or <code>-|&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_neg_perm.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;|-</code> or <code>_-|&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_neg_perm.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;/-</code> or <code>-/&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_fuz_perm.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;/-</code> or <code>_-/&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_fuz_perm.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;~</code> or <code>~&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_pos_temp.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;~</code> or <code>_~&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_pos_temp.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;|~</code> or <code>~|&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_neg_temp.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;|~</code> or <code>_~|&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_neg_temp.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>&lt;/~</code> or <code>~/&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_const_fuz_temp.png"></img></td>
+  </tr>
+  <tr>
+    <td><code>_&lt;/~</code> or <code>_~/&gt;</code></td>
+    <td><img src="../../images/scg/scg_edge_var_fuz_temp.png"></img></td>
+  </tr>
+</table></p>
+<hr/>
+
+<table>
+  <tr>
+    <th>SCg construction</th>
+    <th>Equal SCs-level 2 text</th>
+  </tr>
+
+  <tr>
+    <td><img src="../../images/scs/scs_example_level_1.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+fruit -> apple;;
+// backward direction
+banana <- fruit;;
+        </code>
+      </pre>
+    </td>
+  </tr>
+</table>
+
+<p><hr/>
+Compound identifier of an edge builds as a sentence in SCs-level 2, but without
+<code>;;</code> separator and inside brackets <code>()</code>: <code>(&lt;element&gt; &lt;edge&gt; &lt;element&gt;)</code>.
+So that allows to simplify usage of an edge as a source or target of another one.</p>
+<hr/>
+
+<p><strong>Examples</strong>
+<table>
+  <tr>
+    <th>SCg construction</th>
+    <th>Equal SCs-level 2 text</th>
+  </tr></p>
+<p><tr>
+    <td width="50%"><img src="../../images/scs/scs_example_level_1_2.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+nrel_image -&gt; (fruit =&gt; "file://apple.png");;
+        </code>
+      </pre>
+    </td>
+  </tr></p>
+<p><tr>
+    <td><img src="../../images/scs/scs_example_level_2.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+d -&gt; (c -&gt; (a -&gt; b));;
+        </code>
+      </pre>
+    </td>
+  </tr></p>
+<p><tr>
+    <td><img src="../../images/scs/scs_example_level_2_2.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+(a -&gt; b) -&gt; (c &lt;- d);;
+        </code>
+      </pre>
+    </td>
+  </tr></p>
+</table>
+
+<h3 id="scs-level-3">SCs level 3</h3>
+<p>This level of SCs-text allows to minimize symbols to represent constructions like this one:
+<img alt="SCg-example" src="../../images/scs/scs_example_level_3.png" /></p>
+<pre><code class="js">c -&gt; (a -&gt; b);;
+</code></pre>
+
+<p>To do that you should use sentence like this:</p>
+<pre><code>&lt;object&gt; &lt;edge&gt; &lt;attribute&gt;: &lt;object&gt;
+</code></pre>
+
+<p>For this example it would be like this:</p>
+<pre><code class="js">a -&gt; c: b;;
+</code></pre>
+
+<p>In case, when output edge from <code>c</code> is an variable, then use <code>::</code> splitter instead of <code>:</code>:</p>
+<pre><code class="js">a -&gt; c:: b;;
+</code></pre>
+
+<p>equal to:</p>
+<pre><code class="js">c _-&gt; (a -&gt; b);;
+</code></pre>
+
+<div class="note">
+<b>Note</b>: you can use <code>:</code>, <code>::</code> just to replace <code>-></code> or <code>_-></code> edges.
+</div>
+
+<hr/>
+
+<p><strong>Examples</strong>
+<table>
+  <tr>
+    <th>SCg construction</th>
+    <th>Equal SCs-level 3 text</th>
+  </tr></p>
+<p><tr>
+    <td><img src="../../images/scs/scs_example_level_1_2.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+apple =&gt; nrel_image: "file://apple.png";;
+        </code>
+      </pre>
+    </td>
+  </tr></p>
+<p><tr>
+    <td><img src="../../images/scs/scs_example_level_3_2.png"></img></td>
+    <td>
+      <div class="note">
+        <b>Note</b>: it is possible to use any number of <code>:</code>, <code>::</code> in one sentence.
+      </div>
+      <pre>
+        <code class="js hljs javascript">
+a -&gt; c: d:: b;;
+        </code>
+      </pre>
+    </td>
+  </tr>
+</table></p>
+<h3 id="scs-level-4">SCs level 4</h3>
+<p>This level of SCs-text allows to combine many setences with one element into one.
+For that pupropses used ';' symbol. So if we have some sentences like:</p>
+<pre><code class="js">x -&gt; y;;
+x &lt;- z;;
+x =&gt; h: r;;
+</code></pre>
+
+<p>Then using SCs level 4 we can write them like this:</p>
+<pre><code class="js">x -&gt; y;
+  &lt;- z;
+  =&gt; h: r;;
+</code></pre>
+
+<p>Another words, this level of SCs text, allows to use source element one time.</p>
+<hr/>
+
+<p><strong>Examples</strong>
+<table>
+  <tr>
+    <th>SCg construction</th>
+    <th>Equal SCs-level 4 text</th>
+  </tr></p>
+<p><tr>
+    <td><img src="../../images/scs/scs_example_level_1.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+fruit -&gt; apple;
+      -&gt; banana;;
+        </code>
+      </pre>
+    </td>
+  <tr></p>
+<p><tr>
+    <td><img src="../../images/scs/scs_example_level_4.png"></img></td>
+    <td>
+      <pre>
+        <code class="js hljs javascript">
+a -&gt; c: d: b;
+  -&gt; e;
+  -&gt; g: f;;
+        </code>
+      </pre>
+    </td>
+  </tr>
+<table></p>
+<h3 id="scs-level-5">SCs level 5</h3>
+<h3 id="scs-level-6">SCs level 6</h3>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../modules/nl/AApiAiParseUserTextAgent/" class="btn btn-neutral float-right" title="AApiAiParseUserTextAgent">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../net/sctp/" class="btn btn-neutral" title="Sctp-protocol"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../net/sctp/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../modules/nl/AApiAiParseUserTextAgent/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
