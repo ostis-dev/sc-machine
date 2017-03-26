@@ -131,6 +131,9 @@
                 <li class="toctree-l3"><a href="#members">Members</a></li>
                 
             
+                <li class="toctree-l3"><a href="#faq">FAQ</a></li>
+                
+            
             </ul>
         
     </li>
@@ -202,6 +205,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../modules/nl/AApiAiParseUserTextAgent/">AApiAiParseUserTextAgent</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../modules/nl/AGenText/">AGenText</a>
         
     </li>
 
@@ -447,6 +457,26 @@ static ScAddr m_node;
     </td>
   </tr></p>
 </table>
+
+<h2 id="faq">FAQ</h2>
+<ol>
+<li>How to include one <code>MyObject</code> into <code>OtherObject</code></li>
+</ol>
+<pre><code class="cpp">/* In CPP file you should include header file for object, that implemented in this file
+ * For example in file MyObject.cpp we should make order
+ */
+#include &quot;otherObject.hpp&quot;
+#include &quot;otherObject2.hpp&quot;
+...
+
+#include &quot;myObject.hpp&quot;
+
+// other includes (that doesn't contains ScObject derived classes)
+...
+
+// Implementation
+...
+</code></pre>
               
             </div>
           </div>
