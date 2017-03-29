@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../../img/favicon.ico">
-  <title>AApiAiParseUserTextAgent - SC-machine</title>
+  <title>AGenCmdResultText - SC-machine</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "AApiAiParseUserTextAgent";
-    var mkdocs_page_input_path = "modules\\nl\\AApiAiParseUserTextAgent.md";
-    var mkdocs_page_url = "/modules/nl/AApiAiParseUserTextAgent/";
+    var mkdocs_page_name = "AGenCmdResultText";
+    var mkdocs_page_input_path = "modules\\nl\\AGenCmdResultText.md";
+    var mkdocs_page_url = "/modules/nl/AGenCmdResultText/";
   </script>
   
   <script src="../../../js/jquery-2.1.1.min.js"></script>
@@ -187,8 +187,22 @@
 
         
             
+    <li class="toctree-l1 ">
+        <a class="" href="../AApiAiParseUserTextAgent/">AApiAiParseUserTextAgent</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../AGenText/">AGenText</a>
+        
+    </li>
+
+        
+            
     <li class="toctree-l1 current">
-        <a class="current" href="./">AApiAiParseUserTextAgent</a>
+        <a class="current" href="./">AGenCmdResultText</a>
         
             <ul>
             
@@ -202,20 +216,6 @@
                 
             
             </ul>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../AGenText/">AGenText</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../AGenCmdResultText/">AGenCmdResultText</a>
         
     </li>
 
@@ -277,7 +277,7 @@
         
       
     
-    <li>AApiAiParseUserTextAgent</li>
+    <li>AGenCmdResultText</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -288,114 +288,69 @@
             <div class="section">
               
                 <h3 id="description">Description</h3>
-<p>This agent trying to parse user text by using <a href="http://api.ai">api.ai</a> service.
-There are set <code>apiai_action</code> in the memory. This set contains all possible actions,
-that can be parsed by api.ai (field <code>result.action</code> in parsed JSON).</p>
-<p><strong>Note:</strong> Name of action can contain <code>[0-9a-zA-Z_.]</code> symbols. We recomend to use
-<code>&lt;module&gt;.&lt;action_name&gt;</code> rule to form action name.</p>
-<p>After getting JSON from api.ai, agent trying to find node that represents this action
-in memory. For that is replace <code>.</code> symbol by <code>_</code> in action name. And append result string
-to <code>apiai_action_</code>. So new string will be look like <code>apiai_action_&lt;module&gt;_&lt;action_name&gt;</code>.</p>
-<p><strong>Example:</strong> for action <code>train.add_into_set</code> agent would try to find <code>sc-node</code> with system identifier
-<code>apiai_action_train_add_into_set</code> in <code>apiai_action</code> set.</p>
-<p>There are possible two different behaviour with found action node.</p>
-<hr />
-<p><strong>Emit command</strong></p>
-<p>In that case you can specify a command, that should be initiated by this apiai action.</p>
-<p><img alt="Example" src="../images/apiai_action_example_1.png" /></p>
-<p>Each command should have a common template to genarate it instance. This template
-connected to command node by <code>nrel_common_template</code> relation.</p>
-<p><img alt="Example" src="../images/apiai_action_example_2.png" /></p>
-<p><strong>Note:</strong> Command instance node in template should have identifier <code>_command</code>.</p>
-<p>All named variables in common template would be replaced by resolved elements.
-Resolved element for <code>result.parameters._varName</code> will replace <code>_varName</code> variable in template.
-Each node resolves by identifier from JSON <code>result.parameters</code> items values.
-To resolve node, this module init command:</p>
-<pre><code>command_resolve_addr
-  -&gt; ...
-  (*
-    -&gt; rrel_1: [identifier to resolve];;
-  *);;
+<p>This agent get result text template for a specified command and run <a href="../AGenText/">AGenText</a> agent
+to generate output text.</p>
+<p><strong>Parameters:</strong></p>
+<ol>
+<li><code>command instance</code> - sc-node that designate instance of a command. It should be included into
+specified <code>command class</code> set.</li>
+</ol>
+<p>Templates for a specified <code>command class</code> should be defined with relation <code>nrel_text_templates</code>.
+This relation edge starts from templates set and end in <code>command class</code>. All of templates
+included into set with an attribute relation. This attribute describes for which agent result it can be used. For example:</p>
+<pre><code class="js">command_add_into_set
+    &lt;- sc_node_not_relation;
+    &lt;- command;
+    =&gt; nrel_common_template:
+        [*
+            command_add_into_set
+                _-&gt; _command;;
+
+            _command
+                _-&gt; rrel_1:: _set;
+                _-&gt; rrel_2:: _element;;
+        *];
+
+    &lt;= nrel_text_templates:
+       ...
+       (*
+           &lt;- sc_node_not_binary_tuple;;
+           -&gt; ...
+           (*
+               =&gt; nrel_suitable_for:
+                   sc_result_ok;;
+               -&gt; [Tanks for an information] (* &lt;- lang_en;; *);;
+               -&gt; [Спасибо за информацию] (* &lt;- lang_ru;; *);;
+           *);;
+           -&gt; ...
+           (*
+               =&gt; nrel_suitable_for:
+                   sc_result_invalid_state;;
+               -&gt; [Yes, i know this] (* &lt;- lang_en;; *);;
+               -&gt; [Да, я это знаю] (* &lt;- lang_ru;; *);;
+           *);;
+       *);;
 </code></pre>
 
-<p>Right now there are no implementation of this agent as opensource in this moule,
-but you can implement any by yourself.
-<strong>TODO:</strong> <em>add more info or update, agent would be in repo</em></p>
-<p>When command instance generated by template, then it would be added into set of
-initiated commands (<code>command_initiated</code>). Also node of initiated command (<code>generated_command_instance</code>) would be
-added into result set of this agent command (<code>this_command_instance</code>). See image below.</p>
-<p><img alt="Example" src="../images/apiai_action_example_3.png" /></p>
-<hr />
-<p><strong>Generate construction</strong></p>
-<p>In that case you can specify any template that would be used to generate construction.
-There are default variables that can be used in template and would be replaced by
-values:</p>
-<ul>
-<li><code>_apiai_speech</code> - value of this variable is a <code>sc-link</code> that contains text from
-field <code>result.fullfilment.speech</code> in result JSON;</li>
-<li><code>_lang</code> - <strong>not implemented</strong> values is a <code>sc-node</code> of current user used language (<code>lang_...</code>);</li>
-<li><code>_result</code> - value is a result node ot this agent command instance.</li>
-</ul>
-<p>For example we have result JSON:</p>
-<pre><code class="json">{
-  &quot;id&quot;: &quot;d5b8d09f-ca7e-46da-a437-e8b943bee853&quot;,
-  &quot;timestamp&quot;: &quot;2017-01-28T21:09:38.508Z&quot;,
-  &quot;result&quot;: {
-    &quot;source&quot;: &quot;agent&quot;,
-    &quot;resolvedQuery&quot;: &quot;weather in minsk&quot;,
-    &quot;action&quot;: &quot;weather.search&quot;,
-    &quot;actionIncomplete&quot;: false,
-    &quot;parameters&quot;: {
-      &quot;location&quot;: &quot;Minsk&quot;
-    },
-    &quot;contexts&quot;: [],
-    &quot;metadata&quot;: {
-      &quot;intentId&quot;: &quot;9596c4bd-55ba-4ef2-b0b7-528026583fe2&quot;,
-      &quot;webhookUsed&quot;: &quot;false&quot;,
-      &quot;webhookForSlotFillingUsed&quot;: &quot;false&quot;,
-      &quot;intentName&quot;: &quot;Weather in location&quot;
-    },
-    &quot;fulfillment&quot;: {
-      &quot;speech&quot;: &quot;Search info about weather in Minsk&quot;,
-      &quot;messages&quot;: [
-        {
-          &quot;type&quot;: 0,
-          &quot;speech&quot;: &quot;Search info about weather in Minsk&quot;
-        }
-      ]
-    },
-    &quot;score&quot;: 1
-  },
-  &quot;status&quot;: {
-    &quot;code&quot;: 200,
-    &quot;errorType&quot;: &quot;success&quot;
-  },
-  &quot;sessionId&quot;: &quot;f4ed0d4f-32d3-4edc-824f-d1ad60f498a3&quot;
-}
-</code></pre>
+<p><strong>Algorithm:</strong></p>
+<p>When agent try to generate text, it find template with a specified command result and language.
+If there are more then one suitable templates, then any of them will be used.
+For example if command finished with <code>sc_result_ok</code> status and user use <code>lang_en</code> language,
+then in our sample template <code>[Tanks for an information]</code> will be used.</p>
+<div class="note">If there are no specified template for a <code>sc_result_error_...</code>, then
+<code>sc_result_error</code> will be used</div>
 
-<p>And template:</p>
-<p><img alt="Example" src="../images/apiai_action_example_4.png" /></p>
-<p>After agent finish result would be:</p>
-<p><img alt="Example" src="../images/apiai_action_example_5.png" /></p>
+<div class="note"> TODO: More complex description </div>
+
 <h3 id="example">Example</h3>
-<p>Example command:</p>
-<pre><code>command_process_user_text_message
-  -&gt; ...
-  (*
-    -&gt; [link with text to parse];;
-  *);;
-</code></pre>
-
 <h3 id="result">Result</h3>
-<p>Result structure contains sc-link with newly generated text.</p>
 <p>Possible result codes:</p>
 <ul>
-<li><code>sc_result_ok</code> - text parsed and assigned action emited;</li>
-<li><code>sc_result_error_invalid_params</code> - invalid parameters for an agent (no <code>link</code>);</li>
-<li><code>sc_result_invalid_state</code> - provided <code>link</code> has no content (content cant' be read);</li>
-<li><code>sc_result_error_io</code> - content of a <code>link</code> can't be converted into string or can't setup speech link content;</li>
-<li><code>sc_result_error</code> - can't generate and emit result action.</li>
+<li><code>sc_result_ok</code> - text generated;</li>
+<li><code>sc_result_error_invalid_params</code> - there are no <code>command instance</code> in parameters;</li>
+<li><code>sc_result_error_invalid_state</code> - invalid state of knowledge base (in most cases bad description of templates);</li>
+<li><code>sc_result_error_not_found</code> - there are no any template found;</li>
+<li><code>sc_result_error</code> - unknown error.</li>
 </ul>
               
             </div>
@@ -404,10 +359,10 @@ field <code>result.fullfilment.speech</code> in result JSON;</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../AGenText/" class="btn btn-neutral float-right" title="AGenText">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../../other/scs/" class="btn btn-neutral" title="SCs language"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../AGenText/" class="btn btn-neutral" title="AGenText"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -433,10 +388,10 @@ field <code>result.fullfilment.speech</code> in result JSON;</li>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../../other/scs/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../AGenText/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../AGenText/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../../license/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
