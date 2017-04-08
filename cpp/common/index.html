@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Build on Windows - SC-machine</title>
+  <title>Common - SC-machine</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Build on Windows";
-    var mkdocs_page_input_path = "build\\windows-build.md";
-    var mkdocs_page_url = "/build/windows-build/";
+    var mkdocs_page_name = "Common";
+    var mkdocs_page_input_path = "cpp\\common.md";
+    var mkdocs_page_url = "/cpp/common/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -58,14 +58,11 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../linux-build/">Build on Linux</a>
+    <a class="" href="../../build/linux-build/">Build on Linux</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Build on Windows</a>
-    <ul class="subnav">
-            
-    </ul>
+    <a class="" href="../../build/windows-build/">Build on Windows</a>
                 </li>
     </ul>
 	    </li>
@@ -99,19 +96,25 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../cpp/cpp-meta/">Meta programming</a>
+    <a class="" href="../cpp-meta/">Meta programming</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../cpp/kpm/">Agents</a>
+    <a class="" href="../kpm/">Agents</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../cpp/templates/">Template</a>
+    <a class="" href="../templates/">Template</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../../cpp/common/">Common</a>
+    <a class="current" href="./">Common</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#iterators">Iterators</a></li>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -122,7 +125,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../../cpp/el_types/">Element types</a>
+    <a class="" href="../el_types/">Element types</a>
                 </li>
                 <li class="">
                     
@@ -176,11 +179,11 @@
     
       
         
-          <li>Build &raquo;</li>
+          <li>API &raquo;</li>
         
       
     
-    <li>Build on Windows</li>
+    <li>Common</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -190,13 +193,73 @@
           <div role="main">
             <div class="section">
               
-                <p>Build with Visual Studio 2013:</p>
-<ul>
-<li>install <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html">jre</a></li>
-<li>downlaod source code of <a href="https://github.com/deniskoronchik/sc-machine">sc-machine</a>.</li>
-<li>Run cmake for Visual Studio 2013 with param <code>CMAKE_PREFIX_PATH=&lt;path to QT&gt;</code>. For example: <code>CMAKE_PREFIX_PATH=D:\Qt\5.5\msvc2013_64\)</code></li>
-<li>Setup redis for Windows: <a href="https://github.com/MSOpenTech/redis/releases">https://github.com/MSOpenTech/redis/releases</a></li>
-</ul>
+                <h2 id="iterators">Iterators</h2>
+<p>You can use 3-element iterators and 5-element iterators from c++ code. Image below shows numeration
+of elements in 3-element (left) and 5-element (right) iterators.
+<img alt="Iterators element numeration" src="../images/iterators_scheme.png" /></p>
+<p>For both of them you have two approaches.
+First approach to use simple while loop. It suitable, when you need to break this loop depending on logic:</p>
+<pre><code class="cpp">...
+// example of f_a_a iterator
+ScIterator3Ptr it3 = ctx.Iterator3(
+            set,
+            ScType::EdgeAccessConstPosPerm,
+            ScType::Unknown);
+while (it3-&gt;Next())
+{
+  // to get values use it3-&gt;Get(index), where index in range [0; 2]
+  ... // there is you code
+}
+
+...
+// example of f_a_a_a_f iterator
+ScIterator5Ptr it5 = ctx.Iterator5(
+        objAddr,
+        ScType::EdgeDCommonConst,
+        ScType::NodeConstAbstract,
+        ScType::EdgeAccessConstPosPerm,
+        Keynodes::nrel_mass);
+
+
+while (it5-&gt;Next())
+{
+  // to get values use it5-&gt;Get(index), where index in range [0; 4]
+  ... // there is you code
+}
+</code></pre>
+
+<p>Second approach allows you iterate 3-element and 5-element constructions with less code, and suitable when
+you need to iterate all results. <strong>Use it if you need to iterate all results. Because it more clearly.</strong></p>
+<pre><code class="cpp">...
+ctx.ForEachIter3(
+    set,
+    ScType::EdgeAccessConstPosPerm,
+    ScType::Unknown,
+    [] (ScAddr const &amp; src, ScAddr const &amp; edge, ScAddr const &amp; trg)
+{
+  // src equal to 0 value of iterator
+  // edge equal to 1 value of iterator
+  // trg equal to 2 value of iterator
+  ... // there is you code
+});
+
+...
+ctx.ForEachIter5(
+  objAddr,
+  ScType::EdgeDCommonConst,
+  ScType::NodeConstAbstract,
+  ScType::EdgeAccessConstPosPerm,
+  Keynodes::nrel_mass
+  [] (ScAddr const &amp; src, ScAddr const &amp; edge, ScAddr const &amp; trg, ScAddr const &amp; edgeAttr, ScAddr const &amp; attr)
+{
+  // src equal to 0 value of iterator
+  // edge equal to 1 value of iterator
+  // trg equal to 2 value of iterator
+  // edgeAttr equal to 3 value of iterator
+  // attr equal to 4 value of iterator
+  ... // there is you code
+});
+</code></pre>
               
             </div>
           </div>
@@ -204,10 +267,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../dev/git-workflow/" class="btn btn-neutral float-right" title="Git-workflow">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../el_types/" class="btn btn-neutral float-right" title="Element types">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../linux-build/" class="btn btn-neutral" title="Build on Linux"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../templates/" class="btn btn-neutral" title="Template"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -233,10 +296,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../linux-build/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../templates/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../dev/git-workflow/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../el_types/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

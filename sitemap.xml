@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,13 +13,13 @@
         
     <url>
      <loc>/build/linux-build/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/build/windows-build/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -29,25 +29,25 @@
         
     <url>
      <loc>/dev/git-workflow/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/dev/pr/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/dev/codestyle/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/dev/test/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -57,19 +57,25 @@
         
     <url>
      <loc>/cpp/cpp-meta/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/cpp/kpm/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/cpp/templates/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/cpp/common/</loc>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -79,35 +85,25 @@
         
     <url>
      <loc>/cpp/el_types/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/other/config/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/net/sctp/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/other/scs/</loc>
-     <lastmod>2017-03-30</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc></loc>
-     <lastmod></lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -116,7 +112,7 @@
     
     <url>
      <loc>/license/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -124,7 +120,7 @@
     
     <url>
      <loc>/changelog/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -132,7 +128,7 @@
     
     <url>
      <loc>/thirdparty/</loc>
-     <lastmod>2017-03-30</lastmod>
+     <lastmod>2017-04-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
