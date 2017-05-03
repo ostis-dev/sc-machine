@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Python - SC-machine</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Python";
+    var mkdocs_page_input_path = "python/python.md";
+    var mkdocs_page_url = "/python/python/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> SC-machine</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Build</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../build/linux-build/">Build on Linux</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../build/windows-build/">Build on Windows</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Development</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../dev/git-workflow/">Git-workflow</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/pr/">Pull requets</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/codestyle/">Codestyle</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../dev/test/">Unit tests</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../cpp/cpp-meta/">Meta programming</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../cpp/kpm/">Agents</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../cpp/templates/">Template</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../cpp/common/">Common</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Python</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#python">Python</a></li>
+    
+
+    <li class="toctree-l3"><a href="#classes">Classes</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#scaddr">ScAddr</a></li>
+        
+            <li><a class="toctree-l4" href="#sctype">ScType</a></li>
+        
+            <li><a class="toctree-l4" href="#sciterator3">ScIterator3</a></li>
+        
+            <li><a class="toctree-l4" href="#sciterator5">ScIterator5</a></li>
+        
+            <li><a class="toctree-l4" href="#sclinkcontent">ScLinkContent</a></li>
+        
+            <li><a class="toctree-l4" href="#sctemplategenparams">ScTemplateGenParams</a></li>
+        
+            <li><a class="toctree-l4" href="#sctemplategenresult">ScTemplateGenResult</a></li>
+        
+            <li><a class="toctree-l4" href="#sctemplatesearchresultitem">ScTemplateSearchResultItem</a></li>
+        
+            <li><a class="toctree-l4" href="#sctemplatesearchresult">ScTemplateSearchResult</a></li>
+        
+            <li><a class="toctree-l4" href="#scmemorycontext">ScMemoryContext</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Common</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../cpp/el_types/">Element types</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../other/config/">Configuration files</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../net/sctp/">Sctp-protocol</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../other/scs/">SCs language</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../license/">License</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../changelog/">Changelog</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../thirdparty/">Thirdparty</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">SC-machine</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>Python</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="python">Python</h1>
+<p>You can implement agents using python. All python modules should be implemented with specified rules.</p>
+<ol>
+<li>
+<p>Each module, that implement agent should be names by this rule: <code>a_&lt;agentName&gt;.py</code>. That allows system to
+know which modules could be used to run. Util modules and others should be named NOT using this rule.</p>
+</li>
+<li>
+<p>You can specify search paths of a python modules by <code>python.modules_path</code> value in a <a href="../../other/config/">configuration file</a>.</p>
+</li>
+</ol>
+<h1 id="classes">Classes</h1>
+<h2 id="scaddr">ScAddr</h2>
+<p>This class represents <code>ScAddr</code> in C++. Methods of this class:</p>
+<ul>
+<li><code>IsValid</code> - if addr is valid, then returns <code>True</code>; otherwise - <code>False</code></li>
+<li><code>ToInt</code> - convert addr value to integer (equal C++ <code>ScAddr::Hash</code>). <em>Useful for debug purposes</em>.</li>
+<li><code>__eq__</code> - equal operator <code>==</code>. Can be used like this:</li>
+</ul>
+<pre><code class="python">if addr1 == addr2:
+  pass # do something
+</code></pre>
+
+<hr />
+<ul>
+<li><code>__ne__</code> - not equal operator <code>!=</code>. Can be used like this:</li>
+</ul>
+<pre><code class="python">if addr1 != addr2:
+  pass # do something
+</code></pre>
+
+<h2 id="sctype">ScType</h2>
+<p>This class equal to <code>ScType</code> in C++. Methods of this class:</p>
+<ul>
+<li><code>constructor</code> - you can create this class with input type combinations</li>
+</ul>
+<pre><code class="python">type1 = ScType() # equal to ScType.Unknown
+type2 = ScType.Node # see more constants below
+type3 = ScType.Node | ScType.Const # equal to ScType.NodeConst
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsValid()</code> - if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></li>
+<li><code>__eq__</code> - equal operator <code>==</code>. Can be used like this:</li>
+</ul>
+<pre><code class="python">if type1 == type2:
+  pass # do something
+</code></pre>
+
+<hr />
+<ul>
+<li><code>__eq__</code> - not equal operator <code>!=</code>. Can be used like this:</li>
+</ul>
+<pre><code class="python">if type1 != type2:
+  pass # do something
+</code></pre>
+
+<hr />
+<ul>
+<li><code>__or__</code> - bitwise or operator <code>|</code>. Can be used like this:</li>
+</ul>
+<pre><code class="python">type1 = ScType.Node
+type2 = ScType.Const
+
+type3 = type1 | type2
+type3 == ScType.NodeConst # will be True
+</code></pre>
+
+<hr />
+<ul>
+<li><code>__and__</code> - bitwise and operator <code>&amp;</code>. Can be used like this:</li>
+</ul>
+<pre><code class="python">type1 = ScType.NodeConst
+type2 = ScType.Node
+
+type3 = type1 &amp; type2
+
+type3 == type1 # will be True
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsLink()</code> - if type represents a link, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">type1 = ScType.LinkConst
+type1.IsLink() # returns True
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsEdge()</code> - if type represents an edge, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">type1 = ScType.EdgeAccessConstFuzPerm
+type1.IsEdge() # return True
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsNode()</code> - if type represents a node, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">type1 = ScType.NodeConst
+type1.IsNode() # returns True
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsValid()</code> - if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">type1 = ScType.Node
+type1.IsValid() # return True
+
+type2 = ScType()
+type2.IsValid() # return False
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsConst()</code> - if type represents constant, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">type1 = ScType()
+type1.IsConst() # returns False
+
+type2 = ScType.NodeVar()
+type2.IsConst() # return False
+
+type3 = ScType.Node()
+type3.IsConst() # return False
+
+type4 = ScType.NodeConst()
+type4.IsConst() # returns True
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsVar()</code> - if type represents variable, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">type1 = ScType()
+type1.IsVar() # returns False
+
+type2 = ScType.NodeVar()
+type2.IsVar() # returns True
+
+type3= ScType.Node()
+type3.IsVar() # returns False
+
+type4 = ScType.NodeConst
+type4.IsVar() # returns False
+</code></pre>
+
+<ul>
+<li><code>ToInt()</code> - returns integer, that represents a type. Useful for debug purposes</li>
+</ul>
+<p><strong>There are some predefined types</strong>. You can find them in <a href="../../cpp/el_types/">types table</a> (see C++ table). In <strong>Python</strong> you should use <code>ScType.Node</code> instead of <code>ScType::Node</code></p>
+<h2 id="sciterator3">ScIterator3</h2>
+<p>This class represents iterator for a triples (see <a href="../../cpp/common/#iterators">iterators description</a>). There are a list of available methods:</p>
+<ul>
+<li><code>Next()</code> - move iterator to next triple. Returns <code>True</code> if moved to next triple; otherwise - <code>False</code>. Example of usage:</li>
+</ul>
+<pre><code class="python">while (it3.Next())
+  ... # do something
+</code></pre>
+
+<hr />
+<ul>
+<li><code>Get(idx)</code> - returns <code>ScAddr</code> of specified element in current triple (should be in range <code>[0; 2]</code>). Example of usage:</li>
+</ul>
+<pre><code class="python">while (it3.Next())
+  src = it3.Get(0)  # source element in triple
+  edge = it3.Get(1) # edge in triple
+  trg = it3.Get(2)  # target element in triple
+  ...
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsValid()</code> - returns <code>True</code> if iterator is valid; otherwise - <code>False</code></li>
+</ul>
+<h2 id="sciterator5">ScIterator5</h2>
+<p>This class represents iterator of 5-element constructions (see <a href="../../cpp/common/#iterators">iterators description</a>). There are a list of available methods:</p>
+<ul>
+<li><code>Next()</code> - move iterator to next 5-element construction. Returns <code>True</code> if moved to next construction; otherwise - <code>False</code>. Example of usage:</li>
+</ul>
+<pre><code class="python">while (it5.Next())
+  ... # do something
+</code></pre>
+
+<hr />
+<ul>
+<li><code>Get(idx)</code> - returns <code>ScAddr</code> of specified element in current construction (should be in range <code>[0; 4]</code>). Example of usage:</li>
+</ul>
+<pre><code class="python">while (it5.Next())
+  src = it5.Get(0)      # source element in triple
+  edge = it5.Get(1)     # edge in triple
+  trg = it5.Get(2)      # target element in triple
+  attrEdge = it5.Get(3) # edge from attribute set
+  attr = it5.Get(4)     # attribute set
+  ...
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsValid()</code> - returns <code>True</code> if iterator is valid; otherwise - <code>False</code></li>
+</ul>
+<h2 id="sclinkcontent">ScLinkContent</h2>
+<p>This class wrap content of link. It allows to unpack it to <code>string</code>, <code>int</code> or <code>float</code>. There are methods of this class:</p>
+<ul>
+<li><code>AsString</code> - get content of a link as <code>string</code> value.</li>
+</ul>
+<pre><code class="python">content = ctx.GetLinkContent(linkAddr)
+stringValue = content.AsString()
+</code></pre>
+
+<hr />
+<ul>
+<li><code>AsInt</code> - get content of a link as <code>int</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.</li>
+</ul>
+<pre><code class="python">content = ctx.GetLinkContent(linkAddr)
+intValue = content.AsInt()
+</code></pre>
+
+<hr />
+<ul>
+<li><code>AsFloat</code> - get content of a link as <code>float</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.</li>
+</ul>
+<pre><code class="python">content = ctx.GetLinkContent(linkAddr)
+floatValue = content.AsFloat()
+</code></pre>
+
+<h2 id="sctemplategenparams">ScTemplateGenParams</h2>
+<p>This class accumulate parameters for a template generation. There are methods of this class:</p>
+<ul>
+<li><code>Add(paramName, valueAddr)</code> - add new parameter value, where <code>paramName</code> - string with a replacement name; <code>valueAddr</code> - <code>ScAddr</code> of element that need to be placed instead of specified replacement (see more in <a href="../../cpp/templates/">templates description</a>)</li>
+</ul>
+<pre><code class="python">params = ScTemplateGenParams()
+params.Add(&quot;_item&quot;, itemAddr);
+...
+</code></pre>
+
+<hr />
+<ul>
+<li><code>Get(paramName)</code> - return value of parameter with a specified name <code>paramName</code>. If parameter with specified identifier exists, then returns <code>ScAddr</code> value of it; otherwise - <code>None</code></li>
+</ul>
+<pre><code class="python">addr = params.Get(&quot;_item&quot;)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>IsEmpty()</code> - if there are no any parameters added, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<h2 id="sctemplategenresult">ScTemplateGenResult</h2>
+<p>This class wrap template generation result. There are methods of this class:</p>
+<ul>
+<li><code>Size()</code> - return number of elements</li>
+</ul>
+<hr />
+<ul>
+<li><code>__getitem__(replName)</code> - return specified result by replacement name (<code>replName</code> - string). Returns <code>ScAddr</code> type. If there are no replacement with a specified name, then raise <code>ExceptionItemNotFound</code> exception</li>
+</ul>
+<pre><code class="python">addr = genResult[&quot;node1&quot;]
+</code></pre>
+
+<h2 id="sctemplatesearchresultitem">ScTemplateSearchResultItem</h2>
+<p>This class represents one result for a search by template. There are methods of this class:</p>
+<ul>
+<li><code>Size()</code> - return size of result (number of addrs equal to search construction)</li>
+</ul>
+<hr />
+<ul>
+<li><code>__getitem__</code> - allows to get result items by any index: <code>int</code>, <code>str</code>. In case of <code>int</code> index you will just get <code>ScAddr</code> by index in result array (length equal to <code>Size()</code>) this case suitable, when you need to iterate all addrs in result. <div class="note">You will receive duplicate <code>ScAddr</code>'s, because result stored as array of founded triples.'</div> When you try to get <code>ScAddr</code> by name it will be find it by replacement name (see <a href="../../cpp/templates/">templates</a> for more info). If there are no element with specified index, then returns <code>None</code></li>
+</ul>
+<pre><code class="python">resultSize = searchResultItem.Size()
+for i in range(resultSize):
+  addr = searchResultItem[i] # iterate all addrs
+
+addr1 = searchResultItem[&quot;replacement name&quot;] # get by replacement name
+</code></pre>
+
+<h2 id="sctemplatesearchresult">ScTemplateSearchResult</h2>
+<p>This class represent list of results by template search. There are methods of this class:</p>
+<ul>
+<li><code>Size()</code> - return number of results.</li>
+</ul>
+<hr />
+<ul>
+<li><code>__getitem__</code> - get result by specified index (<code>int</code> should be less then <code>Size()</code>).</li>
+</ul>
+<pre><code class="python">resultNum = searchResult.Size()
+for i in range(resultNum):
+  searchResultItem = searchResult[i]
+
+  # work with searchResultItem there see (ScTemplateSearchResult)
+</code></pre>
+
+<h2 id="scmemorycontext">ScMemoryContext</h2>
+<p>This class implements context, that allows you to work with memory.
+<div class="note"><b>You shouldn't share one context between two or more threads</b></div>
+There are methods of this class:</p>
+<ul>
+<li><code>CreateNode(type)</code> - create node with specified type. Where <code>type</code> is an instance of <code>ScType</code> (just <strong>edge</strong> types could be used). Returns <code>ScAddr</code> of created node. If returned <code>ScAddr</code> is not valid (<code>IsValid()</code>), then node wasn't created.</li>
+</ul>
+<pre><code class="python">nodeAddr = ctx.CreateNode(ScType.NodeConst)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>CreateEdge(type, src, trg)</code> - create edge between <code>src</code> and <code>trg</code> elements. Where <code>type</code> is an instance
+of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>src</code> is a <code>ScAddr</code> of source element (could be any but not <code>Unknown</code>); <code>trg</code> is a <code>ScAddr</code> of target element (could be any but not <code>Unknown</code>). Returns <code>ScAddr</code> of created edge, but if returned <code>ScAddr</code> is not valid, then edge wasn't created.</li>
+</ul>
+<pre><code class="python">edgeAddr = ctx.CreateEdge(ScType.EdgeAccessConstPosPerm, srcAddr, trgAddr)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>CreateLink()</code> - create link. Returns <code>ScAddr</code> of created link, but if returned <code>ScAddr</code> is not valid, then link wasn't created</li>
+</ul>
+<pre><code class="python">linkAddr = ctx.CreateLink()
+</code></pre>
+
+<hr />
+<ul>
+<li><code>GetName()</code> - returns name of context. Useful in debug purposes</li>
+</ul>
+<hr />
+<ul>
+<li><code>IsElement(addr)</code> - if element with specified <code>addr</code> exist, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">ctx.IsElement(elementAddr)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>GetElementType(addr)</code> - returns type of specified element. If element doesn't exist, then returns <code>ScType.Unknown</code></li>
+</ul>
+<pre><code class="python">t = ctx.GetElementType(elementAddr)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>GetEdgeInfo(addr)</code> - returns tuple <code>(src, trg)</code>, where <code>src</code> - is a <code>ScAddr</code> of adge source element; <code>trg</code> - target element. If <code>addr</code> point to element that doesn't exist, or is not an edge, then returns <code>(None, None)</code>.</li>
+</ul>
+<pre><code class="python">src, trg = ctx.GetEdgeInfo(edgeAddr)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>SetLinkContent(addr, content)</code> - sets specified <code>content</code> into link (specified with <code>addr</code>). Type of <code>content</code> should be one of: <code>int</code>, <code>float</code>, <code>string</code>. If content changed, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">
+...
+ctx.SetLinkContent(linkAddr1, 56)
+...
+ctx.SetLinkContent(linkAddr1, 56.0)
+...
+ctx.SetLinkContent(linkAddr1, &quot;any text&quot;)
+...
+
+</code></pre>
+
+<hr />
+<ul>
+<li><code>GetLinkContent(addr)</code> - returns content of a specified link. If specified <code>addr</code> is not a link, or it doesn't exist, then returns <code>None</code>. Returned value has type <code>ScLinkContent</code>.</li>
+</ul>
+<pre><code class="python">...
+
+value = ctx.GetLinkContent(elementAddr)
+if value:
+  print (value)
+
+...
+</code></pre>
+
+<hr />
+<ul>
+<li><code>Iterator3(param1, param2, param3)</code> - create iterator for a specified triple template. Parameters <code>param1</code>, <code>param2</code>, <code>param3</code> could be on of a type: <code>ScAddr</code>, <code>ScType</code>. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator3</code> object; otherwise - <code>None</code></li>
+</ul>
+<pre><code class="python">itFAA = ctx.Iterator3(addr1, ScType.EdgeAccessConstPosPerm, ScType.NodeVar)
+while itFAA.Next():
+  pass # process iterated constructions there
+
+...
+
+itFAF = ctx.Iterator3(addr1, ScType.EdgeAccessConstPosPerm, addr2)
+while itFAF.Next():
+  pass # process iterated constructions there
+
+...
+
+itAAF = ctx.Iterator3(ScType.NodeConst, ScType.EdgeAccessConstPosPerm, addr2)
+while itAAF.Next():
+  pass # process iterated constructions there
+</code></pre>
+
+<hr />
+<ul>
+<li><code>Iterator5(param1, param2, param3, param4, param5)</code> - create iterator for a specified 5-element construction. Parameters <code>param1</code>, <code>param2</code>, <code>param3</code>, <code>param4</code>, <code>param5</code> could be on of a type <code>ScAddr</code>, <code>ScType</code>. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator5</code> object; otherwise - <code>None</code></li>
+</ul>
+<pre><code class="python">itFAFAF = ctx.Iterator5(
+            addr1,
+            ScType.EdgeAccessConstPosPerm,
+            addr2,
+            ScType.EdgeAccessVarPosTemp,
+            attr)
+while itFAFAF.Next():
+  pass # process iterated constructions there
+
+...
+
+itFAFAA = ctx.Iterator5(
+            addr1,
+            ScType.EdgeAccessConstPosPerm,
+            addr2,
+            ScType.EdgeAccessVarPosTemp,
+            ScType.Node)
+while itFAFAA.Next():
+  pass # process iterated constructions there
+
+...
+
+itFAAAF = ctx.Iterator5(
+            addr1,
+            ScType.EdgeAccessConstPosPerm,
+            ScType.NodeVar,
+            ScType.EdgeAccessVarPosTemp,
+            attr)
+while itFAAAF.Next():
+  pass # process iterated constructions there
+
+...
+
+itFAAAA = ctx.Iterator5(
+            addr1,
+            ScType.EdgeAccessConstPosPerm,
+            ScType.NodeVar,
+            ScType.EdgeAccessVarPosTemp,
+            ScType.Node)
+while itFAAAA.Next():
+  pass # process iterated constructions there
+
+...
+itAAFAF = ctx.Iterator5(
+            ScType.NodeConst,
+            ScType.EdgeAccessConstPosPerm,
+            addr2,
+            ScType.EdgeAccessVarPosTemp,
+            attr)
+while itAAFAF.Next():
+  pass # process iterated constructions there
+
+...
+
+itAAFAA = ctx.Iterator5(
+            ScType.NodeConst,
+            ScType.EdgeAccessConstPosPerm,
+            addr2,
+            ScType.EdgeAccessVarPosTemp,
+            ScType.Node)
+while itAAFAA.Next():
+  pass # process iterated constructions there
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperResolveSystemIdtf(idtf, type)</code> - resolve element by system identifier. This function tries to find element with specified system identifier - <code>idtf</code>. If element wasn't found and type is <code>ScType</code>, then new element will be created with specified system identifier and type. If <code>type</code> is <code>None</code>, then new element wouldn't created and function returns invalid <code>ScAddr</code>. In other cases function returns <code>ScAddr</code> of element with specified system identifier.</li>
+</ul>
+<pre><code class="python">addr = ctx.HelperResolveSystemIdtf(&quot;nrel_main_idtf&quot;, ScType.NodeConstNoRole)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperSetSystemIdtf(idtf, addr)</code> - set specified system identifier - <code>idtf</code>, to element with specified <code>addr</code>. If identifier changed, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">if ctx.HelperSetSystemIdtf(&quot;new_idtf&quot;, addr):
+  pass # identifier changed
+else:
+  pass # identifier not changed
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperGetSystemIdtf(addr)</code> - returns system identifier of a specified element. If system identifier exist, then it returns as a non empty string; otherwise result string would be empty.</li>
+</ul>
+<pre><code class="python">idtfValue = ctx.HelperGetSystemIdtf(addr)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperCheckEdge(srcAddr, trgAddr, edgeType)</code> - if there are one or more edge with a specified type (<code>edgeType</code>) between <code>srcAddr</code> and <code>trgAddr</code> elements, then returns <code>True</code>; otherwise - <code>False</code></li>
+</ul>
+<pre><code class="python">if ctx.HelperCheckEdge(addr1, addr2, ScType.EdgeAccessConstPosPerm):
+  pass # edge between addr1 and addr2 exist
+else:
+  pass # edge doesn't exists
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperGenTemplate(templ, params)</code> - generate construction by specified template (<code>templ</code> should be instance of <code>ScTemplate</code>) with specified parameters (<code>params</code> should be instance of <code>ScTemplateGenParams</code>). If construction generated, then returns <code>ScTemplateGenResult</code> that contains generated construction; otherwise - <code>None</code>.</li>
+</ul>
+<pre><code class="python">templ = ScTemplate()
+... # fill template
+
+params = ScTemplateGenParams()
+... # fill parameters
+
+result = ctx.HelperGenTemplate(templ, params)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperSearchTemplate(templ)</code> - search construction by specified template (<code>templ</code> should be instance of <code>ScTemplate</code>). Returns <code>ScTemplateSearchResult</code> object instance. If it <code>Size()</code> equal to 0, then no anything found</li>
+</ul>
+<pre><code class="python">templ = ScTemplate()
+... # fill template
+
+result = ctx.HelperSearchTemplate(templ)
+</code></pre>
+
+<hr />
+<ul>
+<li><code>HelperBuildTemplate(templAddr)</code> - build template from construction in memory. Returns <code>ScTemplate</code> instance. If template wasn't built, then return <code>None</code></li>
+</ul>
+<pre><code class="python">templ = ctx.HelperBuildTemplate(templAddr)
+... # work with template
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../cpp/el_types/" class="btn btn-neutral float-right" title="Element types">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../cpp/common/" class="btn btn-neutral" title="Common"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../cpp/common/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../cpp/el_types/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
