@@ -14,11 +14,12 @@
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../_assets/main.css" rel="stylesheet">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Common";
-    var mkdocs_page_input_path = "cpp/common.md";
+    var mkdocs_page_input_path = "cpp\\common.md";
     var mkdocs_page_url = "/cpp/common/";
   </script>
   
@@ -111,6 +112,12 @@
     <a class="current" href="./">Common</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#sclink">ScLink</a></li>
+    
+
+    <li class="toctree-l3"><a href="#common-constructions">Common constructions</a></li>
+    
+
     <li class="toctree-l3"><a href="#iterators">Iterators</a></li>
     
 
@@ -200,7 +207,82 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="iterators">Iterators</h2>
+                <h2 id="sclink">ScLink</h2>
+<p>Include file: <code>#include &lt;sc-memory/cpp/sc_link.hpp&gt;</code></p>
+<p>There is a special wrapped class <code>ScLink</code> that makes work with sc-links simple. It allows to set/get common types values.
+Supported types: <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, <code>uint64_t</code>, <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, <code>int64_t</code>, <code>float</code>, <code>double</code>, <code>std::string</code>.</p>
+<div class="note">If you try to get <code>Type1</code> value, but in memory stores <code>Type2</code> value, then function <code>Get&ltType&gt()</code> will throws an exception <code>ExceptionInvalidParams</code></div>
+
+<p>Example:</p>
+<pre><code class="cpp">...
+std::string const str = &quot;any text value&quot;;
+ScLink link(linkAddr);
+link.Set(str);
+link.IsType&lt;std::string&gt;(); // will return true
+std::string const value = link.Get&lt;std::string&gt;(); // value == str
+
+...
+
+uint32_t const ivalue = 473;
+link.Set(ivalue);
+link.IsType&lt;std::string&gt;(); // returns false
+link.IsType&lt;uint32_t&gt;(); // returns true
+link.IsType&lt;uint8_t&gt;(); // returns false
+
+...
+
+link.Get&lt;std::string&gt;(); // throws ExceptionInvalidParams
+link.Get&lt;uint32_t&gt;(); // returns stored value
+link.IsType&lt;uint8_t&gt;(); // throws ExceptionInvalidParams
+...
+</code></pre>
+
+<hr />
+<p>Also you can get type of specified <code>ScLink</code>:</p>
+<pre><code class="cpp">ScLink link;
+link.Set&lt;uint32_t&gt;(32);
+link.DetermineType(); // will return ScLink::Type::UInt32
+</code></pre>
+
+<p>See <code>ScLink::Types</code> for full list of supported ones.</p>
+<hr />
+<p>You can get value of any ScLink as <code>std::string</code>:</p>
+<pre><code class="cpp">ScLink link;
+link.Set&lt;uint32_t&gt;(32);
+link.GetAsString(); // will return &quot;32&quot;
+</code></pre>
+
+<h2 id="common-constructions">Common constructions</h2>
+<p>Include file: <code>#include &lt;sc-memory/cpp/sc_common_templ.hpp&gt;</code></p>
+<p>There are some function that allows to make a common routine work:</p>
+<ul>
+<li><code>sc::ResolveRelationTuple</code> - allow to ensure that specified <code>quasy_binary</code> relation between tuple and specified element exists. Returns <code>ScAddr</code> of tuple. This function check if specified construction exists, and if it doesn't then generate it by template. Used template for check/generation:
+<scg src="../images/sc_ResolveRelationTuple.gwf"></scg></li>
+</ul>
+<p>Example:</p>
+<pre><code class="cpp">ScAddr const tuple = sc::ResolveRelationTuple(ctx, el, relAddr);
+// where:
+// el - is a ScAddr of element to ensure tuple exist
+// relAddr - is a ScAddr of quasy_binary relation
+</code></pre>
+
+<hr />
+<ul>
+<li><code>sc::SetRelationValue</code> - create sc-link linked to <code>el</code> by relation <code>rel</code>. If it already exist, than changes it value to new one. Returns <code>ScAddr</code> of sc-link. Used template for check/generation:
+<scg src="../images/sc_SetRelationValue.gwf"></scg></li>
+</ul>
+<p>Example:</p>
+<pre><code class="cpp">std::string const value1 = &quot;test_value&quot;;
+ScAddr const linkAddr1 = sc::SetRelationValue(ctx, el, relAddr1, value1);
+
+uint32_t const value2 = 57;
+ScAddr const linkAddr2 = sc::SetRelationValue(ctx, el, relAddr1, value2);
+
+SC_ASSERT(linkAddr1 == linkAddr2, ()); // should be valid (ScAddr of link doesn't changed)
+
+</code></pre>
+
+<h2 id="iterators">Iterators</h2>
 <p>You can use 3-element iterators and 5-element iterators from c++ code. Image below shows numeration
 of elements in 3-element (left) and 5-element (right) iterators.
 <img alt="Iterators element numeration" src="../images/iterators_scheme.png" /></p>
@@ -334,6 +416,8 @@ if (response.IsPtrValid() &amp;&amp; response-&gt;IsSuccess())
     </span>
 </div>
     <script src="../../js/theme.js"></script>
+      <script src="../../_assets/scg.min.js"></script>
+      <script src="../../_assets/main.js"></script>
 
 </body>
 </html>
