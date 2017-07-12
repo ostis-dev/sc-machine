@@ -119,6 +119,9 @@
     <li class="toctree-l3"><a href="#python">Python</a></li>
     
 
+    <li class="toctree-l3"><a href="#usage-example">Usage example</a></li>
+    
+
     <li class="toctree-l3"><a href="#classes">Classes</a></li>
     
         <ul>
@@ -226,16 +229,124 @@
             <div class="section">
               
                 <h1 id="python">Python</h1>
-<p>You can implement agents using python. All python modules should be implemented with specified rules.</p>
+<p>You can implement agents using <strong>Python 3</strong>. All python modules should be implemented with specified rules.</p>
 <ol>
-<li>
-<p>Each module, that implement agent should be names by this rule: <code>a_&lt;agentName&gt;.py</code>. That allows system to
-know which modules could be used to run. Util modules and others should be named NOT using this rule.</p>
-</li>
-<li>
-<p>You can specify search paths of a python modules by <code>python.modules_path</code> value in a <a href="../../other/config/">configuration file</a>.</p>
-</li>
+<li>You can specify search paths of a python modules by <code>python.modules_path</code> value in a <a href="../../other/config/">configuration file</a>.</li>
 </ol>
+<h1 id="usage-example">Usage example</h1>
+<p>There are two ways to run python script:</p>
+<ul>
+<li>when you need run script and wait it finished, then just use this code:</li>
+</ul>
+<pre><code class="cpp">#include &lt;sc-memory/cpp/python/sc_python_interp.hpp&gt;
+...
+void doSomething()
+{
+  ...
+  py::ScPythonInterpreter::RunScript(&quot;lg/tv_service.py&quot;, m_bridge);
+  ...
+}
+</code></pre>
+
+<p>Then in python you can write any code you want:</p>
+<pre><code class="python">import any_module
+
+# create context (with minimal access)
+ctx = createScMemoryContext('context name')
+
+# create node
+nodeAddr = ctx.CreateNode(ScType.NodeConst)
+...
+
+# you can use any installed python libraries
+any_module.doSomething()
+</code></pre>
+
+<ul>
+<li>if you want to run script as a service and communicate with it, then use code:</li>
+</ul>
+<pre><code class="cpp">class Service
+{
+public:
+  void Run()
+  {
+    // Run script in a separate thread
+    m_workThread.reset(new std::thread([&amp;]
+    {
+      // should exist my/my_script.py in python modules path
+      py::ScPythonInterpreter::RunScript(&quot;my/my_script.py&quot;, m_bridge);
+    }));
+    m_workThread-&gt;detach();
+
+    // wait until bridge starts
+    m_bridge-&gt;WaitInitialize();
+
+    // now you can use bridge
+    ScPythonBridge::ResponsePtr res = m_bridge-&gt;DoRequest(&quot;eventName&quot;, &quot;eventData&quot;);
+  }
+
+  void Stop()
+  {
+    m_bridge-&gt;Close(); // close bridge
+    m_workThread-&gt;join(); // wait until thread finished    
+  }
+
+private:
+  py::ScPythonBridgePtr m_bridge; // special bridge to communicate with python script
+  std::unique_ptr&lt;std::thread&gt; m_workThread; // thread where script runs
+};
+</code></pre>
+
+<p>Then in python code use common module:</p>
+<pre><code class="python">from common import ScModule
+
+class MyModule(ScModule):
+
+    kNrelMainIdtf = 'nrel_main_idtf'
+    kDevice = 'device'
+
+    def __init__(self):
+        ScModule.__init__(self,
+            createScMemoryContext('MyModule'), keynodes=[
+                # there we can initialize keynodes that we need
+                MyModule.kNrelMainIdtf,
+                MyModule.kDevice,
+            ], cpp_bridge=cpp_bridge)
+        # cpp_bridge - is a global variable that store CPP-Python bridge object
+
+
+    def OnCppUpdate(self):
+        super.OnCppUpdate(self)
+        # you can overload more functions for work
+        # see more details in sc-kpm/python/common/sc_module.py
+
+    def printMainIdtf(self):
+        # template to update current volume value
+        templ = ScTemplate()
+        templ.TripleWithRelation(
+            self.keynodes[self.kDevice], # get ScAddr of keynode
+            ScType.EdgeDCommonVar,
+            ScType.Link &gt;&gt; '_link',
+            ScType.EdgeAccessVarPosPerm,
+            self.keynodes[self.kNrelMainIdtf])
+
+        # self.sc_context - is a context to work with sc-memory (use just this one)
+        searchResult = self.sc_context.HelperSearchTemplate(templ)
+
+        linkAddr = None
+        if searchResult.Size() &gt; 0:
+            # we found old value change it
+            linkAddr = searchResult[0]['_link']
+        else:
+            genResult = self.sc_context.HelperGenTemplate(templ, ScTemplateGenParams())
+            if genResult:
+                linkAddr = genResult['_link']
+
+        if linkAddr:
+            print(self.sc_context.GetLinkContent(linkAddr))
+
+</code></pre>
+
 <h1 id="classes">Classes</h1>
 <h2 id="scaddr">ScAddr</h2>
 <p>This class represents <code>ScAddr</code> in C++. Methods of this class:</p>
@@ -521,7 +632,7 @@ for i in range(resultNum):
 
 <h2 id="scmemorycontext">ScMemoryContext</h2>
 <p>This class implements context, that allows you to work with memory.
-<div class="note"><b>You shouldn't share one context between two or more threads</b></div>
+<div class="note"><b>DO NOT use one context in different threads</b></div>
 There are methods of this class:</p>
 <ul>
 <li><code>CreateNode(type)</code> - create node with specified type. Where <code>type</code> is an instance of <code>ScType</code> (just <strong>edge</strong> types could be used). Returns <code>ScAddr</code> of created node. If returned <code>ScAddr</code> is not valid (<code>IsValid()</code>), then node wasn't created.</li>
