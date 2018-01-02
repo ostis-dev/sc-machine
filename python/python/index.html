@@ -1,233 +1,575 @@
+
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Python - SC-machine</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-
-  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/highlight.css">
-  <link href="../../_assets/main.css" rel="stylesheet">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Python";
-    var mkdocs_page_input_path = "python\\python.md";
-    var mkdocs_page_url = "/python/python/";
-  </script>
-  
-  <script src="../../js/jquery-2.1.1.min.js"></script>
-  <script src="../../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
-  
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
+<html lang="en" class="no-js">
+  <head>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-      <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> SC-machine</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-  </form>
-</div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.languages" content="">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.12.2">
+    
+    
+      
+        <title>Common - SC-machine</title>
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-04ea671600.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../_assets/main.css">
+    
+    
+  </head>
+  
+  
+  
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="SC-machine" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon md-icon--home"></i>
+          
+        </a>
       </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Build</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../build/linux-build/">Build on Linux</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../build/windows-build/">Build on Windows</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Development</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../dev/git-workflow/">Git-workflow</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../dev/pr/">Pull requets</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../dev/codestyle/">Codestyle</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../dev/test/">Unit tests</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">API</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../cpp/cpp-meta/">Meta programming</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../cpp/kpm/">Agents</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../cpp/templates/">Template</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../cpp/common/">Common</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Python</a>
-    <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#python">Python</a></li>
-    
-
-    <li class="toctree-l3"><a href="#usage-example">Usage example</a></li>
-    
-
-    <li class="toctree-l3"><a href="#classes">Classes</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#scaddr">ScAddr</a></li>
-        
-            <li><a class="toctree-l4" href="#sctype">ScType</a></li>
-        
-            <li><a class="toctree-l4" href="#sciterator3">ScIterator3</a></li>
-        
-            <li><a class="toctree-l4" href="#sciterator5">ScIterator5</a></li>
-        
-            <li><a class="toctree-l4" href="#sclinkcontent">ScLinkContent</a></li>
-        
-            <li><a class="toctree-l4" href="#sctemplategenparams">ScTemplateGenParams</a></li>
-        
-            <li><a class="toctree-l4" href="#sctemplategenresult">ScTemplateGenResult</a></li>
-        
-            <li><a class="toctree-l4" href="#sctemplatesearchresultitem">ScTemplateSearchResultItem</a></li>
-        
-            <li><a class="toctree-l4" href="#sctemplatesearchresult">ScTemplateSearchResult</a></li>
-        
-            <li><a class="toctree-l4" href="#scmemorycontext">ScMemoryContext</a></li>
-        
-        </ul>
-    
-
-    </ul>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Common</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../cpp/el_types/">Element types</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../other/config/">Configuration files</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../net/sctp/">Sctp-protocol</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../other/scs/">SCs language</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../license/">License</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../changelog/">Changelog</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../thirdparty/">Thirdparty</a>
-	    </li>
-          
-        </ul>
-      </div>
-      &nbsp;
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">SC-machine</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
-    
-      
-        
-          <li>API &raquo;</li>
-        
-      
-    
-    <li>Python</li>
-    <li class="wy-breadcrumbs-aside">
-      
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
               
+                <span class="md-header-nav__parent">
+                  API
+                </span>
+              
+                <span class="md-header-nav__parent">
+                  Python
+                </span>
+              
+            
+            Common
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon md-icon--home"></i>
+      
+    </span>
+    SC-machine
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Build
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Build
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/linux-build/" title="Build on Linux" class="md-nav__link">
+      Build on Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/windows-build/" title="Build on Windows" class="md-nav__link">
+      Build on Windows
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/git-workflow/" title="Git-workflow" class="md-nav__link">
+      Git-workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/pr/" title="Pull requets" class="md-nav__link">
+      Pull requets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/codestyle/" title="Codestyle" class="md-nav__link">
+      Codestyle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/test/" title="Unit tests" class="md-nav__link">
+      Unit tests
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/cpp-meta/" title="Meta programming" class="md-nav__link">
+      Meta programming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/kpm/" title="Agents" class="md-nav__link">
+      Agents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/templates/" title="Template" class="md-nav__link">
+      Template
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/common/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5" checked>
+    
+    <label class="md-nav__link" for="nav-4-5">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-5">
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Common" class="md-nav__link md-nav__link--active">
+      Common
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../library/" title="Library" class="md-nav__link">
+      Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cpp_wrap/" title="Wrapped classes" class="md-nav__link">
+      Wrapped classes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Common
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Common
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/el_types/" title="Element types" class="md-nav__link">
+      Element types
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/config/" title="Configuration files" class="md-nav__link">
+      Configuration files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../net/sctp/" title="Sctp-protocol" class="md-nav__link">
+      Sctp-protocol
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/scs/" title="SCs language" class="md-nav__link">
+      SCs language
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../thirdparty/" title="Thirdparty" class="md-nav__link">
+      Thirdparty
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
                 <h1 id="python">Python</h1>
 <p>You can implement agents using <strong>Python 3</strong>. All python modules should be implemented with specified rules.</p>
 <ol>
@@ -238,687 +580,183 @@
 <ul>
 <li>when you need run script and wait it finished, then just use this code:</li>
 </ul>
-<pre><code class="cpp">#include &lt;sc-memory/cpp/python/sc_python_interp.hpp&gt;
-...
-void doSomething()
-{
-  ...
-  py::ScPythonInterpreter::RunScript(&quot;lg/tv_service.py&quot;, m_bridge);
-  ...
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;sc-memory/cpp/python/sc_python_interp.hpp&gt;</span><span class="cp"></span>
+<span class="p">...</span>
+<span class="kt">void</span> <span class="n">doSomething</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="p">...</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">ScPythonInterpreter</span><span class="o">::</span><span class="n">RunScript</span><span class="p">(</span><span class="s">&quot;lg/tv_service.py&quot;</span><span class="p">,</span> <span class="n">m_bridge</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+
 
 <p>Then in python you can write any code you want:</p>
-<pre><code class="python">import any_module
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">any_module</span>
 
-# create context (with minimal access)
-ctx = createScMemoryContext('context name')
+<span class="c1"># create context (with minimal access)</span>
+<span class="n">ctx</span> <span class="o">=</span> <span class="n">ScMemoryContext</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;context name&#39;</span><span class="p">)</span>
 
-# create node
-nodeAddr = ctx.CreateNode(ScType.NodeConst)
-...
+<span class="c1"># create node</span>
+<span class="n">nodeAddr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">CreateNode</span><span class="p">(</span><span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span><span class="p">)</span>
+<span class="o">...</span>
 
-# you can use any installed python libraries
-any_module.doSomething()
-</code></pre>
+<span class="c1"># you can use any installed python libraries</span>
+<span class="n">any_module</span><span class="o">.</span><span class="n">doSomething</span><span class="p">()</span>
+</pre></div>
+
 
 <ul>
 <li>if you want to run script as a service and communicate with it, then use code:</li>
 </ul>
 <p><strong>my_service.hpp</strong></p>
-<pre><code class="cpp">#pragma once
+<div class="codehilite"><pre><span></span><span class="cp">#pragma once</span>
 
-#include &lt;sc-memory/cpp/python/sc_python_service.hpp&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;sc-memory/cpp/python/sc_python_service.hpp&gt;</span><span class="cp"></span>
 
-class MyService : public py::ScPythonService
-{
-public:
-  MyService();
+<span class="k">class</span> <span class="nc">MyService</span> <span class="o">:</span> <span class="k">public</span> <span class="n">py</span><span class="o">::</span><span class="n">ScPythonService</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">MyService</span><span class="p">();</span>
 
-private:
-  virtual void RunImpl() override;
-  virtual void StopImpl() override;
-};
+<span class="k">private</span><span class="o">:</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">RunImpl</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">StopImpl</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+<span class="p">};</span>
 
-}
-</code></pre>
+<span class="p">}</span>
+</pre></div>
+
 
 <p><strong>my_service.cpp</strong></p>
-<pre><code class="cpp">#include &quot;my_service.hpp&quot;
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;my_service.hpp&quot;</span><span class="cp"></span>
 
-MyService::MyService()
-  : ScPythonService(&quot;my_service.py&quot;)
-{
-}
+<span class="n">MyService</span><span class="o">::</span><span class="n">MyService</span><span class="p">()</span>
+  <span class="o">:</span> <span class="n">ScPythonService</span><span class="p">(</span><span class="s">&quot;my_service.py&quot;</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
 
-void MyService::RunImpl()
-{
-  // your run code that need to be run after service started
-}
+<span class="kt">void</span> <span class="n">MyService</span><span class="o">::</span><span class="n">RunImpl</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// your run code that need to be run after service started</span>
+<span class="p">}</span>
 
-void MyService::StopImpl()
-{
-  // your run code that need to be run after service stopped
-}
-</code></pre>
+<span class="kt">void</span> <span class="n">MyService</span><span class="o">::</span><span class="n">StopImpl</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// your run code that need to be run after service stopped</span>
+<span class="p">}</span>
+</pre></div>
+
 
 <p>Then in python code use common module:</p>
 <p><strong>my_service.py</strong></p>
-<pre><code class="python">from common import ScModule
-
-class MyModule(ScModule):
-
-    kNrelMainIdtf = 'nrel_main_idtf'
-    kDevice = 'device'
-
-    def __init__(self):
-        ScModule.__init__(self,
-            createScMemoryContext('MyModule'), keynodes=[
-                # there we can initialize keynodes that we need
-                MyModule.kNrelMainIdtf,
-                MyModule.kDevice,
-            ], cpp_bridge=cpp_bridge)
-        # cpp_bridge - is a global variable that store CPP-Python bridge object
-
-
-    def OnCppUpdate(self):
-        super.OnCppUpdate(self)
-        # you can overload more functions for work
-        # see more details in sc-kpm/python/common/sc_module.py
-
-    def printMainIdtf(self):
-        # template to update current volume value
-        templ = ScTemplate()
-        templ.TripleWithRelation(
-            self.keynodes[self.kDevice], # get ScAddr of keynode
-            ScType.EdgeDCommonVar,
-            ScType.Link &gt;&gt; '_link',
-            ScType.EdgeAccessVarPosPerm,
-            self.keynodes[self.kNrelMainIdtf])
-
-        # self.sc_context - is a context to work with sc-memory (use just this one)
-        searchResult = self.sc_context.HelperSearchTemplate(templ)
-
-        linkAddr = None
-        if searchResult.Size() &gt; 0:
-            # we found old value change it
-            linkAddr = searchResult[0]['_link']
-        else:
-            genResult = self.sc_context.HelperGenTemplate(templ, ScTemplateGenParams())
-            if genResult:
-                linkAddr = genResult['_link']
-
-        if linkAddr:
-            print(self.sc_context.GetLinkContent(linkAddr))
-
-service = MyModule()
-service.Run()
-</code></pre>
-
-<h1 id="classes">Classes</h1>
-<h2 id="scaddr">ScAddr</h2>
-<p>This class represents <code>ScAddr</code> in C++. Methods of this class:</p>
-<ul>
-<li><code>IsValid</code> - if addr is valid, then returns <code>True</code>; otherwise - <code>False</code></li>
-<li><code>ToInt</code> - convert addr value to integer (equal C++ <code>ScAddr::Hash</code>). <em>Useful for debug purposes</em>.</li>
-<li><code>__eq__</code> - equal operator <code>==</code>. Can be used like this:</li>
-</ul>
-<pre><code class="python">if addr1 == addr2:
-  pass # do something
-</code></pre>
-
-<hr />
-<ul>
-<li><code>__ne__</code> - not equal operator <code>!=</code>. Can be used like this:</li>
-</ul>
-<pre><code class="python">if addr1 != addr2:
-  pass # do something
-</code></pre>
-
-<h2 id="sctype">ScType</h2>
-<p>This class equal to <code>ScType</code> in C++. Methods of this class:</p>
-<ul>
-<li><code>constructor</code> - you can create this class with input type combinations</li>
-</ul>
-<pre><code class="python">type1 = ScType() # equal to ScType.Unknown
-type2 = ScType.Node # see more constants below
-type3 = ScType.Node | ScType.Const # equal to ScType.NodeConst
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></li>
-<li><code>__eq__</code> - equal operator <code>==</code>. Can be used like this:</li>
-</ul>
-<pre><code class="python">if type1 == type2:
-  pass # do something
-</code></pre>
-
-<hr />
-<ul>
-<li><code>__eq__</code> - not equal operator <code>!=</code>. Can be used like this:</li>
-</ul>
-<pre><code class="python">if type1 != type2:
-  pass # do something
-</code></pre>
-
-<hr />
-<ul>
-<li><code>__or__</code> - bitwise or operator <code>|</code>. Can be used like this:</li>
-</ul>
-<pre><code class="python">type1 = ScType.Node
-type2 = ScType.Const
-
-type3 = type1 | type2
-type3 == ScType.NodeConst # will be True
-</code></pre>
-
-<hr />
-<ul>
-<li><code>__and__</code> - bitwise and operator <code>&amp;</code>. Can be used like this:</li>
-</ul>
-<pre><code class="python">type1 = ScType.NodeConst
-type2 = ScType.Node
-
-type3 = type1 &amp; type2
-
-type3 == type1 # will be True
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsLink()</code> - if type represents a link, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">type1 = ScType.LinkConst
-type1.IsLink() # returns True
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsEdge()</code> - if type represents an edge, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">type1 = ScType.EdgeAccessConstFuzPerm
-type1.IsEdge() # return True
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsNode()</code> - if type represents a node, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">type1 = ScType.NodeConst
-type1.IsNode() # returns True
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">type1 = ScType.Node
-type1.IsValid() # return True
-
-type2 = ScType()
-type2.IsValid() # return False
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsConst()</code> - if type represents constant, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">type1 = ScType()
-type1.IsConst() # returns False
-
-type2 = ScType.NodeVar()
-type2.IsConst() # return False
-
-type3 = ScType.Node()
-type3.IsConst() # return False
-
-type4 = ScType.NodeConst()
-type4.IsConst() # returns True
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsVar()</code> - if type represents variable, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">type1 = ScType()
-type1.IsVar() # returns False
-
-type2 = ScType.NodeVar()
-type2.IsVar() # returns True
-
-type3= ScType.Node()
-type3.IsVar() # returns False
-
-type4 = ScType.NodeConst
-type4.IsVar() # returns False
-</code></pre>
-
-<ul>
-<li><code>ToInt()</code> - returns integer, that represents a type. Useful for debug purposes</li>
-</ul>
-<p><strong>There are some predefined types</strong>. You can find them in <a href="../../cpp/el_types/">types table</a> (see C++ table). In <strong>Python</strong> you should use <code>ScType.Node</code> instead of <code>ScType::Node</code></p>
-<h2 id="sciterator3">ScIterator3</h2>
-<p>This class represents iterator for a triples (see <a href="../../cpp/common/#iterators">iterators description</a>). There are a list of available methods:</p>
-<ul>
-<li><code>Next()</code> - move iterator to next triple. Returns <code>True</code> if moved to next triple; otherwise - <code>False</code>. Example of usage:</li>
-</ul>
-<pre><code class="python">while (it3.Next())
-  ... # do something
-</code></pre>
-
-<hr />
-<ul>
-<li><code>Get(idx)</code> - returns <code>ScAddr</code> of specified element in current triple (should be in range <code>[0; 2]</code>). Example of usage:</li>
-</ul>
-<pre><code class="python">while (it3.Next())
-  src = it3.Get(0)  # source element in triple
-  edge = it3.Get(1) # edge in triple
-  trg = it3.Get(2)  # target element in triple
-  ...
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - returns <code>True</code> if iterator is valid; otherwise - <code>False</code></li>
-</ul>
-<h2 id="sciterator5">ScIterator5</h2>
-<p>This class represents iterator of 5-element constructions (see <a href="../../cpp/common/#iterators">iterators description</a>). There are a list of available methods:</p>
-<ul>
-<li><code>Next()</code> - move iterator to next 5-element construction. Returns <code>True</code> if moved to next construction; otherwise - <code>False</code>. Example of usage:</li>
-</ul>
-<pre><code class="python">while (it5.Next())
-  ... # do something
-</code></pre>
-
-<hr />
-<ul>
-<li><code>Get(idx)</code> - returns <code>ScAddr</code> of specified element in current construction (should be in range <code>[0; 4]</code>). Example of usage:</li>
-</ul>
-<pre><code class="python">while (it5.Next())
-  src = it5.Get(0)      # source element in triple
-  edge = it5.Get(1)     # edge in triple
-  trg = it5.Get(2)      # target element in triple
-  attrEdge = it5.Get(3) # edge from attribute set
-  attr = it5.Get(4)     # attribute set
-  ...
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - returns <code>True</code> if iterator is valid; otherwise - <code>False</code></li>
-</ul>
-<h2 id="sclinkcontent">ScLinkContent</h2>
-<p>This class wrap content of link. It allows to unpack it to <code>string</code>, <code>int</code> or <code>float</code>. There are methods of this class:</p>
-<ul>
-<li><code>AsString</code> - get content of a link as <code>string</code> value.</li>
-</ul>
-<pre><code class="python">content = ctx.GetLinkContent(linkAddr)
-stringValue = content.AsString()
-</code></pre>
-
-<hr />
-<ul>
-<li><code>AsInt</code> - get content of a link as <code>int</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.</li>
-</ul>
-<pre><code class="python">content = ctx.GetLinkContent(linkAddr)
-intValue = content.AsInt()
-</code></pre>
-
-<hr />
-<ul>
-<li><code>AsFloat</code> - get content of a link as <code>float</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.</li>
-</ul>
-<pre><code class="python">content = ctx.GetLinkContent(linkAddr)
-floatValue = content.AsFloat()
-</code></pre>
-
-<hr />
-<ul>
-<li><code>GetType</code> - return type of content. There are possible values: <code>ScLinkContent.String</code>, <code>ScLinkContent.Int</code>, <code>ScLinkContent.Float</code></li>
-</ul>
-<h2 id="sctemplategenparams">ScTemplateGenParams</h2>
-<p>This class accumulate parameters for a template generation. There are methods of this class:</p>
-<ul>
-<li><code>Add(paramName, valueAddr)</code> - add new parameter value, where <code>paramName</code> - string with a replacement name; <code>valueAddr</code> - <code>ScAddr</code> of element that need to be placed instead of specified replacement (see more in <a href="../../cpp/templates/">templates description</a>)</li>
-</ul>
-<pre><code class="python">params = ScTemplateGenParams()
-params.Add(&quot;_item&quot;, itemAddr);
-...
-</code></pre>
-
-<hr />
-<ul>
-<li><code>Get(paramName)</code> - return value of parameter with a specified name <code>paramName</code>. If parameter with specified identifier exists, then returns <code>ScAddr</code> value of it; otherwise - <code>None</code></li>
-</ul>
-<pre><code class="python">addr = params.Get(&quot;_item&quot;)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>IsEmpty()</code> - if there are no any parameters added, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<h2 id="sctemplategenresult">ScTemplateGenResult</h2>
-<p>This class wrap template generation result. There are methods of this class:</p>
-<ul>
-<li><code>Size()</code> - return number of elements</li>
-</ul>
-<hr />
-<ul>
-<li><code>__getitem__(replName)</code> - return specified result by replacement name (<code>replName</code> - string). Returns <code>ScAddr</code> type. If there are no replacement with a specified name, then raise <code>ExceptionItemNotFound</code> exception</li>
-</ul>
-<pre><code class="python">addr = genResult[&quot;node1&quot;]
-</code></pre>
-
-<h2 id="sctemplatesearchresultitem">ScTemplateSearchResultItem</h2>
-<p>This class represents one result for a search by template. There are methods of this class:</p>
-<ul>
-<li><code>Size()</code> - return size of result (number of addrs equal to search construction)</li>
-</ul>
-<hr />
-<ul>
-<li><code>__getitem__</code> - allows to get result items by any index: <code>int</code>, <code>str</code>. In case of <code>int</code> index you will just get <code>ScAddr</code> by index in result array (length equal to <code>Size()</code>) this case suitable, when you need to iterate all addrs in result. <div class="note">You will receive duplicate <code>ScAddr</code>'s, because result stored as array of founded triples.'</div> When you try to get <code>ScAddr</code> by name it will be find it by replacement name (see <a href="../../cpp/templates/">templates</a> for more info). If there are no element with specified index, then returns <code>None</code></li>
-</ul>
-<pre><code class="python">resultSize = searchResultItem.Size()
-for i in range(resultSize):
-  addr = searchResultItem[i] # iterate all addrs
-
-addr1 = searchResultItem[&quot;replacement name&quot;] # get by replacement name
-</code></pre>
-
-<h2 id="sctemplatesearchresult">ScTemplateSearchResult</h2>
-<p>This class represent list of results by template search. There are methods of this class:</p>
-<ul>
-<li><code>Size()</code> - return number of results.</li>
-</ul>
-<hr />
-<ul>
-<li><code>__getitem__</code> - get result by specified index (<code>int</code> should be less then <code>Size()</code>).</li>
-</ul>
-<pre><code class="python">resultNum = searchResult.Size()
-for i in range(resultNum):
-  searchResultItem = searchResult[i]
-
-  # work with searchResultItem there see (ScTemplateSearchResult)
-</code></pre>
-
-<h2 id="scmemorycontext">ScMemoryContext</h2>
-<p>This class implements context, that allows you to work with memory.
-<div class="note"><b>DO NOT use one context in different threads</b></div>
-There are methods of this class:</p>
-<ul>
-<li><code>CreateNode(type)</code> - create node with specified type. Where <code>type</code> is an instance of <code>ScType</code> (just <strong>edge</strong> types could be used). Returns <code>ScAddr</code> of created node. If returned <code>ScAddr</code> is not valid (<code>IsValid()</code>), then node wasn't created.</li>
-</ul>
-<pre><code class="python">nodeAddr = ctx.CreateNode(ScType.NodeConst)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>CreateEdge(type, src, trg)</code> - create edge between <code>src</code> and <code>trg</code> elements. Where <code>type</code> is an instance
-of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>src</code> is a <code>ScAddr</code> of source element (could be any but not <code>Unknown</code>); <code>trg</code> is a <code>ScAddr</code> of target element (could be any but not <code>Unknown</code>). Returns <code>ScAddr</code> of created edge, but if returned <code>ScAddr</code> is not valid, then edge wasn't created.</li>
-</ul>
-<pre><code class="python">edgeAddr = ctx.CreateEdge(ScType.EdgeAccessConstPosPerm, srcAddr, trgAddr)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>CreateLink()</code> - create link. Returns <code>ScAddr</code> of created link, but if returned <code>ScAddr</code> is not valid, then link wasn't created</li>
-</ul>
-<pre><code class="python">linkAddr = ctx.CreateLink()
-</code></pre>
-
-<hr />
-<ul>
-<li><code>GetName()</code> - returns name of context. Useful in debug purposes</li>
-</ul>
-<hr />
-<ul>
-<li><code>IsElement(addr)</code> - if element with specified <code>addr</code> exist, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">ctx.IsElement(elementAddr)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>GetElementType(addr)</code> - returns type of specified element. If element doesn't exist, then returns <code>ScType.Unknown</code></li>
-</ul>
-<pre><code class="python">t = ctx.GetElementType(elementAddr)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>GetEdgeInfo(addr)</code> - returns tuple <code>(src, trg)</code>, where <code>src</code> - is a <code>ScAddr</code> of adge source element; <code>trg</code> - target element. If <code>addr</code> point to element that doesn't exist, or is not an edge, then returns <code>(None, None)</code>.</li>
-</ul>
-<pre><code class="python">src, trg = ctx.GetEdgeInfo(edgeAddr)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>SetLinkContent(addr, content)</code> - sets specified <code>content</code> into link (specified with <code>addr</code>). Type of <code>content</code> should be one of: <code>int</code>, <code>float</code>, <code>string</code>. If content changed, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">
-...
-ctx.SetLinkContent(linkAddr1, 56)
-...
-ctx.SetLinkContent(linkAddr1, 56.0)
-...
-ctx.SetLinkContent(linkAddr1, &quot;any text&quot;)
-...
-
-</code></pre>
-
-<hr />
-<ul>
-<li><code>GetLinkContent(addr)</code> - returns content of a specified link. If specified <code>addr</code> is not a link, or it doesn't exist, then returns <code>None</code>. Returned value has type <code>ScLinkContent</code>.</li>
-</ul>
-<pre><code class="python">...
-
-value = ctx.GetLinkContent(elementAddr)
-if value:
-  print (value)
-
-...
-</code></pre>
-
-<hr />
-<ul>
-<li><code>Iterator3(param1, param2, param3)</code> - create iterator for a specified triple template. Parameters <code>param1</code>, <code>param2</code>, <code>param3</code> could be on of a type: <code>ScAddr</code>, <code>ScType</code>. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator3</code> object; otherwise - <code>None</code></li>
-</ul>
-<pre><code class="python">itFAA = ctx.Iterator3(addr1, ScType.EdgeAccessConstPosPerm, ScType.NodeVar)
-while itFAA.Next():
-  pass # process iterated constructions there
-
-...
-
-itFAF = ctx.Iterator3(addr1, ScType.EdgeAccessConstPosPerm, addr2)
-while itFAF.Next():
-  pass # process iterated constructions there
-
-...
-
-itAAF = ctx.Iterator3(ScType.NodeConst, ScType.EdgeAccessConstPosPerm, addr2)
-while itAAF.Next():
-  pass # process iterated constructions there
-</code></pre>
-
-<hr />
-<ul>
-<li><code>Iterator5(param1, param2, param3, param4, param5)</code> - create iterator for a specified 5-element construction. Parameters <code>param1</code>, <code>param2</code>, <code>param3</code>, <code>param4</code>, <code>param5</code> could be on of a type <code>ScAddr</code>, <code>ScType</code>. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator5</code> object; otherwise - <code>None</code></li>
-</ul>
-<pre><code class="python">itFAFAF = ctx.Iterator5(
-            addr1,
-            ScType.EdgeAccessConstPosPerm,
-            addr2,
-            ScType.EdgeAccessVarPosTemp,
-            attr)
-while itFAFAF.Next():
-  pass # process iterated constructions there
-
-...
-
-itFAFAA = ctx.Iterator5(
-            addr1,
-            ScType.EdgeAccessConstPosPerm,
-            addr2,
-            ScType.EdgeAccessVarPosTemp,
-            ScType.Node)
-while itFAFAA.Next():
-  pass # process iterated constructions there
-
-...
-
-itFAAAF = ctx.Iterator5(
-            addr1,
-            ScType.EdgeAccessConstPosPerm,
-            ScType.NodeVar,
-            ScType.EdgeAccessVarPosTemp,
-            attr)
-while itFAAAF.Next():
-  pass # process iterated constructions there
-
-...
-
-itFAAAA = ctx.Iterator5(
-            addr1,
-            ScType.EdgeAccessConstPosPerm,
-            ScType.NodeVar,
-            ScType.EdgeAccessVarPosTemp,
-            ScType.Node)
-while itFAAAA.Next():
-  pass # process iterated constructions there
-
-...
-itAAFAF = ctx.Iterator5(
-            ScType.NodeConst,
-            ScType.EdgeAccessConstPosPerm,
-            addr2,
-            ScType.EdgeAccessVarPosTemp,
-            attr)
-while itAAFAF.Next():
-  pass # process iterated constructions there
-
-...
-
-itAAFAA = ctx.Iterator5(
-            ScType.NodeConst,
-            ScType.EdgeAccessConstPosPerm,
-            addr2,
-            ScType.EdgeAccessVarPosTemp,
-            ScType.Node)
-while itAAFAA.Next():
-  pass # process iterated constructions there
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperResolveSystemIdtf(idtf, type)</code> - resolve element by system identifier. This function tries to find element with specified system identifier - <code>idtf</code>. If element wasn't found and type is <code>ScType</code>, then new element will be created with specified system identifier and type. If <code>type</code> is <code>None</code>, then new element wouldn't created and function returns invalid <code>ScAddr</code>. In other cases function returns <code>ScAddr</code> of element with specified system identifier.</li>
-</ul>
-<pre><code class="python">addr = ctx.HelperResolveSystemIdtf(&quot;nrel_main_idtf&quot;, ScType.NodeConstNoRole)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperSetSystemIdtf(idtf, addr)</code> - set specified system identifier - <code>idtf</code>, to element with specified <code>addr</code>. If identifier changed, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">if ctx.HelperSetSystemIdtf(&quot;new_idtf&quot;, addr):
-  pass # identifier changed
-else:
-  pass # identifier not changed
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperGetSystemIdtf(addr)</code> - returns system identifier of a specified element. If system identifier exist, then it returns as a non empty string; otherwise result string would be empty.</li>
-</ul>
-<pre><code class="python">idtfValue = ctx.HelperGetSystemIdtf(addr)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperCheckEdge(srcAddr, trgAddr, edgeType)</code> - if there are one or more edge with a specified type (<code>edgeType</code>) between <code>srcAddr</code> and <code>trgAddr</code> elements, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<pre><code class="python">if ctx.HelperCheckEdge(addr1, addr2, ScType.EdgeAccessConstPosPerm):
-  pass # edge between addr1 and addr2 exist
-else:
-  pass # edge doesn't exists
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperGenTemplate(templ, params)</code> - generate construction by specified template (<code>templ</code> should be instance of <code>ScTemplate</code>) with specified parameters (<code>params</code> should be instance of <code>ScTemplateGenParams</code>). If construction generated, then returns <code>ScTemplateGenResult</code> that contains generated construction; otherwise - <code>None</code>.</li>
-</ul>
-<pre><code class="python">templ = ScTemplate()
-... # fill template
-
-params = ScTemplateGenParams()
-... # fill parameters
-
-result = ctx.HelperGenTemplate(templ, params)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperSearchTemplate(templ)</code> - search construction by specified template (<code>templ</code> should be instance of <code>ScTemplate</code>). Returns <code>ScTemplateSearchResult</code> object instance. If it <code>Size()</code> equal to 0, then no anything found</li>
-</ul>
-<pre><code class="python">templ = ScTemplate()
-... # fill template
-
-result = ctx.HelperSearchTemplate(templ)
-</code></pre>
-
-<hr />
-<ul>
-<li><code>HelperBuildTemplate(templAddr)</code> - build template from construction in memory. Returns <code>ScTemplate</code> instance. If template wasn't built, then return <code>None</code></li>
-</ul>
-<pre><code class="python">templ = ctx.HelperBuildTemplate(templAddr)
-... # work with template
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">common</span> <span class="kn">import</span> <span class="n">ScModule</span>
+
+<span class="k">class</span> <span class="nc">TestModule</span><span class="p">(</span><span class="n">ScModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ScModule</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">ctx</span><span class="o">=</span><span class="n">__ctx__</span><span class="p">,</span>
+            <span class="n">cpp_bridge</span><span class="o">=</span><span class="n">__cpp_bridge__</span><span class="p">,</span>
+            <span class="n">keynodes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">DoSomething</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">OnContentChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evt_data</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">OnInitialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c1"># subscribe to any event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">CreateEventContentChanged</span><span class="p">(</span><span class="n">content_addr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OnContentChanged</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">OnShutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="n">module</span> <span class="o">=</span> <span class="n">TestModule</span><span class="p">()</span>
+<span class="n">module</span><span class="o">.</span><span class="n">Run</span><span class="p">()</span>
+</pre></div>
+                
+                  
+                
               
-            </div>
+              
+                
+              
+            </article>
           </div>
-          <footer>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../cpp/el_types/" class="btn btn-neutral float-right" title="Element types">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../../cpp/common/" class="btn btn-neutral" title="Common"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../../cpp/common/" title="Common" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Common
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../library/" title="Library" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Library
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
     </div>
   
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-    
-  </div>
-
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-	  
-        </div>
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
       </div>
-
-    </section>
-    
+      
+        
+      
+    </div>
   </div>
-
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application-946997f430.js"></script>
       
       
-        <span><a href="../../cpp/common/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <script>app.initialize({version:"0.16.3",url:{base:"../.."}})</script>
       
+        <script src="../../_assets/scg.min.js"></script>
       
-        <span style="margin-left: 15px"><a href="../../cpp/el_types/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <script src="../../_assets/main.js"></script>
       
-    </span>
-</div>
-    <script src="../../js/theme.js"></script>
-      <script src="../../_assets/scg.min.js"></script>
-      <script src="../../_assets/main.js"></script>
-
-</body>
+    
+    
+      
+    
+  </body>
 </html>

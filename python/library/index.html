@@ -31,7 +31,7 @@
     
     
       
-        <title>Build on Linux - SC-machine</title>
+        <title>Library - SC-machine</title>
       
     
     
@@ -91,11 +91,15 @@
             
               
                 <span class="md-header-nav__parent">
-                  Build
+                  API
+                </span>
+              
+                <span class="md-header-nav__parent">
+                  Python
                 </span>
               
             
-            Build on Linux
+            Library
           
         </span>
       </div>
@@ -169,12 +173,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
       Build
@@ -190,18 +192,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Build on Linux" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../build/linux-build/" title="Build on Linux" class="md-nav__link">
       Build on Linux
     </a>
-    
   </li>
 
         
@@ -211,7 +206,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../windows-build/" title="Build on Windows" class="md-nav__link">
+    <a href="../../build/windows-build/" title="Build on Windows" class="md-nav__link">
       Build on Windows
     </a>
   </li>
@@ -298,10 +293,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
     
     <label class="md-nav__link" for="nav-4">
       API
@@ -365,10 +362,12 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5" checked>
     
     <label class="md-nav__link" for="nav-4-5">
       Python
@@ -386,7 +385,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../python/python/" title="Common" class="md-nav__link">
+    <a href="../python/" title="Common" class="md-nav__link">
       Common
     </a>
   </li>
@@ -396,11 +395,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../python/library/" title="Library" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+    <a href="./" title="Library" class="md-nav__link md-nav__link--active">
       Library
     </a>
+    
   </li>
 
         
@@ -410,7 +416,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../python/cpp_wrap/" title="Wrapped classes" class="md-nav__link">
+    <a href="../cpp_wrap/" title="Wrapped classes" class="md-nav__link">
       Wrapped classes
     </a>
   </li>
@@ -560,17 +566,9 @@
               
                 
                 
-                  <h1>Build on Linux</h1>
+                  <h1>Library</h1>
                 
-                <p>Build with Ubuntu:</p>
-<div class="codehilite"><pre><span></span>git clone https://github.com/ostis-dev/sc-machine.git
-<span class="nb">cd</span> sc-machine
-./scripts/install_deps_ubuntu.sh
-mkdir build
-<span class="nb">cd</span> build
-cmake .. -DCMAKE_BUILD_TYPE<span class="o">=</span>Release <span class="c1"># use Debug for debug build</span>
-make
-</pre></div>
+                
                 
                   
                 
@@ -589,7 +587,7 @@ make
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../python/" title="Common" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -598,19 +596,19 @@ make
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                Common
               </span>
             </div>
           </a>
         
         
-          <a href="../windows-build/" title="Build on Windows" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../cpp_wrap/" title="Wrapped classes" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Build on Windows
+                Wrapped classes
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

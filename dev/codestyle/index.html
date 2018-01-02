@@ -1,213 +1,664 @@
+
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Codestyle - SC-machine</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-
-  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../../css/highlight.css">
-  <link href="../../_assets/main.css" rel="stylesheet">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Codestyle";
-    var mkdocs_page_input_path = "dev\\codestyle.md";
-    var mkdocs_page_url = "/dev/codestyle/";
-  </script>
-  
-  <script src="../../js/jquery-2.1.1.min.js"></script>
-  <script src="../../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
-  
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
+<html lang="en" class="no-js">
+  <head>
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-      <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> SC-machine</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-  </form>
-</div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.languages" content="">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.12.2">
+    
+    
+      
+        <title>Codestyle - SC-machine</title>
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-04ea671600.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../_assets/main.css">
+    
+    
+  </head>
+  
+  
+  
+  
+    <body>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="SC-machine" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon md-icon--home"></i>
+          
+        </a>
       </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Build</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../build/linux-build/">Build on Linux</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../build/windows-build/">Build on Windows</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Development</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../git-workflow/">Git-workflow</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../pr/">Pull requets</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Codestyle</a>
-    <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#c-style-guide">C++ Style Guide</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#clangformat">ClangFormat</a></li>
-        
-            <li><a class="toctree-l4" href="#formatting-exampleguidereference">Formatting Example/Guide/Reference</a></li>
-        
-            <li><a class="toctree-l4" href="#tips-and-hints">Tips and Hints</a></li>
-        
-        </ul>
-    
-
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../test/">Unit tests</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">API</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../cpp/cpp-meta/">Meta programming</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../cpp/kpm/">Agents</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../cpp/templates/">Template</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../cpp/common/">Common</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../python/python/">Python</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Common</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../../cpp/el_types/">Element types</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../other/config/">Configuration files</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../net/sctp/">Sctp-protocol</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../../other/scs/">SCs language</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../license/">License</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../changelog/">Changelog</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../../thirdparty/">Thirdparty</a>
-	    </li>
-          
-        </ul>
-      </div>
-      &nbsp;
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">SC-machine</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
-    
-      
-        
-          <li>Development &raquo;</li>
-        
-      
-    
-    <li>Codestyle</li>
-    <li class="wy-breadcrumbs-aside">
-      
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main">
-            <div class="section">
               
+                <span class="md-header-nav__parent">
+                  Development
+                </span>
+              
+            
+            Codestyle
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon md-icon--home"></i>
+      
+    </span>
+    SC-machine
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Build
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Build
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/linux-build/" title="Build on Linux" class="md-nav__link">
+      Build on Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/windows-build/" title="Build on Windows" class="md-nav__link">
+      Build on Windows
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../git-workflow/" title="Git-workflow" class="md-nav__link">
+      Git-workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pr/" title="Pull requets" class="md-nav__link">
+      Pull requets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Codestyle
+      </label>
+    
+    <a href="./" title="Codestyle" class="md-nav__link md-nav__link--active">
+      Codestyle
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clangformat" title="ClangFormat" class="md-nav__link">
+    ClangFormat
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatting-exampleguidereference" title="Formatting Example/Guide/Reference" class="md-nav__link">
+    Formatting Example/Guide/Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-and-hints" title="Tips and Hints" class="md-nav__link">
+    Tips and Hints
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#some-useful-macros" title="Some useful macros:" class="md-nav__link">
+    Some useful macros:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../test/" title="Unit tests" class="md-nav__link">
+      Unit tests
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/cpp-meta/" title="Meta programming" class="md-nav__link">
+      Meta programming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/kpm/" title="Agents" class="md-nav__link">
+      Agents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/templates/" title="Template" class="md-nav__link">
+      Template
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/common/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
+    
+    <label class="md-nav__link" for="nav-4-5">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-5">
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/python/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/library/" title="Library" class="md-nav__link">
+      Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/cpp_wrap/" title="Wrapped classes" class="md-nav__link">
+      Wrapped classes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Common
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Common
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/el_types/" title="Element types" class="md-nav__link">
+      Element types
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/config/" title="Configuration files" class="md-nav__link">
+      Configuration files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../net/sctp/" title="Sctp-protocol" class="md-nav__link">
+      Sctp-protocol
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/scs/" title="SCs language" class="md-nav__link">
+      SCs language
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../thirdparty/" title="Thirdparty" class="md-nav__link">
+      Thirdparty
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#clangformat" title="ClangFormat" class="md-nav__link">
+    ClangFormat
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatting-exampleguidereference" title="Formatting Example/Guide/Reference" class="md-nav__link">
+    Formatting Example/Guide/Reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-and-hints" title="Tips and Hints" class="md-nav__link">
+    Tips and Hints
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#some-useful-macros" title="Some useful macros:" class="md-nav__link">
+    Some useful macros:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
                 <h1 id="c-style-guide">C++ Style Guide</h1>
 <p>In general, <a href="https://google.github.io/styleguide/cppguide.html">Google's coding standard</a> is used, and we strongly encourage to read it.</p>
 <p>Below are our specific (but not all!) exceptions to the Google's coding standard:</p>
@@ -219,20 +670,21 @@
 <li>Includes are sorted and grouped by directory, there should be newlines between different directories.</li>
 <li>Order of directories in includes: "current_dir/current_file.hpp", other includes from the same dir, includes from other dirs sorted by name.</li>
 </ul>
-<pre><code class="cpp">#include &quot;../test.hpp&quot;
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;../test.hpp&quot;</span><span class="cp"></span>
 
-#include &quot;hash/hmac.h&quot;
-#include &quot;hash/sha256.h&quot;
+<span class="cp">#include</span> <span class="cpf">&quot;hash/hmac.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;hash/sha256.h&quot;</span><span class="cp"></span>
 
-#include &quot;sc-memory/cpp/sc_wait.hpp&quot;
-#include &quot;sc-memory/cpp/kpm/sc_agent.hpp&quot;
+<span class="cp">#include</span> <span class="cpf">&quot;sc-memory/cpp/sc_wait.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;sc-memory/cpp/kpm/sc_agent.hpp&quot;</span><span class="cp"></span>
 
-#include &lt;curl/curl.h&gt;
+<span class="cp">#include</span> <span class="cpf">&lt;curl/curl.h&gt;</span><span class="cp"></span>
 
-#include &lt;rapidjson/document.h&gt;
-#include &lt;rapidjson/stringbuffer.h&gt;
-#include &lt;rapidjson/writer.h&gt;
-</code></pre>
+<span class="cp">#include</span> <span class="cpf">&lt;rapidjson/document.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;rapidjson/stringbuffer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;rapidjson/writer.h&gt;</span><span class="cp"></span>
+</pre></div>
+
 
 <ul>
 <li>We ARE using C++ exceptions.</li>
@@ -248,17 +700,18 @@
 <li>Use right-to-left order for variables/params: <code>ScAddr const &amp; addr</code> (reference to the const <code>ScAddr</code>).</li>
 <li>In one line <code>if</code>, <code>for</code>, <code>while</code> we do not use brackets. If one line <code>for</code> or <code>while</code> is combined with one line <code>if</code>, do use brackets for cycle.</li>
 </ul>
-<pre><code class="cpp">for (ScAddr const &amp; addr : listOfAddr)
-  ctx.EraseElement(addr);
+<div class="codehilite"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">ScAddr</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="nl">addr</span> <span class="p">:</span> <span class="n">listOfAddr</span><span class="p">)</span>
+  <span class="n">ctx</span><span class="p">.</span><span class="n">EraseElement</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
 
-...
+<span class="p">...</span>
 
-for (ScAddr const &amp; addr : listOfAddr)
-{
-  if (addr.IsValid())
-    return true;
-}
-</code></pre>
+<span class="k">for</span> <span class="p">(</span><span class="n">ScAddr</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="nl">addr</span> <span class="p">:</span> <span class="n">listOfAddr</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">addr</span><span class="p">.</span><span class="n">IsValid</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
 
 <ul>
 <li>Space after the keyword in conditions and loops. Space after <code>;</code> in <code>for</code> loop.</li>
@@ -277,150 +730,153 @@ containing namespaces. Avoid them when possible - use <code>const</code> or <cod
 <h2 id="clangformat">ClangFormat</h2>
 <p>Most of our coding style is specified in a configuration file for <a href="http://clang.llvm.org/docs/ClangFormat.html">ClangFormat</a>.
 To automatically format a file, install <code>clang-format</code> and run:</p>
-<pre><code>clang-format -i file.cpp file.hpp other_file.cpp
-</code></pre>
+<div class="codehilite"><pre><span></span>clang-format -i file.cpp file.hpp other_file.cpp
+</pre></div>
+
+
 <h2 id="formatting-exampleguidereference">Formatting Example/Guide/Reference</h2>
-<pre><code class="cpp">#pragma once
+<div class="codehilite"><pre><span></span><span class="cp">#pragma once</span>
 
-#include &quot;sc_addr.hpp&quot;
+<span class="cp">#include</span> <span class="cpf">&quot;sc_addr.hpp&quot;</span><span class="cp"></span>
 
-uint16_t constexpr kBufferSize = 255;
+<span class="kt">uint16_t</span> <span class="k">constexpr</span> <span class="n">kBufferSize</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
 
-// C-style enums are ALL_CAPS. But remember that C++11 enum classes are preferred.
-enum Type
-{
-  TYPE_INTEGER,
-  TYPE_FLOAT,
-  TYPE_STRING
-};
+<span class="c1">// C-style enums are ALL_CAPS. But remember that C++11 enum classes are preferred.</span>
+<span class="k">enum</span> <span class="n">Type</span>
+<span class="p">{</span>
+  <span class="n">TYPE_INTEGER</span><span class="p">,</span>
+  <span class="n">TYPE_FLOAT</span><span class="p">,</span>
+  <span class="n">TYPE_STRING</span>
+<span class="p">};</span>
 
-using TMyTypeStartsWithCapitalTLetter = double;
+<span class="k">using</span> <span class="n">TMyTypeStartsWithCapitalTLetter</span> <span class="o">=</span> <span class="kt">double</span><span class="p">;</span>
 
-class ComplexClass
-{
-public:
-  Complex(double rePart, double imPart) : m_re(rePart), m_im(imPart) {}
-  double Modulus() const
-  {
-    double const rere = m_re * m_re;
-    double const imim = m_im * m_im;
-    return sqrt(rere + imim);
-  }
-  double OneLineMethod() const { return m_re; }
-private:
-  // We use m_ prefix for member variables.
-  double m_re;
-  double m_im;
-};
+<span class="k">class</span> <span class="nc">ComplexClass</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">Complex</span><span class="p">(</span><span class="kt">double</span> <span class="n">rePart</span><span class="p">,</span> <span class="kt">double</span> <span class="n">imPart</span><span class="p">)</span> <span class="o">:</span> <span class="n">m_re</span><span class="p">(</span><span class="n">rePart</span><span class="p">),</span> <span class="n">m_im</span><span class="p">(</span><span class="n">imPart</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="kt">double</span> <span class="n">Modulus</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="kt">double</span> <span class="k">const</span> <span class="n">rere</span> <span class="o">=</span> <span class="n">m_re</span> <span class="o">*</span> <span class="n">m_re</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="k">const</span> <span class="n">imim</span> <span class="o">=</span> <span class="n">m_im</span> <span class="o">*</span> <span class="n">m_im</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">rere</span> <span class="o">+</span> <span class="n">imim</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="kt">double</span> <span class="n">OneLineMethod</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_re</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="c1">// We use m_ prefix for member variables.</span>
+  <span class="kt">double</span> <span class="n">m_re</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">m_im</span><span class="p">;</span>
+<span class="p">};</span>
 
-namespace
-{
-void CamelCaseFunctionName(int lowerCamelCaseVar)
-{
-  static int counter = 0;
-  counter += lowerCamelCaseVar;
-}
-}  // namespace
+<span class="k">namespace</span>
+<span class="p">{</span>
+<span class="kt">void</span> <span class="n">CamelCaseFunctionName</span><span class="p">(</span><span class="kt">int</span> <span class="n">lowerCamelCaseVar</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">counter</span> <span class="o">+=</span> <span class="n">lowerCamelCaseVar</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace</span>
 
-namespace lower_case
-{
-template &lt;class TTemplateTypeStartsWithCapitalTLetter&gt;
-void SomeFoo(int a, int b,
-             TTemplateTypeStartsWithCapitalTLetter /* We avoid compilation warnings. */)
-{
-  for (int i = 0; i &lt; a; ++i)
-  {
-    // IMPORTANT! We DON'T use one-liners for if statements for easier debugging.
-    // The following syntax is invalid: if (i &lt; b) Bar(i);
-    if (i &lt; b)
-      Bar(i);
-    else
-    {
-      Bar(i);
-      Bar(b);
-      // Commented out the call.
-      // Bar(c);
-    }
-  }
-}
-}  // namespace lower_case
+<span class="k">namespace</span> <span class="n">lower_case</span>
+<span class="p">{</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">TTemplateTypeStartsWithCapitalTLetter</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">SomeFoo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span>
+             <span class="n">TTemplateTypeStartsWithCapitalTLetter</span> <span class="cm">/* We avoid compilation warnings. */</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// IMPORTANT! We DON&#39;T use one-liners for if statements for easier debugging.</span>
+    <span class="c1">// The following syntax is invalid: if (i &lt; b) Bar(i);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">Bar</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">Bar</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+      <span class="n">Bar</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+      <span class="c1">// Commented out the call.</span>
+      <span class="c1">// Bar(c);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace lower_case</span>
 
-// Switch formatting.
-int Foo(int a)
-{
-  switch (a)
-  {
-  case 1:
-    Bar(1);
-    break;
-  case 2:
-  {
-    Bar(2);
-    break;
-  }
-  case 3:
-  default:
-    Bar(3);
-    break;
-  }
-  return 0;
-}
+<span class="c1">// Switch formatting.</span>
+<span class="kt">int</span> <span class="n">Foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+    <span class="n">Bar</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+  <span class="p">{</span>
+    <span class="n">Bar</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+  <span class="k">default</span><span class="o">:</span>
+    <span class="n">Bar</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-// Loops formatting.
+<span class="c1">// Loops formatting.</span>
 
-if (condition)
-  foo();
-else
-  bar();
+<span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+  <span class="n">foo</span><span class="p">();</span>
+<span class="k">else</span>
+  <span class="nf">bar</span><span class="p">();</span>
 
-if (condition)
-{
-  if (condition)
-    foo();
-  else
-    bar();
-}
+<span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+    <span class="n">foo</span><span class="p">();</span>
+  <span class="k">else</span>
+    <span class="nf">bar</span><span class="p">();</span>
+<span class="p">}</span>
 
-for (size_t i = 0; i &lt; size; ++i)
-  foo(i);
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="n">foo</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 
-while (true)
-{
-  if (condition)
-    break;
-}
+<span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+    <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
 
-// Space after the keyword.
-if (condition)
-{
-}
+<span class="c1">// Space after the keyword.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
 
-for (size_t i = 0; i &lt; 5; ++i)
-{
-}
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
 
-while (condition)
-{
-}
+<span class="k">while</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
 
-switch (i)
-{
-}
+<span class="k">switch</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
 
-// Space between operators, and don't use space between unary operator and expression.
-x = 0;
-x = -5;
-++x;
-x--;
-x *= 5;
-if (x &amp;&amp; !y)
-{
-}
-v = w * x + y / z;
-v = w * (x + z);
+<span class="c1">// Space between operators, and don&#39;t use space between unary operator and expression.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">;</span>
+<span class="o">++</span><span class="n">x</span><span class="p">;</span>
+<span class="n">x</span><span class="o">--</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">*=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">/</span> <span class="n">z</span><span class="p">;</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">z</span><span class="p">);</span>
 
-// Space after double dash. And full sentences in comments.
-</code></pre>
+<span class="c1">// Space after double dash. And full sentences in comments.</span>
+</pre></div>
+
 
 <h2 id="tips-and-hints">Tips and Hints</h2>
 <ul>
@@ -435,55 +891,59 @@ v = w * (x + z);
 <ul>
 <li>macroses to check compilation platform</li>
 </ul>
-<pre><code class="cpp">#if SC_IS_PLATFORM_WIN32
-  // windows platform
-#endif
+<div class="codehilite"><pre><span></span><span class="cp">#if SC_IS_PLATFORM_WIN32</span>
+  <span class="c1">// windows platform</span>
+<span class="cp">#endif</span>
 
-#if SC_IS_PLATFORM_LINUX
- // linux platform
-#endif
-#if SC_IS_PLATFORM_MAC
- // OSX (mac) platform
-#endif
+<span class="cp">#if SC_IS_PLATFORM_LINUX</span>
+ <span class="c1">// linux platform</span>
+<span class="cp">#endif</span>
+<span class="cp">#if SC_IS_PLATFORM_MAC</span>
+ <span class="c1">// OSX (mac) platform</span>
+<span class="cp">#endif</span>
 
-#if SC_IS_PLATFORM_IOS
- // iOS platform
-#endif
+<span class="cp">#if SC_IS_PLATFORM_IOS</span>
+ <span class="c1">// iOS platform</span>
+<span class="cp">#endif</span>
 
-#if SC_IS_PLATFORM_ANDROID
- // android platform
-#endif
-</code></pre>
+<span class="cp">#if SC_IS_PLATFORM_ANDROID</span>
+ <span class="c1">// android platform</span>
+<span class="cp">#endif</span>
+</pre></div>
+
 
 <ul>
 <li>Check code in runtime for Debug builds:</li>
 </ul>
-<pre><code class="cpp">SC_ASSERT(expr, (&quot;message&quot;));
-SC_ASSERT(expr, ()); // no message
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">SC_ASSERT</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;message&quot;</span><span class="p">));</span>
+<span class="n">SC_ASSERT</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// no message</span>
+</pre></div>
+
 
 <ul>
 <li>Check if code compiles in Debug mode:</li>
 </ul>
-<pre><code class="cpp">#if SC_DEBUG_MODE
- // compiles in debug
-#endif
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="cp">#if SC_DEBUG_MODE</span>
+ <span class="c1">// compiles in debug</span>
+<span class="cp">#endif</span>
+</pre></div>
+
 
 <ul>
 <li>Check code in runtime for any type of build. Prefer <code>SC_CHECK_...</code> to <code>SC_CHECK</code>:</li>
 </ul>
-<pre><code class="cpp">SC_CHECK(expr, (&quot;message&quot;));
-SC_CHECK(expr, ()); // no message
+<div class="codehilite"><pre><span></span><span class="n">SC_CHECK</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;message&quot;</span><span class="p">));</span>
+<span class="n">SC_CHECK</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// no message</span>
 
-SC_CHECK_NOT(expr, ()); // equal to SC_CHECK(!expr, ());
-SC_CHECK_EQUAL(a, b, ()); // equal to SC_CHECK(a == b, ());
-SC_CHECK_NOT_EQUAL(a, b, ()); // equal to SC_CHECK(a != b, ());
-SC_CHECK_GREAT(a, b, ()); // equal to SC_CHECK(a &gt; b, ());
-SC_CHECK_GREAT_EQ(a, b, ()); // equal to SC_CHECK(a &gt;= b, ());
-SC_CHECK_LESS(a, b, ()); // equal to SC_CHECK(a &lt; b, ());
-SC_CHECK_LESS_EQ(a, b, ()); // equal to SC_CHECK(a &lt;= b, ());
-</code></pre>
+<span class="n">SC_CHECK_NOT</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(!expr, ());</span>
+<span class="n">SC_CHECK_EQUAL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(a == b, ());</span>
+<span class="n">SC_CHECK_NOT_EQUAL</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(a != b, ());</span>
+<span class="n">SC_CHECK_GREAT</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(a &gt; b, ());</span>
+<span class="n">SC_CHECK_GREAT_EQ</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(a &gt;= b, ());</span>
+<span class="n">SC_CHECK_LESS</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(a &lt; b, ());</span>
+<span class="n">SC_CHECK_LESS_EQ</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">());</span> <span class="c1">// equal to SC_CHECK(a &lt;= b, ());</span>
+</pre></div>
+
 
 <ul>
 <li>Logging:</li>
@@ -498,70 +958,107 @@ SC_CHECK_LESS_EQ(a, b, ()); // equal to SC_CHECK(a &lt;= b, ());
 <p>Declare your own exceptions:</p>
 </li>
 </ul>
-<pre><code class="cpp">class MyException final : public ScException
-{
-public:
-    explicit MyException(std::string const &amp; msg) : ScException(&quot;My: &quot; + msg) {}
-};
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">MyException</span> <span class="k">final</span> <span class="o">:</span> <span class="k">public</span> <span class="n">ScException</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">explicit</span> <span class="n">MyException</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span> <span class="o">:</span> <span class="n">ScException</span><span class="p">(</span><span class="s">&quot;My: &quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+</pre></div>
+
 
 <ul>
 <li>Throw exceptions with <code>SC_THROW_EXCEPTION(exceptionName, message)</code>:</li>
 </ul>
-<pre><code class="cpp">SC_THROW_EXCEPTION(MyException, &quot;my message&quot;)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">SC_THROW_EXCEPTION</span><span class="p">(</span><span class="n">MyException</span><span class="p">,</span> <span class="s">&quot;my message&quot;</span><span class="p">)</span>
+</pre></div>
+
 
 <ul>
 <li>Exception for a non implemented parts of code</li>
 </ul>
-<pre><code class="cpp">SC_NOT_IMPLEMENTED(&quot;message&quot;)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">SC_NOT_IMPLEMENTED</span><span class="p">(</span><span class="s">&quot;message&quot;</span><span class="p">)</span>
+</pre></div>
+                
+                  
+                
               
-            </div>
+              
+                
+              
+            </article>
           </div>
-          <footer>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../test/" class="btn btn-neutral float-right" title="Unit tests">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../pr/" class="btn btn-neutral" title="Pull requets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../pr/" title="Pull requets" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Pull requets
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../test/" title="Unit tests" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Unit tests
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
     </div>
   
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-    
-  </div>
-
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-	  
-        </div>
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
       </div>
-
-    </section>
-    
+      
+        
+      
+    </div>
   </div>
-
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application-946997f430.js"></script>
       
       
-        <span><a href="../pr/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <script>app.initialize({version:"0.16.3",url:{base:"../.."}})</script>
       
+        <script src="../../_assets/scg.min.js"></script>
       
-        <span style="margin-left: 15px"><a href="../test/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <script src="../../_assets/main.js"></script>
       
-    </span>
-</div>
-    <script src="../../js/theme.js"></script>
-      <script src="../../_assets/scg.min.js"></script>
-      <script src="../../_assets/main.js"></script>
-
-</body>
+    
+    
+      
+    
+  </body>
 </html>
