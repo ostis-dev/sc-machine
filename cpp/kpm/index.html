@@ -767,7 +767,7 @@ set<span class="o">(</span>HEADERS
 * <code>mMemoryCtx</code> - memory context that can be used to work with <code>ScMemory</code>.</p>
 <p>If sc-agent finished work without any errors, then it must return <code>SC_RESULT_OK</code>, otherwise - one of code error <code>SC_RESULT_ERROR_...</code>.
 Result of agent will be automaticaly added into specified set:</p>
-<p><img alt="Example of succesfully finished command" src="../images/sc_result_ok_example.png" /></p>
+<p><scg src="../images/sc_result_ok_example.gwf"></scg></p>
 <p>Possible result sets:</p>
 <ul>
 <li><code>sc_result_error</code> - unknown error;</li>
@@ -812,7 +812,7 @@ Result of agent will be automaticaly added into specified set:</p>
 <p><tr>
     <td><strong>ScEventAddOutputEdge</strong></td>
     <td>
-      <img src="../../images/sc-events/sc-event-output-edge.png"></img>
+      <scg src="../../images/sc-events/sc-event-output-edge.gwf"></scg>
       <br/>
       Callback calls each time, when any type edge <code>edgeAddr</code> between <code>listenAddr</code> and <code>otherAddr</code> create.
       <hr/>
@@ -836,7 +836,7 @@ ScEventAddOutputEdge evt(ctx, addr, callback);
 <p><tr>
     <td><strong>ScEventAddInputEdge</strong></td>
     <td>
-      <img src="../../images/sc-events/sc-event-input-edge.png"></img>
+      <scg src="../../images/sc-events/sc-event-input-edge.gwf"></scg>
       <br/>
       Callback calls each time, when any type edge <code>edgeAddr</code> between <code>otherAddr</code> and <code>listenAddr</code> create.
       <hr/>
@@ -860,7 +860,7 @@ ScEventAddInputEdge evt(ctx, addr, callback);
 <p><tr>
     <td><strong>ScEventRemoveOutputEdge</strong></td>
     <td>
-      <img src="../../images/sc-events/sc-event-output-edge.png"></img>
+      <scg src="../../images/sc-events/sc-event-output-edge.gwf"></scg>
       <br/>
       Callback calls each time, when any type edge <code>edgeAddr</code> between <code>listenAddr</code> and any element <code>otherAddr</code> erase.
       <hr/>
@@ -884,7 +884,7 @@ ScEventRemoveOutputEdge evt(ctx, addr, callback);
 <p><tr>
     <td><strong>ScEventRemoveInputEdge</strong></td>
     <td>
-      <img src="../../images/sc-events/sc-event-input-edge.png"></img>
+      <scg src="../../images/sc-events/sc-event-input-edge.gwf"></scg>
       <br/>
       Callback calls each time, when any type edge <code>edgeAddr</code> between any element <code>otherAddr</code> and <code>listenAddr</code> erase.
       <hr/>
