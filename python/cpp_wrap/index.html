@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -14,7 +17,11 @@
       
         <meta name="lang:clipboard.copied" content="Copied to clipboard">
       
-        <meta name="lang:search.languages" content="">
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
       
         <meta name="lang:search.result.none" content="No matching documents">
       
@@ -24,10 +31,8 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      
-        <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.12.2">
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
     
     
       
@@ -35,17 +40,14 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
-    
-    
-      <link rel="stylesheet" href="../../assets/stylesheets/application-04ea671600.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
       
     
     
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
@@ -57,10 +59,7 @@
     
   </head>
   
-  
-  
-  
-    <body>
+    <body dir="ltr">
   
     <svg class="md-svg">
       <defs>
@@ -72,13 +71,18 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#global" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="../.." title="SC-machine" class="md-header-nav__button md-logo">
           
-            <i class="md-icon md-icon--home"></i>
+            <i class="md-icon"></i>
           
         </a>
       </div>
@@ -86,34 +90,33 @@
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  API
-                </span>
-              
-                <span class="md-header-nav__parent">
-                  Python
-                </span>
-              
+              <span class="md-header-nav__topic">
+                SC-machine
+              </span>
+              <span class="md-header-nav__topic">
+                Wrapped classes
+              </span>
             
-            Wrapped classes
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
-  <div class="md-search__inner">
+  <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -127,6 +130,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -136,6 +140,7 @@
     
     <div class="md-container">
       
+        
       
       
       <main class="md-main">
@@ -149,7 +154,7 @@
   <label class="md-nav__title md-nav__title--site" for="drawer">
     <span class="md-nav__button md-logo">
       
-        <i class="md-icon md-icon--home"></i>
+        <i class="md-icon"></i>
       
     </span>
     SC-machine
@@ -508,13 +513,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#scpythonbridge" title="ScPythonBridge" class="md-nav__link">
-    ScPythonBridge
-  </a>
-  
-</li>
-      
       
       
     </ul>
@@ -737,13 +735,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#scpythonbridge" title="ScPythonBridge" class="md-nav__link">
-    ScPythonBridge
-  </a>
-  
-</li>
-      
       
       
     </ul>
@@ -763,131 +754,58 @@
                 
                 <h2 id="global">Global</h2>
 <ul>
-<li><code>getScConfigValue</code> - function that returns value from a sc-memory config file.</li>
-</ul>
+<li><code>getScConfigValue</code> - function that returns value from a sc-memory config file.
 <div class="codehilite"><pre><span></span><span class="n">configValue</span> <span class="o">=</span> <span class="n">getScConfigValue</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<h2 id="scaddr">ScAddr</h2>
-<p>This class represents <code>ScAddr</code> in C++. Methods of this class:</p>
-<ul>
-<li><code>IsValid</code> - if addr is valid, then returns <code>True</code>; otherwise - <code>False</code></li>
-<li><code>ToInt</code> - convert addr value to integer (equal C++ <code>ScAddr::Hash</code>). <em>Useful for debug purposes</em>.</li>
-<li><code>__eq__</code> - equal operator <code>==</code>. Can be used like this:</li>
+</pre></div></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">addr1</span> <span class="o">==</span> <span class="n">addr2</span><span class="p">:</span>
+<h2 id="scaddr">ScAddr</h2>
+<details class="tip"><summary>IsValid()</summary><p>if <code>ScAddr</code> is valid, then returns <code>True</code>; otherwise - <code>False</code></p></details><details class="tip"><summary>ToInt()</summary><p>convert addr value to integer (equal C++ <code>ScAddr::Hash</code>). <em>Useful for debug purposes</em>.</p></details><details class="tip"><summary>__eq__()</summary><p>equal operator <code>==</code>. Can be used like this:</p><div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">addr1</span> <span class="o">==</span> <span class="n">addr2</span><span class="p">:</span>
   <span class="k">pass</span> <span class="c1"># do something</span>
 </pre></div>
-
-
-<hr />
-<ul>
-<li><code>__ne__</code> - not equal operator <code>!=</code>. Can be used like this:</li>
-</ul>
+</details><details class="tip"><summary>__ne__()</summary><p>not equal operator <code>!=</code>. Can be used like this:
 <div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">addr1</span> <span class="o">!=</span> <span class="n">addr2</span><span class="p">:</span>
   <span class="k">pass</span> <span class="c1"># do something</span>
-</pre></div>
-
-
-<h2 id="sctype">ScType</h2>
+</pre></div></p></details><h2 id="sctype">ScType</h2>
 <p>This class equal to <code>ScType</code> in C++. Methods of this class:</p>
-<ul>
-<li><code>constructor</code> - you can create this class with input type combinations</li>
-</ul>
+<details class="tip"><summary>constructor</summary><p>you can create this class with input type combinations
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="p">()</span> <span class="c1"># equal to ScType.Unknown</span>
 <span class="n">type2</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Node</span> <span class="c1"># see more constants below</span>
 <span class="n">type3</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Node</span> <span class="o">|</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Const</span> <span class="c1"># equal to ScType.NodeConst</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></li>
-<li><code>__eq__</code> - equal operator <code>==</code>. Can be used like this:</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsValid()</summary><p>if type is not <code>ScType.Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></p></details><details class="tip"><summary>__eq__()</summary><p>equal operator <code>==</code>. Can be used like this:
 <div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">type1</span> <span class="o">==</span> <span class="n">type2</span><span class="p">:</span>
   <span class="k">pass</span> <span class="c1"># do something</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>__eq__</code> - not equal operator <code>!=</code>. Can be used like this:</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>__ne__()</summary><p>not equal operator <code>!=</code>. Can be used like this:
 <div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">type1</span> <span class="o">!=</span> <span class="n">type2</span><span class="p">:</span>
   <span class="k">pass</span> <span class="c1"># do something</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>__or__</code> - bitwise or operator <code>|</code>. Can be used like this:</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>__or__()</summary><p>bitwise or operator <code>|</code>. Can be used like this:
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Node</span>
 <span class="n">type2</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Const</span>
 
 <span class="n">type3</span> <span class="o">=</span> <span class="n">type1</span> <span class="o">|</span> <span class="n">type2</span>
 <span class="n">type3</span> <span class="o">==</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span> <span class="c1"># will be True</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>__and__</code> - bitwise and operator <code>&amp;</code>. Can be used like this:</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>__and__()</summary><p>bitwise and operator <code>&amp;</code>. Can be used like this:
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span>
 <span class="n">type2</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Node</span>
 
 <span class="n">type3</span> <span class="o">=</span> <span class="n">type1</span> <span class="o">&amp;</span> <span class="n">type2</span>
 
 <span class="n">type3</span> <span class="o">==</span> <span class="n">type1</span> <span class="c1"># will be True</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsLink()</code> - if type represents a link, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsLink()</summary><p>if type represents a link, then returns <code>True</code>; otherwise - <code>False</code>
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">LinkConst</span>
 <span class="n">type1</span><span class="o">.</span><span class="n">IsLink</span><span class="p">()</span> <span class="c1"># returns True</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsEdge()</code> - if type represents an edge, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsEdge()</summary><p>if type represents an edge, then returns <code>True</code>; otherwise - <code>False</code>
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">EdgeAccessConstFuzPerm</span>
 <span class="n">type1</span><span class="o">.</span><span class="n">IsEdge</span><span class="p">()</span> <span class="c1"># return True</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsNode()</code> - if type represents a node, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsNode()</summary><p>if type represents a node, then returns <code>True</code>; otherwise - <code>False</code>
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span>
 <span class="n">type1</span><span class="o">.</span><span class="n">IsNode</span><span class="p">()</span> <span class="c1"># returns True</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsUnknown()</code> - if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsUnknown()</summary><p>if type is not <code>Unknown</code>, then returns <code>True</code>; otherwise - <code>False</code>
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">Node</span>
 <span class="n">type1</span><span class="o">.</span><span class="n">IsUnknown</span><span class="p">()</span> <span class="c1"># return True</span>
 
 <span class="n">type2</span> <span class="o">=</span> <span class="n">ScType</span><span class="p">()</span>
 <span class="n">type2</span><span class="o">.</span><span class="n">IsUnknown</span><span class="p">()</span> <span class="c1"># return False</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsConst()</code> - if type represents constant, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsConst()</summary><p>if type represents constant, then returns <code>True</code>; otherwise - <code>False</code>
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="p">()</span>
 <span class="n">type1</span><span class="o">.</span><span class="n">IsConst</span><span class="p">()</span> <span class="c1"># returns False</span>
 
@@ -899,13 +817,7 @@
 
 <span class="n">type4</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span><span class="p">()</span>
 <span class="n">type4</span><span class="o">.</span><span class="n">IsConst</span><span class="p">()</span> <span class="c1"># returns True</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsVar()</code> - if type represents variable, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>IsVar()</summary><p>if type represents variable, then returns <code>True</code>; otherwise - <code>False</code>
 <div class="codehilite"><pre><span></span><span class="n">type1</span> <span class="o">=</span> <span class="n">ScType</span><span class="p">()</span>
 <span class="n">type1</span><span class="o">.</span><span class="n">IsVar</span><span class="p">()</span> <span class="c1"># returns False</span>
 
@@ -917,242 +829,90 @@
 
 <span class="n">type4</span> <span class="o">=</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span>
 <span class="n">type4</span><span class="o">.</span><span class="n">IsVar</span><span class="p">()</span> <span class="c1"># returns False</span>
-</pre></div>
-
-
-<ul>
-<li><code>ToInt()</code> - returns integer, that represents a type. Useful for debug purposes</li>
-</ul>
-<p><strong>There are some predefined types</strong>. You can find them in <a href="../../cpp/el_types/">types table</a> (see C++ table). In <strong>Python</strong> you should use <code>ScType.Node</code> instead of <code>ScType::Node</code></p>
+</pre></div></p></details><details class="tip"><summary>ToInt()</summary><p>returns integer, that represents a type. Useful for debug purposes</p></details><p><strong>There are some predefined types</strong>. You can find them in <a href="../../cpp/el_types/">types table</a> (see C++ table). In <strong>Python</strong> you should use <code>ScType.Node</code> instead of <code>ScType::Node</code></p>
 <h2 id="sciterator3">ScIterator3</h2>
 <p>This class represents iterator for a triples (see <a href="../../cpp/common/#iterators">iterators description</a>). There are a list of available methods:</p>
-<ul>
-<li><code>Next()</code> - move iterator to next triple. Returns <code>True</code> if moved to next triple; otherwise - <code>False</code>. Example of usage:</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">it3</span><span class="o">.</span><span class="n">Next</span><span class="p">())</span>
+<details class="tip"><summary>Next()</summary><p>move iterator to next triple. Returns <code>True</code> if moved to next triple; otherwise - <code>False</code>. Example of usage:
+<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="n">it3</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="o">...</span> <span class="c1"># do something</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>Get(idx)</code> - returns <code>ScAddr</code> of specified element in current triple (should be in range <code>[0; 2]</code>). Example of usage:</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">it3</span><span class="o">.</span><span class="n">Next</span><span class="p">())</span>
+</pre></div></p></details><details class="tip"><summary>Get(idx)</summary><ul><li><strong>idx</strong> - <code>number</code> that represents values index. Ыhould be in range <code>[0; 2]</code></li></ul><p>returns <code>ScAddr</code> of specified element in current triple. Example of usage:
+<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="n">it3</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="n">src</span> <span class="o">=</span> <span class="n">it3</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># source element in triple</span>
   <span class="n">edge</span> <span class="o">=</span> <span class="n">it3</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># edge in triple</span>
   <span class="n">trg</span> <span class="o">=</span> <span class="n">it3</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># target element in triple</span>
   <span class="o">...</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - returns <code>True</code> if iterator is valid; otherwise - <code>False</code></li>
-</ul>
-<h2 id="sciterator5">ScIterator5</h2>
+</pre></div></p></details><details class="tip"><summary>IsValid()</summary><p>returns <code>True</code> if iterator is valid; otherwise - <code>False</code></p></details><h2 id="sciterator5">ScIterator5</h2>
 <p>This class represents iterator of 5-element constructions (see <a href="../../cpp/common/#iterators">iterators description</a>). There are a list of available methods:</p>
-<ul>
-<li><code>Next()</code> - move iterator to next 5-element construction. Returns <code>True</code> if moved to next construction; otherwise - <code>False</code>. Example of usage:</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">it5</span><span class="o">.</span><span class="n">Next</span><span class="p">())</span>
+<details class="tip"><summary>Next()</summary><p>move iterator to next 5-element construction. Returns <code>True</code> if moved to next construction; otherwise - <code>False</code>. Example of usage:
+<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="n">it5</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="o">...</span> <span class="c1"># do something</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>Get(idx)</code> - returns <code>ScAddr</code> of specified element in current construction (should be in range <code>[0; 4]</code>). Example of usage:</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="n">it5</span><span class="o">.</span><span class="n">Next</span><span class="p">())</span>
+</pre></div></p></details><details class="tip"><summary>Get(idx)</summary><ul><li><strong>idx</strong> - <code>number</code>  that represents values index. Ыhould be in range <code>[0; 4]</code></li></ul><p>returns <code>ScAddr</code> of specified element in current construction. Example of usage:
+<div class="codehilite"><pre><span></span><span class="k">while</span> <span class="n">it5</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="n">src</span> <span class="o">=</span> <span class="n">it5</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>      <span class="c1"># source element in triple</span>
   <span class="n">edge</span> <span class="o">=</span> <span class="n">it5</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>     <span class="c1"># edge in triple</span>
   <span class="n">trg</span> <span class="o">=</span> <span class="n">it5</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>      <span class="c1"># target element in triple</span>
   <span class="n">attrEdge</span> <span class="o">=</span> <span class="n">it5</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># edge from attribute set</span>
   <span class="n">attr</span> <span class="o">=</span> <span class="n">it5</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>     <span class="c1"># attribute set</span>
   <span class="o">...</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsValid()</code> - returns <code>True</code> if iterator is valid; otherwise - <code>False</code></li>
-</ul>
-<h2 id="sclinkcontent">ScLinkContent</h2>
+</pre></div></p></details><details class="tip"><summary>IsValid()</summary><p>returns <code>True</code> if iterator is valid; otherwise - <code>False</code></p></details><h2 id="sclinkcontent">ScLinkContent</h2>
 <p>This class wrap content of link. It allows to unpack it to <code>string</code>, <code>int</code> or <code>float</code>. There are methods of this class:</p>
-<ul>
-<li><code>AsString</code> - get content of a link as <code>string</code> value.</li>
-</ul>
+<details class="tip"><summary>AsString()</summary><p>get content of a link as <code>string</code> value.
 <div class="codehilite"><pre><span></span><span class="n">content</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetLinkContent</span><span class="p">(</span><span class="n">linkAddr</span><span class="p">)</span>
 <span class="n">stringValue</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">AsString</span><span class="p">()</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>AsInt</code> - get content of a link as <code>int</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>AsInt()</summary><p>get content of a link as <code>int</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.
 <div class="codehilite"><pre><span></span><span class="n">content</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetLinkContent</span><span class="p">(</span><span class="n">linkAddr</span><span class="p">)</span>
 <span class="n">intValue</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">AsInt</span><span class="p">()</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>AsFloat</code> - get content of a link as <code>float</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>AsFloat()</summary><p>get content of a link as <code>float</code> value. If length of content not equal to 8 bytes, then <code>ExceptionInvalidType</code> will be raised.
 <div class="codehilite"><pre><span></span><span class="n">content</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetLinkContent</span><span class="p">(</span><span class="n">linkAddr</span><span class="p">)</span>
 <span class="n">floatValue</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">AsFloat</span><span class="p">()</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>AsBinary</code> - get content of a link as <code>memoryview</code> value.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>AsBinary()</summary><p>get content of a link as <code>memoryview</code> value.
 <div class="codehilite"><pre><span></span><span class="n">content</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetLinkContent</span><span class="p">(</span><span class="n">linkAddr</span><span class="p">)</span>
-<span class="n">binaryValue</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">AsFloat</span><span class="p">()</span>
-</pre></div>
-
-
-<div class="note">
-Object <code>content</code> should be alive until memory used
-</div>
-
-<hr />
-<ul>
-<li><code>GetType</code> - return type of content. There are possible values: <code>ScLinkContent.String</code>, <code>ScLinkContent.Int</code>, <code>ScLinkContent.Float</code></li>
-</ul>
-<h2 id="sctemplategenparams">ScTemplateGenParams</h2>
+<span class="n">binaryValue</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">AsBinary</span><span class="p">()</span>
+</pre></div></p><div class="admonition danger"><p class="admonition-title">Danger</p><p>Object <code>content</code> should be alive until memory used</p></div></details><details class="tip"><summary>GetType()</summary><p>return type of content. There are possible values:</p><ul><li><code>ScLinkContent.String</code></li><li><code>ScLinkContent.Int</code></li><li><code>ScLinkContent.Float</code></li></ul></details><h2 id="sctemplategenparams">ScTemplateGenParams</h2>
 <p>This class accumulate parameters for a template generation. There are methods of this class:</p>
-<ul>
-<li><code>Add(paramName, valueAddr)</code> - add new parameter value, where <code>paramName</code> - string with a replacement name; <code>valueAddr</code> - <code>ScAddr</code> of element that need to be placed instead of specified replacement (see more in <a href="../../cpp/templates/">templates description</a>)</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">ScTemplateGenParams</span><span class="p">()</span>
-<span class="n">params</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s2">&quot;_item&quot;</span><span class="p">,</span> <span class="n">itemAddr</span><span class="p">);</span>
+<details class="tip"><summary>Add(paramName, valueAddr)</summary><ul><li><strong>paramName</strong> - parameter name (<code>str</code>)</li><li><strong>valueAddr</strong> - <code>ScAddr</code> of element that should be used with specified name (see more in <a href="../../cpp/templates/">templates description</a>)</li></ul><div class="codehilite"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">ScTemplateGenParams</span><span class="p">()</span>
+<span class="n">params</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s2">&quot;_item&quot;</span><span class="p">,</span> <span class="n">itemAddr</span><span class="p">)</span>
 <span class="o">...</span>
 </pre></div>
-
-
-<hr />
-<ul>
-<li><code>Get(paramName)</code> - return value of parameter with a specified name <code>paramName</code>. If parameter with specified identifier exists, then returns <code>ScAddr</code> value of it; otherwise - <code>None</code></li>
-</ul>
+</details><details class="tip"><summary>Get(paramName)</summary><ul><li><strong>paramName</strong> - name of parameter (<code>str</code>)</li></ul><p>returns value of parameter with a specified name. If parameter with specified identifier exists, then returns it <code>ScAddr</code>; otherwise - <code>None</code>
 <div class="codehilite"><pre><span></span><span class="n">addr</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s2">&quot;_item&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>IsEmpty()</code> - if there are no any parameters added, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
-<h2 id="sctemplategenresult">ScTemplateGenResult</h2>
+</pre></div></p></details><details class="tip"><summary>IsEmpty()</summary><p>if there are no any parameters added, then returns <code>True</code>; otherwise - <code>False</code></p></details><h2 id="sctemplategenresult">ScTemplateGenResult</h2>
 <p>This class wrap template generation result. There are methods of this class:</p>
-<ul>
-<li><code>Size()</code> - return number of elements</li>
-</ul>
-<hr />
-<ul>
-<li><code>__getitem__(replName)</code> - return specified result by replacement name (<code>replName</code> - string). Returns <code>ScAddr</code> type. If there are no replacement with a specified name, then raise <code>ExceptionItemNotFound</code> exception</li>
-</ul>
+<details class="tip"><summary>Size()</summary><p>return number of elements</p></details><details class="tip"><summary>__getitem__(replName)</summary><ul><li><strong>replName</strong> - name of result parameter (<code>str</code>)</li></ul><p>returns <code>ScAddr</code> by specified name. If there are no value with a specified name, then returns <code>None</code>
 <div class="codehilite"><pre><span></span><span class="n">addr</span> <span class="o">=</span> <span class="n">genResult</span><span class="p">[</span><span class="s2">&quot;node1&quot;</span><span class="p">]</span>
-</pre></div>
-
-
-<h2 id="sctemplatesearchresultitem">ScTemplateSearchResultItem</h2>
+</pre></div></p></details><h2 id="sctemplatesearchresultitem">ScTemplateSearchResultItem</h2>
 <p>This class represents one result for a search by template. There are methods of this class:</p>
-<ul>
-<li><code>Size()</code> - return size of result (number of addrs equal to search construction)</li>
-</ul>
-<hr />
-<ul>
-<li><code>__getitem__</code> - allows to get result items by any index: <code>int</code>, <code>str</code>. In case of <code>int</code> index you will just get <code>ScAddr</code> by index in result array (length equal to <code>Size()</code>) this case suitable, when you need to iterate all addrs in result. <div class="note">You will receive duplicate <code>ScAddr</code>'s, because result stored as array of founded triples.'</div> When you try to get <code>ScAddr</code> by name it will be find it by replacement name (see <a href="../../cpp/templates/">templates</a> for more info). If there are no element with specified index, then returns <code>None</code></li>
-</ul>
+<details class="tip"><summary>Size()</summary><p>return size of result (number of <code>ScAddr</code>'s equal to search construction)</p></details><details class="tip"><summary>__getitem__()</summary><div class="admonition warning"><p class="admonition-title">Warning</p><p>You will receive duplicate <code>ScAddr</code>'s, because result stored as array of founded triples.</p></div><p>When you try to get <code>ScAddr</code> with <code>str</code> it will be found by replacement name (see <a href="../../cpp/templates/">templates</a> for more info). If there are no element with specified index, then returns <code>None</code>
 <div class="codehilite"><pre><span></span><span class="n">resultSize</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="o">.</span><span class="n">Size</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">resultSize</span><span class="p">):</span>
   <span class="n">addr</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="c1"># iterate all addrs</span>
 
 <span class="n">addr1</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="p">[</span><span class="s2">&quot;replacement name&quot;</span><span class="p">]</span> <span class="c1"># get by replacement name</span>
-</pre></div>
-
-
-<h2 id="sctemplatesearchresult">ScTemplateSearchResult</h2>
+</pre></div></p></details><h2 id="sctemplatesearchresult">ScTemplateSearchResult</h2>
 <p>This class represent list of results by template search. There are methods of this class:</p>
-<ul>
-<li><code>Size()</code> - return number of results.</li>
-</ul>
-<hr />
-<ul>
-<li><code>__getitem__</code> - get result by specified index (<code>int</code> should be less then <code>Size()</code>).</li>
-</ul>
+<details class="tip"><summary>Size()</summary><p>returns number of results.</p></details><details class="tip"><summary>__getitem__()</summary><p>get result by specified index (<code>int</code> should be less then <code>Size()</code>).
 <div class="codehilite"><pre><span></span><span class="n">resultNum</span> <span class="o">=</span> <span class="n">searchResult</span><span class="o">.</span><span class="n">Size</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">resultNum</span><span class="p">):</span>
   <span class="n">searchResultItem</span> <span class="o">=</span> <span class="n">searchResult</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
   <span class="c1"># work with searchResultItem there see (ScTemplateSearchResult)</span>
-</pre></div>
-
-
-<h2 id="scmemorycontext">ScMemoryContext</h2>
-<p>This class implements context, that allows you to work with memory.
-<div class="note"><b>DO NOT use one context in different threads</b></div>
-There are methods of this class:</p>
-<ul>
-<li><code>CreateNode(type)</code> - create node with specified type. Where <code>type</code> is an instance of <code>ScType</code> (just <strong>edge</strong> types could be used). Returns <code>ScAddr</code> of created node. If returned <code>ScAddr</code> is not valid (<code>IsValid()</code>), then node wasn't created.</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="n">nodeAddr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">CreateNode</span><span class="p">(</span><span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>CreateEdge(type, src, trg)</code> - create edge between <code>src</code> and <code>trg</code> elements. Where <code>type</code> is an instance
-of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>src</code> is a <code>ScAddr</code> of source element (could be any but not <code>Unknown</code>); <code>trg</code> is a <code>ScAddr</code> of target element (could be any but not <code>Unknown</code>). Returns <code>ScAddr</code> of created edge, but if returned <code>ScAddr</code> is not valid, then edge wasn't created.</li>
-</ul>
+</pre></div></p></details><h2 id="scmemorycontext">ScMemoryContext</h2>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p><strong>DO NOT use same context in different threads</strong></p>
+</div>
+<p>There are methods of this class:</p>
+<details class="tip"><summary>CreateNode(type)</summary><ul><li><strong>type</strong> - <code>ScType</code> of a node</li></ul></details><details class="tip"><summary>CreateEdge(type, src, trg)</summary><ul><li><strong>type</strong> - <code>ScType</code> of edge</li><li><strong>src</strong> - <code>ScAddr</code> of source edge element</li><li><strong>trg</strong> - <code>ScAddr</code> of target edge element</li></ul><p>create edge between <code>src</code> and <code>trg</code> elements. Returns <code>ScAddr</code> of created edge, but if returned <code>ScAddr</code> is not valid, then edge wasn't created.</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">edgeAddr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">CreateEdge</span><span class="p">(</span><span class="n">ScType</span><span class="o">.</span><span class="n">EdgeAccessConstPosPerm</span><span class="p">,</span> <span class="n">srcAddr</span><span class="p">,</span> <span class="n">trgAddr</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>CreateLink()</code> - create link. Returns <code>ScAddr</code> of created link, but if returned <code>ScAddr</code> is not valid, then link wasn't created</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>CreateLink()</summary><p>create link. Returns <code>ScAddr</code> of created link, but if returned <code>ScAddr</code> is not valid, then link wasn't created</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">linkAddr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">CreateLink</span><span class="p">()</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>GetName()</code> - returns name of context. Useful in debug purposes</li>
-</ul>
-<hr />
-<ul>
-<li><code>IsElement(addr)</code> - if element with specified <code>addr</code> exist, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>GetName()</summary><p>returns name of context. Useful in debug purposes</p></details><details class="tip"><summary>IsElement(addr)</summary><ul><li><strong>addr</strong> - <code>ScAddr</code> of element to check</li></ul><p>if element exist, then returns <code>True</code>; otherwise - <code>False</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">ctx</span><span class="o">.</span><span class="n">IsElement</span><span class="p">(</span><span class="n">elementAddr</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>GetElementType(addr)</code> - returns type of specified element. If element doesn't exist, then returns <code>ScType.Unknown</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>GetElementType(addr)</summary><ul><li><strong>addr</strong> - <code>ScAddr</code> of element to get type</li></ul><p>returns type of specified element. If element doesn't exist, then returns <code>ScType.Unknown</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetElementType</span><span class="p">(</span><span class="n">elementAddr</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>GetEdgeInfo(addr)</code> - returns tuple <code>(src, trg)</code>, where <code>src</code> - is a <code>ScAddr</code> of adge source element; <code>trg</code> - target element. If <code>addr</code> point to element that doesn't exist, or is not an edge, then returns <code>(None, None)</code>.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>GetEdgeInfo(addr)</summary><ul><li><strong>addr</strong> - <code>ScAddr</code> of edge</li></ul><p>returns tuple <code>(src, trg)</code>, where:</p><ul><li><code>src</code> - is a <code>ScAddr</code> of edge source element;</li><li><code>trg</code> - target element.</li></ul><p>If <code>addr</code> point to element that doesn't exist, or is not an edge, then returns <code>(None, None)</code>.</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">src</span><span class="p">,</span> <span class="n">trg</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetEdgeInfo</span><span class="p">(</span><span class="n">edgeAddr</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>SetLinkContent(addr, content)</code> - sets specified <code>content</code> into link (specified with <code>addr</code>). Type of <code>content</code> should be one of: <code>int</code>, <code>float</code>, <code>string</code>. If content changed, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>SetLinkContent(addr, content)</summary><ul><li><strong>addr</strong> - <code>ScAddr</code> of sc-link to set content</li><li><strong>content</strong> - content of sc-link, that should be set. Type of <code>content</code> should be one of: <code>int</code>, <code>float</code>, <code>string</code>.</li></ul><p>Change content of sc-link. If content changed, then returns <code>True</code>; otherwise - <code>False</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="o">...</span>
 <span class="n">ctx</span><span class="o">.</span><span class="n">SetLinkContent</span><span class="p">(</span><span class="n">linkAddr1</span><span class="p">,</span> <span class="mi">56</span><span class="p">)</span>
 <span class="o">...</span>
@@ -1160,13 +920,7 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
 <span class="o">...</span>
 <span class="n">ctx</span><span class="o">.</span><span class="n">SetLinkContent</span><span class="p">(</span><span class="n">linkAddr1</span><span class="p">,</span> <span class="s2">&quot;any text&quot;</span><span class="p">)</span>
 <span class="o">...</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>GetLinkContent(addr)</code> - returns content of a specified link. If specified <code>addr</code> is not a link, or it doesn't exist, then returns <code>None</code>. Returned value has type <code>ScLinkContent</code>.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>GetLinkContent(addr)</summary><ul><li><strong>addr</strong> - <code>ScAddr</code> of sc-link</li></ul><p>returns content of a specified link. If specified <code>addr</code> is not a link, or it doesn't exist, then returns <code>None</code>. Returned value has type <code>ScLinkContent</code>.</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="o">...</span>
 
 <span class="n">value</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">GetLinkContent</span><span class="p">(</span><span class="n">elementAddr</span><span class="p">)</span>
@@ -1174,13 +928,7 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
   <span class="k">print</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
 <span class="o">...</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>Iterator3(param1, param2, param3)</code> - create iterator for a specified triple template. Parameters <code>param1</code>, <code>param2</code>, <code>param3</code> could be on of a type: <code>ScAddr</code>, <code>ScType</code>. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator3</code> object; otherwise - <code>None</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>Iterator3(param1, param2, param3)</summary><ul><li><strong>param1</strong>, <strong>param2</strong>, <strong>param3</strong> - could be on of a type: <code>ScAddr</code>, <code>ScType</code></li></ul><p>create iterator for a specified triple template. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator3</code> object; otherwise - <code>None</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">itFAA</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">Iterator3</span><span class="p">(</span><span class="n">addr1</span><span class="p">,</span> <span class="n">ScType</span><span class="o">.</span><span class="n">EdgeAccessConstPosPerm</span><span class="p">,</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeVar</span><span class="p">)</span>
 <span class="k">while</span> <span class="n">itFAA</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="k">pass</span> <span class="c1"># process iterated constructions there</span>
@@ -1196,13 +944,7 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
 <span class="n">itAAF</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">Iterator3</span><span class="p">(</span><span class="n">ScType</span><span class="o">.</span><span class="n">NodeConst</span><span class="p">,</span> <span class="n">ScType</span><span class="o">.</span><span class="n">EdgeAccessConstPosPerm</span><span class="p">,</span> <span class="n">addr2</span><span class="p">)</span>
 <span class="k">while</span> <span class="n">itAAF</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="k">pass</span> <span class="c1"># process iterated constructions there</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>Iterator5(param1, param2, param3, param4, param5)</code> - create iterator for a specified 5-element construction. Parameters <code>param1</code>, <code>param2</code>, <code>param3</code>, <code>param4</code>, <code>param5</code> could be on of a type <code>ScAddr</code>, <code>ScType</code>. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator5</code> object; otherwise - <code>None</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>Iterator5(param1, param2, param3, param4, param5)</summary><ul><li><strong>param1</strong>, <strong>param2</strong>, <strong>param3</strong>, <strong>param4</strong>, <strong>param5</strong> - could be on of a type <code>ScAddr</code>, <code>ScType</code></li></ul><p>create iterator for a specified 5-element construction. For more information about iterators see <a href="../../cpp/common/#iterators">iterators description</a>. If iterator created, then return <code>ScIterator5</code> object; otherwise - <code>None</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">itFAFAF</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">Iterator5</span><span class="p">(</span>
             <span class="n">addr1</span><span class="p">,</span>
             <span class="n">ScType</span><span class="o">.</span><span class="n">EdgeAccessConstPosPerm</span><span class="p">,</span>
@@ -1265,51 +1007,21 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
             <span class="n">ScType</span><span class="o">.</span><span class="n">Node</span><span class="p">)</span>
 <span class="k">while</span> <span class="n">itAAFAA</span><span class="o">.</span><span class="n">Next</span><span class="p">():</span>
   <span class="k">pass</span> <span class="c1"># process iterated constructions there</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperResolveSystemIdtf(idtf, type)</code> - resolve element by system identifier. This function tries to find element with specified system identifier - <code>idtf</code>. If element wasn't found and type is <code>ScType</code>, then new element will be created with specified system identifier and type. If <code>type</code> is <code>None</code>, then new element wouldn't created and function returns invalid <code>ScAddr</code>. In other cases function returns <code>ScAddr</code> of element with specified system identifier.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperResolveSystemIdtf(idtf, type)</summary><ul><li><strong>idtf</strong> - <code>str</code> that represents a system identifier of sc-element</li><li><strong>type</strong> - <code>ScType</code> of sc-element</li></ul><p>resolve element by system identifier. This function tries to find element with specified system identifier - <code>idtf</code>. If element wasn't found and type is valid (<code>ScType.IsValid()</code>), then new element will be created with specified system identifier and type. If <code>type</code> is <code>None</code>, then new element wouldn't created and function returns invalid <code>ScAddr</code>. In other cases function returns <code>ScAddr</code> of element with specified system identifier.</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">addr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperResolveSystemIdtf</span><span class="p">(</span><span class="s2">&quot;nrel_main_idtf&quot;</span><span class="p">,</span> <span class="n">ScType</span><span class="o">.</span><span class="n">NodeConstNoRole</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperSetSystemIdtf(idtf, addr)</code> - set specified system identifier - <code>idtf</code>, to element with specified <code>addr</code>. If identifier changed, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperSetSystemIdtf(idtf, addr)</summary><ul><li><strong>idtf</strong> - <code>str</code> new identifier of sc-element</li><li><strong>addr</strong> - <code>ScAddr</code> of element</li></ul><p>set specified system identifier - <code>idtf</code>, to element with specified <code>addr</code>. If identifier changed, then returns <code>True</code>; otherwise - <code>False</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperSetSystemIdtf</span><span class="p">(</span><span class="s2">&quot;new_idtf&quot;</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
   <span class="k">pass</span> <span class="c1"># identifier changed</span>
 <span class="k">else</span><span class="p">:</span>
   <span class="k">pass</span> <span class="c1"># identifier not changed</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperGetSystemIdtf(addr)</code> - returns system identifier of a specified element. If system identifier exist, then it returns as a non empty string; otherwise result string would be empty.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperGetSystemIdtf(addr)</summary><ul><li><strong>addr</strong> - <code>ScAddr</code> of sc-element to get identifier</li></ul><p>returns system identifier of a specified element. If system identifier exist, then it returns as a non empty string; otherwise result string would be empty.</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">idtfValue</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperGetSystemIdtf</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperCheckEdge(srcAddr, trgAddr, edgeType)</code> - if there are one or more edge with a specified type (<code>edgeType</code>) between <code>srcAddr</code> and <code>trgAddr</code> elements, then returns <code>True</code>; otherwise - <code>False</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperCheckEdge(srcAddr, trgAddr, edgeType)</summary><ul><li><strong>srcAddr</strong> - <code>ScAddr</code> of source edge sc-element</li><li><strong>trgAddr</strong> - <code>ScAddr</code> of target edge sc-element</li><li><strong>edgeType</strong> - <code>ScType</code> of edge to check</li></ul><p>if there are one or more edge with a specified type (<code>edgeType</code>) between <code>srcAddr</code> and <code>trgAddr</code> elements, then returns <code>True</code>; otherwise - <code>False</code></p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperCheckEdge</span><span class="p">(</span><span class="n">addr1</span><span class="p">,</span> <span class="n">addr2</span><span class="p">,</span> <span class="n">ScType</span><span class="o">.</span><span class="n">EdgeAccessConstPosPerm</span><span class="p">):</span>
   <span class="k">pass</span> <span class="c1"># edge between addr1 and addr2 exist</span>
 <span class="k">else</span><span class="p">:</span>
   <span class="k">pass</span> <span class="c1"># edge doesn&#39;t exists</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperGenTemplate(templ, params)</code> - generate construction by specified template (<code>templ</code> should be instance of <code>ScTemplate</code>) with specified parameters (<code>params</code> should be instance of <code>ScTemplateGenParams</code>). If construction generated, then returns <code>ScTemplateGenResult</code> that contains generated construction; otherwise - <code>None</code>.</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperGenTemplate(templ, params)</summary><ul><li><strong>templ</strong> - <code>ScTemplate</code> to generate construction</li><li><strong>params</strong> - <code>ScTemplateGenParams</code> parameters for construction generation</li></ul><p>generates construction by specified template with specified parameters. If construction generated, then returns instance of <code>ScTemplateGenResult</code>; otherwise - <code>None</code>.</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">templ</span> <span class="o">=</span> <span class="n">ScTemplate</span><span class="p">()</span>
 <span class="o">...</span> <span class="c1"># fill template</span>
 
@@ -1317,30 +1029,15 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
 <span class="o">...</span> <span class="c1"># fill parameters</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperGenTemplate</span><span class="p">(</span><span class="n">templ</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperSearchTemplate(templ)</code> - search construction by specified template (<code>templ</code> should be instance of <code>ScTemplate</code>). Returns <code>ScTemplateSearchResult</code> object instance. If it <code>Size()</code> equal to 0, then no anything found</li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperSearchTemplate(templ)</summary><ul><li><strong>templ</strong> - <code>ScTemplate</code> to search construction</li></ul><p>searches construction by specified template. Returns <code>ScTemplateSearchResult</code> object instance. If it <code>Size()</code> equal to 0, then nothing was found</p><p><strong>Example:</strong>
 <div class="codehilite"><pre><span></span><span class="n">templ</span> <span class="o">=</span> <span class="n">ScTemplate</span><span class="p">()</span>
 <span class="o">...</span> <span class="c1"># fill template</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperSearchTemplate</span><span class="p">(</span><span class="n">templ</span><span class="p">)</span>
-</pre></div>
-
-
-<hr />
-<ul>
-<li><code>HelperBuildTemplate(templAddr)</code> - build template from construction in memory. Returns <code>ScTemplate</code> instance. If template wasn't built, then return <code>None</code></li>
-</ul>
+</pre></div></p></details><details class="tip"><summary>HelperBuildTemplate(templAddr)</summary><ul><li><strong>templAddr</strong> - <code>ScAddr</code> to sc-struct in memory, that contains a template</li></ul><p>build template from construction in memory. Returns <code>ScTemplate</code> instance. If template wasn't built, then return <code>None</code></p><p>*<em>Example:</em>
 <div class="codehilite"><pre><span></span><span class="n">templ</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperBuildTemplate</span><span class="p">(</span><span class="n">templAddr</span><span class="p">)</span>
 <span class="o">...</span> <span class="c1"># work with template</span>
-</pre></div>
-
-
-<h2 id="scpythonbridge">ScPythonBridge</h2>
+</pre></div></p></details>
                 
                   
                 
@@ -1396,9 +1093,9 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
       <div class="md-footer-copyright">
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1410,10 +1107,9 @@ of <code>ScType</code> (just <strong>edge</strong> types could be used); <code>s
       
     </div>
     
-      <script src="../../assets/javascripts/application-946997f430.js"></script>
+      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
       
-      
-      <script>app.initialize({version:"0.16.3",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
       
         <script src="../../_assets/scg.min.js"></script>
       
