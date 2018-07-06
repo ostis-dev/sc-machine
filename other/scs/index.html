@@ -217,6 +217,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/osx-build/" title="Build on OSX" class="md-nav__link">
+      Build on OSX
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -430,18 +442,66 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Http
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Http
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../http/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../http/websocket/" title="WebSocket" class="md-nav__link">
+      WebSocket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Common
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Common
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -739,6 +799,11 @@ So if you use <code>x</code> in different <em>scs</em> files, then you designate
 For example: <code>.x</code>.</p>
 <p>In case, when you need to make a named object just local for a <em>scs</em> file,
 then you should to use <code>..</code> prefix (example: <code>..x</code>).</p>
+<p>So a rule to build identifier is:</p>
+<div class="codehilite"><pre><span></span>[visibility][variable]&lt;identifier&gt;
+</pre></div>
+
+<p>For example identifier <code>.._x</code> localy visible variable identifier.</p>
 <div class="note">
 SCs-code is splitted into levels. Each level allows to minimize number
 of string symbols to represent the same structures.
@@ -1067,64 +1132,74 @@ a -&gt; c: d: b;
 <tr>
 <th>Keynode</th>
 <th>Equal sc-type</th>
+<th>Equal SCg-element</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>sc_node</td>
 <td>ScType::Node</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node.png" /></td>
 </tr>
 <tr>
 <td>sc_link</td>
 <td>ScType::Link</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_link.png" /></td>
 </tr>
 <tr>
 <td>sc_edge_dcommon</td>
 <td>ScType::EdgeDCommon</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_edge_common_orient.png" /></td>
 </tr>
 <tr>
 <td>sc_edge_ucommon</td>
 <td>ScType::EdgeUCommon</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_edge_common.png" /></td>
 </tr>
 <tr>
 <td>sc_edge_main</td>
 <td>ScType::EdgeAccessConstPosPerm</td>
-</tr>
-<tr>
-<td>sc_arc_access</td>
-<td>ScType::EdgeAccess</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_edge_const_pos_perm.png" /></td>
 </tr>
 <tr>
 <td>sc_edge_access</td>
 <td>ScType::EdgeAccess</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_edge_access.png" /></td>
 </tr>
 <tr>
 <td>sc_node_tuple</td>
 <td>ScType::NodeTuple</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_tuple.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_tuple.png" /></td>
 </tr>
 <tr>
 <td>sc_node_struct</td>
 <td>ScType::NodeStruct</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_struct.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_struct.png" /></td>
 </tr>
 <tr>
 <td>sc_node_role_relation</td>
 <td>ScType::NodeRole</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_role.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_role.png" /></td>
 </tr>
 <tr>
 <td>sc_node_norole_relation</td>
 <td>ScType::NodeNoRole</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_norole.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_norole.png" /></td>
 </tr>
 <tr>
 <td>sc_node_class</td>
 <td>ScType::NodeClass</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_class.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_class.png" /></td>
 </tr>
 <tr>
 <td>sc_node_abstract</td>
 <td>ScType::NodeAbstract</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_abstract.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_abstract.png" /></td>
 </tr>
 <tr>
 <td>sc_node_material</td>
 <td>ScType::NodeMaterial</td>
+<td><img alt="SCg-edge" src="../../images/scg/scg_node_const_material.png" /> <img alt="SCg-edge" src="../../images/scg/scg_node_var_material.png" /></td>
 </tr>
 </tbody>
 </table>
@@ -1152,6 +1227,11 @@ a -&gt; c: d: b;
 <td>sc_arc_common</td>
 <td>ScType::EdgeDCommon</td>
 <td>sc_edge_dcommon</td>
+</tr>
+<tr>
+<td>sc_arc_access</td>
+<td>ScType::EdgeAccess</td>
+<td>sc_edge_access</td>
 </tr>
 <tr>
 <td>sc_node_not_relation</td>

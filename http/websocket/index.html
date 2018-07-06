@@ -1,0 +1,1490 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+    
+    
+      
+        <title>WebSocket - SC-machine</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../_assets/main.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#websocket-protocol" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="SC-machine" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                SC-machine
+              </span>
+              <span class="md-header-nav__topic">
+                WebSocket
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </span>
+    SC-machine
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Build
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Build
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/linux-build/" title="Build on Linux" class="md-nav__link">
+      Build on Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/windows-build/" title="Build on Windows" class="md-nav__link">
+      Build on Windows
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/osx-build/" title="Build on OSX" class="md-nav__link">
+      Build on OSX
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Development
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Development
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/git-workflow/" title="Git-workflow" class="md-nav__link">
+      Git-workflow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/pr/" title="Pull requets" class="md-nav__link">
+      Pull requets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/codestyle/" title="Codestyle" class="md-nav__link">
+      Codestyle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../dev/test/" title="Unit tests" class="md-nav__link">
+      Unit tests
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/cpp-meta/" title="Meta programming" class="md-nav__link">
+      Meta programming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/kpm/" title="Agents" class="md-nav__link">
+      Agents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/templates/" title="Template" class="md-nav__link">
+      Template
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/common/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
+    
+    <label class="md-nav__link" for="nav-4-5">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-5">
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/python/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/library/" title="Library" class="md-nav__link">
+      Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/cpp_wrap/" title="Wrapped classes" class="md-nav__link">
+      Wrapped classes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Http
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Http
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        WebSocket
+      </label>
+    
+    <a href="./" title="WebSocket" class="md-nav__link md-nav__link--active">
+      WebSocket
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#common" title="Common" class="md-nav__link">
+    Common
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentificate" title="Authentificate" class="md-nav__link">
+    Authentificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createelements" title="CreateElements" class="md-nav__link">
+    CreateElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkelements" title="CheckElements" class="md-nav__link">
+    CheckElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleteelements" title="DeleteElements" class="md-nav__link">
+    DeleteElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searchbytemplate" title="SearchByTemplate" class="md-nav__link">
+    SearchByTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generatebytemplate" title="GenerateByTemplate" class="md-nav__link">
+    GenerateByTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" title="Events" class="md-nav__link">
+    Events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keynodes" title="Keynodes" class="md-nav__link">
+    Keynodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content" title="Content" class="md-nav__link">
+    Content
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Common
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Common
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/el_types/" title="Element types" class="md-nav__link">
+      Element types
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/config/" title="Configuration files" class="md-nav__link">
+      Configuration files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../net/sctp/" title="Sctp-protocol" class="md-nav__link">
+      Sctp-protocol
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/scs/" title="SCs language" class="md-nav__link">
+      SCs language
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../thirdparty/" title="Thirdparty" class="md-nav__link">
+      Thirdparty
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#common" title="Common" class="md-nav__link">
+    Common
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentificate" title="Authentificate" class="md-nav__link">
+    Authentificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createelements" title="CreateElements" class="md-nav__link">
+    CreateElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkelements" title="CheckElements" class="md-nav__link">
+    CheckElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleteelements" title="DeleteElements" class="md-nav__link">
+    DeleteElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searchbytemplate" title="SearchByTemplate" class="md-nav__link">
+    SearchByTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generatebytemplate" title="GenerateByTemplate" class="md-nav__link">
+    GenerateByTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" title="Events" class="md-nav__link">
+    Events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keynodes" title="Keynodes" class="md-nav__link">
+    Keynodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content" title="Content" class="md-nav__link">
+    Content
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="websocket-protocol">WebSocket protocol</h1>
+<p>It used to communicate with knowledge base by network from a browser.
+This protocol based is asynchronous and based on JSON.</p>
+<div class="admonition note">
+<p>JSON used instead of binary data to prevent problems with different byte (bit) order on different platforms.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">ScAddr</p>
+<p><code>ScAddr</code> encodes with <code>ScAddr::Hash</code> function</p>
+</div>
+<h2 id="common">Common</h2>
+<p>Each request has a common structure:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;request type&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Where:</p>
+<div class="admonition tip">
+<ul>
+<li><strong>id</strong> - unique id of command. Used to identify responses;</li>
+<li><strong>payload</strong> - command specified data.</li>
+</ul>
+</div>
+<hr />
+<p>Response also has a common structure:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="err">//</span> <span class="err">flag</span> <span class="err">that</span> <span class="err">mark</span> <span class="err">if</span> <span class="err">it</span> <span class="err">is</span> <span class="err">an</span> <span class="err">emited</span> <span class="err">event</span> <span class="err">or</span> <span class="err">not</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Where:</p>
+<div class="admonition tip">
+<ul>
+<li><strong>id</strong> - id of command;</li>
+<li><strong>status</strong> - has <code>true</code> value when command processed; otherwise has a <code>false</code> value;</li>
+<li><strong>payload</strong> - command specified result data.</li>
+</ul>
+</div>
+<hr />
+<h3 id="authentificate">Authentificate</h3>
+<div class="admonition warning">
+<p class="admonition-title">TODO</p>
+<p>Need to make documentation</p>
+</div>
+<hr />
+<h3 id="createelements">CreateElements</h3>
+<p><strong>Request type</strong>: <code>create_elements</code></p>
+<p>With this command you can create a batch of elements. <code>payload</code> of this command
+contains list of element creation parameters (depend on element type).
+All of this parameters have common structure:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">type</span> <span class="err">of</span> <span class="err">element</span> <span class="err">to</span> <span class="err">create.</span> <span class="err">Possible</span> <span class="err">values:</span> <span class="err">node,</span> <span class="err">edge,</span> <span class="err">link</span>
+  <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{}</span>  <span class="err">//</span> <span class="err">parameters</span> <span class="err">that</span> <span class="err">depends</span> <span class="err">on</span> <span class="err">element</span> <span class="err">type</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>There are parameters requested by elements type:</p>
+<ul>
+<li><strong>node</strong> - to create node use parameters:
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">type</span> <span class="err">of</span> <span class="err">element</span> <span class="err">to</span> <span class="err">create</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">342</span>   <span class="err">//</span> <span class="err">ScType</span> <span class="err">value</span> <span class="err">of</span> <span class="err">node</span> <span class="err">type</span>
+<span class="p">}</span>
+</pre></div></li>
+<li><strong>edge</strong> - to create edge use parameters:
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;src&quot;</span><span class="p">:</span> <span class="p">{</span>          <span class="err">//</span> <span class="err">source</span> <span class="err">element</span> <span class="err">of</span> <span class="err">edge</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">use</span> <span class="err">exist</span> <span class="err">ScAddr</span> <span class="err">of</span> <span class="err">element</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2313</span>   <span class="err">//</span> <span class="err">value</span> <span class="err">of</span> <span class="err">ScAddr</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;trg&quot;</span><span class="p">:</span> <span class="p">{</span>          <span class="err">//</span> <span class="err">target</span> <span class="err">element</span> <span class="err">of</span> <span class="err">edge</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ref&quot;</span><span class="p">,</span>  <span class="err">//</span> <span class="err">reference</span> <span class="err">to</span> <span class="err">created</span> <span class="err">element</span> <span class="err">before</span> <span class="err">this</span> <span class="err">one</span>
+    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>      <span class="err">//</span> <span class="err">index</span> <span class="err">of</span> <span class="err">element</span> <span class="err">in</span> <span class="err">CreateElement</span> <span class="err">payload</span> <span class="err">list</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">32</span>        <span class="err">//</span> <span class="err">ScType</span> <span class="err">value</span> <span class="err">of</span> <span class="err">edge</span> <span class="err">type</span>
+<span class="p">}</span>
+</pre></div></li>
+<li><strong>link</strong> - to create link use parameters:
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;link&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>         <span class="err">//</span> <span class="err">ScType</span> <span class="err">value</span> <span class="err">of</span> <span class="err">link</span> <span class="err">type</span> <span class="err">(const</span> <span class="err">or</span> <span class="err">var)</span>
+  <span class="nt">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">content</span> <span class="err">data</span> <span class="err">of</span> <span class="err">link</span>
+  <span class="nt">&quot;content_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>  <span class="err">//</span> <span class="err">content</span> <span class="err">type</span><span class="p">:</span> <span class="err">int</span><span class="p">,</span> <span class="err">float,</span> <span class="err">string,</span> <span class="err">binary</span>
+<span class="p">}</span>
+</pre></div></li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="codehilite"><pre><span></span><span class="err">//</span> <span class="err">request</span>
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;create_elements&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;link&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nt">&quot;content&quot;</span><span class="p">:</span> <span class="mf">45.4</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;src&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ref&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">0</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;trg&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ref&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">1</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">32</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="err">//</span> <span class="err">response</span>
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="mi">323</span><span class="p">,</span>
+    <span class="mi">534</span><span class="p">,</span>
+    <span class="mi">342</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<hr />
+<h3 id="checkelements">CheckElements</h3>
+<p><strong>Request type</strong>: <code>check_elements</code></p>
+<p>With this command you can check if specified elements exist. So you should pass
+list of ScAddr to check, and this command will return list of each element type.
+If type is not valid, then element doesn't exist. See <code>ScType</code> for more information.</p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;check_elements&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">ScAddr&#39;s</span> <span class="err">to</span> <span class="err">check</span>
+    <span class="mi">23123</span><span class="p">,</span>
+    <span class="mi">432</span><span class="p">,</span>
+    <span class="err">...</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">is</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">element</span> <span class="err">types</span> <span class="err">(ScType)</span>
+    <span class="mi">32</span><span class="p">,</span> <span class="err">//</span> <span class="err">valid</span> <span class="err">type</span>
+    <span class="mi">0</span><span class="p">,</span>  <span class="err">//</span> <span class="err">not</span> <span class="err">valid</span> <span class="err">type</span>
+    <span class="err">...</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<hr />
+<h3 id="deleteelements">DeleteElements</h3>
+<p><strong>Request type</strong>: <code>delete_elements</code></p>
+<p>This request delete specified elements.</p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delete_elements&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">ScAddr&#39;s</span> <span class="err">to</span> <span class="err">delete</span>
+    <span class="mi">2323</span><span class="p">,</span>
+    <span class="mi">4322</span><span class="p">,</span>
+    <span class="err">...</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<p>If command processed, then response status is <code>true</code>,
+otherwise status - <code>false</code></p>
+</div>
+<hr />
+<h3 id="searchbytemplate">SearchByTemplate</h3>
+<p><strong>Request type</strong>: <code>search_template</code></p>
+<p>This request search constructions by specified template.</p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;search_template&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">template</span> <span class="err">triples</span>
+    <span class="p">[</span>
+      <span class="err">//</span> <span class="err">triple</span> <span class="err">that</span> <span class="err">represents</span> <span class="err">F_A_A</span> <span class="err">template</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23123</span>  <span class="err">//</span> <span class="err">ScAddr</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>    <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
+        <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>     <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
+        <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_trg&quot;</span>  <span class="err">//</span> <span class="err">can</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">next</span> <span class="err">triples</span> <span class="err">to</span> <span class="err">ref</span> <span class="err">this</span> <span class="err">element</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">231342</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+        <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge2&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>  <span class="err">//</span> <span class="err">ref</span> <span class="err">to</span> <span class="err">first</span> <span class="err">triple</span> <span class="err">element</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="err">...</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="admonition note">
+<p>Just elements with <code>aliases</code> will be exist in a result</p>
+</div>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">/*</span> <span class="err">this</span> <span class="err">map</span> <span class="err">contains</span> <span class="err">index</span> <span class="err">of</span> <span class="err">specified</span> <span class="err">alias</span> <span class="err">in</span>
+    <span class="err">*</span> <span class="err">result</span> <span class="err">addrs</span> <span class="err">list</span>
+    <span class="err">*/</span>
+    <span class="nt">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;trg&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nt">&quot;edge1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;edge2&quot;</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;addrs&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">412</span><span class="p">,</span> <span class="mi">423</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">282</span><span class="p">,</span> <span class="mi">412</span><span class="p">],</span> <span class="err">//</span> <span class="err">addrs</span> <span class="err">for</span> <span class="mi">1</span><span class="err">st</span> <span class="err">result</span>
+      <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">6734</span><span class="p">,</span> <span class="mi">85643</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">4234</span><span class="p">,</span> <span class="mi">6734</span><span class="p">],</span> <span class="err">//</span> <span class="err">addrs</span> <span class="err">for</span> <span class="mi">2</span><span class="err">nd</span> <span class="err">result</span>
+      <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">7256</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">654</span><span class="p">,</span> <span class="mi">7256</span><span class="p">],</span>
+      <span class="err">...</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<p>You can use <a href="../../other/scs/">SCs-text</a> language to make a search requests. Just replace <code>payload</code> field with a string, that contains <code>SCs-text</code>.
+Each vairable identifier (start with <code>_</code> symbol) will be used as an alias. All other should be a system identifiers, that will be used to find <code>ScAddr</code> of elements.
+<strong>Example</strong>:</p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;search_template&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="s2">&quot;person _-&gt; .._p (* _=&gt; nrel_email:: _[] *);;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<hr />
+<h3 id="generatebytemplate">GenerateByTemplate</h3>
+<p><strong>Request type</strong>: <code>generate_template</code></p>
+<p>This request generate construction by specified template.</p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;generate_template&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">template</span> <span class="err">triples</span>
+    <span class="nt">&quot;templ&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="p">[</span>
+        <span class="err">//</span> <span class="err">triple</span> <span class="err">that</span> <span class="err">represents</span> <span class="err">F_A_A</span> <span class="err">template</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23123</span>  <span class="err">//</span> <span class="err">ScAddr</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>    <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
+          <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>     <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
+          <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_trg&quot;</span>  <span class="err">//</span> <span class="err">can</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">next</span> <span class="err">triples</span> <span class="err">to</span> <span class="err">ref</span> <span class="err">this</span> <span class="err">element</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">231342</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+          <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge2&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>  <span class="err">//</span> <span class="err">ref</span> <span class="err">to</span> <span class="err">first</span> <span class="err">triple</span> <span class="err">element</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="err">...</span>
+    <span class="p">],</span>
+    <span class="err">/*</span> <span class="err">Map</span> <span class="err">of</span> <span class="err">parameters.</span> <span class="err">Each</span> <span class="err">parameter</span> <span class="err">with</span> <span class="err">specified</span> <span class="err">alias</span> <span class="err">in</span> <span class="err">this</span> <span class="err">map.</span>
+    <span class="err">*</span> <span class="err">Will</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">template</span> <span class="err">generation.</span> <span class="err">Just</span> <span class="err">`type`</span> <span class="err">values</span> <span class="err">can</span> <span class="err">be</span> <span class="err">replaced</span>
+    <span class="err">*</span> <span class="err">by</span> <span class="err">params.</span> <span class="err">Also</span> <span class="err">you</span> <span class="err">can&#39;t</span> <span class="err">use</span> <span class="err">alias</span> <span class="err">in</span> <span class="err">parameters</span> <span class="err">for</span> <span class="err">an</span> <span class="err">edges.</span>
+    <span class="err">*/</span>
+    <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;_trg&quot;</span><span class="p">:</span> <span class="mi">564</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">/*</span> <span class="err">This</span> <span class="err">map</span> <span class="err">contains</span> <span class="err">index</span> <span class="err">of</span> <span class="err">ScAddr</span> <span class="err">(in</span> <span class="err">`addrs`</span> <span class="err">field)</span> <span class="err">for</span> <span class="err">each</span> <span class="err">alias</span> <span class="err">from</span> <span class="err">template.</span>
+    <span class="err">*/</span>
+    <span class="nt">&quot;aliases&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;_trg&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="nt">&quot;_edge1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;_edge2&quot;</span><span class="p">:</span> <span class="mi">4</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;addrs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">4953</span><span class="p">,</span> <span class="mi">564</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">533</span><span class="p">,</span> <span class="mi">4953</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<p>Like in <a href="#searchbytemplate">SearchByTemplate</a> you can use SCs-template for generation. Just replace <code>templ</code> field of <code>payload</code> to do that. <strong>Example</strong>:
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;generate_template&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">template</span> <span class="err">triples</span>
+    <span class="nt">&quot;templ&quot;</span><span class="p">:</span> <span class="s2">&quot;person _-&gt; .._p (* _=&gt; nrel_email:: _[test@email.com] *);;&quot;</span><span class="p">,</span>
+    <span class="err">/*</span> <span class="err">Map</span> <span class="err">of</span> <span class="err">parameters.</span> <span class="err">Each</span> <span class="err">parameter</span> <span class="err">with</span> <span class="err">specified</span> <span class="err">alias</span> <span class="err">in</span> <span class="err">this</span> <span class="err">map.</span>
+    <span class="err">*</span> <span class="err">Will</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">template</span> <span class="err">generation.</span> <span class="err">Just</span> <span class="err">`type`</span> <span class="err">values</span> <span class="err">can</span> <span class="err">be</span> <span class="err">replaced</span>
+    <span class="err">*</span> <span class="err">by</span> <span class="err">params.</span> <span class="err">Also</span> <span class="err">you</span> <span class="err">can&#39;t</span> <span class="err">use</span> <span class="err">alias</span> <span class="err">in</span> <span class="err">parameters</span> <span class="err">for</span> <span class="err">an</span> <span class="err">edges.</span>
+    <span class="err">*/</span>
+    <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;.._p&quot;</span><span class="p">:</span> <span class="mi">5314</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div></p>
+<hr />
+<h3 id="events">Events</h3>
+<p><strong>Request type</strong>: <code>events</code></p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;events&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">events</span> <span class="err">to</span> <span class="err">create</span>
+    <span class="nt">&quot;create&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;add_output_edge&quot;</span><span class="p">,</span>  <span class="err">//</span> <span class="err">event</span> <span class="err">type</span>
+        <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="mi">324</span>                 <span class="err">//</span> <span class="err">element</span> <span class="err">to</span> <span class="err">subscribe</span> <span class="err">events</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">events</span> <span class="err">id&#39;s</span> <span class="err">to</span> <span class="err">delete</span>
+    <span class="nt">&quot;delete&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<p>List of possible event types:</p>
+<ul>
+<li><code>add_outgoing_edge</code> - used to subscribe for events, when new outgoing edge added from a specified element;</li>
+<li><code>add_ingoing_edge</code> - the same as <code>add_outgoing_edge</code>, but for ingoing edges;</li>
+<li><code>remove_outgoing_edge</code> - used to subscribe for events, when outgoing edge removed from a specified element;</li>
+<li><code>remove_ingoing_edge</code> - the same as <code>remove_outgoing_edge</code>, but for outgoing edges;</li>
+<li><code>content_change</code> - used to subscribe for sc-link content changes event;</li>
+<li><code>delete_element</code> - used to subscribe for element deletion.</li>
+</ul>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">/*</span> <span class="err">List</span> <span class="err">of</span> <span class="err">created</span> <span class="err">event</span> <span class="err">id&#39;s.</span> <span class="err">The</span> <span class="err">same</span> <span class="err">order</span> <span class="err">(index)</span>
+    <span class="err">*</span> <span class="err">as</span> <span class="err">in</span> <span class="err">request</span> <span class="err">`create`</span> <span class="err">list</span>
+    <span class="err">*/</span>
+    <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<p><strong>Events emit</strong></p>
+<p>Each event can be emitted by server and passed to client. It has such structure:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+  <span class="err">//</span> <span class="err">payload</span> <span class="err">contains</span> <span class="err">1</span> <span class="err">or</span> <span class="err">3</span> <span class="err">elements</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="mi">32</span><span class="p">,</span>   <span class="err">//</span> <span class="err">ScAddr</span> <span class="err">of</span> <span class="err">subscribed</span> <span class="err">element</span>
+    <span class="mi">324</span><span class="p">,</span>  <span class="err">//</span> <span class="err">added/removed</span> <span class="err">edge</span> <span class="err">ScAddr</span>
+    <span class="mi">34</span>    <span class="err">//</span> <span class="err">source/target</span> <span class="err">of</span> <span class="err">edge</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="admonition info">
+<p><code>2nd</code> and <code>3rd</code> elements used in add/remove edge events</p>
+</div>
+<hr />
+<h3 id="keynodes">Keynodes</h3>
+<p>This command allows you to find/resolve keynodes.</p>
+<p><strong>Request type</strong>: <code>keynodes</code></p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keynodes&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">commands</span> <span class="err">that</span> <span class="err">you</span> <span class="err">need</span> <span class="err">to</span> <span class="err">process</span>
+    <span class="p">{</span>
+      <span class="err">//</span> <span class="err">command</span> <span class="err">to</span> <span class="err">find</span> <span class="err">element</span> <span class="err">by</span> <span class="err">system</span> <span class="err">identifier</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;find&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;idtf&quot;</span><span class="p">:</span> <span class="s2">&quot;any system identifier&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="err">//</span> <span class="err">Command</span> <span class="err">to</span> <span class="err">resolve</span> <span class="err">element.</span> <span class="err">If</span> <span class="err">it</span> <span class="err">doesn&#39;t</span> <span class="err">exist,</span> <span class="err">then</span> <span class="err">create</span> <span class="err">new</span> <span class="err">one.</span>
+      <span class="err">//</span> <span class="err">elType</span> <span class="err">-</span> <span class="err">element</span> <span class="err">type,</span> <span class="err">that</span> <span class="err">will</span> <span class="err">be</span> <span class="err">used</span> <span class="err">to</span> <span class="err">create</span> <span class="err">it.</span>
+      <span class="err">//</span> <span class="err">Should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">any</span> <span class="err">node</span> <span class="err">type.</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;idtf&quot;</span><span class="p">:</span> <span class="s2">&quot;any system identifier&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;elType&quot;</span><span class="p">:</span> <span class="mi">32</span>
+    <span class="p">},</span>
+    <span class="err">...</span> <span class="err">//</span> <span class="err">any</span> <span class="err">commands</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">/*</span> <span class="err">List</span> <span class="err">of</span> <span class="err">resolved</span> <span class="err">ScAddr</span> <span class="err">values</span> <span class="err">(numbers).</span>
+    <span class="err">*</span> <span class="err">Each</span> <span class="err">element</span> <span class="err">with</span> <span class="err">index</span> <span class="err">N</span> <span class="err">is</span> <span class="err">a</span> <span class="err">result</span> <span class="err">of</span> <span class="err">N</span> <span class="err">command</span> <span class="err">in</span> <span class="err">a</span> <span class="err">request.</span>
+    <span class="err">*</span> <span class="err">So</span> <span class="err">length</span> <span class="err">of</span> <span class="err">this</span> <span class="err">array</span> <span class="err">should</span> <span class="err">be</span> <span class="err">equal</span> <span class="err">to</span> <span class="err">length</span>
+    <span class="err">*</span> <span class="err">of</span> <span class="err">commands</span> <span class="err">array</span> <span class="err">in</span> <span class="err">request.</span>
+    <span class="err">*</span> <span class="mi">0</span> <span class="err">-</span> <span class="err">is</span> <span class="err">an</span> <span class="err">invalid</span> <span class="err">ScAddr</span> <span class="err">(not</span> <span class="err">found/resolved)</span>
+    <span class="err">*/</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<div class="codehilite"><pre><span></span><span class="err">//</span> <span class="err">request</span>
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keynodes&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;find&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;idtf&quot;</span><span class="p">:</span> <span class="s2">&quot;any system identifier that NOT exist&quot;</span>
+    <span class="p">},</span>
+
+    <span class="p">{</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;find&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;idtf&quot;</span><span class="p">:</span> <span class="s2">&quot;any system identifier that exist&quot;</span>
+    <span class="p">},</span>
+
+    <span class="p">{</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;idtf&quot;</span><span class="p">:</span> <span class="s2">&quot;NOT exist&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;elType&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">},</span>
+
+    <span class="p">{</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;idtf&quot;</span><span class="p">:</span> <span class="s2">&quot;exist&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;elType&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="err">//</span> <span class="err">response</span>
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">321</span><span class="p">,</span>
+    <span class="mi">435</span><span class="p">,</span>
+    <span class="mi">324</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<hr />
+<h3 id="content">Content</h3>
+<p>This command allow to work with ScLink contents.</p>
+<p><strong>Request type</strong>: <code>content</code></p>
+<div class="admonition quote">
+<p class="admonition-title">Request</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">commands</span> <span class="err">that</span> <span class="err">you</span> <span class="err">need</span> <span class="err">to</span> <span class="err">process</span>
+    <span class="p">{</span>
+      <span class="err">//</span> <span class="err">command</span> <span class="err">to</span> <span class="err">set</span> <span class="err">ScLink</span> <span class="err">content</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;set&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>  <span class="err">//</span> <span class="err">content</span> <span class="err">type</span>
+      <span class="nt">&quot;data&quot;</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span>     <span class="err">//</span> <span class="err">content</span> <span class="err">could</span> <span class="err">be</span> <span class="err">a</span> <span class="err">string,</span> <span class="err">number</span>
+      <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="mi">3123</span>    <span class="err">//</span> <span class="err">ScAddr</span> <span class="err">of</span> <span class="err">ScLink</span> <span class="err">to</span> <span class="err">change</span> <span class="err">content</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="err">//</span> <span class="err">Comman</span> <span class="err">to</span> <span class="err">get</span> <span class="err">link</span> <span class="err">content</span>
+      <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;get&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="mi">232</span>       <span class="err">//</span> <span class="err">ScAddr</span> <span class="err">of</span> <span class="err">ScLink</span> <span class="err">to</span> <span class="err">get</span> <span class="err">content</span>
+    <span class="p">},</span>
+    <span class="err">...</span> <span class="err">//</span> <span class="err">any</span> <span class="err">commands</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+<p>List of possible content types:</p>
+<ul>
+<li><code>int</code> - for integer values;</li>
+<li><code>float</code> - for float values;</li>
+<li><code>string</code> - for string values;</li>
+<li><code>binary</code> - for binary values.</li>
+</ul>
+<div class="admonition quote">
+<p class="admonition-title">Response</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
+  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="err">//</span> <span class="err">List</span> <span class="err">of</span> <span class="err">command</span> <span class="err">results</span>
+    <span class="kc">true</span><span class="p">,</span>      <span class="err">//</span> <span class="kc">true</span> <span class="err">or</span> <span class="kc">false</span> <span class="err">for</span> <span class="err">a</span> <span class="err">set</span> <span class="err">command</span> <span class="err">result</span>
+    <span class="err">//</span> <span class="err">for</span> <span class="err">get</span> <span class="err">command</span> <span class="err">it</span> <span class="err">returns</span> <span class="err">content</span> <span class="err">with</span> <span class="err">a</span> <span class="err">type</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mf">56.7</span><span class="p">,</span>  <span class="err">//</span> <span class="err">value</span> <span class="err">will</span> <span class="err">be</span> <span class="err">a</span> <span class="err">null,</span> <span class="err">if</span> <span class="err">content</span> <span class="err">doesn&#39;t</span> <span class="err">exist</span>
+      <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span>
+    <span class="p">},</span>
+    <span class="err">...</span> <span class="err">//</span> <span class="err">other</span> <span class="err">command</span> <span class="err">results</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+</div>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../" title="Common" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Common
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../cpp/el_types/" title="Element types" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Element types
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      
+      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      
+        <script src="../../_assets/scg.min.js"></script>
+      
+        <script src="../../_assets/main.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

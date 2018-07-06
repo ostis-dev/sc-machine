@@ -217,6 +217,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/osx-build/" title="Build on OSX" class="md-nav__link">
+      Build on OSX
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -491,10 +503,58 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      Common
+      Http
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
+        Http
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../http/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../http/websocket/" title="WebSocket" class="md-nav__link">
+      WebSocket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Common
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
         Common
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -786,8 +846,19 @@ In code you can see a construction <code>ScType::NODE_VAR &gt;&gt; "_device_inst
 <p>During template building all constants will be resolved by their system identifier (in example: <code>device</code>, <code>device_enabled</code>), so in result <code>templ</code> will be contain template:</p>
 <p><scg src="../../images/templates/template_example_2.gwf"></scg></p>
 <h2 id="search">Search</h2>
-<p>Search algorithm trying to find all possible variants of specified construction.</p>
+<p>Search algorithm trying to find all possible variants of specified construction. It use any constants (available <code>ScAddr</code>'s from parameters to find equal constructions in sc-memory).</p>
 <h2 id="search-in-construction">Search in construction</h2>
+<p>Do the same as <a href="#search">Search</a>, but check if all elements of found constructions are in a specified set.</p>
+<p>Example:</p>
+<div class="codehilite"><pre><span></span><span class="n">ScTemplate</span> <span class="n">templ</span><span class="p">;</span> 
+<span class="n">templ</span><span class="p">.</span><span class="n">Triple</span><span class="p">(</span>
+  <span class="n">anyAddr</span> <span class="o">&gt;&gt;</span> <span class="s">&quot;_anyAddr&quot;</span><span class="p">,</span>
+  <span class="n">ScType</span><span class="o">::</span><span class="n">EdgeAccessVarPosPerm</span> <span class="o">&gt;&gt;</span> <span class="s">&quot;_edge&quot;</span><span class="p">,</span>
+  <span class="n">ScType</span><span class="o">::</span><span class="n">NodeVar</span> <span class="o">&gt;&gt;</span> <span class="s">&quot;_trgAddr&quot;</span><span class="p">);</span>
+
+<span class="n">ctx</span><span class="p">.</span><span class="n">HelperSearchTemplateInStruct</span><span class="p">(</span><span class="n">templ</span><span class="p">,</span> <span class="n">anyStructAddr</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+
 <h2 id="generate">Generate</h2>
                 
                   

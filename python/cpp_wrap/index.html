@@ -217,6 +217,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../build/osx-build/" title="Build on OSX" class="md-nav__link">
+      Build on OSX
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -542,10 +554,58 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      Common
+      Http
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
+        Http
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../http/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../http/websocket/" title="WebSocket" class="md-nav__link">
+      WebSocket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Common
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
         Common
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -878,19 +938,19 @@
 <div class="codehilite"><pre><span></span><span class="n">addr</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s2">&quot;_item&quot;</span><span class="p">)</span>
 </pre></div></p></details><details class="tip"><summary>IsEmpty()</summary><p>if there are no any parameters added, then returns <code>True</code>; otherwise - <code>False</code></p></details><h2 id="sctemplategenresult">ScTemplateGenResult</h2>
 <p>This class wrap template generation result. There are methods of this class:</p>
-<details class="tip"><summary>Size()</summary><p>return number of elements</p></details><details class="tip"><summary>__getitem__(replName)</summary><ul><li><strong>replName</strong> - name of result parameter (<code>str</code>)</li></ul><p>returns <code>ScAddr</code> by specified name. If there are no value with a specified name, then returns <code>None</code>
+<details class="tip"><summary>Aliases()</summary><p>returns a <code>dict</code> of all used aliases in template (where key - <code>alias</code>, value - index in generate result). Keys can be used to get result values by <code>__getitem__</code></p></details><details class="tip"><summary>Size()</summary><p>return number of elements</p></details><details class="tip"><summary>__getitem__(alias)</summary><ul><li><strong>alias</strong> - name of result parameter (<code>str</code>)</li></ul><p>returns <code>ScAddr</code> by specified name. If there are no value with a specified name, then returns <code>None</code>
 <div class="codehilite"><pre><span></span><span class="n">addr</span> <span class="o">=</span> <span class="n">genResult</span><span class="p">[</span><span class="s2">&quot;node1&quot;</span><span class="p">]</span>
 </pre></div></p></details><h2 id="sctemplatesearchresultitem">ScTemplateSearchResultItem</h2>
 <p>This class represents one result for a search by template. There are methods of this class:</p>
-<details class="tip"><summary>Size()</summary><p>return size of result (number of <code>ScAddr</code>'s equal to search construction)</p></details><details class="tip"><summary>__getitem__()</summary><div class="admonition warning"><p class="admonition-title">Warning</p><p>You will receive duplicate <code>ScAddr</code>'s, because result stored as array of founded triples.</p></div><p>When you try to get <code>ScAddr</code> with <code>str</code> it will be found by replacement name (see <a href="../../cpp/templates/">templates</a> for more info). If there are no element with specified index, then returns <code>None</code>
+<details class="tip"><summary>Size()</summary><p>return size of result (number of <code>ScAddr</code>'s equal to search construction)</p></details><details class="tip"><summary>__getitem__(name_or_index)</summary><p>allows to get result items by any index: <code>int</code>, <code>str</code>. In case of <code>int</code> index you will just get <code>ScAddr</code> by index in result array (length equal to <code>Size()</code>) this case suitable, when you need to iterate all addrs in result.</p><div class="admonition warning"><p class="admonition-title">Warning</p><p>You will receive duplicate <code>ScAddr</code>'s, because result stored as array of founded triples.</p></div><p>When you try to get <code>ScAddr</code> with <code>str</code> it will be found by alias (see <a href="../../cpp/templates/">templates</a> for more info). If there are no element with specified index, then returns <code>None</code>
 <div class="codehilite"><pre><span></span><span class="n">resultSize</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="o">.</span><span class="n">Size</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">resultSize</span><span class="p">):</span>
   <span class="n">addr</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="c1"># iterate all addrs</span>
 
-<span class="n">addr1</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="p">[</span><span class="s2">&quot;replacement name&quot;</span><span class="p">]</span> <span class="c1"># get by replacement name</span>
+<span class="n">addr1</span> <span class="o">=</span> <span class="n">searchResultItem</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span> <span class="c1"># get by replacement name</span>
 </pre></div></p></details><h2 id="sctemplatesearchresult">ScTemplateSearchResult</h2>
 <p>This class represent list of results by template search. There are methods of this class:</p>
-<details class="tip"><summary>Size()</summary><p>returns number of results.</p></details><details class="tip"><summary>__getitem__()</summary><p>get result by specified index (<code>int</code> should be less then <code>Size()</code>).
+<details class="tip"><summary>Aliases()</summary><p>returns a <code>dict</code> of all used aliases in template (where key - <code>alias</code>, value - index in search result). Keys can be used to get result values by <code>__getitem__</code></p></details><details class="tip"><summary>Size()</summary><p>returns number of results.</p></details><details class="tip"><summary>__getitem__()</summary><p>get result by specified index (<code>int</code> should be less then <code>Size()</code>).
 <div class="codehilite"><pre><span></span><span class="n">resultNum</span> <span class="o">=</span> <span class="n">searchResult</span><span class="o">.</span><span class="n">Size</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">resultNum</span><span class="p">):</span>
   <span class="n">searchResultItem</span> <span class="o">=</span> <span class="n">searchResult</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -1034,8 +1094,9 @@
 <span class="o">...</span> <span class="c1"># fill template</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperSearchTemplate</span><span class="p">(</span><span class="n">templ</span><span class="p">)</span>
-</pre></div></p></details><details class="tip"><summary>HelperBuildTemplate(templAddr)</summary><ul><li><strong>templAddr</strong> - <code>ScAddr</code> to sc-struct in memory, that contains a template</li></ul><p>build template from construction in memory. Returns <code>ScTemplate</code> instance. If template wasn't built, then return <code>None</code></p><p>*<em>Example:</em>
-<div class="codehilite"><pre><span></span><span class="n">templ</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperBuildTemplate</span><span class="p">(</span><span class="n">templAddr</span><span class="p">)</span>
+</pre></div></p></details><details class="tip"><summary>HelperBuildTemplate(data)</summary><ul><li><strong>data</strong> - <code>ScAddr</code> or <code>str</code>. If it's a <code>ScAddr</code> then it should point to sc-struct in memory, that is a template. It it's a <code>str</code>, then it should contains <code>SCs-code</code> that describes template</li></ul><p>returns <code>ScTemplate</code> instance. If template wasn't built, then return <code>None</code></p><p>*<em>Example:</em>
+<div class="codehilite"><pre><span></span><span class="n">templFromMemory</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperBuildTemplate</span><span class="p">(</span><span class="n">templAddr</span><span class="p">)</span>
+<span class="n">templFromStr</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">HelperBuildTemplate</span><span class="p">(</span><span class="s1">&#39;person _=&gt; nrel_email:: _[];;&#39;</span><span class="p">)</span>
 <span class="o">...</span> <span class="c1"># work with template</span>
 </pre></div></p></details>
                 
@@ -1071,13 +1132,13 @@
           </a>
         
         
-          <a href="../../cpp/el_types/" title="Element types" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../http/" title="Common" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Element types
+                Common
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
