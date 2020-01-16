@@ -209,23 +209,23 @@ enum class ScTemplateResultCode : uint8_t
 /* Parameters for template generator.
  * Can be used to replace variables by values
  */
-class ScTemplateGenParams
+class ScTemplateParams
 {
   friend class ScTemplateGenerator;
 
 public:
-  ScTemplateGenParams(ScTemplateGenParams const & other) = delete;
-  ScTemplateGenParams & operator = (ScTemplateGenParams const & other) = delete;
+  ScTemplateParams(ScTemplateParams const & other) = delete;
+  ScTemplateParams & operator = (ScTemplateParams const & other) = delete;
 
-  ScTemplateGenParams() = default;
+  ScTemplateParams() = default;
 
-  SC_DEPRECATED(0.4.0, "You should to use ScTemplateGenParams::Add")
-  _SC_EXTERN ScTemplateGenParams & add(std::string const & varIdtf, ScAddr const & value)
+  SC_DEPRECATED(0.4.0, "You should to use ScTemplateParams::Add")
+  _SC_EXTERN ScTemplateParams & add(std::string const & varIdtf, ScAddr const & value)
   {
     return Add(varIdtf, value);
   }
 
-  _SC_EXTERN ScTemplateGenParams & Add(std::string const & varIdtf, ScAddr const & value)
+  _SC_EXTERN ScTemplateParams & Add(std::string const & varIdtf, ScAddr const & value)
   {
     assert(m_values.find(varIdtf) == m_values.end());
     m_values[varIdtf] = value;
@@ -244,7 +244,7 @@ public:
     return false;
   }
 
-  SC_DEPRECATED(0.4.0, "You should to use ScTemplateGenParams::IsEmpty")
+  SC_DEPRECATED(0.4.0, "You should to use ScTemplateParams::IsEmpty")
   _SC_EXTERN bool empty() const
   {
     return m_values.empty();
@@ -255,7 +255,7 @@ public:
     return m_values.empty();
   }
 
-  _SC_EXTERN static const ScTemplateGenParams Empty;
+  _SC_EXTERN static const ScTemplateParams Empty;
 
 protected:
   using ParamsMap = std::map<std::string, ScAddr>;
@@ -317,13 +317,13 @@ public:
 
 protected:
   // Begin: calls by memory context
-  bool Generate(ScMemoryContext & ctx, ScTemplateGenResult & result, ScTemplateGenParams const & params, ScTemplateResultCode * errorCode = nullptr) const;
+  bool Generate(ScMemoryContext & ctx, ScTemplateGenResult & result, ScTemplateParams const & params, ScTemplateResultCode * errorCode = nullptr) const;
   bool Search(ScMemoryContext & ctx, ScTemplateSearchResult & result) const;
   bool SearchInStruct(ScMemoryContext & ctx, ScAddr const & scStruct, ScTemplateSearchResult & result) const;
 
   // Builds template based on template in sc-memory
   bool FromScTemplate(ScMemoryContext & ctx, ScAddr const & scTemplateAddr);
-  bool FromScTemplate(ScMemoryContext & ctx, ScAddr const & scTemplateAddr, const ScTemplateGenParams & params);
+  bool FromScTemplate(ScMemoryContext & ctx, ScAddr const & scTemplateAddr, const ScTemplateParams & params);
   bool FromScs(ScMemoryContext & ctx, std::string const & scsText);
   // End: calls by memory context
 
@@ -403,10 +403,10 @@ public:
     return m_result[index];
   }
 
-  inline ScTemplate::ReplacementsMap const & GetReplacements() const 
-  { 
-    return m_replacements; 
-  } 
+  inline ScTemplate::ReplacementsMap const & GetReplacements() const
+  {
+    return m_replacements;
+  }
 
 protected:
   ScAddrVector m_result;
