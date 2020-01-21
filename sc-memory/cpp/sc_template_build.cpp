@@ -339,7 +339,7 @@ protected:
   std::vector<ObjectInfo> m_objects;
 
 private:
-  const ObjectInfo * replaceWithParam(const ObjectInfo * templateItem)
+ ObjectInfo replaceWithParam(ObjectInfo const * templateItem) const
   {
     if (!templateItem->IsEdge())
     {
