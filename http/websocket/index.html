@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
     
     
       
@@ -40,21 +40,27 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
       
     
     
-      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
       <link rel="stylesheet" href="../../_assets/main.css">
+    
+    
+      
     
     
   </head>
@@ -67,11 +73,11 @@
         
       </defs>
     </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#websocket-protocol" tabindex="1" class="md-skip">
+      <a href="#websocket-protocol" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -80,40 +86,39 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="SC-machine" class="md-header-nav__button md-logo">
+        <a href="../.." title="SC-machine" aria-label="SC-machine" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
         </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            
-              <span class="md-header-nav__topic">
-                SC-machine
-              </span>
-              <span class="md-header-nav__topic">
+            <span class="md-header-nav__topic">
+              SC-machine
+            </span>
+            <span class="md-header-nav__topic">
+              
                 WebSocket
-              </span>
-            
+              
+            </span>
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
+  <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
         &#xE5CD;
       </button>
@@ -130,7 +135,6 @@
     </div>
   </div>
 </div>
-          
         
       </div>
       
@@ -143,7 +147,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -151,12 +155,12 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="SC-machine" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
-    </span>
+    </a>
     SC-machine
   </label>
   
@@ -316,297 +320,10 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
-      API
+      Common
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-4">
-        API
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../cpp/cpp-meta/" title="Meta programming" class="md-nav__link">
-      Meta programming
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../cpp/kpm/" title="Agents" class="md-nav__link">
-      Agents
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../cpp/templates/" title="Template" class="md-nav__link">
-      Template
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../cpp/common/" title="Common" class="md-nav__link">
-      Common
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
-    
-    <label class="md-nav__link" for="nav-4-5">
-      Python
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-4-5">
-        Python
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../python/python/" title="Common" class="md-nav__link">
-      Common
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../python/library/" title="Library" class="md-nav__link">
-      Library
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../python/cpp_wrap/" title="Wrapped classes" class="md-nav__link">
-      Wrapped classes
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
-    
-    <label class="md-nav__link" for="nav-5">
-      Http
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        Http
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../" title="Common" class="md-nav__link">
-      Common
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        WebSocket
-      </label>
-    
-    <a href="./" title="WebSocket" class="md-nav__link md-nav__link--active">
-      WebSocket
-    </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#common" title="Common" class="md-nav__link">
-    Common
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#authentificate" title="Authentificate" class="md-nav__link">
-    Authentificate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#createelements" title="CreateElements" class="md-nav__link">
-    CreateElements
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#checkelements" title="CheckElements" class="md-nav__link">
-    CheckElements
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deleteelements" title="DeleteElements" class="md-nav__link">
-    DeleteElements
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#searchbytemplate" title="SearchByTemplate" class="md-nav__link">
-    SearchByTemplate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#generatebytemplate" title="GenerateByTemplate" class="md-nav__link">
-    GenerateByTemplate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#events" title="Events" class="md-nav__link">
-    Events
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#keynodes" title="Keynodes" class="md-nav__link">
-    Keynodes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#content" title="Content" class="md-nav__link">
-    Content
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
-    
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
-    
-    <label class="md-nav__link" for="nav-6">
-      Common
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
         Common
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -670,6 +387,343 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/cpp-meta/" title="Meta programming" class="md-nav__link">
+      Meta programming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/kpm/" title="Agents" class="md-nav__link">
+      Agents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/templates/" title="Template" class="md-nav__link">
+      Template
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/common/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-5" type="checkbox" id="nav-5-5">
+    
+    <label class="md-nav__link" for="nav-5-5">
+      Python
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-5">
+        Python
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/python/" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/library/" title="Library" class="md-nav__link">
+      Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../python/cpp_wrap/" title="Wrapped classes" class="md-nav__link">
+      Wrapped classes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      Http
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Http
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Common" class="md-nav__link">
+      Common
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        WebSocket
+      </label>
+    
+    <a href="./" title="WebSocket" class="md-nav__link md-nav__link--active">
+      WebSocket
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#common" class="md-nav__link">
+    Common
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentificate" class="md-nav__link">
+    Authentificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createelements" class="md-nav__link">
+    CreateElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkelements" class="md-nav__link">
+    CheckElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleteelements" class="md-nav__link">
+    DeleteElements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searchbytemplate" class="md-nav__link">
+    SearchByTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generatebytemplate" class="md-nav__link">
+    GenerateByTemplate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    Events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keynodes" class="md-nav__link">
+    Keynodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content" class="md-nav__link">
+    Content
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Tools
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Tools
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tools/kb_builder/" title="Builder" class="md-nav__link">
+      Builder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tools/web/" title="Web" class="md-nav__link">
+      Web
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="../../license/" title="License" class="md-nav__link">
       License
@@ -718,11 +772,11 @@
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
+    <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#common" title="Common" class="md-nav__link">
+  <a href="#common" class="md-nav__link">
     Common
   </a>
   
@@ -730,63 +784,63 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#authentificate" title="Authentificate" class="md-nav__link">
+  <a href="#authentificate" class="md-nav__link">
     Authentificate
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#createelements" title="CreateElements" class="md-nav__link">
+  <a href="#createelements" class="md-nav__link">
     CreateElements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#checkelements" title="CheckElements" class="md-nav__link">
+  <a href="#checkelements" class="md-nav__link">
     CheckElements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deleteelements" title="DeleteElements" class="md-nav__link">
+  <a href="#deleteelements" class="md-nav__link">
     DeleteElements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#searchbytemplate" title="SearchByTemplate" class="md-nav__link">
+  <a href="#searchbytemplate" class="md-nav__link">
     SearchByTemplate
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#generatebytemplate" title="GenerateByTemplate" class="md-nav__link">
+  <a href="#generatebytemplate" class="md-nav__link">
     GenerateByTemplate
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#events" title="Events" class="md-nav__link">
+  <a href="#events" class="md-nav__link">
     Events
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#keynodes" title="Keynodes" class="md-nav__link">
+  <a href="#keynodes" class="md-nav__link">
     Keynodes
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#content" title="Content" class="md-nav__link">
+  <a href="#content" class="md-nav__link">
     Content
   </a>
   
@@ -796,6 +850,8 @@
     </nav>
   
 </li>
+      
+      
       
       
       
@@ -824,14 +880,14 @@ This protocol based is asynchronous and based on JSON.</p>
 </div>
 <h2 id="common">Common</h2>
 <p>Each request has a common structure:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;request type&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="err">...</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>Where:</p>
 <div class="admonition tip">
@@ -842,7 +898,7 @@ This protocol based is asynchronous and based on JSON.</p>
 </div>
 <hr />
 <p>Response also has a common structure:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
   <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="err">//</span> <span class="err">flag</span> <span class="err">that</span> <span class="err">mark</span> <span class="err">if</span> <span class="err">it</span> <span class="err">is</span> <span class="err">an</span> <span class="err">emited</span> <span class="err">event</span> <span class="err">or</span> <span class="err">not</span>
@@ -850,7 +906,7 @@ This protocol based is asynchronous and based on JSON.</p>
     <span class="err">...</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>Where:</p>
 <div class="admonition tip">
@@ -872,22 +928,22 @@ This protocol based is asynchronous and based on JSON.</p>
 <p>With this command you can create a batch of elements. <code>payload</code> of this command
 contains list of element creation parameters (depend on element type).
 All of this parameters have common structure:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">type</span> <span class="err">of</span> <span class="err">element</span> <span class="err">to</span> <span class="err">create.</span> <span class="err">Possible</span> <span class="err">values:</span> <span class="err">node,</span> <span class="err">edge,</span> <span class="err">link</span>
   <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{}</span>  <span class="err">//</span> <span class="err">parameters</span> <span class="err">that</span> <span class="err">depends</span> <span class="err">on</span> <span class="err">element</span> <span class="err">type</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>There are parameters requested by elements type:</p>
 <ul>
 <li><strong>node</strong> - to create node use parameters:
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">type</span> <span class="err">of</span> <span class="err">element</span> <span class="err">to</span> <span class="err">create</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">342</span>   <span class="err">//</span> <span class="err">ScType</span> <span class="err">value</span> <span class="err">of</span> <span class="err">node</span> <span class="err">type</span>
 <span class="p">}</span>
-</pre></div></li>
+</code></pre></div></li>
 <li><strong>edge</strong> - to create edge use parameters:
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span>
   <span class="nt">&quot;src&quot;</span><span class="p">:</span> <span class="p">{</span>          <span class="err">//</span> <span class="err">source</span> <span class="err">element</span> <span class="err">of</span> <span class="err">edge</span>
     <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">use</span> <span class="err">exist</span> <span class="err">ScAddr</span> <span class="err">of</span> <span class="err">element</span>
@@ -899,19 +955,19 @@ All of this parameters have common structure:</p>
   <span class="p">},</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">32</span>        <span class="err">//</span> <span class="err">ScType</span> <span class="err">value</span> <span class="err">of</span> <span class="err">edge</span> <span class="err">type</span>
 <span class="p">}</span>
-</pre></div></li>
+</code></pre></div></li>
 <li><strong>link</strong> - to create link use parameters:
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;el&quot;</span><span class="p">:</span> <span class="s2">&quot;link&quot;</span><span class="p">,</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>         <span class="err">//</span> <span class="err">ScType</span> <span class="err">value</span> <span class="err">of</span> <span class="err">link</span> <span class="err">type</span> <span class="err">(const</span> <span class="err">or</span> <span class="err">var)</span>
   <span class="nt">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="err">//</span> <span class="err">content</span> <span class="err">data</span> <span class="err">of</span> <span class="err">link</span>
   <span class="nt">&quot;content_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>  <span class="err">//</span> <span class="err">content</span> <span class="err">type</span><span class="p">:</span> <span class="err">int</span><span class="p">,</span> <span class="err">float,</span> <span class="err">string,</span> <span class="err">binary</span>
 <span class="p">}</span>
-</pre></div></li>
+</code></pre></div></li>
 </ul>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<div class="codehilite"><pre><span></span><span class="err">//</span> <span class="err">request</span>
+<div class="codehilite"><pre><span></span><code><span class="err">//</span> <span class="err">request</span>
 <span class="p">{</span>
   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;create_elements&quot;</span><span class="p">,</span>
@@ -950,7 +1006,7 @@ All of this parameters have common structure:</p>
     <span class="mi">342</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <hr />
@@ -961,7 +1017,7 @@ list of ScAddr to check, and this command will return list of each element type.
 If type is not valid, then element doesn't exist. See <code>ScType</code> for more information.</p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;check_elements&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -971,12 +1027,12 @@ If type is not valid, then element doesn't exist. See <code>ScType</code> for mo
     <span class="err">...</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <div class="admonition quote">
 <p class="admonition-title">Response</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="err">//</span> <span class="err">there</span> <span class="err">is</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">element</span> <span class="err">types</span> <span class="err">(ScType)</span>
@@ -985,7 +1041,7 @@ If type is not valid, then element doesn't exist. See <code>ScType</code> for mo
     <span class="err">...</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <hr />
@@ -994,7 +1050,7 @@ If type is not valid, then element doesn't exist. See <code>ScType</code> for mo
 <p>This request delete specified elements.</p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;delete_elements&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1004,7 +1060,7 @@ If type is not valid, then element doesn't exist. See <code>ScType</code> for mo
     <span class="err">...</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <div class="admonition quote">
@@ -1018,55 +1074,60 @@ otherwise status - <code>false</code></p>
 <p>This request search constructions by specified template.</p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
-  <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
-  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;search_template&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">template</span> <span class="err">triples</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="p">...,</span> <span class="c1">// common request data</span>
+  <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;search_template&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;payload&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="c1">// there are a list of template triples</span>
     <span class="p">[</span>
-      <span class="err">//</span> <span class="err">triple</span> <span class="err">that</span> <span class="err">represents</span> <span class="err">F_A_A</span> <span class="err">template</span>
+      <span class="c1">// triple that represents F_A_A template</span>
       <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23123</span>  <span class="err">//</span> <span class="err">ScAddr</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mi">23123</span>  <span class="c1">// ScAddr</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>    <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
-        <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mi">32</span><span class="p">,</span>    <span class="c1">// ScType (should be a variable type)</span>
+        <span class="s2">&quot;alias&quot;</span><span class="o">:</span> <span class="s2">&quot;_edge1&quot;</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>     <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
-        <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_trg&quot;</span>  <span class="err">//</span> <span class="err">can</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">next</span> <span class="err">triples</span> <span class="err">to</span> <span class="err">ref</span> <span class="err">this</span> <span class="err">element</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>     <span class="c1">// ScType (should be a variable type)</span>
+        <span class="s2">&quot;alias&quot;</span><span class="o">:</span> <span class="s2">&quot;_trg&quot;</span>  <span class="c1">// can be used in next triples to ref this element</span>
       <span class="p">}</span>
     <span class="p">],</span>
     <span class="p">[</span>
       <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">231342</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mi">231342</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
-        <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge2&quot;</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mi">2000</span><span class="p">,</span>
+        <span class="s2">&quot;alias&quot;</span><span class="o">:</span> <span class="s2">&quot;_edge2&quot;</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>  <span class="err">//</span> <span class="err">ref</span> <span class="err">to</span> <span class="err">first</span> <span class="err">triple</span> <span class="err">element</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;_edge1&quot;</span>  <span class="c1">// ref to first triple element</span>
+      <span class="p">},</span>
+      <span class="c1">// last field is an options. You should to use it, when you need to override defaults</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;is_required&quot;</span><span class="o">:</span> <span class="kc">false</span>
       <span class="p">}</span>
     <span class="p">],</span>
-    <span class="err">...</span>
+    <span class="p">...</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
-<div class="admonition note">
-<p>Just elements with <code>aliases</code> will be exist in a result</p>
 </div>
-</div>
+<p>There are decription options value for an each triple in template:</p>
+<ul>
+<li><code>is_required</code>: <em>default value is</em> <code>true</code>. This option can be used to make triple optional in a search (use <code>false</code> value for that)</li>
+</ul>
 <div class="admonition quote">
 <p class="admonition-title">Response</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="err">/*</span> <span class="err">this</span> <span class="err">map</span> <span class="err">contains</span> <span class="err">index</span> <span class="err">of</span> <span class="err">specified</span> <span class="err">alias</span> <span class="err">in</span>
@@ -1080,12 +1141,12 @@ otherwise status - <code>false</code></p>
     <span class="nt">&quot;addrs&quot;</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">412</span><span class="p">,</span> <span class="mi">423</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">282</span><span class="p">,</span> <span class="mi">412</span><span class="p">],</span> <span class="err">//</span> <span class="err">addrs</span> <span class="err">for</span> <span class="mi">1</span><span class="err">st</span> <span class="err">result</span>
       <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">6734</span><span class="p">,</span> <span class="mi">85643</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">4234</span><span class="p">,</span> <span class="mi">6734</span><span class="p">],</span> <span class="err">//</span> <span class="err">addrs</span> <span class="err">for</span> <span class="mi">2</span><span class="err">nd</span> <span class="err">result</span>
-      <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">7256</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">654</span><span class="p">,</span> <span class="mi">7256</span><span class="p">],</span>
+      <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">7256</span><span class="p">,</span> <span class="mi">252</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>    <span class="err">//</span> <span class="err">doens&#39;t</span> <span class="err">found</span> <span class="err">triple</span> <span class="err">with</span> <span class="err">is_required</span> <span class="err">=</span> <span class="kc">false</span>
       <span class="err">...</span>
     <span class="p">]</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <p>You can use <a href="../../other/scs/">SCs-text</a> language to make a search requests. Just replace <code>payload</code> field with a string, that contains <code>SCs-text</code>.
@@ -1093,12 +1154,12 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
 <strong>Example</strong>:</p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;search_template&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="s2">&quot;person _-&gt; .._p (* _=&gt; nrel_email:: _[] *);;&quot;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <hr />
@@ -1107,45 +1168,50 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
 <p>This request generate construction by specified template.</p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;generate_template&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="err">//</span> <span class="err">there</span> <span class="err">are</span> <span class="err">a</span> <span class="err">list</span> <span class="err">of</span> <span class="err">template</span> <span class="err">triples</span>
     <span class="nt">&quot;templ&quot;</span><span class="p">:</span>
     <span class="p">[</span>
-      <span class="p">[</span>
-        <span class="err">//</span> <span class="err">triple</span> <span class="err">that</span> <span class="err">represents</span> <span class="err">F_A_A</span> <span class="err">template</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23123</span>  <span class="err">//</span> <span class="err">ScAddr</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>    <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
-          <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>     <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
-          <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_trg&quot;</span>  <span class="err">//</span> <span class="err">can</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">next</span> <span class="err">triples</span> <span class="err">to</span> <span class="err">ref</span> <span class="err">this</span> <span class="err">element</span>
-        <span class="p">}</span>
-      <span class="p">],</span>
-      <span class="p">[</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">231342</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
-          <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge2&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>  <span class="err">//</span> <span class="err">ref</span> <span class="err">to</span> <span class="err">first</span> <span class="err">triple</span> <span class="err">element</span>
-        <span class="p">}</span>
-      <span class="p">],</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+
+          <span class="err">//</span> <span class="err">triple</span> <span class="err">that</span> <span class="err">represents</span> <span class="err">F_A_A</span> <span class="err">template</span>
+          <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23123</span>  <span class="err">//</span> <span class="err">ScAddr</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>    <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
+            <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>     <span class="err">//</span> <span class="err">ScType</span> <span class="err">(should</span> <span class="err">be</span> <span class="err">a</span> <span class="err">variable</span> <span class="err">type)</span>
+            <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_trg&quot;</span>  <span class="err">//</span> <span class="err">can</span> <span class="err">be</span> <span class="err">used</span> <span class="err">in</span> <span class="err">next</span> <span class="err">triples</span> <span class="err">to</span> <span class="err">ref</span> <span class="err">this</span> <span class="err">element</span>
+          <span class="p">}</span>
+        <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;addr&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">231342</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+            <span class="nt">&quot;alias&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge2&quot;</span>
+          <span class="p">},</span>
+          <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;_edge1&quot;</span>  <span class="err">//</span> <span class="err">ref</span> <span class="err">to</span> <span class="err">first</span> <span class="err">triple</span> <span class="err">element</span>
+          <span class="p">}</span>
+        <span class="p">]</span>
+      <span class="p">},</span>
       <span class="err">...</span>
     <span class="p">],</span>
     <span class="err">/*</span> <span class="err">Map</span> <span class="err">of</span> <span class="err">parameters.</span> <span class="err">Each</span> <span class="err">parameter</span> <span class="err">with</span> <span class="err">specified</span> <span class="err">alias</span> <span class="err">in</span> <span class="err">this</span> <span class="err">map.</span>
@@ -1157,12 +1223,12 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <div class="admonition quote">
 <p class="admonition-title">Response</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="err">/*</span> <span class="err">This</span> <span class="err">map</span> <span class="err">contains</span> <span class="err">index</span> <span class="err">of</span> <span class="err">ScAddr</span> <span class="err">(in</span> <span class="err">`addrs`</span> <span class="err">field)</span> <span class="err">for</span> <span class="err">each</span> <span class="err">alias</span> <span class="err">from</span> <span class="err">template.</span>
@@ -1175,11 +1241,11 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="nt">&quot;addrs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">23123</span><span class="p">,</span> <span class="mi">4953</span><span class="p">,</span> <span class="mi">564</span><span class="p">,</span> <span class="mi">231342</span><span class="p">,</span> <span class="mi">533</span><span class="p">,</span> <span class="mi">4953</span><span class="p">]</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <p>Like in <a href="#searchbytemplate">SearchByTemplate</a> you can use SCs-template for generation. Just replace <code>templ</code> field of <code>payload</code> to do that. <strong>Example</strong>:
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;generate_template&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1194,13 +1260,13 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div></p>
+</code></pre></div></p>
 <hr />
 <h3 id="events">Events</h3>
 <p><strong>Request type</strong>: <code>events</code></p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;events&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1217,7 +1283,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="p">]</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <p>List of possible event types:</p>
@@ -1231,7 +1297,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
 </ul>
 <div class="admonition quote">
 <p class="admonition-title">Response</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="err">/*</span> <span class="err">List</span> <span class="err">of</span> <span class="err">created</span> <span class="err">event</span> <span class="err">id&#39;s.</span> <span class="err">The</span> <span class="err">same</span> <span class="err">order</span> <span class="err">(index)</span>
@@ -1240,12 +1306,12 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <p><strong>Events emit</strong></p>
 <p>Each event can be emitted by server and passed to client. It has such structure:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
   <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
   <span class="err">//</span> <span class="err">payload</span> <span class="err">contains</span> <span class="err">1</span> <span class="err">or</span> <span class="err">3</span> <span class="err">elements</span>
@@ -1255,7 +1321,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="mi">34</span>    <span class="err">//</span> <span class="err">source/target</span> <span class="err">of</span> <span class="err">edge</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <div class="admonition info">
 <p><code>2nd</code> and <code>3rd</code> elements used in add/remove edge events</p>
@@ -1266,7 +1332,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
 <p><strong>Request type</strong>: <code>keynodes</code></p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keynodes&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1287,12 +1353,12 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="err">...</span> <span class="err">//</span> <span class="err">any</span> <span class="err">commands</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <div class="admonition quote">
 <p class="admonition-title">Response</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="err">/*</span> <span class="err">List</span> <span class="err">of</span> <span class="err">resolved</span> <span class="err">ScAddr</span> <span class="err">values</span> <span class="err">(numbers).</span>
@@ -1303,12 +1369,12 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="err">*/</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<div class="codehilite"><pre><span></span><span class="err">//</span> <span class="err">request</span>
+<div class="codehilite"><pre><span></span><code><span class="err">//</span> <span class="err">request</span>
 <span class="p">{</span>
   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keynodes&quot;</span><span class="p">,</span>
@@ -1348,7 +1414,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="mi">324</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <hr />
@@ -1357,7 +1423,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
 <p><strong>Request type</strong>: <code>content</code></p>
 <div class="admonition quote">
 <p class="admonition-title">Request</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">request</span> <span class="err">data</span>
   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">,</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1377,7 +1443,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="err">...</span> <span class="err">//</span> <span class="err">any</span> <span class="err">commands</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
 <p>List of possible content types:</p>
@@ -1389,7 +1455,7 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
 </ul>
 <div class="admonition quote">
 <p class="admonition-title">Response</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
   <span class="err">...,</span> <span class="err">//</span> <span class="err">common</span> <span class="err">response</span> <span class="err">data</span>
   <span class="nt">&quot;payload&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="err">//</span> <span class="err">List</span> <span class="err">of</span> <span class="err">command</span> <span class="err">results</span>
@@ -1402,15 +1468,18 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
     <span class="err">...</span> <span class="err">//</span> <span class="err">other</span> <span class="err">command</span> <span class="err">results</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
                 
                   
                 
+                
               
               
                 
+
+
               
             </article>
           </div>
@@ -1438,13 +1507,13 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
           </a>
         
         
-          <a href="../../cpp/el_types/" title="Element types" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../tools/kb_builder/" title="Builder" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Element types
+                Builder
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -1460,13 +1529,11 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
       <div class="md-footer-copyright">
         
         powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
         and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs</a>
       </div>
-      
-        
       
     </div>
   </div>
@@ -1474,16 +1541,13 @@ Each vairable identifier (start with <code>_</code> symbol) will be used as an a
       
     </div>
     
-      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
         <script src="../../_assets/scg.min.js"></script>
       
         <script src="../../_assets/main.js"></script>
-      
-    
-    
       
     
   </body>

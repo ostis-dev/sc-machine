@@ -2,7 +2,7 @@
 
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
     
     
       
@@ -40,21 +40,27 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.aa3de92b.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
       
     
     
-      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
       <link rel="stylesheet" href="../../_assets/main.css">
+    
+    
+      
     
     
   </head>
@@ -67,11 +73,11 @@
         
       </defs>
     </svg>
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
-    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#python" tabindex="1" class="md-skip">
+      <a href="#python" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -80,40 +86,39 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="SC-machine" class="md-header-nav__button md-logo">
+        <a href="../.." title="SC-machine" aria-label="SC-machine" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
         </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
-        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            
-              <span class="md-header-nav__topic">
-                SC-machine
-              </span>
-              <span class="md-header-nav__topic">
+            <span class="md-header-nav__topic">
+              SC-machine
+            </span>
+            <span class="md-header-nav__topic">
+              
                 Common
-              </span>
-            
+              
+            </span>
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
-            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
-            
 <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="search"></label>
+  <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
-      <label class="md-icon md-search__icon" for="search"></label>
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
         &#xE5CD;
       </button>
@@ -130,7 +135,6 @@
     </div>
   </div>
 </div>
-          
         
       </div>
       
@@ -143,7 +147,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -151,12 +155,12 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title md-nav__title--site" for="drawer">
-    <span class="md-nav__button md-logo">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="SC-machine" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
-    </span>
+    </a>
     SC-machine
   </label>
   
@@ -310,18 +314,90 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Common
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Common
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../cpp/el_types/" title="Element types" class="md-nav__link">
+      Element types
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/config/" title="Configuration files" class="md-nav__link">
+      Configuration files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../net/sctp/" title="Sctp-protocol" class="md-nav__link">
+      Sctp-protocol
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../other/scs/" title="SCs language" class="md-nav__link">
+      SCs language
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -384,13 +460,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-5" type="checkbox" id="nav-5-5" checked>
     
-    <label class="md-nav__link" for="nav-4-5">
+    <label class="md-nav__link" for="nav-5-5">
       Python
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-4-5">
+      <label class="md-nav__title" for="nav-5-5">
         Python
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -405,7 +481,7 @@
 
   <li class="md-nav__item md-nav__item--active">
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
       
     
@@ -458,13 +534,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Http
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Http
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -506,14 +582,14 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
-    <label class="md-nav__link" for="nav-6">
-      Common
+    <label class="md-nav__link" for="nav-7">
+      Tools
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
-        Common
+      <label class="md-nav__title" for="nav-7">
+        Tools
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
@@ -524,8 +600,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../cpp/el_types/" title="Element types" class="md-nav__link">
-      Element types
+    <a href="../../tools/kb_builder/" title="Builder" class="md-nav__link">
+      Builder
     </a>
   </li>
 
@@ -536,32 +612,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../other/config/" title="Configuration files" class="md-nav__link">
-      Configuration files
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../net/sctp/" title="Sctp-protocol" class="md-nav__link">
-      Sctp-protocol
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../other/scs/" title="SCs language" class="md-nav__link">
-      SCs language
+    <a href="../../tools/web/" title="Web" class="md-nav__link">
+      Web
     </a>
   </li>
 
@@ -645,7 +697,7 @@
 <ul>
 <li>
 <p>when you need run script and wait it finished, then just use this code:
-<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;sc-memory/cpp/python/sc_python_interp.hpp&gt;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;sc-memory/cpp/python/sc_python_interp.hpp&gt;</span><span class="cp"></span>
 <span class="p">...</span>
 <span class="kt">void</span> <span class="n">doSomething</span><span class="p">()</span>
 <span class="p">{</span>
@@ -653,9 +705,9 @@
   <span class="n">py</span><span class="o">::</span><span class="n">ScPythonInterpreter</span><span class="o">::</span><span class="n">RunScript</span><span class="p">(</span><span class="s">&quot;lg/tv_service.py&quot;</span><span class="p">,</span> <span class="n">m_bridge</span><span class="p">);</span>
   <span class="p">...</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 Then in python you can write any code you want:
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">any_module</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">any_module</span>
 
 <span class="c1"># create context (with minimal access)</span>
 <span class="n">ctx</span> <span class="o">=</span> <span class="n">ScMemoryContext</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;context name&#39;</span><span class="p">)</span>
@@ -666,14 +718,14 @@ Then in python you can write any code you want:
 
 <span class="c1"># you can use any installed python libraries</span>
 <span class="n">any_module</span><span class="o">.</span><span class="n">doSomething</span><span class="p">()</span>
-</pre></div></p>
+</code></pre></div></p>
 </li>
 <li>
 <p>if you want to run script as a service and communicate with it, then use code:</p>
 </li>
 </ul>
 <p><strong>my_service.hpp</strong>
-<div class="codehilite"><pre><span></span><span class="cp">#pragma once</span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;sc-memory/cpp/python/sc_python_service.hpp&gt;</span><span class="cp"></span>
 
@@ -688,9 +740,9 @@ Then in python you can write any code you want:
 <span class="p">};</span>
 
 <span class="p">}</span>
-</pre></div></p>
+</code></pre></div></p>
 <p><strong>my_service.cpp</strong>
-<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;my_service.hpp&quot;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&quot;my_service.hpp&quot;</span><span class="cp"></span>
 
 <span class="n">MyService</span><span class="o">::</span><span class="n">MyService</span><span class="p">()</span>
   <span class="o">:</span> <span class="n">ScPythonService</span><span class="p">(</span><span class="s">&quot;my_service.py&quot;</span><span class="p">)</span>
@@ -706,10 +758,10 @@ Then in python you can write any code you want:
 <span class="p">{</span>
   <span class="c1">// your run code that need to be run after service stopped</span>
 <span class="p">}</span>
-</pre></div></p>
+</code></pre></div></p>
 <p>Then in python code use common module:</p>
 <p><strong>my_service.py</strong>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">common</span> <span class="kn">import</span> <span class="n">ScModule</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">common</span> <span class="kn">import</span> <span class="n">ScModule</span>
 
 <span class="k">class</span> <span class="nc">TestModule</span><span class="p">(</span><span class="n">ScModule</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -734,13 +786,16 @@ Then in python you can write any code you want:
 
 <span class="n">module</span> <span class="o">=</span> <span class="n">TestModule</span><span class="p">()</span>
 <span class="n">module</span><span class="o">.</span><span class="n">Run</span><span class="p">()</span>
-</pre></div></p>
+</code></pre></div></p>
                 
                   
                 
+                
               
               
                 
+
+
               
             </article>
           </div>
@@ -790,13 +845,11 @@ Then in python you can write any code you want:
       <div class="md-footer-copyright">
         
         powered by
-        <a href="http://www.mkdocs.org">MkDocs</a>
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
         and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs</a>
       </div>
-      
-        
       
     </div>
   </div>
@@ -804,16 +857,13 @@ Then in python you can write any code you want:
       
     </div>
     
-      <script src="../../assets/javascripts/application.9fb73e57.js"></script>
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"0.17.2",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
         <script src="../../_assets/scg.min.js"></script>
       
         <script src="../../_assets/main.js"></script>
-      
-    
-    
       
     
   </body>
