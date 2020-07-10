@@ -18,7 +18,7 @@ Use package: https://support.apple.com/kb/dl1572?locale=en_US
 cd scripts
 ./install_deps_osx.sh
 cd ..
-pip3 --user -r requirements.txt
+pip3 install --user -r requirements.txt
 ```
 
 ## Build
