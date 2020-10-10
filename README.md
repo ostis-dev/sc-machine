@@ -3,6 +3,14 @@
 ## Documentation
 [http://ostis-dev.github.io/sc-machine/](http://ostis-dev.github.io/sc-machine/)
 
+## Clone repository
+
+```sh
+git clone git@github.com:ostis-dev/sc-machine.git
+cd sc-machine
+git submodule update --init --recursive
+```
+
 ## Build on Ubuntu
 
 ### Dependencies
