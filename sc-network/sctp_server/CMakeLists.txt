@@ -23,7 +23,7 @@ target_include_directories(sctp-server
 	PRIVATE ${GLIB2_INCLUDE_DIRS}
 	)
 
-target_link_libraries(sctp-server sc-memory sc-memory-cpp
+target_link_libraries(sctp-server sc-memory
                                   Qt5::Core
                                   Qt5::Network)
 
