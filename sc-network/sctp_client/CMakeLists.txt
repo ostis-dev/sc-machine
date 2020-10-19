@@ -25,7 +25,12 @@ else ()
 endif()
 
 add_library (sctp-client SHARED ${SOURCES} ${HEADERS} ${SOCKET_SRC})
-target_link_libraries(sctp-client sc-memory-cpp ${SOCKET_LIBS})
+
+target_include_directories(sctp-client
+  PRIVATE ${SC_MEMORY_SRC}
+  PRIVATE ${GLIB2_INCLUDE_DIRS}
+  )
+target_link_libraries(sctp-client sc-memory ${SOCKET_LIBS})
 target_compile_definitions(sctp-client PUBLIC "-DSC_MEMORY_SELF_BUILD")
 
 if (${WIN32})

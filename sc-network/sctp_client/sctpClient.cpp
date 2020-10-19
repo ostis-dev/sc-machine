@@ -241,7 +241,7 @@ _SC_EXTERN bool Client::GetArcInfo(ScAddr const & arcAddr, ScAddr & outBegin, Sc
   return false;
 }
 
-_SC_EXTERN bool Client::SetLinkContent(ScAddr const & addr, IScStreamPtr const & stream)
+_SC_EXTERN bool Client::SetLinkContent(ScAddr const & addr, ScStreamPtr const & stream)
 {
   RequestSetLinkContent req;
 
@@ -272,7 +272,7 @@ _SC_EXTERN bool Client::SetLinkContent(ScAddr const & addr, IScStreamPtr const &
   return false;
 }
 
-_SC_EXTERN bool Client::GetLinkContent(ScAddr const & addr, IScStreamPtr & stream)
+_SC_EXTERN bool Client::GetLinkContent(ScAddr const & addr, ScStreamPtr & stream)
 {
   RequestGetLinkContent req;
   req.header.id = ++m_cmdIdCounter;
@@ -290,7 +290,7 @@ _SC_EXTERN bool Client::GetLinkContent(ScAddr const & addr, IScStreamPtr & strea
       if (m_socketImpl->Read(buff, res.resultSize) == static_cast<int>(res.resultSize))
       {
         MemoryBufferPtr buffer(new MemoryBuffer(buff, res.resultSize));
-        stream = IScStreamPtr(new ScStreamMemory(buffer));
+        stream = ScStreamPtr(new ScStreamMemory(buffer));
         return true;
       }
     }
@@ -299,7 +299,7 @@ _SC_EXTERN bool Client::GetLinkContent(ScAddr const & addr, IScStreamPtr & strea
   return false;
 }
 
-_SC_EXTERN bool Client::FindLinksByContent(IScStreamPtr const & stream, ScAddrList & found)
+_SC_EXTERN bool Client::FindLinksByContent(ScStreamPtr const & stream, ScAddrVector & found)
 {
   return false;
 }
