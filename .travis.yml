@@ -44,6 +44,8 @@ jobs:
             'g++-7',
             'librocksdb-dev',
             'libglib2.0-dev',
+            'qt5-qmake',
+            'qtbase5-dev',
             'libboost-system-dev',
             'libboost-filesystem-dev',
             'libboost-program-options-dev',
