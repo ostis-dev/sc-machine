@@ -3,6 +3,8 @@ bin
 /build-*/
 /site/
 scripts/redis*
+cmake-build-debug
+cmake-build-release
 
 !thirdparty/*/bin/
 
@@ -12,6 +14,7 @@ manifest.json
 *.*~
 
 .vscode
+.idea
 __pycache__
 .DS_store
 .antlr
