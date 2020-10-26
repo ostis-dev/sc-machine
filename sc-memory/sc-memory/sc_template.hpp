@@ -225,12 +225,6 @@ public:
 
   ScTemplateParams() = default;
 
-  SC_DEPRECATED(0.4.0, "You should to use ScTemplateParams::Add")
-  _SC_EXTERN ScTemplateParams & add(std::string const & varIdtf, ScAddr const & value)
-  {
-    return Add(varIdtf, value);
-  }
-
   _SC_EXTERN ScTemplateParams & Add(std::string const & varIdtf, ScAddr const & value)
   {
     assert(m_values.find(varIdtf) == m_values.end());
@@ -248,12 +242,6 @@ public:
     }
 
     return false;
-  }
-
-  SC_DEPRECATED(0.4.0, "You should to use ScTemplateParams::IsEmpty")
-  _SC_EXTERN bool empty() const
-  {
-    return m_values.empty();
   }
 
   _SC_EXTERN bool IsEmpty() const
