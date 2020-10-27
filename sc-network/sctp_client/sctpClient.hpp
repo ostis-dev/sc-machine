@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "sc-memory/cpp/sc_addr.hpp"
-#include "sc-memory/cpp/sc_stream.hpp"
-#include "sc-memory/cpp/sc_utils.hpp"
+#include "sc-memory/sc_addr.hpp"
+#include "sc-memory/sc_stream.hpp"
+#include "sc-memory/sc_utils.hpp"
 
 #include "sctpTypes.hpp"
 #include "sctpISocket.hpp"
@@ -303,11 +303,11 @@ public:
 
   _SC_EXTERN bool GetArcInfo(ScAddr const & arcAddr, ScAddr & outBegin, ScAddr & outEnd) const;
 
-  _SC_EXTERN bool SetLinkContent(ScAddr const & addr, IScStreamPtr const & stream);
-  _SC_EXTERN bool GetLinkContent(ScAddr const & addr, IScStreamPtr & stream);
+  _SC_EXTERN bool SetLinkContent(ScAddr const & addr, ScStreamPtr const & stream);
+  _SC_EXTERN bool GetLinkContent(ScAddr const & addr, ScStreamPtr & stream);
 
   //! Returns true, if any links found
-  _SC_EXTERN bool FindLinksByContent(IScStreamPtr const & stream, ScAddrList & found);
+  _SC_EXTERN bool FindLinksByContent(ScStreamPtr const & stream, ScAddrVector & found);
 
   template <typename ParamType1, typename ParamType2, typename ParamType3>
   _SC_EXTERN IteratorPtr Iterator3(ParamType1 param1, ParamType2 param2, ParamType3 param3)
