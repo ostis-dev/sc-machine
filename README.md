@@ -10,16 +10,17 @@
 Install python dependencies:
 
 ```sh
+sudo apt install python3-pip
 pip3 install -r requirements.txt
 ```
 
 __Ubuntu 18.04__ and __Ubuntu 20.04__
 
 ```sh
-sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev libboost-python-dev python3-pip
+sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev libboost-python-dev
 ```
 
-Install Python evelopment package
+Install Python development package
 
 __Ubuntu 18.04__
 
