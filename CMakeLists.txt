@@ -85,7 +85,7 @@ if (${APPLE})
     include_directories("${CMAKE_OSX_SYSROOT}/usr/include")
 
 elseif (${UNIX})
-    find_package(PythonLibs 3.4 REQUIRED)
+    find_package(PythonLibs 3.6 REQUIRED)
 
     string(REPLACE "." ";" PY_VERSION_LIST ${PYTHONLIBS_VERSION_STRING})
     list(GET PY_VERSION_LIST 0 PY_VERSION_MAJOR)
@@ -93,7 +93,11 @@ elseif (${UNIX})
 
     set(PY_SHORT_VERSION "${PY_VERSION_MAJOR}${PY_VERSION_MINOR}")
 
-    find_package(Boost 1.54 REQUIRED COMPONENTS filesystem python-py${PY_SHORT_VERSION})
+    find_package(Boost 1.71 COMPONENTS filesystem python${PY_SHORT_VERSION})
+    if (NOT ${Boost_FOUND})
+        find_package(Boost 1.65 REQUIRED COMPONENTS filesystem python-py${PY_SHORT_VERSION})
+    endif()
+    
     find_package(RocksDB REQUIRED)
 
     include(FindPkgConfig)
