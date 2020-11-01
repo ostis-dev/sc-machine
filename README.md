@@ -9,29 +9,52 @@
 
 Install python dependencies:
 
+__Ubuntu 18.04+__
+
 ```sh
 sudo apt install python3-pip
 pip3 install -r requirements.txt
 ```
 
-__Ubuntu 18.04__ and __Ubuntu 20.04__
+__Ubuntu 18.04+__
 
 ```sh
 sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev libboost-python-dev
 ```
 
-Install Python development package
-
-__Ubuntu 18.04__
-
-```
-sudo apt install python3.6-dev
-```
-
-__Ubuntu 20.04__
+### Make
 
 ```sh
-sudo apt install python3.8-dev
+mkdir build
+cd build
+cmake ..
+make
+```
+
+## Build on Linux Mint
+
+### Dependencies
+
+Install python dependencies:
+
+__Linux Mint 19__
+
+```sh
+sudo apt install python3-pip python3-setuptools python3-wheel
+pip3 install -r requirements.txt
+```
+
+__Linux Mint 20__
+
+```sh
+sudo apt install python3-pip
+pip3 install -r requirements.txt
+```
+
+__Linux Mint 19+__
+
+```sh
+sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev libboost-python-dev
 ```
 
 ### Make
