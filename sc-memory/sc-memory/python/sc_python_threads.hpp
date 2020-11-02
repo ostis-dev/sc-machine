@@ -50,8 +50,8 @@ public:
   WithGIL() { m_state = PyGILState_Ensure(); }
   ~WithGIL() { PyGILState_Release(m_state); }
 
-  WithGIL(WithoutGIL const &) = delete;
-  WithGIL & operator=(WithoutGIL const &) = delete;
+  WithGIL(WithGIL const &) = delete;
+  WithGIL & operator=(WithGIL const &) = delete;
 
 private:
   PyGILState_STATE m_state;
