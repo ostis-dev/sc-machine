@@ -68,4 +68,3 @@ SC_AGENT_IMPLEMENTATION(ATestContentChanged)
   msWaiter.Unlock();
   return SC_RESULT_OK;
 }
-

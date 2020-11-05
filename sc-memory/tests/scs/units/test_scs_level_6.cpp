@@ -317,4 +317,3 @@ TEST(scs_level_6, contout_with_content)
     EXPECT_EQ(trg.GetValue(), "test*");
   }
 }
-
