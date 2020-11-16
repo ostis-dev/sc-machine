@@ -4,7 +4,9 @@ cmake_minimum_required (VERSION 2.8)
 
 include(CTest)
 
-set(SC_BIN_PATH "${CMAKE_SOURCE_DIR}/bin")
+if (NOT DEFINED SC_BIN_PATH)
+    set(SC_BIN_PATH "${CMAKE_SOURCE_DIR}/bin")
+endif()
 
 set(SC_MACHINE_ROOT ${CMAKE_CURRENT_LIST_DIR})
 set(SC_MACHINE_THIRDPARTY_PATH "${SC_MACHINE_ROOT}/thirdparty")
@@ -99,7 +101,7 @@ elseif (${UNIX})
     if (NOT ${Boost_FOUND})
         find_package(Boost 1.65 REQUIRED COMPONENTS filesystem python-py${PY_SHORT_VERSION})
     endif()
-    
+
     find_package(RocksDB REQUIRED)
 
     include(FindPkgConfig)
