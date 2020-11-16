@@ -94,6 +94,36 @@ TEST_F(SCsHelperTest, GenerateBySCs_Aliases)
   EXPECT_EQ(content, content2);
 }
 
+TEST_F(SCsHelperTest, GenerateBySCs_EdgeAlias)
+{
+  std::string const data = "@edge_alias = (c -> b);;"
+                       "a -> @edge_alias;;";
+  SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
+  EXPECT_TRUE(helper.GenerateBySCsText(data));
+
+  ScAddr const aAddr = m_ctx->HelperResolveSystemIdtf("a");
+  EXPECT_TRUE(aAddr.IsValid());
+
+  ScAddr const bAddr = m_ctx->HelperResolveSystemIdtf("b");
+  EXPECT_TRUE(bAddr.IsValid());
+
+  ScAddr const cAddr = m_ctx->HelperResolveSystemIdtf("c");
+  EXPECT_TRUE(cAddr.IsValid());
+
+  ScTemplate templ;
+  templ.TripleWithRelation(
+          cAddr,
+          ScType::EdgeAccessVarPosPerm,
+          bAddr,
+          ScType::EdgeAccessVarPosPerm,
+          aAddr);
+
+  ScTemplateSearchResult result;
+  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  EXPECT_EQ(result.Size(), 1u);
+}
+
+
 TEST_F(SCsHelperTest, GenerateBySCs_Contents)
 {
   std::string const dataString = "v_string -> [string];;";
