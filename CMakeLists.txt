@@ -12,7 +12,6 @@ set(SC_MACHINE_THIRDPARTY_PATH "${SC_MACHINE_ROOT}/thirdparty")
 option (SC_AUTO_TEST "Flag to build for automation testing" OFF)
 option (SC_KPM_SCP "Flag to build SCP module" OFF)
 option (SC_BUILD_SCTP "Flag to turn on/off sctp protocol support" OFF)
-option (SC_BUILD_TESTS "Flag to build unit tests" OFF)
 
 # codegen
 if (${UNIX})
@@ -204,7 +203,7 @@ message ("Python version: ${PYTHONLIBS_VERSION_STRING}")
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.ini.in ${CMAKE_CURRENT_LIST_DIR}/bin/config.ini)
 
-if (${SC_BUILD_TESTS})
+if (BUILD_TESTING)
     include (cmake/tests.cmake)
 endif()
 
