@@ -1,5 +1,8 @@
 ## v0.7.0 - WIP
 
+ - **Core**:
+    - Fix issue with erasing empty sc-link
+
  - **C++**:
     - Migrate test system to `gtest`
     - Remove optional search triples support
