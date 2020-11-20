@@ -91,7 +91,6 @@ sc_result sc_stream_memory_free_handler(const sc_stream *stream)
 
   if (buffer->data_owner == SC_TRUE)
   {
-    g_assert(buffer->data != 0);
     g_free(buffer->data);
   }
 
@@ -121,7 +120,9 @@ sc_stream* sc_stream_memory_new(const sc_char *buffer, sc_uint buffer_size, sc_u
   }
 
   g_assert(flags & SC_STREAM_FLAG_READ);
-  g_assert(buffer != null_ptr);
+  if (buffer_size != 0) {
+    g_assert(buffer != null_ptr);
+  }
 
   sc_memory_buffer *data_buffer = g_new0(sc_memory_buffer, 1);
 
