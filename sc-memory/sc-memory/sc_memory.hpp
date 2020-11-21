@@ -55,9 +55,9 @@ class ScMemoryContext
 public:
   struct Stat
   {
-    uint32_t m_nodesNum;
-    uint32_t m_linksNum;
-    uint32_t m_edgesNum;
+    uint32_t m_nodesNum = 0;
+    uint32_t m_linksNum = 0;
+    uint32_t m_edgesNum = 0;
 
     uint32_t GetAllNum() const
     {
@@ -216,7 +216,7 @@ public:
   _SC_EXTERN Stat CalculateStat() const;
 
 private:
-  sc_memory_context * m_context;
+  sc_memory_context * m_context = nullptr;
   std::string m_name;
 };
 

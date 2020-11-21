@@ -33,7 +33,8 @@ TEST_F(ScPythonTest, smoke)
 
   size_t const numTests = 50;
   threads.resize(numTests);
-  for (size_t i = 0; i < numTests; ++i) {
+  for (size_t i = 0; i < numTests; ++i)
+  {
     threads[i].reset(new std::thread([&passed]()
     {
       py::DummyService testService("sc_tests/test_dummy.py");

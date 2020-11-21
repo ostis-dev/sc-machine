@@ -17,6 +17,7 @@
 
 #include "utils/sc_log.hpp"
 
+#include <atomic>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -70,13 +71,13 @@ void _logPrintHandler(gchar const * log_domain, GLogLevelFlags log_level,
   };
 }
 
-unsigned int gContextGounter;
+std::atomic_int gContextGounter = { 0 };
 
 } // namespace
 
 // ------------------
 
-sc_memory_context * ScMemory::ms_globalContext = 0;
+sc_memory_context * ScMemory::ms_globalContext = nullptr;
 ScMemory::MemoryContextList ScMemory::ms_contexts;
 
 bool ScMemory::Initialize(sc_memory_params const & params)
@@ -177,7 +178,7 @@ bool ScMemory::HasMemoryContext(ScMemoryContext const * ctx)
 // ---------------
 
 ScMemoryContext::ScMemoryContext(sc_uint8 accessLevels, std::string const & name)
-  : m_context(0)
+  : m_context(nullptr)
 {
   m_context = sc_memory_context_new(accessLevels);
   if (name.empty())
