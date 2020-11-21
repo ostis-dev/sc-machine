@@ -13,6 +13,10 @@ option (SC_AUTO_TEST "Flag to build for automation testing" OFF)
 option (SC_KPM_SCP "Flag to build SCP module" OFF)
 option (SC_BUILD_SCTP "Flag to turn on/off sctp protocol support" OFF)
 
+set(SC_USE_SANITAZER "none" CACHE STRING "Build with specified sanitizer")
+set_property(CACHE SC_USE_SANITAZER PROPERTY STRINGS none address memory)
+
+
 # codegen
 if (${UNIX})
     set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
@@ -39,17 +43,29 @@ endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 set(SC_MEMORY_SRC "${SC_MACHINE_ROOT}/sc-memory")
 
+if (${SC_USE_SANITAZER} EQUAL "address")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -O1 -fno-omit-frame-pointer")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -O1 -fno-omit-frame-pointer")
+elseif (${SC_USE_SANITAZER} EQUAL "memory")
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer")
+endif()
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics -std=c++14")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
+    if (${SC_USE_SANITAZER} EQUAL "none")
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+    endif()
+    
     if(${SC_AUTO_TEST})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdeprecated-declarations")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    set(CMAKE_CXX_FLAGS "-std=c++14 -Wall")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3")        ## Optimize
-    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-s")  ## Strip binary
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
+    if (${SC_USE_SANITAZER} EQUAL "none")
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")        ## Optimize
+        set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s")  ## Strip binary
+    endif()
 elseif (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 endif ()
@@ -59,6 +75,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSC_DEBUG -DSC_PROFILE")
 
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+message ("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
+message ("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 if (${SC_AUTO_TEST})
     add_definitions(-DSC_BUILD_AUTO_TESTS)
