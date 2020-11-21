@@ -12,6 +12,7 @@
     - `ScSet` and `ScStruct` constructors now receive reference to `ScMemoryContext` instead of pointer
     - Fix issue with specifying type of elements inside contour (#353)
     - Fix issues with alias support in SCs-text (#350, #333)
+    - Add performance benchmarks
 
 ## v0.6.0
 
