@@ -43,3 +43,5 @@ make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/codegen
   INCLUDES ${SC_MEMORY_SRC} ${CMAKE_CURRENT_LIST_DIR}/_test)
 
 sc_codegen(sc-memory-codegen-tests ${CMAKE_CURRENT_LIST_DIR}/codegen)
+
+include (${CMAKE_CURRENT_LIST_DIR}/performance/perf.cmake)
