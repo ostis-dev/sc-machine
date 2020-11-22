@@ -3,6 +3,7 @@
  - **C++**:
     - Migrate test system to `gtest`
     - Remove optional search triples support
+    - `ScSet` and `ScStruct` constructors now receive reference to `ScMemoryContext` instead of pointer
 
 ## v0.6.0
 
