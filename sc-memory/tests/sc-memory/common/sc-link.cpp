@@ -96,7 +96,10 @@ TEST_F(ScLinkTest, as_string)
   EXPECT_EQ(link.GetAsString(), "7600000000");
 
   EXPECT_TRUE(link.Set<std::string>(""));
+  EXPECT_EQ(link.GetAsString(), "");
+
   EXPECT_TRUE(link.Set<std::string>("test"));
+  EXPECT_EQ(link.GetAsString(), "test");
 }
 
 TEST_F(ScLinkTest, erase)
