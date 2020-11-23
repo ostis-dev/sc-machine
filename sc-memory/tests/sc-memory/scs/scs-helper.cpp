@@ -94,6 +94,34 @@ TEST_F(SCsHelperTest, GenerateBySCs_Aliases)
   EXPECT_EQ(content, content2);
 }
 
+TEST_F(SCsHelperTest, nested_alias)
+{
+  std::string const data =
+          "a -> b;;"
+          "@link_a = a;;"
+          "@link_b = b;;"
+          "@edge_alias = (@link_a -> @link_b);;";
+
+  SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
+  EXPECT_TRUE(helper.GenerateBySCsText(data));
+
+  ScAddr const aAddr = m_ctx->HelperResolveSystemIdtf("a");
+  EXPECT_TRUE(aAddr.IsValid());
+
+  ScAddr const bAddr = m_ctx->HelperResolveSystemIdtf("b");
+  EXPECT_TRUE(bAddr.IsValid());
+
+  ScTemplate templ;
+  templ.Triple(
+          aAddr,
+          ScType::EdgeAccessVarPosPerm,
+          bAddr);
+
+  ScTemplateSearchResult result;
+  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  EXPECT_EQ(result.Size(), 2u);
+}
+
 TEST_F(SCsHelperTest, GenerateBySCs_EdgeAlias)
 {
   std::string const data = "@edge_alias = (c -> b);;"

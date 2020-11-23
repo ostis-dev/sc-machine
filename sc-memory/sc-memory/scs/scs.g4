@@ -163,9 +163,9 @@ idtf_lvl1 returns [ElementHandle handle]
   ;
 
 idtf_edge returns [ElementHandle handle]
-  : '(' src=idtf_system
+  : '(' src=idtf_atomic
         c=connector attrs=attr_list?
-        trg=idtf_system
+        trg=idtf_atomic
     ')'
 
     {
@@ -220,8 +220,13 @@ idtf_set returns [ElementHandle handle]
   ;
 
 idtf_common returns [ElementHandle handle]
-  : a=alias 
-    { 
+  : at=idtf_atomic { $ctx->handle = $ctx->at->handle; }
+  | ie=idtf_edge { $ctx->handle = $ctx->ie->handle; }
+  ;
+
+idtf_atomic returns [ElementHandle handle]
+  : a=alias
+    {
       std::string const _alias = $ctx->a->getText();
       $ctx->handle = m_parser->ResolveAlias(_alias);
       if (!$ctx->handle.IsValid())
@@ -231,7 +236,6 @@ idtf_common returns [ElementHandle handle]
       }
     }
     | is=idtf_system { $ctx->handle = $ctx->is->handle; }
-  | ie=idtf_edge { $ctx->handle = $ctx->ie->handle; }
   | iset=idtf_set { $ctx->handle = $ctx->iset->handle; }
     | ct=contour { $ctx->handle = $ctx->ct->handle; }
   | cn=content { $ctx->handle = $ctx->cn->handle; }

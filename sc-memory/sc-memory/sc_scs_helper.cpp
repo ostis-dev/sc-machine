@@ -34,7 +34,8 @@ protected:
   {
     // generate aliases
     auto const & aliases = parser.GetAliases();
-    for (auto const & it : aliases) {
+    for (auto const & it : aliases)
+    {
       auto const & parsedElement = parser.GetParsedElement(it.second);
       if (!parsedElement.GetType().IsEdge())
       {
