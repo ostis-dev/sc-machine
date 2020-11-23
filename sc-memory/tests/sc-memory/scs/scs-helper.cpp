@@ -79,6 +79,109 @@ TEST_F(SCsHelperTest, GenerateBySCs_Aliases)
   EXPECT_EQ(content, content2);
 }
 
+TEST_F(SCsHelperTest, GenerateBySCs_NestedAliases)
+{
+  std::string const data =
+          "a -> b;;"
+          "@link_a = a;;"
+          "@link_b = b;;"
+          "@edge_alias = (@link_a -> @link_b);;";
+
+  SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
+  EXPECT_TRUE(helper.GenerateBySCsText(data));
+
+  ScAddr const aAddr = m_ctx->HelperResolveSystemIdtf("a");
+  EXPECT_TRUE(aAddr.IsValid());
+
+  ScAddr const bAddr = m_ctx->HelperResolveSystemIdtf("b");
+  EXPECT_TRUE(bAddr.IsValid());
+
+  ScTemplate templ;
+  templ.Triple(
+          aAddr,
+          ScType::EdgeAccessVarPosPerm,
+          bAddr);
+
+  ScTemplateSearchResult result;
+  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  EXPECT_EQ(result.Size(), 2u);
+}
+
+TEST_F(SCsHelperTest, GenerateBySCs_EdgeAlias)
+{
+  std::string const data = "@edge_alias = (c -> b);;"
+                       "a -> @edge_alias;;";
+  SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
+  EXPECT_TRUE(helper.GenerateBySCsText(data));
+
+  ScAddr const aAddr = m_ctx->HelperResolveSystemIdtf("a");
+  EXPECT_TRUE(aAddr.IsValid());
+
+  ScAddr const bAddr = m_ctx->HelperResolveSystemIdtf("b");
+  EXPECT_TRUE(bAddr.IsValid());
+
+  ScAddr const cAddr = m_ctx->HelperResolveSystemIdtf("c");
+  EXPECT_TRUE(cAddr.IsValid());
+
+  ScTemplate templ;
+  templ.TripleWithRelation(
+          cAddr,
+          ScType::EdgeAccessVarPosPerm,
+          bAddr,
+          ScType::EdgeAccessVarPosPerm,
+          aAddr);
+
+  ScTemplateSearchResult result;
+  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  EXPECT_EQ(result.Size(), 1u);
+}
+
+TEST_F(SCsHelperTest, GenerateBySCs_ContourAlias)
+{
+  std::string const data = "@alias = [* x -> y;; *];;"
+                           "z -> @alias;;";
+  SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
+  EXPECT_TRUE(helper.GenerateBySCsText(data));
+
+  ScAddr const xAddr = m_ctx->HelperResolveSystemIdtf("x");
+  EXPECT_TRUE(xAddr.IsValid());
+
+  ScAddr const yAddr = m_ctx->HelperResolveSystemIdtf("y");
+  EXPECT_TRUE(xAddr.IsValid());
+
+  ScAddr const zAddr = m_ctx->HelperResolveSystemIdtf("z");
+  EXPECT_TRUE(zAddr.IsValid());
+
+  ScTemplate templ;
+  templ.Triple(
+          zAddr,
+          ScType::EdgeAccessVarPosPerm,
+          ScType::NodeVarStruct >> "_contour");
+  templ.Triple(
+          "_contour",
+          ScType::EdgeAccessVarPosPerm,
+          xAddr);
+
+  templ.Triple(
+          "_contour",
+          ScType::EdgeAccessVarPosPerm,
+          yAddr);
+
+  templ.Triple(
+          xAddr,
+          ScType::EdgeAccessVarPosPerm >> "_edge",
+          yAddr);
+
+  templ.Triple(
+          "_contour",
+          ScType::EdgeAccessVarPosPerm,
+          "_edge");
+
+  ScTemplateSearchResult result;
+  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  EXPECT_EQ(result.Size(), 1u);
+}
+
 TEST_F(SCsHelperTest, GenerateBySCs_Contents)
 {
   std::string const dataString = "v_string -> [string];;";
