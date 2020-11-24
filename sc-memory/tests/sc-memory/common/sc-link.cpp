@@ -95,3 +95,18 @@ TEST_F(ScLinkTest, as_string)
   EXPECT_TRUE(link.Set<uint64_t>(7600000000));
   EXPECT_EQ(link.GetAsString(), "7600000000");
 }
+
+TEST_F(ScLinkTest, erase)
+{
+  ScAddr linkAddr = m_ctx->CreateLink();
+  EXPECT_TRUE(m_ctx->IsElement(linkAddr));
+  m_ctx->EraseElement(linkAddr);
+  EXPECT_FALSE(m_ctx->IsElement(linkAddr));
+
+  linkAddr = m_ctx->CreateLink();
+  ScLink link(*m_ctx, linkAddr);
+  link.Set<std::string>("test_string_value_3");
+  EXPECT_TRUE(m_ctx->IsElement(linkAddr));
+  m_ctx->EraseElement(linkAddr);
+  EXPECT_FALSE(m_ctx->IsElement(linkAddr));
+}
