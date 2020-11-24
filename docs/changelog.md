@@ -1,5 +1,8 @@
 ## v0.7.0 - WIP
 
+ - **Build system**:
+    - Set project binaries path to root (#352)
+
  - **Core**:
     - Fix issue with erasing empty sc-link
 
