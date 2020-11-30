@@ -2,26 +2,11 @@
 
 #include "sc-memory/sc_link.hpp"
 #include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_scs_helper.hpp"
 
-#include "dummy_file_interface.hpp"
+#include "scs_test_utils.hpp"
+
 #include "sc_test.hpp"
-
-namespace
-{
-
-class TestFileInterface : public SCsFileInterface
-{
-public:
-  ~TestFileInterface() override {}
-
-  ScStreamPtr GetFileContent(std::string const & fileURL) override
-  {
-    std::string const content = "content: " + fileURL;
-    return ScStreamConverter::StreamFromString(content);
-  }
-};
-
-} // namespace
 
 using SCsHelperTest = ScMemoryTest;
 
