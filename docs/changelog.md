@@ -13,6 +13,7 @@
    - Fix issue with specifying type of elements inside contour (#353)
    - Fix issues with alias support in SCs-text (#350, #333)
    - Add performance benchmarks
+   - Fix issues with assigning empty content to `sc-link` (#342, #343)
 
 - **Python**:
    - Python modules support removed. [More details](https://github.com/ostis-dev/sc-machine/issues/378)
