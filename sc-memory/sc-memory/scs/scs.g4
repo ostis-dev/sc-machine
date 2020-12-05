@@ -118,7 +118,7 @@ ifdf_alias returns [ElementHandle handle]
       if (!$ctx->handle.IsValid())
       {
         PARSE_ERROR($ctx->start->getLine(), $ctx->start->getCharPositionInLine(),
-          "Can't resolve alias `" << _alias << "`. You should use assigment of alias before usage.");
+          "Can't resolve alias `" << _alias << "`. You should assign an alias before use.");
       }
     }
   ;
