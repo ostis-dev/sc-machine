@@ -421,7 +421,7 @@ void Parser::ProcessTriple(ElementHandle const & source, ElementHandle const & e
   {
     ParsedElement const & srcEl = GetParsedElement(src);
     std::string const & idtf = srcEl.GetIdtf();
-    if ((edgeEl.GetType() == ScType::EdgeAccessConstPosPerm && scs::TypeResolver::IsKeynodeType(idtf)))
+    if (edgeEl.GetType() == ScType::EdgeAccessConstPosPerm && scs::TypeResolver::IsKeynodeType(idtf))
     {
       ParsedElement & targetEl = GetParsedElementRef(trg);
       ScType const newType = targetEl.m_type | scs::TypeResolver::GetKeynodeType(idtf);
@@ -502,7 +502,7 @@ ElementHandle Parser::ProcessContourBegin()
   return result;
 }
 
-void Parser::ProcessContourEnd(ElementHandle contourHandle)
+void Parser::ProcessContourEnd(ElementHandle const & contourHandle)
 {
   SC_ASSERT(!m_contourElementsStack.empty(), ());
   SC_ASSERT(!m_contourTriplesStack.empty(), ());
