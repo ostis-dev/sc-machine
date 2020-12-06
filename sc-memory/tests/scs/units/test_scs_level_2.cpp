@@ -111,3 +111,19 @@ TEST(scs_level_2, unnamed)
   EXPECT_EQ(triples[0].m_source, triples[1].m_source);
   EXPECT_NE(triples[0].m_target, triples[1].m_target);
 }
+
+TEST(scs_level_2, not_allowed)
+{
+  std::vector<std::string> tests = {
+    "a -> (x -> (y -> z));;",
+    "a -> (x -> [content]);;",
+    "a -> (x -> [* y -> z ;; *]);;",
+    "a -> (x -> { y; z });;"
+  };
+
+  for (auto const & t : tests)
+  {
+    scs::Parser parser;
+    EXPECT_FALSE(parser.Parse(t));
+  }
+}

@@ -35,7 +35,11 @@ protected:
     // generate aliases
     auto const & aliases = parser.GetAliases();
     for (auto const & it : aliases)
-      ResolveElement(parser.GetParsedElement(it.second));
+    {
+      scs::ParsedElement const & el = parser.GetParsedElement(it.second);
+      if (!el.GetType().IsEdge())
+        ResolveElement(el);
+    }
 
     // generate triples
     auto const & triples = parser.GetParsedTriples();

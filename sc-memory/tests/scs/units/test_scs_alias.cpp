@@ -4,7 +4,6 @@
 
 TEST(scs_alias, assign)
 {
-
   std::string const data = "@alias = [];; x ~> @alias;;";
 
   scs::Parser parser;
@@ -116,5 +115,29 @@ TEST(scs_alias, contour)
     EXPECT_EQ(src.GetType(), ScType::LinkVar);
     EXPECT_EQ(edge.GetType(), ScType::EdgeAccessVarPosTemp);
     EXPECT_EQ(trg.GetIdtf(), "y");
+  }
+}
+
+TEST(scs_alias, edge)
+{
+  std::string const data = "@alias = (x _-> _y);;";
+
+  scs::Parser parser;
+
+  EXPECT_TRUE(parser.Parse(data));
+
+  auto const & triples = parser.GetParsedTriples();
+  EXPECT_EQ(triples.size(), 1u);
+
+  {
+    SPLIT_TRIPLE(triples[0]);
+
+    EXPECT_EQ(src.GetType(), ScType::NodeConst);
+    EXPECT_EQ(src.GetIdtf(), "x");
+
+    EXPECT_EQ(edge.GetType(), ScType::EdgeAccessVarPosPerm);
+
+    EXPECT_EQ(trg.GetType(), ScType::NodeVar);
+    EXPECT_EQ(trg.GetIdtf(), "_y");
   }
 }
