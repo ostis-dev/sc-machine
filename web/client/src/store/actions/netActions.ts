@@ -5,13 +5,9 @@ export namespace Type {
   export const ChangeState = "NET_CHANGE_STATE";
 }
 
-export type ChangeNetState = { state: NetworkState };
-
-export function changeNetState(newState: NetworkState) : Action<ChangeNetState> {
+export function changeNetState(newState: NetworkState) : Action<NetworkState> {
   return {
     type: Type.ChangeState,
-      payload: {
-        state: newState
-      }
+      payload: newState
   };
 }

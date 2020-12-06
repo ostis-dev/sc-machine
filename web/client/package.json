@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --progress --color --watch --config webpack.dev.js",
     "copy-bundle": "cpx build/bundle.js assets/",
-    "webpack-dev": "webpack --color --config webpack.dev.js && yarn run copy-bundle",
+    "webpack-dev": "webpack --progress --color --config webpack.dev.js && yarn run copy-bundle",
     "webpack-prod": "webpack --progress --color --config webpack.prod.js"
   },
   "repository": {

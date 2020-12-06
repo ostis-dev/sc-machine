@@ -1,5 +1,11 @@
 import { combineReducers } from 'redux';
 
-export const rootReducer = combineReducers({
+import * as ui from './uiReducers';
+import * as net from './netReducer';
+import * as services from './serviceReducers';
 
+export const rootReducer = combineReducers({
+  ui: ui.reducer,
+  net: net.reducer,
+  services: services.reducer,
 });
