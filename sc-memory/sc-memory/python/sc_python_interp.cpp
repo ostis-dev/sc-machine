@@ -415,7 +415,7 @@ bool ScPythonInterpreter::Initialize(std::string const & name)
   ScPythonMemoryModule::Initialize();
   PyImport_AppendInittab("scb", &PyInit_scb);
 
-  SC_ASSERT(gMainThread == nullptr, ("ScPythonInterpreter already initialized"));
+  SC_ASSERT(!gMainThread, ("ScPythonInterpreter is already initialized"));
   gMainThread = std::make_unique<ScPythonMainThread>();
 
   ModulePathSet modulePaths;

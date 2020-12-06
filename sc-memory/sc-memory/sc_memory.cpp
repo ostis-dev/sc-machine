@@ -42,8 +42,8 @@ struct ContextMutexLock
 
 bool gIsLogMuted = false;
 
-void _logPrintHandler(gchar const * log_domain, GLogLevelFlags log_level,
-  gchar const * message, gpointer user_data)
+void _logPrintHandler(gchar const * /* log_domain */, GLogLevelFlags log_level,
+  gchar const * message, gpointer /* user_data */)
 {
   if (gIsLogMuted)
     return;
@@ -71,7 +71,7 @@ void _logPrintHandler(gchar const * log_domain, GLogLevelFlags log_level,
   };
 }
 
-std::atomic_int gContextGounter = { 0 };
+std::atomic_int gContextCounter = { 0 };
 
 } // namespace
 
@@ -83,7 +83,7 @@ ScMemory::MemoryContextList ScMemory::ms_contexts;
 bool ScMemory::Initialize(sc_memory_params const & params)
 {
   std::srand(unsigned(std::time(0)));
-  gContextGounter = 0;
+  gContextCounter = 0;
 
   g_log_set_default_handler(_logPrintHandler, nullptr);
 
@@ -184,7 +184,7 @@ ScMemoryContext::ScMemoryContext(sc_uint8 accessLevels, std::string const & name
   if (name.empty())
   {
     std::stringstream ss;
-    ss << "Context_" << gContextGounter;
+    ss << "Context_" << gContextCounter;
     m_name = ss.str();
   }
   else

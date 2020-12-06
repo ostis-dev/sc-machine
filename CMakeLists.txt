@@ -13,8 +13,8 @@ option (SC_AUTO_TEST "Flag to build for automation testing" OFF)
 option (SC_KPM_SCP "Flag to build SCP module" OFF)
 option (SC_BUILD_SCTP "Flag to turn on/off sctp protocol support" OFF)
 
-set(SC_USE_SANITAZER "none" CACHE STRING "Build with specified sanitizer")
-set_property(CACHE SC_USE_SANITAZER PROPERTY STRINGS none address memory)
+set(SC_USE_SANITIZER "none" CACHE STRING "Build with specified sanitizer")
+set_property(CACHE SC_USE_SANITIZER PROPERTY STRINGS none address memory)
 
 
 # codegen
@@ -43,17 +43,17 @@ endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 set(SC_MEMORY_SRC "${SC_MACHINE_ROOT}/sc-memory")
 
-if (${SC_USE_SANITAZER} EQUAL "address")
+if (${SC_USE_SANITIZER} STREQUAL "address")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -O1 -fno-omit-frame-pointer")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -O1 -fno-omit-frame-pointer")
-elseif (${SC_USE_SANITAZER} EQUAL "memory")
+elseif (${SC_USE_SANITIZER} STREQUAL "memory")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics -std=c++14")
-    if (${SC_USE_SANITAZER} EQUAL "none")
+    if (${SC_USE_SANITIZER} STREQUAL "none")
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
     endif()
     
@@ -62,7 +62,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
-    if (${SC_USE_SANITAZER} EQUAL "none")
+    if (${SC_USE_SANITIZER} STREQUAL "none")
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")        ## Optimize
         set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s")  ## Strip binary
     endif()
