@@ -14,6 +14,7 @@ Possible tags:
 
   * `[builder]` - changes in builder tool
   * `[changelog]` - update changelog
+  * `[ci]` - change in `ci` configuration or scripts
   * `[cmake]` - changes in cmake build system
   * `[codegen]` - changes in code generator
   * `[core]` - changes in `sc-storage` code
@@ -22,9 +23,10 @@ Possible tags:
   * `[python]` - changes in python modules
   * `[sc-kpm]` - changes in `sc-kpm` code
   * `[sc-memory]` - changes in `sc-memory` code
-  * `[sc-server]` - changes in `sc-server` code
   * `[sc-network]` - changes in `sc-network` code
+  * `[sc-server]` - changes in `sc-server` code
   * `[scs]` - changes in `scs` support
+  * `[scripts]` - changes in scripts
   * `[test]` or `[tests]` - changes in tests
   * `[thirdparty]` - updated thirdparty libraries
   * `[web]` - changes in web interface
