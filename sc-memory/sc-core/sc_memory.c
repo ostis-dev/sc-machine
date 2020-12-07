@@ -32,10 +32,10 @@ GMutex s_concurrency_mutex;
 void sc_memory_params_clear(sc_memory_params *params)
 {
   params->clear = SC_FALSE;
-  params->config_file = 0;
-  params->ext_path = 0;
-  params->repo_path = 0;
-  params->enabled_exts = 0;
+  params->config_file = null_ptr;
+  params->ext_path = null_ptr;
+  params->repo_path = null_ptr;
+  params->enabled_exts = null_ptr;
 }
 
 sc_memory_context* sc_memory_initialize(const sc_memory_params *params)
@@ -71,8 +71,8 @@ sc_memory_context* sc_memory_initialize(const sc_memory_params *params)
 
   if (params->ext_path)
   {
-    if (sc_memory_init_ext(params->ext_path, params->enabled_exts) == SC_RESULT_OK)
-      return s_memory_default_ctx;
+    if (sc_memory_init_ext(params->ext_path, params->enabled_exts) != SC_RESULT_OK)
+      goto error;
   }
 
   return s_memory_default_ctx;

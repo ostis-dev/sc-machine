@@ -88,17 +88,20 @@ void PyLoadModulePathFromConfig(py::ScPythonInterpreter::ModulePathSet & outValu
     outValues.insert(utils::StringUtils::ReplaceAll(v, "\\", "/"));
 }
 
-void AddModuleSearchPaths(py::ScPythonInterpreter::ModulePathSet const & modulePath)
+void AddSysPath(std::string const & path)
 {
   PyObject* sysPath = PySys_GetObject("path");
-  for (auto const & p : modulePath)
+  if (gAddedModulePaths.find(path) == gAddedModulePaths.end())
   {
-    if (gAddedModulePaths.find(p) == gAddedModulePaths.end())
-    {
-      PyList_Insert(sysPath, 0, PyUnicode_FromString(p.c_str()));
-      gAddedModulePaths.insert(p);
-    }
+    PyList_Insert(sysPath, 0, PyUnicode_FromString(path.c_str()));
+    gAddedModulePaths.insert(path);
   }
+}
+
+void AddModuleSearchPaths(py::ScPythonInterpreter::ModulePathSet const & modulePath)
+{
+  for (auto const & p : modulePath)
+    AddSysPath(p);
 }
 
 class PyBridgeWrap;
@@ -402,7 +405,7 @@ utils::ScLock ScPythonInterpreter::ms_lock;
 ScPythonInterpreter::ModulesMap ScPythonInterpreter::ms_foundModules;
 ScPythonInterpreter::ModulePathSet ScPythonInterpreter::ms_modulePaths;
 
-ScPythonMainThread * gMainThread = nullptr;
+std::unique_ptr<ScPythonMainThread> gMainThread;
 
 bool ScPythonInterpreter::Initialize(std::string const & name)
 {
@@ -412,8 +415,8 @@ bool ScPythonInterpreter::Initialize(std::string const & name)
   ScPythonMemoryModule::Initialize();
   PyImport_AppendInittab("scb", &PyInit_scb);
 
-  SC_ASSERT(gMainThread == nullptr, ("ScPythonInterpreter already initialized"));
-  gMainThread = new ScPythonMainThread();
+  SC_ASSERT(!gMainThread, ("ScPythonInterpreter is already initialized"));
+  gMainThread = std::make_unique<ScPythonMainThread>();
 
   ModulePathSet modulePaths;
   PyLoadModulePathFromConfig(modulePaths);
@@ -429,8 +432,10 @@ bool ScPythonInterpreter::Initialize(std::string const & name)
 
 void ScPythonInterpreter::Shutdown()
 {
-  SC_ASSERT(gMainThread != nullptr, ());
-  gMainThread = nullptr;
+  SC_ASSERT(gMainThread.get(), ());
+  gMainThread.reset();
+
+  gAddedModulePaths.clear();
 
   ms_modulePaths.clear();
   ms_foundModules.clear();
@@ -463,6 +468,11 @@ void ScPythonInterpreter::RunScript(std::string const & scriptName, ScMemoryCont
   p /= moduleName;
   std::string const filePath = p.string();
 
+  {
+    utils::ScLockScope scope(ms_lock);
+    AddSysPath(p.parent_path().string());
+  }
+
   //PyEvalLock lock;
   bp::object mainModule((bp::handle<>(bp::borrowed(PyImport_AddModule("__main__")))));
   bp::object mainNamespace = mainModule.attr("__dict__");
@@ -475,7 +485,6 @@ void ScPythonInterpreter::RunScript(std::string const & scriptName, ScMemoryCont
       << "from scb import *" << std::endl
       << "from sc import *" << std::endl
       << "import sys" << std::endl
-      << "sys.path.append('" << p.parent_path().string() << "')" << std::endl
       << "sys.stdout = CppLog()" << std::endl
       << "sys.stderr = CppLogError()" << std::endl;
     bp::exec(initCode.str().c_str(), globalNamespace, globalNamespace);

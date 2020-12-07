@@ -10,6 +10,7 @@
 #include "sc_type.hpp"
 #include "sc_utils.hpp"
 
+#include <unordered_map>
 
 #define SC_REPL(x) (char const *)(x)
 
@@ -293,7 +294,7 @@ public:
   ScTemplate(ScTemplate const & other) = delete;
   ScTemplate & operator = (ScTemplate const & other) = delete;
 
-  using ReplacementsMap = std::map<std::string, size_t>;
+  using ReplacementsMap = std::unordered_map<std::string, size_t>;
   using TemplateConstr3Vector = std::vector<ScTemplateConstr3>;
   using ProcessOrder = std::vector<size_t>;
 

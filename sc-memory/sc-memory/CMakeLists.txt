@@ -28,7 +28,7 @@ add_library (sc-memory SHARED ${SOURCES} ${SOURCES_PARSER})
 target_include_directories(sc-memory
       PRIVATE ${GLIB2_INCLUDE_DIRS}
       PRIVATE ${SC_MACHINE_ANTRL_DIR}/runtime/src
-      PRIVATE ${SC_MEMORY_SRC}
+      PUBLIC ${SC_MEMORY_SRC}
       PRIVATE ${PYTHON_INCLUDE_DIRS})
 
 if (${WIN32})

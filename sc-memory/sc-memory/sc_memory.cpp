@@ -17,6 +17,7 @@
 
 #include "utils/sc_log.hpp"
 
+#include <atomic>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -41,8 +42,8 @@ struct ContextMutexLock
 
 bool gIsLogMuted = false;
 
-void _logPrintHandler(gchar const * log_domain, GLogLevelFlags log_level,
-  gchar const * message, gpointer user_data)
+void _logPrintHandler(gchar const * /* log_domain */, GLogLevelFlags log_level,
+  gchar const * message, gpointer /* user_data */)
 {
   if (gIsLogMuted)
     return;
@@ -70,19 +71,19 @@ void _logPrintHandler(gchar const * log_domain, GLogLevelFlags log_level,
   };
 }
 
-unsigned int gContextGounter;
+std::atomic_int gContextCounter = { 0 };
 
 } // namespace
 
 // ------------------
 
-sc_memory_context * ScMemory::ms_globalContext = 0;
+sc_memory_context * ScMemory::ms_globalContext = nullptr;
 ScMemory::MemoryContextList ScMemory::ms_contexts;
 
 bool ScMemory::Initialize(sc_memory_params const & params)
 {
   std::srand(unsigned(std::time(0)));
-  gContextGounter = 0;
+  gContextCounter = 0;
 
   g_log_set_default_handler(_logPrintHandler, nullptr);
 
@@ -177,13 +178,13 @@ bool ScMemory::HasMemoryContext(ScMemoryContext const * ctx)
 // ---------------
 
 ScMemoryContext::ScMemoryContext(sc_uint8 accessLevels, std::string const & name)
-  : m_context(0)
+  : m_context(nullptr)
 {
   m_context = sc_memory_context_new(accessLevels);
   if (name.empty())
   {
     std::stringstream ss;
-    ss << "Context_" << gContextGounter;
+    ss << "Context_" << gContextCounter;
     m_name = ss.str();
   }
   else
