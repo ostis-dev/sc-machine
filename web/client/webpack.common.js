@@ -1,9 +1,8 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
-const outputPath = path.resolve(__dirname, 'build');
+const outputPath = path.resolve(__dirname, 'assets');
 
 module.exports = {
   mode: 'none',
@@ -44,7 +43,6 @@ module.exports = {
         'parameterHints', 'rename', 'smartSelect', 'snippets', 'suggest', 'wordHighlighter', 'wordOperations',
       ]
     }),
-    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
