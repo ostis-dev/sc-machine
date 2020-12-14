@@ -28,6 +28,7 @@ protected:
   {
     m_kNrelSCsGlobalIdtf = m_ctx.HelperResolveSystemIdtf("nrel_scs_global_idtf", ScType::NodeConstNoRole);
     SC_ASSERT(m_kNrelSCsGlobalIdtf.IsValid(), ());
+    this->concertedKB = m_ctx.HelperFindBySystemIdtf(CONCERTED_KB_NAME);
   }
 
   void operator() (scs::Parser const & parser)
@@ -60,6 +61,7 @@ protected:
       }
 
       ScAddr const edgeAddr = m_ctx.CreateEdge(edge.GetType(), srcAddr, trgAddr);
+      m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, this->concertedKB, edgeAddr);
       SC_ASSERT(edgeAddr.IsValid(), ());
       m_idtfCache.insert(std::make_pair(edge.GetIdtf(), edgeAddr));
     }
@@ -84,11 +86,14 @@ private:
     // Generate construction manually. To avoid recursive call of ScMemoryContextEventsPendingGuard
 
     ScAddr const linkAddr = m_ctx.CreateLink();
+    m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, this->concertedKB, linkAddr);
     ScLink link(m_ctx, linkAddr);
     link.Set(idtf);
 
     ScAddr const edgeAddr = m_ctx.CreateEdge(ScType::EdgeDCommonConst, addr, linkAddr);
-    m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, m_kNrelSCsGlobalIdtf, edgeAddr);
+    m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, this->concertedKB, edgeAddr);
+    ScAddr const edgeAddr2 = m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, m_kNrelSCsGlobalIdtf, edgeAddr);
+    m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, this->concertedKB, edgeAddr2);
   }
 
   ScAddr FindBySCsGlobalIdtf(std::string const & idtf) const
@@ -153,10 +158,12 @@ private:
         if (type.IsNode())
         {
           result = m_ctx.CreateNode(type);
+          m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, this->concertedKB, result);
         }
         else if (type.IsLink())
         {
           result = m_ctx.CreateLink(type);
+          m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, this->concertedKB, result);
           SetupLinkContent(result, el);
         }
         else
@@ -270,6 +277,8 @@ private:
 
   std::unordered_map<std::string, ScAddr> m_idtfCache;
   ScAddr m_kNrelSCsGlobalIdtf;
+  ScAddr concertedKB;
+  const std::string CONCERTED_KB_NAME = "concertedKB_hash_iF95K2";
 };
 
 } // namespace impl
