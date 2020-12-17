@@ -4,12 +4,12 @@ file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.h" "src/*.hpp")
 if (${WIN32})
   set (BOOST_LIBS_LIST )
 
-  elseif (${APPLE})
-   set (BOOST_LIBS_LIST
-         Boost::filesystem 
-         Boost::program_options 
-         Boost::system
-      )
+elseif (${APPLE})
+  set (BOOST_LIBS_LIST
+        Boost::filesystem 
+        Boost::program_options 
+        Boost::system
+    )
 else()
   set (BOOST_LIBS_LIST
          boost_filesystem 
