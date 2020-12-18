@@ -109,7 +109,7 @@ public:
     if (!Stream2Value(stream, result))
     {
       SC_THROW_EXCEPTION(utils::ExceptionCritical,
-                         "Failed to convert the value of " + std::to_string(m_addr.Hash()));
+                         "Failed to get the value of " + std::to_string(m_addr.Hash()));
     }
 
     return result;

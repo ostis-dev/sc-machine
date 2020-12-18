@@ -332,13 +332,7 @@ ScStreamPtr ScMemoryContext::GetLinkContent(ScAddr const & addr)
   SC_ASSERT(IsValid(), ());
 
   sc_stream * s = nullptr;
-  if (sc_memory_get_link_content(m_context, *addr, &s) != SC_RESULT_OK)
-  {
-    SC_THROW_EXCEPTION(utils::ExceptionCritical,
-                       "Failed to get the value of " + std::to_string(addr.Hash()));
-  }
-
-  if (s == nullptr)
+  if (sc_memory_get_link_content(m_context, *addr, &s) != SC_RESULT_OK || s == nullptr)
     return ScStreamPtr();
 
   return std::make_shared<ScStream>(s);
