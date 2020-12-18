@@ -3,7 +3,7 @@
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: #000;
+  background-color: #f1f1f1;
 }
 
 .loader-vertical-center {
@@ -50,7 +50,7 @@
 
 .loader-text {
   position: relative;
-  color: white;
+  color: #000;
   width: inherit;
   height: inherit;
   text-align: center;
@@ -60,13 +60,9 @@
   margin-left: -125px;
   margin-top: -137px;
   overflow: hidden;
-  background: linear-gradient(90deg, #000, #fff, #000);
   background-repeat: no-repeat;
   background-size: 85%;
   padding: 10px;
-  animation: text-animation 2s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0);
 }
 
 @keyframes text-animation {

@@ -1,6 +1,6 @@
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const copy = require("copy-webpack-plugin");
 
 const outputPath = path.resolve(__dirname, 'assets');
 
@@ -35,26 +35,23 @@ module.exports = {
     ]
   },
   plugins: [
-    new MonacoWebpackPlugin({
-      "languages": [],
-      "features": [
-        'bracketMatching', 'caretOperations', 'clipboard', 'codelens', 'colorDetector', 'comment', 'contextmenu',
-        'coreCommands', 'cursorUndo', 'find', 'folding', 'format', 'gotoLine', 'hover', 'inPlaceReplace', 'inspectTokens', 'linesOperations', 'links',
-        'parameterHints', 'rename', 'smartSelect', 'snippets', 'suggest', 'wordHighlighter', 'wordOperations',
-      ]
-    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
+    new copy({
+      patterns: [
+        { from: 'node_modules/@ostis/scs-js-editor/build/editor.worker.js', to: outputPath + '/editor.worker.js' }
+      ]
+    })
   ],
   resolve: {
     extensions: [ '.tsx', '.ts', '.js', '.css' ]
   },
   externalsPresets: { node: true },
   output: {
-    filename: 'bundle.js',
+    filename: 'sc-memory-web.js',
     path: outputPath,
-    libraryTarget: 'var',
-    library: 'SCsEditor'
+    libraryTarget: 'umd',
+    library: 'ScMemoryWeb'
   }
 };

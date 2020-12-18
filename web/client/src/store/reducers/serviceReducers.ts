@@ -1,8 +1,8 @@
-import * as store from '../store';
+import * as serv from '../interfaces/services';
 import { Action } from '../actions/baseAction';
 import * as serviceAction from '../actions/serviceActions';
 
-export function reducer(state: store.Services = store.servicesInit, action: Action<any>) {
+export function reducer(state: serv.Services = serv._initServices, action: Action<any>) {
 
   switch (action.type) {
 

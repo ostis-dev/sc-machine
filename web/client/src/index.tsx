@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { configureStore, Store } from './store';
-import {AppContainer } from './App';
+import { AppContainer } from './App';
 
 import { SCsInitGlobal } from '@ostis/scs-js-editor';
 

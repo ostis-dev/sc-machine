@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 
 import { DrawerItem } from './ui/DrawerItem';
+import { Dashboard } from './ui/Dashboard';
+import { KnowledgeBase } from './ui/KnowledgeBase';
 
 import * as store from './store';
 import * as ui from '@material-ui/core';
-
-import { NetworkState, UIState, Store, UIMode, storeInitialState } from './store';
 
 const theme = createMuiTheme({
   palette: {
@@ -27,23 +27,19 @@ const theme = createMuiTheme({
 });
 
 interface AppContainerProps {
-  store?: Store
+  store?: store.Store
 };
 
-function mapStateToProps(state: Store): any {
+function mapStateToProps(state: store.Store): any {
   return {
     store: state
   };
 };
 
 export class AppContainerImpl extends React.Component<AppContainerProps, any> {
-  
-  constructor(props: Readonly<AppContainerProps>) {
-    super(props);    
-  }
 
-  private renderMainUI() : React.ReactNode {
-    const isConnected: boolean = (this.props.store.net === store.NetworkState.Connected);
+  private renderMainUI(): React.ReactNode {
+    const isConnected: boolean = (this.props.store.net === store.net.State.Connected);
     return (
       <div className='body-content'>
         <ui.CssBaseline />
@@ -53,53 +49,58 @@ export class AppContainerImpl extends React.Component<AppContainerProps, any> {
               variant='permanent'
               open
               className='drawer'
-              classes={{ 
+              classes={{
                 paper: 'paper'
               }}>
-                
-                <div className='drawer-status'>
-                  <ui.Icon className={isConnected ? 'ok' : 'error'}>
-                    {isConnected ? 'wifi' : 'wifi_off'}
-                  </ui.Icon>
-                </div>
-                <ui.Divider/>
 
-                <ui.List>
-                  <DrawerItem to='/' key='dashboard' title='Dashboard' icon='dashboard'></DrawerItem>
-                  <DrawerItem to='/' key='knowledgebase' title='Knowledge base' icon='create'></DrawerItem>
-                </ui.List>
+              <div className='drawer-status'>
+                <ui.Icon className={isConnected ? 'ok' : 'error'}>
+                  {isConnected ? 'wifi' : 'wifi_off'}
+                </ui.Icon>
+              </div>
+              <ui.Divider />
+              <ui.List>
+                <DrawerItem to='/' key='dashboard' title='Dashboard' icon='dashboard'></DrawerItem>
+                <DrawerItem to='/kb' key='knowledgebase' title='Knowledge base' icon='create'></DrawerItem>
+              </ui.List>
             </ui.Drawer>
           </ui.Hidden>
-        </nav>        
+        </nav>
+        <main>
+          <Switch>
+            <Route exact path='/' component={Dashboard} />
+            <Route path='/kb' component={KnowledgeBase} />
+          </Switch>
+        </main>
       </div>
     );
   }
 
-  private renderLoader(msg: string) : React.ReactNode {
+  private renderLoader(msg: string): React.ReactNode {
     return (
       <div className='loader-container'>
         <div className='loader-vertical-center'>
           <div className='loader'></div>
-          <div className='loader-text'>{ msg }</div>
+          <div className='loader-text'>{msg}</div>
         </div>
       </div>
     );
   }
-  
+
   render() {
     const self = this;
-    const uiState: UIState = this.props.store.ui;
+    const uiState: store.ui.State = this.props.store.ui;
 
-    function renderImpl() : React.ReactNode {
-      if (uiState.mode === UIMode.MainUI)
+    function renderImpl(): React.ReactNode {
+      if (uiState.mode === store.ui.Mode.MainUI)
         return self.renderMainUI();
-      
+
       return self.renderLoader(uiState.initMessage);
-    }   
+    }
 
     return (
       <MuiThemeProvider theme={theme}>
-        { renderImpl() }
+        { renderImpl()}
       </MuiThemeProvider>
     );
   }

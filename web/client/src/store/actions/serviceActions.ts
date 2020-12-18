@@ -1,11 +1,11 @@
 import { Action } from './baseAction';
-import { Services } from '../store';
+import * as serv from '../interfaces/services';
 
 export namespace Type {
   export const Init = 'SERVICES_INIT';
 }
 
-export function Init(services: Services): Action<Services> {
+export function Init(services: serv.Services): Action<serv.Services> {
   return {
     type: Type.Init,
     payload: services

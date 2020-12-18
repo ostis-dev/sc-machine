@@ -7,6 +7,7 @@ import { ServerTemplates } from './ServerTemplates';
 import * as store from '../../store';
 
 import * as redux from 'redux';
+import { net } from '../../store';
 
 
 export class ServerRoot {
@@ -27,29 +28,33 @@ export class ServerRoot {
   }
 
   public Start() {
-    this.NotifyChangeInitState('Connect to knowledge base');
-    this.NotifyChangeNetworkState(store.NetworkState.Connecting);
+    this.NotifyChangeInitState('Connecting');
+    this.NotifyChangeNetworkState(store.net.State.Connecting);
     this._client = new ScNet(this._url, this.OnConnected.bind(this), this.OnDisconnected.bind(this), this.OnError.bind(this));
 
     this._serverKeynodes = new ServerKeynodes(this._client);
     this._serverTemplates = new ServerTemplates(this._client, this._serverKeynodes);
+
+    this._store.dispatch(store.actions.serv.Init({
+      sc: this
+    }));
   }
 
   private NotifyChangeInitState(text: string) {
     this._store.dispatch(store.actions.ui.ChangeInitMessage(text));
   }
 
-  private NotifyChangeNetworkState(newState: store.NetworkState) {
+  private NotifyChangeNetworkState(newState: net.State) {
     this._store.dispatch(store.actions.net.changeNetState(newState));
   }
 
   private OnConnected() {
-    this.NotifyChangeNetworkState(store.NetworkState.Connected);
+    this.NotifyChangeNetworkState(net.State.Connected);
     this.Initialize();
   }
 
   private OnDisconnected() {
-    this.NotifyChangeNetworkState(store.NetworkState.Disconnected);
+    this.NotifyChangeNetworkState(net.State.Disconnected);
   }
 
   private OnError() {
@@ -74,7 +79,7 @@ export class ServerRoot {
     await delay();
 
     return new Promise<boolean>(function (resolve) { 
-      self._store.dispatch(store.actions.ui.ChangeUIMode(store.UIMode.MainUI));
+      self._store.dispatch(store.actions.ui.ChangeUIMode(store.ui.Mode.MainUI));
       resolve(result);
     });
   }

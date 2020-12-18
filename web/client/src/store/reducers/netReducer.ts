@@ -1,8 +1,8 @@
-import * as store from '../store';
+import * as net from '../interfaces/net';
 import { Action } from '../actions/baseAction';
 import * as netAction from '../actions/netActions';
 
-export function reducer(state: store.NetworkState = store.NetworkState.Disconnected, action: Action<any>) {
+export function reducer(state: net.State = net.State.Disconnected, action: Action<any>) {
 
   switch (action.type) {
 
