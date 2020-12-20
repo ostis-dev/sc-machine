@@ -14,6 +14,9 @@
    - Fix issues with alias support in SCs-text (#350, #333)
    - Add performance benchmarks
 
+- **Web**
+   - New implementation of Web UI
+
 ## v0.6.0
 
 - **Build system**:
