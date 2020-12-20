@@ -118,7 +118,7 @@ elseif (${UNIX})
 
     find_package(Boost 1.71 COMPONENTS system filesystem python${PY_SHORT_VERSION})
     if (NOT ${Boost_FOUND})
-        find_package(Boost 1.65 REQUIRED COMPONENTS filesystem python-py${PY_SHORT_VERSION})
+        find_package(Boost 1.65 REQUIRED COMPONENTS system filesystem python-py${PY_SHORT_VERSION})
     endif()
     
     find_package(RocksDB REQUIRED)
