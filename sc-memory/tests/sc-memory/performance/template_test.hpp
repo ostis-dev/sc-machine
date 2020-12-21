@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sc-memory/sc_memory.hpp>
+#include <sc-memory/sc_templates.hpp>
 
 #include <memory>
 
@@ -32,13 +33,16 @@ public:
   virtual void Setup(size_t constrCount) = 0;
   bool Run()
   {
-    ScTemplateSearchResult result;
-    m_ctx->HelperSearchTemplate(m_templ, result);
+    ScTemplateSearch searchResults(*m_ctx, *m_templ);
+    ScTemplateSearch::Iterator it = searchResults.begin();
+    bool const result = (it != searchResults.end());
+    while (it != searchResults.end())
+      ++it;
 
-    return !result.IsEmpty();
+    return result;
   }
 
 protected:
   std::unique_ptr<ScMemoryContext> m_ctx;
-  ScTemplate m_templ;
+  ScTemplatePtr m_templ;
 };

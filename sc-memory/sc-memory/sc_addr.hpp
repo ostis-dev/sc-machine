@@ -13,6 +13,7 @@ extern "C"
 
 #include <cstdint>
 #include <list>
+#include <string>
 #include <vector>
 
 using ScRealAddr = sc_addr;
@@ -34,6 +35,9 @@ public:
   explicit ScAddr(HashType const & hash);
 
   bool IsValid() const;
+  //! Bool operator wraps IsValid method
+  explicit operator bool () const;
+
   void Reset();
 
   bool operator == (ScAddr const & other) const;
@@ -41,8 +45,7 @@ public:
   ScRealAddr const & operator * () const;
   HashType Hash() const;
 
-  /// TODO: remove and replace by operator * ()
-  ScRealAddr const & GetRealAddr() const;
+  std::string ToString() const;
 
 protected:
   ScRealAddr m_realAddr;

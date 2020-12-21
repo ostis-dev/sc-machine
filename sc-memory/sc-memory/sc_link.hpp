@@ -78,9 +78,13 @@ public:
     if (_DetermineTypeEdgeImpl(typeEdge, typeAddr))
     {
       if (typeAddr == newType)
+      {
         needAppend = false;
-      else
+      }
+      else if (typeEdge.IsValid())
+      {
         m_ctx.EraseElement(typeEdge);
+      }
     }
 
     // append into set

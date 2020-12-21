@@ -1,10 +1,6 @@
-/*
- * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
- * Distributed under the MIT License
- * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
- */
-
 #include "sc_link.hpp"
+#include "sc_template_builder.hpp"
+#include "sc_template_search.hpp"
 
 ScLink::ScLink(ScMemoryContext & ctx, ScAddr const & addr)
   : m_ctx(ctx)
@@ -117,23 +113,24 @@ std::string ScLink::GetAsString() const
 bool ScLink::_DetermineTypeEdgeImpl(ScAddr & outEdge, ScAddr & outType) const
 {
   // set type
-  ScTemplate templ;
-  templ.Triple(
-    ScKeynodes::kBinaryType,
-    ScType::EdgeAccessVarPosPerm,
-    ScType::NodeVarClass >> "_type");
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(
+      ScKeynodes::kBinaryType,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVarClass >> "_type")
+    .Triple(
+      "_type",
+      ScType::EdgeAccessVarPosTemp >> "_edge",
+      m_addr)
+    .Make();
 
-  templ.Triple(
-    "_type",
-    ScType::EdgeAccessVarPosTemp >> "_edge",
-    m_addr);
-
-  ScTemplateSearchResult res;
-  if (m_ctx.HelperSearchTemplate(templ, res))
+  ScTemplateSearch search(m_ctx, *templ);
+  auto it = search.begin();
+  if (it != search.end())
   {
-    SC_ASSERT(res.Size() == 1, ("Invalid state of knowledge base"));
-    outType = res[0]["_type"];
-    outEdge = res[0]["_edge"];
+    outType = (*it)["_type"];
+    outEdge = (*it)["_edge"];
+    SC_ASSERT(++it == search.end(), ("Invalid state of knowledge base"));
     return true;
   }
 

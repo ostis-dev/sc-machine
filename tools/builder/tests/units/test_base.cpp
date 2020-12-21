@@ -2,6 +2,8 @@
 
 #include "builder_test.hpp"
 
+#include "sc-memory/sc_templates.hpp"
+
 TEST_F(ScBuilderTest, Smoke)
 {
   ScMemoryContext ctx("Builder_Base");
@@ -13,9 +15,9 @@ TEST_F(ScBuilderTest, Smoke)
     "    _[]"
     "    (* _<- lang_en;; *);;";
 
-  ScTemplate templ;
-  EXPECT_TRUE(ctx.HelperBuildTemplate(templ, scsData));
+  ScTemplatePtr templ = ScTemplateSCsBuilder(ctx).Make(scsData);
+  EXPECT_TRUE(templ);
 
-  ScTemplateSearchResult res;
-  EXPECT_TRUE(ctx.HelperSearchTemplate(templ, res));
+  ScTemplateSearch search(ctx, *templ);
+  EXPECT_TRUE(search.begin() != search.end());
 }

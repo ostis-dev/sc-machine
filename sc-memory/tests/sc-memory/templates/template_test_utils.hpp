@@ -2,6 +2,7 @@
 
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_scs_helper.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 #include "sc_test.hpp"
 
@@ -21,16 +22,17 @@ struct TestTemplParams
   {
   }
 
-  bool operator () (ScTemplateItemValue param1, ScTemplateItemValue param2, ScTemplateItemValue param3)
+  bool operator () (ScTemplateArg param1, ScTemplateArg param2, ScTemplateArg param3)
   {
     bool catched = false;
     try
     {
-      ScTemplate testTempl;
-      testTempl(param1, param2, param3);
+      ScTemplatePtr testTempl = ScTemplateBuilder()
+        .Triple(param1, param2, param3)
+        .Make();
 
-      ScTemplateGenResult res;
-      EXPECT_TRUE(m_ctx.HelperGenTemplate(testTempl, res));
+      ScTemplateGenerate generator(m_ctx, *testTempl);
+      EXPECT_TRUE(generator.Do());
     }
     catch (utils::ExceptionInvalidParams & e)
     {

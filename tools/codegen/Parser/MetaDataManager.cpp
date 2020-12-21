@@ -145,19 +145,8 @@ void MetaDataManager::Check() const
 {
   bool const hasAgent = HasProperty(Props::Agent);
   bool const hasKeynode = HasProperty(Props::Keynode);
-  bool const hasTemplate = HasProperty(Props::Template);
   bool const hasForceCreation = HasProperty(Props::ForceCreate);
   bool const hasCmdClass = HasProperty(Props::AgentCommandClass);
-
-  if (hasAgent && hasTemplate)
-  {
-    EMIT_ERROR_LINE("You can't use " << Props::Template << " property with " << Props::Agent);
-  }
-
-  if (hasKeynode && hasTemplate)
-  {
-    EMIT_ERROR_LINE("You can't use " << Props::Template << " property with " << Props::Keynode);
-  }
 
   if (hasForceCreation && !hasKeynode)
   {
@@ -167,11 +156,6 @@ void MetaDataManager::Check() const
   if (hasKeynode && GetNativeString(Props::Keynode).empty())
   {
     EMIT_ERROR_LINE("Can't use empty " << Props::Keynode << ". You should specify system identifier of keynode in it");
-  }
-
-  if (hasTemplate && GetNativeString(Props::Template).empty())
-  {
-    EMIT_ERROR_LINE("Can't use empty " << Props::Template << ". You should specify system identifier of sc-structure in it");
   }
 
   std::string const cmdClass = GetNativeString(Props::AgentCommandClass);

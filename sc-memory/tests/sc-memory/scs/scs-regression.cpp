@@ -2,6 +2,7 @@
 
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_scs_helper.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 #include "sc_test.hpp"
 
@@ -29,36 +30,29 @@ TEST_F(SCsHelperRegressionTest, issue_353)
   ScAddr const _xAddr = m_ctx->HelperResolveSystemIdtf("_x");
   EXPECT_TRUE(_xAddr.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(
-        aAddr,
-        ScType::EdgeAccessVarPosPerm,
-        ScType::NodeVarStruct >> "_struct");
-
-  templ.Triple(
-        classAddr,
-        ScType::EdgeAccessVarPosPerm >> "_edge",
-        _xAddr);
-
-  templ.Triple(
-        "_struct",
-        ScType::EdgeAccessVarPosPerm,
-        classAddr);
-
-  templ.Triple(
-        "_struct",
-        ScType::EdgeAccessVarPosPerm,
-        "_edge");
-
-  templ.Triple(
-        "_struct",
-        ScType::EdgeAccessVarPosPerm,
-        _xAddr);
+  ScTemplatePtr templ = ScTemplateBuilder()
+      .Triple(aAddr,
+              ScType::EdgeAccessVarPosPerm,
+              ScType::NodeVarStruct >> "_struct")
+      .Triple(classAddr,
+              ScType::EdgeAccessVarPosPerm >> "_edge",
+              _xAddr)
+      .Triple("_struct",
+              ScType::EdgeAccessVarPosPerm,
+              classAddr)
+      .Triple("_struct",
+              ScType::EdgeAccessVarPosPerm,
+              "_edge")
+      .Triple("_struct",
+              ScType::EdgeAccessVarPosPerm,
+              _xAddr)
+      .Make();
 
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  ScTemplateSearch result(*m_ctx, *templ);
+  ScTemplateSearch::Iterator found = result.begin();
+  EXPECT_NE(found, result.end());
 
-  EXPECT_EQ(result.Size(), 1u);
-  EXPECT_EQ(m_ctx->GetElementType(result[0]["_struct"]), ScType::NodeConstStruct);
+  EXPECT_EQ(m_ctx->GetElementType(found["_struct"]), ScType::NodeConstStruct);
+  EXPECT_EQ(++found, result.end());
 }

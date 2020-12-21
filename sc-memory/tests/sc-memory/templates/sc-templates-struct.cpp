@@ -47,8 +47,8 @@ TEST_F(ScTemplateSearchInStructTest, search_in_struct)
     templStruct << xAddr << _yAddr << _zAddr << _xyEdgeAddr << _zxyEdgeAddr;
   }
 
-  ScTemplate templ;
-  EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, templateAddr));
+  ScTemplatePtr templ = ScTemplateStructBuilder(*m_ctx).Make(templateAddr);
+  EXPECT_TRUE(templ);
 
   // create test struct
   ScAddr const testStructAddr = m_ctx->CreateNode(ScType::NodeConstStruct);
@@ -115,19 +115,20 @@ TEST_F(ScTemplateSearchInStructTest, search_in_struct)
   EXPECT_TRUE(edge2.IsValid());
 
   {
-    ScTemplateSearchResult result;
-    EXPECT_TRUE(m_ctx->HelperSearchTemplateInStruct(templ, *testStruct, result));
-
-    EXPECT_EQ(result.Size(), 2u);
-    for (uint32_t i = 0; i < result.Size(); ++i)
+    ScTemplateSearch search(*m_ctx, *templ, {}, *testStruct);
+    size_t count = 0;
+    for (auto const & res : search)
     {
-      ScTemplateSearchResultItem res1 = result[i];
-      EXPECT_EQ(res1["x"], xAddr);
-      EXPECT_TRUE(res1["_y"] == tyAddr || res1["_y"] == tgAddr);
-      EXPECT_TRUE(res1["_z"] == tzAddr || res1["_z"] == tsAddr);
-      EXPECT_TRUE(res1["_xyEdge"] == txyEdgeAddr || res1["_xyEdge"] == txgEdgeAddr);
-      EXPECT_TRUE(res1["_zxyEdge"] == tsxgEdgeAddr || res1["_zxyEdge"] == tzxyEdgeAddr);
+      EXPECT_EQ(res["x"], xAddr);
+      EXPECT_TRUE(res["_y"] == tyAddr || res["_y"] == tgAddr);
+      EXPECT_TRUE(res["_z"] == tzAddr || res["_z"] == tsAddr);
+      EXPECT_TRUE(res["_xyEdge"] == txyEdgeAddr || res["_xyEdge"] == txgEdgeAddr);
+      EXPECT_TRUE(res["_zxyEdge"] == tsxgEdgeAddr || res["_zxyEdge"] == tzxyEdgeAddr);
+
+      ++count;
     }
+
+    EXPECT_EQ(count, 2u);
   }
 }
 

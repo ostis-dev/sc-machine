@@ -2,6 +2,7 @@
 
 #include "sc-memory/sc_event.hpp"
 #include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_templates.hpp"
 #include "sc-memory/sc_timer.hpp"
 
 #include "event_test_utils.hpp"
@@ -210,16 +211,18 @@ TEST_F(ScEventTest, pend_events)
   }
 
   // create template for pending events check
-  ScTemplate templ;
+  ScTemplateBuilder builder;
   for (auto const & a : elements)
   {
-    templ.TripleWithRelation(
+    builder.TripleWithRelation(
       set1,
       ScType::EdgeDCommonVar,
-      a >> "_el",
+      a,
       ScType::EdgeAccessVarPosPerm,
       rel);
   }
+
+  ScTemplatePtr templ = builder.Make();
 
   std::atomic_uint eventsCount(0);
   std::atomic_uint passedCount(0);
@@ -227,25 +230,28 @@ TEST_F(ScEventTest, pend_events)
   ScEventAddOutputEdge evt(*m_ctx, set1,
     [&passedCount, &eventsCount, &set1, &elements, &rel](ScAddr const &, ScAddr const &, ScAddr const &)
   {
-    std::shared_ptr<ScTemplate> checkTempl(new ScTemplate());
+    ScTemplateBuilder checkBuilder;
     size_t step = 100;
     size_t testNum = el_num / step - 1;
     for (size_t i = 0; i < testNum; ++i)
     {
-      checkTempl->TripleWithRelation(
+      checkBuilder.TripleWithRelation(
         set1,
         ScType::EdgeDCommonVar,
-        elements[i * step] >> "_el",
+        elements[i * step],
         ScType::EdgeAccessVarPosPerm,
         rel);
     }
 
+    ScTemplatePtr checkTempl = checkBuilder.Make();
+
     ScMemoryContext localCtx(sc_access_lvl_make_min);
 
-    ScTemplateSearchResult res;
-    EXPECT_TRUE(localCtx.HelperSearchTemplate(*checkTempl, res));
+    ScTemplateSearch checkSearch(localCtx, *checkTempl);
+    ScTemplateSearch::Iterator found = checkSearch.begin();
+    EXPECT_TRUE(found != checkSearch.end());
 
-    if (res.Size() == 1)
+    if (++found == checkSearch.end())
       passedCount.fetch_add(1);
 
     eventsCount.fetch_add(1);
@@ -253,8 +259,8 @@ TEST_F(ScEventTest, pend_events)
     return true;
   });
 
-  ScTemplateGenResult genResult;
-  EXPECT_TRUE(m_ctx->HelperGenTemplate(templ, genResult));
+  ScTemplateGenerate generator(*m_ctx, *templ);
+  EXPECT_TRUE(generator.Do());
 
   // wait all events
   while (eventsCount.load() < el_num)

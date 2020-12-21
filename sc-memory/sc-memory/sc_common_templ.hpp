@@ -3,6 +3,9 @@
 #include "sc_link.hpp"
 #include "sc_memory.hpp"
 #include "sc_template.hpp"
+#include "sc_template_builder.hpp"
+#include "sc_template_generate.hpp"
+#include "sc_template_search.hpp"
 
 namespace sc
 {
@@ -22,32 +25,33 @@ _SC_EXTERN ScAddr ResolveRelationTuple(ScMemoryContext & ctx, ScAddr const & elA
 template <typename ValueType>
 ScAddr SetRelationValue(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr const & relAddr, ValueType const & value)
 {
-  ScTemplate templ;
-
-  templ.TripleWithRelation(
-    elAddr,
-    ScType::EdgeDCommonVar,
-    ScType::Link >> "_link",
-    ScType::EdgeAccessVarPosPerm,
-    relAddr);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      elAddr,
+      ScType::EdgeDCommonVar,
+      ScType::LinkVar >> "_link",
+      ScType::EdgeAccessVarPosPerm,
+      relAddr)
+    .Make();
 
   ScAddr linkAddr;
-  ScTemplateSearchResult res;
-  if (ctx.HelperSearchTemplate(templ, res))
-    linkAddr = res[0]["_link"];
+  ScTemplateSearch search(ctx, *templ);
+  auto const it = search.begin();
+  if (it != search.end())
+    linkAddr = (*it)["_link"];
 
   if (!linkAddr.IsValid())
   {
-    ScTemplateGenResult genRes;
-    if (ctx.HelperGenTemplate(templ, genRes))
-      linkAddr = genRes["_link"];
+    ScTemplateGenerate gen(ctx, *templ);
+    auto const result = gen.Do();
+    if (result)
+      linkAddr = (*result)["_link"];
 
     if (!linkAddr.IsValid())
     {
       SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
                          "Can't create value relation");
     }
-
   }
 
   ScLink link(ctx, linkAddr);

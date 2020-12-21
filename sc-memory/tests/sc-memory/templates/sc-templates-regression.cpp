@@ -281,8 +281,8 @@ TEST_F(ScTemplateRegressionTest, issue_224)
         for (auto const & a : contourItems)
           contour << a;
 
-        ScTemplate templ;
-        EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, structAddr));
+        ScTemplatePtr templ = ScTemplateStructBuilder(*m_ctx).Make(structAddr);
+        EXPECT_TRUE(templ);
       }
     }
   }
@@ -312,27 +312,26 @@ TEST_F(ScTemplateRegressionTest, issue_251)
   EXPECT_TRUE(edgeRel_edge.IsValid());
 
   // create template for a search
-  ScTemplate templ;
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      kAddr,
+      ScType::EdgeDCommonVar,
+      ScType::Link >> "_link",
+      ScType::EdgeAccessVarPosPerm,
+      relAddr)
+    .Triple(
+      tAddr,
+      ScType::EdgeAccessVarPosPerm,
+      "_link")
+    .Make();
 
-  templ.TripleWithRelation(
-    kAddr,
-    ScType::EdgeDCommonVar,
-    ScType::Link >> "_link",
-    ScType::EdgeAccessVarPosPerm,
-    relAddr
-  );
-  templ.Triple(
-    tAddr,
-    ScType::EdgeAccessVarPosPerm,
-    "_link"
-  );
-
-  ScTemplateSearchResult res;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  EXPECT_NE(found, search.end());
 
   // checks
-  EXPECT_EQ(res.Size(), 1u);
-  EXPECT_EQ(res[0]["_link"], linkAddr);
+  EXPECT_EQ(found["_link"], linkAddr);
+  EXPECT_EQ(++found, search.end());
 }
 
 // https://github.com/ostis-dev/sc-machine/issues/295
@@ -361,20 +360,20 @@ TEST_F(ScTemplateRegressionTest, issue_295)
       "_x _=> nrel_value::"
       "  _[] (* _<= _range;; *);;";
 
-  ScTemplate templ;
-  EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, searchSCs));
+  ScTemplatePtr templ = ScTemplateSCsBuilder(*m_ctx).Make(searchSCs);
+  EXPECT_TRUE(templ);
 
-  ScTemplateSearchResult searchResult;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, searchResult));
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  EXPECT_TRUE(found != search.end());
 
-  EXPECT_EQ(searchResult.Size(), 1u);
-  auto const item = searchResult[0];
+  EXPECT_TRUE(found["device_switch_multilevel"].IsValid());
+  EXPECT_TRUE(found["_x"].IsValid());
+  EXPECT_TRUE(found["nrel_value"].IsValid());
+  EXPECT_TRUE(found["_range"].IsValid());
 
-  EXPECT_TRUE(item["device_switch_multilevel"].IsValid());
-  EXPECT_TRUE(item["_x"].IsValid());
-  EXPECT_TRUE(item["nrel_value"].IsValid());
-  EXPECT_TRUE(item["_range"].IsValid());
+  EXPECT_EQ(m_ctx->GetElementType(found["device_switch_multilevel"]), ScType::NodeConstClass);
+  EXPECT_EQ(m_ctx->GetElementType(found["nrel_value"]), ScType::NodeConstNoRole);
 
-  EXPECT_EQ(m_ctx->GetElementType(item["device_switch_multilevel"]), ScType::NodeConstClass);
-  EXPECT_EQ(m_ctx->GetElementType(item["nrel_value"]), ScType::NodeConstNoRole);
+  EXPECT_EQ(++found, search.end());
 }

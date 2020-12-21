@@ -14,18 +14,20 @@ TEST_F(ScCommonTemplTest, ResolveRelationTuple)
 
   ScAddr const tuple = sc::ResolveRelationTuple(*m_ctx, el, relAddr);
   {
-    ScTemplate templ;
-    templ.TripleWithRelation(
-      ScType::NodeVarTuple >> "_tuple",
-      ScType::EdgeDCommonVar,
-      el,
-      ScType::EdgeAccessVarPosPerm,
-      relAddr);
+    ScTemplatePtr templ = ScTemplateBuilder()
+        .TripleWithRelation(
+            ScType::NodeVarTuple >> "_tuple",
+            ScType::EdgeDCommonVar,
+            el,
+            ScType::EdgeAccessVarPosPerm,
+            relAddr)
+        .Make();
 
-    ScTemplateSearchResult res;
-    EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
-    EXPECT_EQ(res.Size(), 1u);
-    EXPECT_EQ(tuple, res[0]["_tuple"]);
+    ScTemplateSearch search(*m_ctx, *templ);
+    ScTemplateSearch::Iterator result = search.begin();
+    EXPECT_NE(result, search.end());
+    EXPECT_EQ(tuple, result["_tuple"]);
+    EXPECT_EQ(++result, search.end());
   }
 
   ScAddr const tuple2 = sc::ResolveRelationTuple(*m_ctx, el, relAddr);
@@ -40,21 +42,24 @@ TEST_F(ScCommonTemplTest, SetRelationValue)
   ScAddr const relAddr1 = m_ctx->CreateNode(ScType::NodeConstNoRole);
   ScAddr const linkAddr1 = sc::SetRelationValue(*m_ctx, el, relAddr1, value1);
 
-  ScTemplate templ;
-  templ.TripleWithRelation(
-    el,
-    ScType::EdgeDCommonVar,
-    ScType::Link >> "_link",
-    ScType::EdgeAccessVarPosPerm,
-    relAddr1);
+  ScTemplatePtr templ = ScTemplateBuilder()
+      .TripleWithRelation(
+          el,
+          ScType::EdgeDCommonVar,
+          ScType::Link >> "_link",
+          ScType::EdgeAccessVarPosPerm,
+          relAddr1)
+      .Make();
 
   ScLink link(*m_ctx, linkAddr1);
 
-  ScTemplateSearchResult res;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
-  EXPECT_EQ(res.Size(), 1u);
-  EXPECT_EQ(linkAddr1, res[0]["_link"]);
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator result = search.begin();
+
+  EXPECT_NE(result, search.end());
+  EXPECT_EQ(linkAddr1, result["_link"]);
   EXPECT_EQ(link.Get<std::string>(), value1);
+  EXPECT_EQ(++result, search.end());
 
   // change value
   uint32_t const value2 = 57;
