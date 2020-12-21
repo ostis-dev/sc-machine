@@ -73,3 +73,27 @@ cd build
 cmake ..
 make
 ```
+
+## Build on OSX
+
+### Dependencies
+
+- Install dependencies with brew:
+```
+brew install boost boost-python3 glib llvm antlr antlr4-cpp-runtime pkgconfig rocksdb
+```
+
+- Install python 3.8
+- Install python packages: 
+```
+pip3.8 install -r requirements.txt
+```
+
+### Make
+
+```sh
+mkdir build
+cd build
+cmake ..
+make
+```

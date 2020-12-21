@@ -86,7 +86,7 @@ endif()
 # find dependencies
 if (${APPLE})
     set(Boost_USE_STATIC_LIBS ON)
-    find_package(Boost 1.67 REQUIRED COMPONENTS filesystem python37 program_options)
+    find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem python38 program_options)
 
     find_package(PkgConfig REQUIRED)
     pkg_search_module(GLIB2 REQUIRED glib-2.0)
@@ -95,10 +95,13 @@ if (${APPLE})
     set (GLIB2_LIBRARIES ${GLIB_LDFLAGS} ${GLIB2_MODULE_LDFLAGS})
 
     set (LIBCLANG_LLVM_CONFIG_EXECUTABLE "/usr/local/opt/llvm/bin/llvm-config")
-    find_package(LibClang REQUIRED)
+    if (NOT DEFINED LIBCLANG_LIBRARIES OR NOT DEFINED LIBCLANG_CXXFLAGS OR NOT DEFINED LIBCLANG_LIBDIR)
+        find_package(LibClang REQUIRED)
+    endif ()
 
-    find_package(PythonLibs 3.7 REQUIRED)
+    find_package(PythonLibs 3.8 REQUIRED)
     find_package(curl REQUIRED)
+    find_package(RocksDB REQUIRED)
 
     set (LIBCURL_LIBRARIES ${CURL_LIBRARIES})
 
@@ -113,9 +116,9 @@ elseif (${UNIX})
 
     set(PY_SHORT_VERSION "${PY_VERSION_MAJOR}${PY_VERSION_MINOR}")
 
-    find_package(Boost 1.71 COMPONENTS filesystem python${PY_SHORT_VERSION})
+    find_package(Boost 1.71 COMPONENTS system filesystem python${PY_SHORT_VERSION})
     if (NOT ${Boost_FOUND})
-        find_package(Boost 1.65 REQUIRED COMPONENTS filesystem python-py${PY_SHORT_VERSION})
+        find_package(Boost 1.65 REQUIRED COMPONENTS system filesystem python-py${PY_SHORT_VERSION})
     endif()
     
     find_package(RocksDB REQUIRED)
