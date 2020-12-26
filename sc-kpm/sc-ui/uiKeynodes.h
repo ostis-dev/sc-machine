@@ -34,9 +34,21 @@ extern sc_addr keynode_nrel_command_template;
 extern sc_addr keynode_nrel_command_result;
 extern sc_addr keynode_displayed_answer;
 
+extern sc_addr keynode_nrel_text;
+extern sc_addr keynode_concept_button;
+extern sc_addr keynode_main_idtf;
+extern sc_addr keynode_nrel_color;
+extern sc_addr keynode_nrel_content;
+extern sc_addr keynode_nrel_background_color;
+extern sc_addr keynode_nrel_text_align;
+extern sc_addr keynode_nrel_border;
+extern sc_addr keynode_nrel_font_size;
+extern sc_addr keynode_nrel_border_radius;
+
 extern sc_addr keynode_format_scs_json;
 extern sc_addr keynode_format_scg_json;
 extern sc_addr keynode_format_scn_json;
+extern sc_addr keynode_format_ui_json;
 
 extern sc_addr keynode_system_element;
 

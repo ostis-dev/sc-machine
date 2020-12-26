@@ -39,12 +39,22 @@ const char keynode_nrel_command_template_str[] = "ui_nrel_command_template";
 const char keynode_nrel_command_result_str[] = "ui_nrel_command_result";
 const char keynode_displayed_answer_str[] = "ui_displayed_answer";
 
+const char keynode_concept_button_str[] = "concept_button";
+const char keynode_nrel_content_str[] = "nrel_content";
+const char keynode_main_idtf_str[] = "nrel_main_idtf";
+const char keynode_nrel_color_str[]="nrel_color";
+const char keynode_nrel_background_color_str[]="nrel_background_color";
+const char keynode_nrel_text_align_str[] = "nrel_text_align";
+const char keynode_nrel_border_str[] = "nrel_border";
+const char keynode_nrel_font_size_str[]="nrel_font_size";
+const char keynode_nrel_border_radius_str[]="nrel_border_radius";
+
 const char keynode_format_scs_json_str[] = "format_scs_json";
 const char keynode_format_scg_json_str[] = "format_scg_json";
 const char keynode_format_scn_json_str[] = "format_scn_json";
+const char keynode_format_ui_json_str[] = "format_ui_json";
 
 const char keynode_system_element_str[] = "system_element";
-
 
 sc_addr keynode_user;
 sc_addr keynode_command_translate_from_sc;
@@ -68,9 +78,20 @@ sc_addr keynode_nrel_command_template;
 sc_addr keynode_nrel_command_result;
 sc_addr keynode_displayed_answer;
 
+sc_addr keynode_concept_button;
+sc_addr keynode_nrel_content;
+sc_addr keynode_main_idtf;
+sc_addr keynode_nrel_color;
+sc_addr keynode_nrel_background_color;
+sc_addr keynode_nrel_text_align;
+sc_addr keynode_nrel_border;
+sc_addr keynode_nrel_font_size;
+sc_addr keynode_nrel_border_radius;
+
 sc_addr keynode_format_scs_json;
 sc_addr keynode_format_scg_json;
 sc_addr keynode_format_scn_json;
+sc_addr keynode_format_ui_json;
 
 sc_addr keynode_system_element;
 
@@ -79,59 +100,68 @@ sc_addr ui_keynode_arg[UI_ARG_COUNT];
 
 
 // -------------------------------------------------
-sc_bool initialize_keynodes()
-{
-  RESOLVE_KEYNODE(s_default_ctx, keynode_user);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_question_nrel_answer);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_question_finished);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_command_translate_from_sc);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_authors);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_user_answer_formats);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_source_sc_construction);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_output_format);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_translation);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_format);
+sc_bool initialize_keynodes() {
+    RESOLVE_KEYNODE(s_default_ctx, keynode_user);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_question_nrel_answer);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_question_finished);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_command_translate_from_sc);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_authors);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_user_answer_formats);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_source_sc_construction);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_output_format);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_translation);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_format);
 
-  RESOLVE_KEYNODE(s_default_ctx, keynode_command_generate_instance);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_command_initiated);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_command_failed);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_command_finished);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_command_arguments);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_command);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_command_template);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_command_result);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_displayed_answer);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_command_generate_instance);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_command_initiated);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_command_failed);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_command_finished);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_command_arguments);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_rrel_command);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_command_template);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_command_result);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_displayed_answer);
 
-  RESOLVE_KEYNODE(s_default_ctx, keynode_format_scs_json);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_format_scg_json);
-  RESOLVE_KEYNODE(s_default_ctx, keynode_format_scn_json);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_concept_button);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_main_idtf);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_content);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_color);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_border);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_text_align);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_font_size);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_border_radius);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_nrel_background_color);
 
-  RESOLVE_KEYNODE(s_default_ctx, keynode_system_element);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_format_scs_json);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_format_scg_json);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_format_scn_json);
+    RESOLVE_KEYNODE(s_default_ctx, keynode_format_ui_json);
 
-  for (sc_uint32 i = 0; i < RREL_ORDER_COUNT; ++i)
-  {
-    std::stringstream ss;
-    ss << "rrel_" << (i + 1);
-    if (sc_helper_resolve_system_identifier(s_default_ctx, ss.str().c_str(), &(ui_keynode_rrel_order[i])) == SC_FALSE)
-    {
-      ui_keynode_rrel_order[i] = sc_memory_node_new(s_default_ctx, 0);
-      if (sc_helper_set_system_identifier(s_default_ctx, ui_keynode_rrel_order[i], ss.str().c_str(), (sc_uint32)ss.str().size()) != SC_RESULT_OK)
-        return SC_FALSE;
+    RESOLVE_KEYNODE(s_default_ctx, keynode_system_element);
+
+    for (sc_uint32 i = 0; i < RREL_ORDER_COUNT; ++i) {
+        std::stringstream ss;
+        ss << "rrel_" << (i + 1);
+        if (sc_helper_resolve_system_identifier(s_default_ctx, ss.str().c_str(), &(ui_keynode_rrel_order[i])) ==
+            SC_FALSE) {
+            ui_keynode_rrel_order[i] = sc_memory_node_new(s_default_ctx, 0);
+            if (sc_helper_set_system_identifier(s_default_ctx, ui_keynode_rrel_order[i], ss.str().c_str(),
+                                                (sc_uint32) ss.str().size()) != SC_RESULT_OK)
+                return SC_FALSE;
+        }
     }
-  }
 
-  for (sc_uint32 i = 0; i < UI_ARG_COUNT; ++i)
-  {
-    std::stringstream ss;
-    ss << "ui_arg_" << (i + 1);
-    if (sc_helper_resolve_system_identifier(s_default_ctx, ss.str().c_str(), &(ui_keynode_arg[i])) == SC_FALSE)
-    {
-      ui_keynode_rrel_order[i] = sc_memory_node_new(s_default_ctx, 0);
-      if (sc_helper_set_system_identifier(s_default_ctx, ui_keynode_rrel_order[i], ss.str().c_str(), (sc_uint32)ss.str().size()) != SC_RESULT_OK)
-        return SC_FALSE;
+    for (sc_uint32 i = 0; i < UI_ARG_COUNT; ++i) {
+        std::stringstream ss;
+        ss << "ui_arg_" << (i + 1);
+        if (sc_helper_resolve_system_identifier(s_default_ctx, ss.str().c_str(), &(ui_keynode_arg[i])) == SC_FALSE) {
+            ui_keynode_rrel_order[i] = sc_memory_node_new(s_default_ctx, 0);
+            if (sc_helper_set_system_identifier(s_default_ctx, ui_keynode_rrel_order[i], ss.str().c_str(),
+                                                (sc_uint32) ss.str().size()) != SC_RESULT_OK)
+                return SC_FALSE;
+        }
     }
-  }
 
-  return SC_TRUE;
+    return SC_TRUE;
 }
 
