@@ -3,12 +3,12 @@ import * as scg from '@ostis/scg-js-editor';
 
 export interface SCgViewerProps {
   constr: scg.SCgStruct,
-};
+}
 
 export interface SCgViewerState {
   viewer: scg.SCgViewer,
   currentConstr: scg.SCgStruct,
-};
+}
 
 export class SCgViewer extends React.Component<SCgViewerProps, SCgViewerState> {
 
@@ -33,4 +33,4 @@ export class SCgViewer extends React.Component<SCgViewerProps, SCgViewerState> {
       <div id="scg-container" className="kb-editor-scg"></div>
     );
   }
-};
+}

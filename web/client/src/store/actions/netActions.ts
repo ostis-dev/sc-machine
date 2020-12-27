@@ -8,6 +8,6 @@ export namespace Type {
 export function changeNetState(newState: net.State) : Action<net.State> {
   return {
     type: Type.ChangeState,
-      payload: newState
+    payload: newState
   };
 }

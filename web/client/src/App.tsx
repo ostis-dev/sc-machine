@@ -28,13 +28,13 @@ const theme = createMuiTheme({
 
 interface AppContainerProps {
   store?: store.Store
-};
+}
 
 function mapStateToProps(state: store.Store): any {
   return {
     store: state
   };
-};
+}
 
 export class AppContainerImpl extends React.Component<AppContainerProps, any> {
 

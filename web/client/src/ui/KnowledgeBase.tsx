@@ -23,11 +23,11 @@ export interface KnowledgeBaseProps {
   dispatch: (any) => void,
   dispatchRunning: (operation: store.ui.RunningOperation) => void,
   dispatchSearchResult: (result: ScTemplateSearchResult) => void,
-};
+}
 
 export interface KnowledgeBaseState {
   constr: SCgStruct,
-};
+}
 
 function mapStateToProps(state: store.Store): any {
   return {

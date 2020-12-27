@@ -2,11 +2,11 @@ import * as React from "react";
 import * as scs from '@ostis/scs-js-editor';
 
 export interface SCsEditorProps {
-};
+}
 
 export interface SCsEditorState {
   editor: scs.SCsEditor
-};
+}
 
 
 export class SCsEditor extends React.Component<SCsEditorProps, SCsEditorState> {
@@ -27,4 +27,4 @@ export class SCsEditor extends React.Component<SCsEditorProps, SCsEditorState> {
       <div id="scs-container" className="kb-editor-scs"></div>
     );
   }
-};
+}

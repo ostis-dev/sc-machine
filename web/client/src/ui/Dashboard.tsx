@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import * as store from '../store/store';
 
 export interface DashboardProps {
-};
+}
 
 export interface DashboardState {
-};
+}
 
 
 function mapStateToProps(state: store.Store): any {

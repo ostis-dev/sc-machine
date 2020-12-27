@@ -8,11 +8,11 @@ export interface RoundButtonProps {
   disabled?: boolean,
   running?: boolean,
   onClick: () => void,
-};
+}
 
 export interface RoundButtonState {
 
-};
+}
 
 export class RoundButton extends React.Component<RoundButtonProps, RoundButtonState> {
 

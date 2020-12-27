@@ -6,4 +6,4 @@ export interface Services {
 
 export const _initServices: Services = {
   sc: null
-};
+}

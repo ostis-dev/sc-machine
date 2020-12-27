@@ -3,7 +3,7 @@ import * as mui from "@material-ui/core";
 
 export interface BasePageProps {
   title: string,
-};
+}
 
 export class BasePage extends React.Component<BasePageProps, null> {
 

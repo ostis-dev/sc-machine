@@ -22,7 +22,7 @@ export namespace kb {
 export enum Mode {
   Initializing,
   MainUI,
-};
+}
 
 export interface State {
   mode: Mode,

@@ -3,5 +3,5 @@ export interface Action<T> {
     payload: T;
     error?: boolean;
     meta?: any;
-  };
+  }
     
