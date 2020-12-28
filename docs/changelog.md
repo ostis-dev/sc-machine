@@ -1,72 +1,75 @@
 ## v0.7.0 - WIP
 
- - **Build system**:
-    - Set project binaries path to root (#352)
+- **Build system**:
+   - Set project binaries path to root (#352)
 
- - **Core**:
-    - Fix issue with erasing empty sc-link
+- **Core**:
+   - Fix issue with erasing empty sc-link
 
- - **C++**:
-    - Migrate test system to `gtest`
-    - Remove optional search triples support
-    - `ScSet` and `ScStruct` constructors now receive reference to `ScMemoryContext` instead of pointer
-    - Fix issue with specifying type of elements inside contour (#353)
-    - Fix issues with alias support in SCs-text (#350, #333)
-    - Add performance benchmarks
+- **C++**:
+   - Migrate test system to `gtest`
+   - Remove optional search triples support
+   - `ScSet` and `ScStruct` constructors now receive reference to `ScMemoryContext` instead of pointer
+   - Fix issue with specifying type of elements inside contour (#353)
+   - Fix issues with alias support in SCs-text (#350, #333)
+   - Add performance benchmarks
+
+- **Web**
+   - New implementation of Web UI
 
 ## v0.6.0
 
- - **Build system**:
-    - Add support of OSX platform
-    - Fix compilation with `clang`
-    - Disable `SCP` and `SCTP` compilation by default
-    - Support of C++14
-    - Use Ubuntu 18.04 on Travis CI
-    - Upgrade `libclang` to version 7
+- **Build system**:
+   - Add support of OSX platform
+   - Fix compilation with `clang`
+   - Disable `SCP` and `SCTP` compilation by default
+   - Support of C++14
+   - Use Ubuntu 18.04 on Travis CI
+   - Upgrade `libclang` to version 7
 
- - **Tools**:
-    - Support custom extensions loading in `sc-builder`
-    - Add `sc-server` application to run claen `sc-memory` with extensions
-    - Refactored code generation tool
-    - Refactored knowledge base tool
+- **Tools**:
+   - Support custom extensions loading in `sc-builder`
+   - Add `sc-server` application to run claen `sc-memory` with extensions
+   - Refactored code generation tool
+   - Refactored knowledge base tool
 
- - **Core**:
-    - Support list of enabled extensions
-    - Support all possible combinations of `sc_iterator3`
-    - Support variable `sc-links`
-    - Fix bug with repo directory write attributes
-    - Fix issue with extension loading on windows
-    - Fix issue with empty content of `sc-link`
-    - Refactored file memory to use rocksdb
+- **Core**:
+   - Support list of enabled extensions
+   - Support all possible combinations of `sc_iterator3`
+   - Support variable `sc-links`
+   - Fix bug with repo directory write attributes
+   - Fix issue with extension loading on windows
+   - Fix issue with empty content of `sc-link`
+   - Refactored file memory to use rocksdb
 
- - **C++**:
-    - Implement optional search triples support
-    - Fix random crash of unittest
-    - Improve test system
-    - Replace `antlr3` with `antlr4` for `SCs-text` parsing
-    - Support of `SCs-text` aliases
-    - Support of 5 and 6 levels of `SCs-text`
-    - Refactored test system
-    - Refactored API of `ScLink` and `ScStream`
-    - Add generation of structure from `SCs-text`
+- **C++**:
+   - Implement optional search triples support
+   - Fix random crash of unittest
+   - Improve test system
+   - Replace `antlr3` with `antlr4` for `SCs-text` parsing
+   - Support of `SCs-text` aliases
+   - Support of 5 and 6 levels of `SCs-text`
+   - Refactored test system
+   - Refactored API of `ScLink` and `ScStream`
+   - Add generation of structure from `SCs-text`
 
- - **Python**:
-    - Refactored test system
-    - Support SCs-templates in WebSocket protocol
-    - Add support of template building from `SCs-code` string
-    - Add `Aliases` method to `ScTemplateSearchResult` and `ScTemplateGenResult`
-    - Fix issue with float/double values support
-    - Add support of logs inside python modules
-    - Support `ActionAgent` states
+- **Python**:
+   - Refactored test system
+   - Support SCs-templates in WebSocket protocol
+   - Add support of template building from `SCs-code` string
+   - Add `Aliases` method to `ScTemplateSearchResult` and `ScTemplateGenResult`
+   - Fix issue with float/double values support
+   - Add support of logs inside python modules
+   - Support `ActionAgent` states
 
- - **KPM**:
-    - **web**:
-        - Implement `http` module to access memory via Web interface
-        - Implement web browser interface to access `sc-memory`
-    - Remove of `sc-merge` module
+- **KPM**:
+   - **web**:
+      - Implement `http` module to access memory via Web interface
+      - Implement web browser interface to access `sc-memory`
+   - Remove of `sc-merge` module
 
- - **Documentation**:
-    - Improve `SCs-code` documentation. Add levels `5` and `6`
+- **Documentation**:
+   - Improve `SCs-code` documentation. Add levels `5` and `6`
 
 ## v0.5.0
 
