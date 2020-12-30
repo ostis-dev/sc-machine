@@ -27,16 +27,6 @@ make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/templates
   DEPENDS sc-memory
   INCLUDES ${SC_MEMORY_SRC} ${CMAKE_CURRENT_LIST_DIR}/_test)
 
-configure_file(
-  "${CMAKE_CURRENT_LIST_DIR}/_test/test_defines.hpp.in"
-  "${CMAKE_CURRENT_LIST_DIR}/_test/test_defines.hpp")
-
-make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/python
-  NAME sc-memory-python-tests
-  DEPENDS sc-memory
-  INCLUDES ${SC_MEMORY_SRC} ${CMAKE_CURRENT_LIST_DIR}/_test)
-
-
 make_tests_from_folder(${CMAKE_CURRENT_LIST_DIR}/codegen
   NAME sc-memory-codegen-tests
   DEPENDS sc-memory

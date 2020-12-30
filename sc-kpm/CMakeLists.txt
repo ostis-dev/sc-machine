@@ -12,7 +12,6 @@ foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
     set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${SC_BIN_PATH}/extensions")
 endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
-add_subdirectory(sc-python)
 add_subdirectory(sc-ui)
 add_subdirectory(sc-search)
 add_subdirectory(sc-utils)
@@ -26,7 +25,6 @@ endif()
 
 add_dependencies(sc-kpm
     sc-kpm-common
-    sc-python
     sc-ui
     sc-search
     sc-utils

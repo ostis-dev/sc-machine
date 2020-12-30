@@ -14,6 +14,9 @@
    - Fix issues with alias support in SCs-text (#350, #333)
    - Add performance benchmarks
 
+- **Python**:
+   - Python modules support removed. [More details](https://github.com/ostis-dev/sc-machine/issues/378)
+
 - **Web**
    - New implementation of Web UI
 

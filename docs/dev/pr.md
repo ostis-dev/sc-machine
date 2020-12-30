@@ -20,7 +20,6 @@ Possible tags:
   * `[core]` - changes in `sc-storage` code
   * `[doc]` or `[docs]` - update documentation
   * `[git]` - changes in git configuration
-  * `[python]` - changes in python modules
   * `[sc-kpm]` - changes in `sc-kpm` code
   * `[sc-memory]` - changes in `sc-memory` code
   * `[sc-network]` - changes in `sc-network` code
