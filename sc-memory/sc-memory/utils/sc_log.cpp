@@ -17,7 +17,7 @@ namespace
 
 // should be synced with ScLog::Type
 const char * kTypeToStr[] = {
-    "Debug", "Info", "Warning", "Error", "Python", "PythonError"
+    "Debug", "Info", "Warning", "Error"
 };
 
 } // namespace

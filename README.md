@@ -27,7 +27,7 @@ pip3 install -r requirements.txt
 __Ubuntu 18.04+__
 
 ```sh
-sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr4 gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev libboost-python-dev
+sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr4 gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev
 ```
 
 ### Make
@@ -62,7 +62,7 @@ pip3 install -r requirements.txt
 __Linux Mint 19+__
 
 ```sh
-sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev libboost-python-dev
+sudo apt install librocksdb-dev libglib2.0-dev qtbase5-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev make cmake antlr gcc g++ llvm-7 libcurl4-openssl-dev libclang-7-dev
 ```
 
 ### Make
@@ -80,7 +80,7 @@ make
 
 - Install dependencies with brew:
 ```
-brew install boost boost-python3 glib llvm antlr antlr4-cpp-runtime pkgconfig rocksdb
+brew install boost glib llvm antlr antlr4-cpp-runtime pkgconfig rocksdb
 ```
 
 - Install python 3.8

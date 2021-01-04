@@ -86,7 +86,7 @@ endif()
 # find dependencies
 if (${APPLE})
     set(Boost_USE_STATIC_LIBS ON)
-    find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem python38 program_options)
+    find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem program_options)
 
     find_package(PkgConfig REQUIRED)
     pkg_search_module(GLIB2 REQUIRED glib-2.0)
@@ -99,7 +99,6 @@ if (${APPLE})
         find_package(LibClang REQUIRED)
     endif ()
 
-    find_package(PythonLibs 3.8 REQUIRED)
     find_package(curl REQUIRED)
     find_package(RocksDB REQUIRED)
 
@@ -108,19 +107,6 @@ if (${APPLE})
     include_directories("${CMAKE_OSX_SYSROOT}/usr/include")
 
 elseif (${UNIX})
-    find_package(PythonLibs 3.6 REQUIRED)
-
-    string(REPLACE "." ";" PY_VERSION_LIST ${PYTHONLIBS_VERSION_STRING})
-    list(GET PY_VERSION_LIST 0 PY_VERSION_MAJOR)
-    list(GET PY_VERSION_LIST 1 PY_VERSION_MINOR)
-
-    set(PY_SHORT_VERSION "${PY_VERSION_MAJOR}${PY_VERSION_MINOR}")
-
-    find_package(Boost 1.71 COMPONENTS system filesystem python${PY_SHORT_VERSION})
-    if (NOT ${Boost_FOUND})
-        find_package(Boost 1.65 REQUIRED COMPONENTS system filesystem python-py${PY_SHORT_VERSION})
-    endif()
-    
     find_package(RocksDB REQUIRED)
 
     include(FindPkgConfig)
@@ -140,7 +126,6 @@ elseif (${UNIX})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 elseif (${WIN32})
-    find_package(PythonLibs 3.6 REQUIRED)
 
     set(PACKAGES_PATH "${CMAKE_BINARY_DIR}/packages")
 
@@ -172,11 +157,6 @@ elseif (${WIN32})
     set (LIBCURL_RUNTIME_PATH "${LIBCURL_PATH}/bin")
     set (LIBCURL_INCLUDE_DIRS "${LIBCURL_PATH}/include")
     set (LIBCURL_LIBRARIES "${LIBCURL_PATH}/lib/libcurl.lib" "WSock32.lib" "Ws2_32.lib")
-
-    set (BOOST_PYTHON_BIN_PATH "${SC_MACHINE_THIRDPARTY_PATH}/boost")
-    set (BOOST_PYTHON_LIBRARY_RELEASE "${BOOST_PYTHON_BIN_PATH}/boost_python3-${MSVC_SUFFIX}-mt-1_64.lib")
-    set (BOOST_PYTHON_LIBRARY_DEBUG "${BOOST_PYTHON_BIN_PATH}/boost_python3-${MSVC_SUFFIX}-mt-gd-1_64.lib")
-
     set (RocksDB_INCLUDE_DIR "${ROCKSDB_PATH}/include")
     set (RocksDB_LIBRARIES "${ROCKSDB_PATH}/rocksdb-shared.lib")
 
@@ -193,7 +173,7 @@ elseif (${WIN32})
 
     set (GLIB2_LIBRARIES "gio-2.0.lib" "glib-2.0.lib" "gmodule-2.0.lib" "gobject-2.0.lib" "gthread-2.0.lib")
 
-    add_definitions(-DSC_PLATFORM_WIN -DBOOST_PYTHON_NO_LIB)
+    add_definitions(-DSC_PLATFORM_WIN)
 
     # copy runtime libraries
     set (GLIB_RUNTIME_PATH "${PACKAGES_PATH}/glib.redist.2.36.2.11/build/native/bin/v110/x64/Release/dynamic")
@@ -213,15 +193,11 @@ elseif (${WIN32})
             "${LIBCURL_RUNTIME_PATH}/libcurl.dll"
             "${LIBCURL_RUNTIME_PATH}/libeay32.dll"
             "${LIBCURL_RUNTIME_PATH}/ssleay32.dll"
-            "${BOOST_PYTHON_BIN_PATH}/boost_python3-${MSVC_SUFFIX}-mt-1_64.dll"
-            "${BOOST_PYTHON_BIN_PATH}/boost_python3-${MSVC_SUFFIX}-mt-gd-1_64.dll"
             "${ROCKSDB_PATH}/rocksdb-shared.dll"
             )
     file(COPY ${WIN_RUNTIME_LIBRARIES} DESTINATION "${SC_BIN_PATH}")
 
 endif(${APPLE})
-
-message ("Python version: ${PYTHONLIBS_VERSION_STRING}")
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.ini.in ${CMAKE_CURRENT_LIST_DIR}/bin/config.ini)
 

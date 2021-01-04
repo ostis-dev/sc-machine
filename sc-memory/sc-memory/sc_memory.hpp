@@ -86,7 +86,6 @@ public:
   //! End events pending mode
   void EndEventsPending();
 
-  // returns copy, because of Python wrapper
   std::string const & GetName() const { return m_name; }
 
   _SC_EXTERN bool IsValid() const;
