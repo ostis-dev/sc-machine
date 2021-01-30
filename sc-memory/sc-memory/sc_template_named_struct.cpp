@@ -2,12 +2,12 @@
 
 #include "sc_debug.hpp"
 
-std::string const kEmptyString = "";
-
 ScTemplateNamedStruct::ScTemplateNamedStruct(NamesMap && names, ScAddrVector && elements)
   : m_names(std::move(names))
   , m_elements(std::move(elements))
 {
+  m_names.reserve(16);
+  m_elements.reserve(32);
 }
 
 bool ScTemplateNamedStruct::Has(std::string const & name) const
@@ -38,54 +38,46 @@ void ScTemplateNamedStruct::Clear()
   m_elements.clear();
 }
 
-size_t ScTemplateNamedStruct::ElementsNum() const
+ScAddrVector const & ScTemplateNamedStruct::GetElements() const
 {
-  return m_elements.size();
+  return m_elements;
 }
 
 ScTemplateNamedStruct::Builder::Builder(ScTemplateNamedStruct & inStruct)
   : m_struct(inStruct)
 {
   m_struct.Clear();
+  m_addrs.reserve(32);
 }
 
 void ScTemplateNamedStruct::Builder::Add(ScAddr const & addr)
 {
-  std::string const name = addr.ToString();
-  if (!CheckExists(name, addr))
+  uint64_t const hash = addr.Hash();
+  if (m_addrs.find(hash) == m_addrs.end())
   {
-    m_struct.m_names.insert({ name, m_struct.m_elements.size() });
+    m_addrs.insert({ hash, m_struct.m_elements.size() });
     m_struct.m_elements.push_back(addr);
   }
 }
 
 void ScTemplateNamedStruct::Builder::Add(std::string const & name, ScAddr const & addr)
 {
-  CheckExists(name, addr);
-  Add(addr);
-
-  auto const it = m_struct.m_names.find(addr.ToString());
-  SC_ASSERT(it != m_struct.m_names.end(), ());
-  if (it != m_struct.m_names.end())
-    m_struct.m_names.insert({ name, it->second });
-}
-
-bool ScTemplateNamedStruct::Builder::CheckExists(std::string const & name, ScAddr const & addr) const
-{
-  auto const it = m_struct.m_names.find(name);
-  if (it != m_struct.m_names.end())
+  if (m_struct.m_names.find(name) != m_struct.m_names.end())
   {
-    SC_ASSERT(it->second < m_struct.m_elements.size(), ());
-    ScAddr const & existAddr = m_struct.m_elements[it->second];
-    if (existAddr != addr)
-    {
-      SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
-                         "NameStruct already have different element with name " << name << " it is " << existAddr.ToString()
-                         << ", but you are trying to replace it with " << addr.ToString());
-    }
-
-    return true;
+    SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
+                       "Name " << name << " already exists");
   }
 
-  return false;
+  uint64_t const hash = addr.Hash();
+  auto const it = m_addrs.find(hash);
+  if (it == m_addrs.end())
+  {
+    m_struct.m_names.insert({ name, m_struct.m_elements.size() });
+    m_addrs.insert({ hash, m_struct.m_elements.size() });
+    m_struct.m_elements.push_back(addr);
+  }
+  else
+  {
+    m_struct.m_names.insert({ name, it->second });
+  }
 }

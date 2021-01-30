@@ -19,10 +19,8 @@ public:
     _SC_EXTERN void Add(std::string const & name, ScAddr const & addr);
 
   private:
-    _SC_EXTERN bool CheckExists(std::string const & name, ScAddr const & addr) const;
-
-  private:
     ScTemplateNamedStruct & m_struct;
+    std::unordered_map<uint64_t, size_t> m_addrs;
   };
 
   using NamesMap = std::unordered_map<std::string, size_t>;
@@ -36,7 +34,7 @@ public:
   _SC_EXTERN bool IsEmpty() const;
   _SC_EXTERN void Clear();
 
-  _SC_EXTERN size_t ElementsNum() const;
+  _SC_EXTERN ScAddrVector const & GetElements() const;
 
 private:
   NamesMap m_names;

@@ -462,13 +462,13 @@ TEST_F(ScTemplateCommonTest, named_struct_builder)
 {
   ScTemplateNamedStruct namedStruct;
   {
+    ScAddr const addr(1);
     ScTemplateNamedStruct::Builder builder(namedStruct);
     EXPECT_TRUE(namedStruct.IsEmpty());
-    builder.Add("_test", ScAddr(1));
-    builder.Add(ScAddr(1));
-    builder.Add("_test", ScAddr(1));
+    builder.Add("_test", addr);
+    builder.Add(addr);
     EXPECT_FALSE(namedStruct.IsEmpty());
-    EXPECT_EQ(namedStruct.ElementsNum(), 1u);
+    EXPECT_EQ(namedStruct.GetElements().size(), 1u);
   }
 
   // test builder
@@ -480,9 +480,11 @@ TEST_F(ScTemplateCommonTest, named_struct_builder)
   builder.Add("name1", addr1);
   builder.Add(addr2);
 
+  EXPECT_EQ(namedStruct.GetElements().size(), 2u);
+
   EXPECT_EQ(namedStruct["name1"], addr1);
-  EXPECT_EQ(namedStruct[addr1.ToString()], addr1);
-  EXPECT_EQ(namedStruct[addr2.ToString()], addr2);
+  EXPECT_EQ(namedStruct[addr1.ToString()], ScAddr::Empty);
+  EXPECT_EQ(namedStruct[addr2.ToString()], ScAddr::Empty);
 
   EXPECT_THROW(builder.Add("name1", addr2), utils::ExceptionInvalidState);
   EXPECT_NO_THROW(builder.Add("name2", addr1));

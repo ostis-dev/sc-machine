@@ -28,7 +28,6 @@ public:
   }
 };
 
-
 class TestScCodeBase : public TestTemplate
 {
 public:
