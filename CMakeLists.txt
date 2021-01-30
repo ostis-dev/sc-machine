@@ -16,6 +16,7 @@ option (SC_BUILD_SCTP "Flag to turn on/off sctp protocol support" OFF)
 set(SC_USE_SANITIZER "none" CACHE STRING "Build with specified sanitizer")
 set_property(CACHE SC_USE_SANITIZER PROPERTY STRINGS none address memory)
 
+message ("Sanitizer: ${SC_USE_SANITIZER}")
 
 # codegen
 if (${UNIX})
@@ -78,10 +79,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 message ("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 message ("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
-
-if (${SC_AUTO_TEST})
-    add_definitions(-DSC_BUILD_AUTO_TESTS)
-endif()
 
 # find dependencies
 if (${APPLE})
@@ -215,6 +212,3 @@ add_subdirectory(${SC_MACHINE_ROOT}/tools)
 if (${SC_BUILD_SCTP})
     add_subdirectory(${SC_MACHINE_ROOT}/sc-network)
 endif()
-
-
-
