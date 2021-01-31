@@ -12,12 +12,13 @@ public:
   ~ScTemplateSCsBuilder();
 
   /*! Makes template from scs text
-   * \return Returns pointer to created ScTemplate or nullptr in case of error.
+   *  \param scsText String with SCs-text
+   *  \return Returns pointer to created ScTemplate or nullptr in case of error.
    */
-  ScTemplatePtr Make(std::string const & scsText);
+  _SC_EXTERN ScTemplatePtr Make(std::string const & scsText);
 
   //! Returns error message in case of error during template creation
-  std::string const & GetErrorMessage() const;
+  _SC_EXTERN std::string const & GetErrorMessage() const;
 
 private:
   class ScMemoryContext & m_ctx;

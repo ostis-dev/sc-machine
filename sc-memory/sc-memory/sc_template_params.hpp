@@ -15,8 +15,8 @@ public:
   _SC_EXTERN ScTemplateParams & Add(std::string const & key, ScAddr const & value);
   _SC_EXTERN ScTemplateParams & Add(ScAddr const & key, ScAddr const & value);
 
-  ContainerType::const_iterator begin() const { return m_values.begin(); }
-  ContainerType::const_iterator end() const { return m_values.end(); }
+  _SC_EXTERN ContainerType::const_iterator begin() const { return m_values.begin(); }
+  _SC_EXTERN ContainerType::const_iterator end() const { return m_values.end(); }
 
   //! Check if parameters are empty
   _SC_EXTERN bool IsEmpty() const;

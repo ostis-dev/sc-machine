@@ -13,14 +13,12 @@ TEST_F(ScTemplateSCsTest, build_ok)
   EXPECT_TRUE(addr.IsValid());
   EXPECT_TRUE(m_ctx->HelperSetSystemIdtf("d", addr));
 
-  ScTemplate templ;
   char const * data = "_a _-> d;; _a <- sc_node_class;;";
   EXPECT_TRUE(ScTemplateSCsBuilder(*m_ctx).Make(data));
 }
 
 TEST_F(ScTemplateSCsTest, build_fail)
 {
-  ScTemplate templ;
   char const * data = "_a _-> b";
   EXPECT_FALSE(ScTemplateSCsBuilder(*m_ctx).Make(data));
 }

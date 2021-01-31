@@ -12,12 +12,13 @@ public:
   ~ScTemplateStructBuilder();
 
   /*! Builds ScTempalte from ScAddr of struct in ScMemory
-   * * \return Returns pointer to created ScTemplate or nullptr in case of error.
+   *  \param structAddr ScAddr of struct that represent template in sc-memory
+   *  \return Returns pointer to created ScTemplate or nullptr in case of error.
    */
-  ScTemplatePtr Make(ScAddr const & structAddr);
+  _SC_EXTERN ScTemplatePtr Make(ScAddr const & structAddr);
 
   //! Returns error message in case of error during template creation
-  std::string const & GetErrorMessage() const;
+  _SC_EXTERN std::string const & GetErrorMessage() const;
 
 private:
   class ScMemoryContext & m_ctx;

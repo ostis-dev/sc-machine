@@ -11,21 +11,21 @@ ScTemplateBuilder::~ScTemplateBuilder()
   // need to use forward declaration for std::unique_ptr
 }
 
-ScTemplateBuilder & ScTemplateBuilder::Triple(ScTemplateArg const & param1,
-                                              ScTemplateArg const & param2,
-                                              ScTemplateArg const & param3)
+ScTemplateBuilder & ScTemplateBuilder::Triple(ScTemplateArg const & source,
+                                              ScTemplateArg const & edge,
+                                              ScTemplateArg const & target)
 {
-  m_impl->Triple(param1, param2, param3);
+  m_impl->Triple(source, edge, target);
   return *this;
 }
 
-ScTemplateBuilder & ScTemplateBuilder::TripleWithRelation(ScTemplateArg const & param1,
-                                                          ScTemplateArg const & param2,
-                                                          ScTemplateArg const & param3,
-                                                          ScTemplateArg const & param4,
-                                                          ScTemplateArg const & param5)
+ScTemplateBuilder & ScTemplateBuilder::TripleWithRelation(ScTemplateArg const & source,
+                                                          ScTemplateArg const & edge,
+                                                          ScTemplateArg const & target,
+                                                          ScTemplateArg const & attrEdge,
+                                                          ScTemplateArg const & attr)
 {
-  m_impl->TripleWithRelation(param1, param2, param3, param4, param5);
+  m_impl->TripleWithRelation(source, edge, target, attrEdge, attr);
   return *this;
 }
 

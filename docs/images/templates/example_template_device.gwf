@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GWF version="2.0">
+    <staticSector>
+        <node type="node/var/general_node" idtf="_device_instance" shapeColor="193" id="4579504592" parent="0" left="0" top="0" right="77.9063" bottom="20" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="540" y="135" haveBus="false" idtf_pos="0">
+            <content type="0" mime_type="" content_visibility="false" file_name=""/>
+        </node>
+        <node type="node/var/general_node" idtf="_device_class" shapeColor="0" id="4579617376" parent="0" left="0" top="0" right="63.5" bottom="20" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="390" y="135" haveBus="false" idtf_pos="0">
+            <content type="0" mime_type="" content_visibility="false" file_name=""/>
+        </node>
+        <node type="node/const/general_node" idtf="device" shapeColor="0" id="4318666016" parent="0" left="0" top="0" right="33.5156" bottom="20" textColor="164" text_angle="0" text_font="Times New Roman [Arial]" font_size="10" x="270" y="135" haveBus="false" idtf_pos="0">
+            <content type="0" mime_type="" content_visibility="false" file_name=""/>
+        </node>
+        <arc type="arc/var/pos" idtf="" shapeColor="0" id="4318931168" parent="0" id_b="4579617376" id_e="4579504592" b_x="390" b_y="135" e_x="540" e_y="135" dotBBalance="0" dotEBalance="0">
+            <points/>
+        </arc>
+        <arc type="arc/var/pos" idtf="" shapeColor="0" id="4500544304" parent="0" id_b="4318666016" id_e="4579617376" b_x="270" b_y="135" e_x="390" e_y="135" dotBBalance="0" dotEBalance="0">
+            <points/>
+        </arc>
+    </staticSector>
+</GWF>
