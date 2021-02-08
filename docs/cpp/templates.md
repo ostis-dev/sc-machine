@@ -87,7 +87,7 @@ It is possible to use parameters in template search/generation. Please use `ScTe
 
 ## Search by template
 
-Search engine traverses cs-memory to find all contructions that correspond to template. Let's assume that we need to check if specified sc-element (`_device`) is included into `device` set and `device_enabled` set:
+Search engine traverses sc-memory to find all contructions that correspond to template. Let's assume that we need to check if specified sc-element (`_device`) is included into `device` set and `device_enabled` set:
 
 <scg src="../../images/templates/template_example_2.gwf"></scg>
 
@@ -108,7 +108,7 @@ ScTemplatePtr templ = ScTemplateBuilder()
     "_device_instance")
   .Make();
 
-ScTemplateSeach search(ctx, *templ);
+ScTemplateSearch search(ctx, *templ);
 // Iterate all results
 for (ScTemplateNamedStruct const & res : search)
 {
@@ -126,7 +126,7 @@ It is possible to run search with parameters:
 ScTemplateParams params;
 params.Add("_device_instance", instanceAddr); // element _device_instance in template become known
 
-ScTemplateSeach search(ctx, *templ, params);
+ScTemplateSearch search(ctx, *templ, params);
 ...
 ```
 

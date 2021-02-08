@@ -38,7 +38,7 @@ ScAddr SetRelationValue(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr con
   ScTemplateSearch search(ctx, *templ);
   auto const it = search.begin();
   if (it != search.end())
-    linkAddr = (*it)["_link"];
+    linkAddr = it["_link"];
 
   if (!linkAddr.IsValid())
   {

@@ -128,8 +128,8 @@ bool ScLink::_DetermineTypeEdgeImpl(ScAddr & outEdge, ScAddr & outType) const
   auto it = search.begin();
   if (it != search.end())
   {
-    outType = (*it)["_type"];
-    outEdge = (*it)["_edge"];
+    outType = it["_type"];
+    outEdge = it["_edge"];
     SC_ASSERT(++it == search.end(), ("Invalid state of knowledge base"));
     return true;
   }

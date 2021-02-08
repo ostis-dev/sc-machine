@@ -33,7 +33,7 @@ public:
                                              ScTemplateArg const & param5);
 
   /*! Returns pointer to created template
-  * \remarks Do not use builde after this method call.
+  * \remarks Do not use builder after this method call.
   */
   ScTemplatePtr Make();
 

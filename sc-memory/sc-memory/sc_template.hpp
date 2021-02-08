@@ -13,7 +13,6 @@ class ScTemplate final
   friend class ScTemplateBuilderImpl;
 
 public:
-  using Triple = std::array<ScTemplateArg &, 3>;
   using Data = ScTemplateData;
 
 public:
@@ -22,9 +21,6 @@ public:
   ScTemplate(ScTemplate const & other) = delete;
   ScTemplate & operator = (ScTemplate const & other) = delete;
 
-  /*  If forceOrder flag is true, then search will be run in the same order,
-   * that was used for a triples append
-   */
   _SC_EXTERN ScTemplate() = default;
   _SC_EXTERN bool IsEmpty() const;
   _SC_EXTERN bool HasReplacement(std::string const & repl) const;

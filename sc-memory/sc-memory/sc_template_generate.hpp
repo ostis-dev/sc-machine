@@ -31,5 +31,4 @@ public:
 
 private:
   std::unique_ptr<class ScTemplateGenerateImpl> m_impl;
-  std::string m_errorMessage;
 };
