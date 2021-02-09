@@ -5,29 +5,33 @@ namespace sc
 
 ScAddr ResolveRelationTuple(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr const & relAddr)
 {
-  ScTemplate templ;
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      ScType::NodeVarTuple >> "_tuple",
+      ScType::EdgeDCommonVar,
+      elAddr,
+      ScType::EdgeAccessVarPosPerm,
+      relAddr)
+    .Make();
 
-  templ.TripleWithRelation(
-    ScType::NodeVarTuple >> "_tuple",
-    ScType::EdgeDCommonVar,
-    elAddr,
-    ScType::EdgeAccessVarPosPerm,
-    relAddr);
-
-  ScTemplateSearchResult searchRes;
-  if (ctx.HelperSearchTemplate(templ, searchRes))
+  ScTemplateSearch search(ctx, *templ);
+  ScTemplateSearch::Iterator it = search.begin();
+  if (it != search.end())
   {
-    return searchRes[0]["_tuple"];
+    ScAddr const result = it["_tuple"];
+    SC_ASSERT(++it == search.end(), ("Invalid state of knowledge base"));
+    return result;
   }
 
-  ScTemplateGenResult genRes;
-  if (!ctx.HelperGenTemplate(templ, genRes))
+  ScTemplateGenerate generator(ctx, *templ);
+  ScTemplateGenerate::Result const generated = generator.Do();
+  if (!generated)
   {
     SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
                        "Can't create tuple");
   }
 
-  return genRes["_tuple"];
+  return (*generated)["_tuple"];
 }
 
 } // namespace sc

@@ -14,6 +14,7 @@
    - Fix issues with alias support in SCs-text (#350, #333)
    - Add performance benchmarks
    - Fix issues with assigning empty content to `sc-link` (#342, #343)
+   - Introduce new Template API #374
 
 - **Python**:
    - Python modules support removed. [More details](https://github.com/ostis-dev/sc-machine/issues/378)

@@ -41,9 +41,10 @@ jobs:
       matrix:
         config:
           - {
-            name: "Ubuntu latest, GCC",
+            name: "Ubuntu latest, GCC, Debug",
             os: ubuntu-latest,
             build_type: "Debug",
+            sanitizer: "none",
             cc: "gcc",
             cxx: "g++"
           }
@@ -51,8 +52,41 @@ jobs:
             name: "Ubuntu latest, GCC, Release",
             os: ubuntu-latest,
             build_type: "Release",
+            sanitizer: "none",
             cc: "gcc",
             cxx: "g++"
+          }
+          - {
+            name: "Ubuntu latest, Clang, Debug",
+            os: ubuntu-latest,
+            build_type: "Debug",
+            sanitizer: "none",
+            cc: "clang",
+            cxx: "clang++"
+          }
+          - {
+            name: "Ubuntu latest, Clang, Release",
+            os: ubuntu-latest,
+            build_type: "Release",
+            sanitizer: "none",
+            cc: "clang",
+            cxx: "clang++"
+          }
+          - {
+            name: "Ubuntu latest, Clang, Sanitizer - address",
+            os: ubuntu-latest,
+            build_type: "Release",
+            sanitizer: "address",
+            cc: "clang",
+            cxx: "clang++"
+          }
+          - {
+            name: "Ubuntu latest, Clang, Sanitizer - memory",
+            os: ubuntu-latest,
+            build_type: "Release",
+            sanitizer: "memory",
+            cc: "clang",
+            cxx: "clang++"
           }
 
     steps:
@@ -71,6 +105,7 @@ jobs:
           CC: ${{ matrix.config.cc }}
           CCX: ${{ matrix.config.cxx }}
           BUILD_TYPE: ${{ matrix.config.build_type }}
+          SANITIZER_TYPE: $${{ matrix.config.sanitizer }}
         run: scripts/ci/install-tests.sh
 
       - name: Run tests

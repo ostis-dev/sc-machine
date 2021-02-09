@@ -1,42 +1,46 @@
-/*
- * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
- * Distributed under the MIT License
- * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
- */
 
-#include "sc_template.hpp"
+#include "sc_template_search.hpp"
 
-#include "sc_debug.hpp"
 #include "sc_memory.hpp"
 
 #include <algorithm>
 #include <stack>
 
-class ScTemplateSearch
+class ScTemplateSearchImpl
 {
 public:
-  ScTemplateSearch(ScTemplate const & templ,
-                   ScMemoryContext & context,
-                   ScAddr const & scStruct)
-    : m_template(templ)
+  ScTemplateSearchImpl(ScTemplate::Data const & templ,
+                       ScMemoryContext & context,
+                       ScAddr const & scStruct,
+                       ScTemplateNamedStruct & result)
+    : m_templ(templ)
     , m_context(context)
     , m_struct(scStruct)
+    , m_result(result)
+  {
+  }
+
+  void Reset()
   {
     UpdateSearchCache();
+
+    size_t const triplesNum = m_templ.TriplesNum();
+    m_state.didIter.resize(triplesNum);
+    m_state.edges.resize(triplesNum);
+    m_state.finishIdx = triplesNum - 1;
+    m_state.newIteration = true;
+    m_state.isFinished = false;
+
+    m_resultAddrs.resize(triplesNum * 3);
+    m_repls.clear();
   }
 
   void UpdateSearchCache()
   {
-    if (m_template.m_isForceOrder)
-    {
-      m_template.m_searchCachedOrder.resize(m_template.m_constructions.size());
-      for (size_t i = 0; i < m_template.m_constructions.size(); ++i)
-        m_template.m_searchCachedOrder[i] = i;
-    }
-    else if (!m_template.IsSearchCacheValid() && !m_template.m_constructions.empty())
+    if (!m_templ.IsEmpty())
     {
       // update it
-      ScTemplate::ProcessOrder preCache(m_template.m_constructions.size());
+      std::vector<size_t> preCache(m_templ.TriplesNum());
       for (size_t i = 0; i < preCache.size(); ++i)
         preCache[i] = i;
 
@@ -47,27 +51,27 @@ public:
         * (more scores - should be search first).
         * Also need to store all replacements that need to be resolved
         */
-      std::vector<uint8_t> tripleScores(m_template.m_constructions.size());
+      std::vector<uint8_t> tripleScores(m_templ.TriplesNum());
       std::unordered_map<std::string, std::vector<size_t>> replDependMap;
-      for (size_t i = 0; i < m_template.m_constructions.size(); ++i)
+      for (size_t i = 0; i < m_templ.TriplesNum(); ++i)
       {
-        ScTemplateConstr3 const & triple = m_template.m_constructions[i];
-        auto const CalculateScore = [](ScTemplateConstr3 const & constr)
+        ScTemplate::Data::Triple const & triple = m_templ.GetTriple(i);
+        auto const CalculateScore = [](ScTemplate::Data::Triple const & constr)
         {
           uint8_t score = 0;
-          auto const & values = constr.GetValues();
-          if (values[1].IsAddr() && values[0].IsAssign() && values[2].IsAssign())
+          if (constr.edge.IsAddr() && constr.source.IsAssign() && constr.target.IsAssign())
             score += kScoreEdge;
-          else if (values[0].IsAddr() && values[1].IsAssign() && values[2].IsAddr())
+          else if (constr.source.IsAddr() && constr.edge.IsAssign() && constr.target.IsAddr())
             score += kScoreOther * 2; // should be a sum of (f_a_a and a_a_f)
-          else if (values[0].IsAddr() || values[2].IsAddr())
+          else if (constr.source.IsAddr() || constr.target.IsAddr())
             score += kScoreOther;
 
           return score;
         };
+
         tripleScores[i] = CalculateScore(triple);
         // doesn't add edges into depend map
-        auto const TryAppendRepl = [&](ScTemplateItemValue const & value, size_t idx)
+        auto const TryAppendRepl = [&](ScTemplateArg const & value, size_t idx)
         {
           SC_ASSERT(idx < 3, ());
           if (!value.IsAddr() && !value.m_replacementName.empty())
@@ -75,9 +79,9 @@ public:
         };
 
         // do not use loop, to make it faster (not all compilators will make a linear code)
-        TryAppendRepl(triple.GetValues()[0], 0);
-        TryAppendRepl(triple.GetValues()[1], 1);
-        TryAppendRepl(triple.GetValues()[2], 2);
+        TryAppendRepl(triple.source, 0);
+        TryAppendRepl(triple.edge, 1);
+        TryAppendRepl(triple.target, 2);
       }
 
       // sort by scores
@@ -87,7 +91,7 @@ public:
       });
 
       // now we need to append triples, in order, when previous resolve replacement for a next one
-      ScTemplate::ProcessOrder & cache = m_template.m_searchCachedOrder;
+      std::vector<size_t> & cache = m_state.processOrder;
       cache.resize(preCache.size());
 
       std::vector<bool> isTripleCached(cache.size(), false);
@@ -100,12 +104,12 @@ public:
       while (orderIdx < cache.size())
       {
         size_t const curTripleIdx = cache[orderIdx - 1];
-        auto const & triple = m_template.m_constructions[curTripleIdx];
+        auto const & triple = m_templ.GetTriple(curTripleIdx);
 
         // get resolved replacements by the last triple
         std::vector<std::string> resolvedReplacements;
         resolvedReplacements.reserve(3);
-        for (auto const & value : triple.GetValues())
+        for (auto const & value : { triple.source, triple.edge, triple.target })
         {
           if (!value.m_replacementName.empty())
             resolvedReplacements.emplace_back(value.m_replacementName);
@@ -154,34 +158,36 @@ public:
         cache[orderIdx++] = bestTripleIdx;
         isTripleCached[bestTripleIdx] = true;
       }
-
-      m_template.m_isSearchCacheValid = true;
     }
   }
 
-  ScAddr const & ResolveAddr(ScTemplateItemValue const & value) const
+  ScAddr const & ResolveAddr(ScTemplateArg const & value) const
   {
-    switch (value.m_itemType)
+    switch (value.m_kind)
     {
-    case ScTemplateItemValue::Type::Addr:
+    case ScTemplateArg::Kind::Addr:
       return value.m_addrValue;
 
-    case ScTemplateItemValue::Type::Replace:
+    case ScTemplateArg::Kind::Replace:
     {
-      auto it = m_template.m_replacements.find(value.m_replacementName);
-      SC_ASSERT(it != m_template.m_replacements.end(), ());
-      SC_ASSERT(it->second < m_resultAddrs.size(), ());
-      return m_resultAddrs[it->second];
+      auto const it = m_repls.find(value.m_replacementName);
+      if (it != m_repls.end())
+      {
+        SC_ASSERT(it->second.addr.IsValid(), ());
+        return it->second.addr;
+      }
     }
 
-    case ScTemplateItemValue::Type::Type:
+    case ScTemplateArg::Kind::Type:
     {
       if (!value.m_replacementName.empty())
       {
-        auto it = m_template.m_replacements.find(value.m_replacementName);
-        SC_ASSERT(it != m_template.m_replacements.end(), ());
-        SC_ASSERT(it->second < m_resultAddrs.size(), ());
-        return m_resultAddrs[it->second];
+        auto const it = m_repls.find(value.m_replacementName);
+        if (it != m_repls.end())
+        {
+          SC_ASSERT(it->second.addr.IsValid(), ());
+          return it->second.addr;
+        }
       }
       break;
     }
@@ -190,21 +196,14 @@ public:
       break;
     };
 
-    static ScAddr empty;
-    return empty;
+    return ScAddr::Empty;
   }
 
-  ScIterator3Ptr CreateIterator(ScTemplateConstr3 const & constr)
+  ScIterator3Ptr CreateIterator(ScTemplate::Data::Triple const & triple)
   {
-    auto const & values = constr.GetValues();
-
-    ScTemplateItemValue const & value0 = values[0];
-    ScTemplateItemValue const & value1 = values[1];
-    ScTemplateItemValue const & value2 = values[2];
-
-    ScAddr const addr0 = ResolveAddr(value0);
-    ScAddr const addr1 = ResolveAddr(value1);
-    ScAddr const addr2 = ResolveAddr(value2);
+    ScAddr const sourceAddr = ResolveAddr(triple.source);
+    ScAddr const edgeAddr = ResolveAddr(triple.edge);
+    ScAddr const targetAddr = ResolveAddr(triple.target);
 
     auto const PrepareType = [](ScType const & type)
     {
@@ -214,45 +213,66 @@ public:
       return type;
     };
 
-    if (addr0.IsValid())
+    if (sourceAddr.IsValid())
     {
-      if (!addr1.IsValid())
+      if (!edgeAddr.IsValid())
       {
-        if (addr2.IsValid()) // F_A_F
+        if (targetAddr.IsValid()) // F_A_F
         {
-          return m_context.Iterator3(addr0, PrepareType(value1.m_typeValue), addr2);
+          return m_context.Iterator3(
+                sourceAddr,
+                PrepareType(triple.edge.m_typeValue),
+                targetAddr);
         }
         else // F_A_A
         {
-          return m_context.Iterator3(addr0, PrepareType(value1.m_typeValue), PrepareType(value2.m_typeValue));
+          return m_context.Iterator3(
+                sourceAddr,
+                PrepareType(triple.edge.m_typeValue),
+                PrepareType(triple.target.m_typeValue));
         }
       }
       else
       {
-        if (addr2.IsValid()) // F_F_F
+        if (targetAddr.IsValid()) // F_F_F
         {
-          return m_context.Iterator3(addr0, addr1, addr2);
+          return m_context.Iterator3(
+                sourceAddr,
+                edgeAddr,
+                targetAddr);
         }
         else // F_F_A
         {
-          return m_context.Iterator3(addr0, addr1, PrepareType(value2.m_typeValue));
+          return m_context.Iterator3(
+                sourceAddr,
+                edgeAddr,
+                PrepareType(triple.target.m_typeValue));
         }
       }
     }
-    else if (addr2.IsValid())
+    else if (targetAddr.IsValid())
     {
-      if (addr1.IsValid()) // A_F_F
+      if (edgeAddr.IsValid()) // A_F_F
       {
-        return m_context.Iterator3(PrepareType(value0.m_typeValue), addr1, addr2);
+        return m_context.Iterator3(
+              PrepareType(triple.source.m_typeValue),
+              edgeAddr,
+              targetAddr);
       }
       else // A_A_F
       {
-        return m_context.Iterator3(PrepareType(value0.m_typeValue), PrepareType(value1.m_typeValue), addr2);
+        return m_context.Iterator3(
+              PrepareType(triple.source.m_typeValue),
+              PrepareType(triple.edge.m_typeValue),
+              targetAddr);
       }
     }
-    else if (addr1.IsValid() && !addr2.IsValid()) // A_F_A
+    else if (edgeAddr.IsValid() && !targetAddr.IsValid()) // A_F_A
     {
-      return m_context.Iterator3(PrepareType(value0.m_typeValue), addr1, PrepareType(value2.m_typeValue));
+      return m_context.Iterator3(
+            PrepareType(triple.source.m_typeValue),
+            edgeAddr,
+            PrepareType(triple.target.m_typeValue));
     }
 
     //// unknown iterator type
@@ -263,110 +283,89 @@ public:
 
   bool CheckInStruct(ScAddr const & addr)
   {
-    StructCache::const_iterator it = m_structCache.find(addr);
-    if (it != m_structCache.end())
-      return true;
-
-    if (m_context.HelperCheckEdge(m_struct, addr, ScType::EdgeAccessConstPosPerm))
-    {
-      m_structCache.insert(addr);
-      return true;
-    }
-
-    return false;
+    return m_context.HelperCheckEdge(m_struct, addr, ScType::EdgeAccessConstPosPerm);
   }
 
-  void RefReplacement(ScTemplateItemValue const & v, ScAddr const & addr)
+  void MakeResult()
   {
-    if (!v.m_replacementName.empty())
+    ScTemplateNamedStruct::Builder builder(m_result);
+    for (auto const & r : m_repls)
     {
-      auto it = m_template.m_replacements.find(v.m_replacementName);
-      SC_ASSERT(it != m_template.m_replacements.end(), ());
-      if (addr.IsValid())
-        m_resultAddrs[it->second] = addr;
-      m_replRefs[it->second]++;
+      SC_ASSERT(r.second.addr.IsValid(), ());
+      builder.Add(r.first, r.second.addr);
     }
+
+    // iterate all addrs and append missed into result
+    for (ScAddr const & addr : m_resultAddrs)
+      builder.Add(addr);
   }
 
-  void UnrefReplacement(ScTemplateItemValue const & v)
+  void UnrefReplacement(ScTemplateArg const & item)
   {
-    if (!v.m_replacementName.empty())
+    if (!item.m_replacementName.empty())
     {
-      auto it = m_template.m_replacements.find(v.m_replacementName);
-      SC_ASSERT(it != m_template.m_replacements.end(), ());
+      auto it = m_repls.find(item.m_replacementName);
+      SC_ASSERT(it != m_repls.end(), ());
 
-      m_replRefs[it->second]--;
-      if (m_replRefs[it->second] == 0)
-        m_resultAddrs[it->second].Reset();
+      if (it->second.refs > 1)
+        --it->second.refs;
+      else
+        m_repls.erase(it);
     }
   }
 
-  void DoIterations(ScTemplateSearchResult & result)
+  void RefReplacement(ScTemplateArg const & item, ScAddr const & addr)
   {
-    std::stack<ScIterator3Ptr> iterators;
-    std::vector<bool> didIter(m_template.m_constructions.size(), false);
-    std::vector<ScAddr> edges(m_template.m_constructions.size());
-    size_t const finishIdx = m_template.m_constructions.size() - 1;
-    bool newIteration = true;
-
-    do
+    if (!item.m_replacementName.empty())
     {
-      size_t const orderIndex = newIteration ? iterators.size() : iterators.size() - 1;
-      size_t const constrIndex = m_template.m_searchCachedOrder[orderIndex];
-
-      SC_ASSERT(constrIndex < m_template.m_constructions.size(), ());
-      size_t const resultIdx = constrIndex * 3;
-
-      ScTemplateConstr3 const & constr = m_template.m_constructions[constrIndex];
-      auto const & values = constr.GetValues();
-
-      ScIterator3Ptr it;
-      if (newIteration)
+      auto it = m_repls.find(item.m_replacementName);
+      if (it == m_repls.end())
       {
-        it = CreateIterator(constr);
-        iterators.push(it);
+        m_repls[item.m_replacementName] = { addr, 1 };
       }
       else
       {
-        UnrefReplacement(values[0]);
-        UnrefReplacement(values[1]);
-        UnrefReplacement(values[2]);
+        ++it->second.refs;
+      }
+    }
+  }
 
-        auto const itEdge = m_usedEdges.find(edges[orderIndex]);
+  bool DoIter()
+  {
+    if (m_state.isFinished)
+      return false; // do nothing
+
+    bool found = false;
+    do
+    {
+      size_t const orderIndex = m_state.newIteration ? m_state.iterators.size() : m_state.iterators.size() - 1;
+      size_t const constrIndex = m_state.processOrder[orderIndex];
+      size_t const resultIdx = constrIndex * 3;
+      SC_ASSERT(constrIndex < m_templ.TriplesNum(), ());
+
+      ScTemplate::Data::Triple const triple = m_templ.GetTriple(constrIndex);
+
+      ScIterator3Ptr it;
+      if (m_state.newIteration)
+      {
+        it = CreateIterator(triple);
+        m_state.iterators.push(it);
+      }
+      else
+      {
+        UnrefReplacement(triple.source);
+        UnrefReplacement(triple.edge);
+        UnrefReplacement(triple.target);
+
+        auto const itEdge = m_usedEdges.find(m_state.edges[orderIndex]);
         if (itEdge != m_usedEdges.end())
           m_usedEdges.erase(itEdge);
 
-        it = iterators.top();
+        it = m_state.iterators.top();
       }
 
-      auto const applyResult = [&](ScAddr const & res1,
-                                   ScAddr const & res2,
-                                   ScAddr const & res3)
-      {
-        edges[orderIndex] = res2;
-
-        // do not make cycle for optimization issues (remove comparsion expresion)
-        m_resultAddrs[resultIdx] = res1;
-        m_resultAddrs[resultIdx + 1] = res2;
-        m_resultAddrs[resultIdx + 2] = res3;
-
-        RefReplacement(values[0], res1);
-        RefReplacement(values[1], res2);
-        RefReplacement(values[2], res3);
-
-        if (orderIndex == finishIdx)
-        {
-          result.m_results.push_back(m_resultAddrs);
-          newIteration = false;
-        }
-        else
-        {
-          newIteration = true;
-        }
-      };
-
       // make one iteration
-      if (it.get())
+      if (it)
       {
         bool isFinished = true;
 
@@ -377,85 +376,234 @@ public:
           ScAddr const addr3 = it->Get(2);
 
           // check if search in structure
-          if (m_struct.IsValid())
+          if (m_struct.IsValid() &&
+              (!CheckInStruct(addr1) ||
+               !CheckInStruct(addr2) ||
+               !CheckInStruct(addr3)))
           {
-            if (!CheckInStruct(addr1) ||
-                !CheckInStruct(addr2) ||
-                !CheckInStruct(addr3))
-            {
               continue;
-            }
           }
 
           auto const res = m_usedEdges.insert(addr2);
           if (!res.second) // don't iterate the same edge twicely
             continue;
 
-          applyResult(addr1, addr2, addr3);
+          m_state.edges[orderIndex] = addr2;
 
-          didIter[orderIndex] = true;
+          // do not make cycle for optimization issues (remove comparison expresion)
+          m_resultAddrs[resultIdx] = addr1;
+          m_resultAddrs[resultIdx + 1] = addr2;
+          m_resultAddrs[resultIdx + 2] = addr3;
+
+          RefReplacement(triple.source, addr1);
+          RefReplacement(triple.edge, addr2);
+          RefReplacement(triple.target, addr3);
+
+          if (orderIndex == m_state.finishIdx)
+          {
+            MakeResult();
+            found = true;
+            m_state.newIteration = false;
+          }
+          else
+          {
+            m_state.newIteration = true;
+          }
+
+          m_state.didIter[orderIndex] = true;
           isFinished = false;
           break;
         }
 
         if (isFinished) // finish iterator
         {
-          iterators.pop();
-          newIteration = false;
+          m_state.iterators.pop();
+          m_state.newIteration = false;
         }
       }
       else // special checks and search
       {
         SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Invalid state during template search");
       }
-    } while (!iterators.empty());
-  }
+    } while (!found && !m_state.iterators.empty());
 
-  ScTemplate::Result operator () (ScTemplateSearchResult & result)
-  {
-    // if (!m_template.m_hasRequired)
-    //  SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "Templates just with optional triples doesn't supported.");
+    if (m_state.iterators.empty())
+      m_state.isFinished = true;
 
-    result.Clear();
-
-    result.m_replacements = m_template.m_replacements;
-    m_resultAddrs.resize(CalculateOneResultSize());
-    m_replRefs.resize(m_resultAddrs.size(), 0);
-
-    DoIterations(result);
-
-    return ScTemplate::Result(result.Size() > 0);
-  }
-
-  size_t CalculateOneResultSize() const
-  {
-    return m_template.m_constructions.size() * 3;
+    return found;
   }
 
 private:
-  ScTemplate const & m_template;
+  struct InternalState
+  {
+    std::vector<size_t> processOrder;
+    std::stack<ScIterator3Ptr> iterators;
+    std::vector<bool> didIter;
+    std::vector<ScAddr> edges;
+    size_t finishIdx = 0;
+    bool newIteration = true;
+    bool isFinished = false;
+  };
+
+private:
+  ScTemplate::Data const & m_templ;
   ScMemoryContext & m_context;
   ScAddr const m_struct;
-
-  using StructCache = std::unordered_set<ScAddr, ScAddrHashFunc<uint32_t>>;
-  StructCache m_structCache;
 
   using UsedEdges = std::set<ScAddr, ScAddLessFunc>;
   UsedEdges m_usedEdges;
 
   ScAddrVector m_resultAddrs;
-  using ReplRefs = std::vector<uint32_t>;
-  ReplRefs m_replRefs;
+  struct ReplCounter
+  {
+    ScAddr addr;
+    uint32_t refs;
+  };
+  std::unordered_map<std::string, ReplCounter> m_repls;
+
+
+
+  InternalState m_state;
+  ScTemplateNamedStruct & m_result;
 };
 
-ScTemplate::Result ScTemplate::Search(ScMemoryContext & ctx, ScTemplateSearchResult & result) const
+
+bool ScTemplateSearch::Iterator::operator == (Iterator const & other) const
 {
-  ScTemplateSearch search(*this, ctx, ScAddr());
-  return search(result);
+  return (m_index == other.m_index);
 }
 
-ScTemplate::Result ScTemplate::SearchInStruct(ScMemoryContext & ctx, ScAddr const & scStruct, ScTemplateSearchResult & result) const
+bool ScTemplateSearch::Iterator::operator != (Iterator const & other) const
 {
-  ScTemplateSearch search(*this, ctx, scStruct);
-  return search(result);
+  return !(*this == other);
+}
+
+ScTemplateSearch::Iterator & ScTemplateSearch::Iterator::operator ++ ()
+{
+  auto const result = m_search.DoIter();
+  if (result)
+  {
+    m_index = (m_index + 1) % kEndIndex; // don't use maximum index
+  }
+  else
+  {
+    m_struct.Clear();
+    m_index = kEndIndex;
+  }
+
+  return *this;
+}
+
+ScTemplateNamedStruct const & ScTemplateSearch::Iterator::operator * () const
+{
+  return m_struct;
+}
+
+ScAddr ScTemplateSearch::Iterator::operator[](std::string const & name) const
+{
+  return m_struct[name];
+}
+
+ScAddr ScTemplateSearch::Iterator::operator[](ScAddr const & addr) const
+{
+  return m_struct[addr.ToString()];
+}
+
+// --------------------------------------
+
+ScTemplateSearch::ScTemplateSearch(ScMemoryContext & ctx,
+                                   ScTemplate const & templ,
+                                   ScTemplateParams const & params /* = {} */,
+                                   ScAddr const & structAddr /* =  ScAddr::Empty */)
+  : m_ctx(ctx)
+  , m_template(templ)
+  , m_structAddr(structAddr)
+  , m_params(params)
+{
+}
+
+ScTemplateSearch::~ScTemplateSearch()
+{
+}
+
+ScTemplateSearch::Iterator ScTemplateSearch::begin()
+{
+  SC_ASSERT(!m_impl, ());
+
+  ApplyParameters();
+
+  m_impl = std::make_unique<ScTemplateSearchImpl>(
+        m_templateWithParams ? m_templateWithParams->GetData() : m_template.GetData(),
+        m_ctx,
+        m_structAddr,
+        m_result);
+
+  m_impl->Reset();
+  if (m_impl->DoIter())
+    return Iterator(*m_impl, m_result, 0);
+
+  return end();
+}
+
+ScTemplateSearch::Iterator ScTemplateSearch::end()
+{
+  return Iterator(*m_impl, m_result);
+}
+
+std::pair<ScTemplateNamedStruct const &, bool> ScTemplateSearch::DoStep()
+{
+  return { m_result, m_impl->DoIter() };
+}
+
+void ScTemplateSearch::ApplyParameters()
+{
+  if (m_params.IsEmpty())
+    return; // do nothing
+
+  // Create new template
+  ScTemplate::Data newData = m_template.GetData();
+
+  for (auto const & param : m_params)
+  {
+    ScTemplateArg * item = newData.GetReplacementForWrite(param.first);
+
+    if (item)
+    {
+      if (!item->IsType())
+      {
+        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
+                           "Please assign values just only to type items of template. Parameter: " << param.first);
+      }
+      else if (!item->m_typeValue.IsVar()) // this case is impossible because of template builder checks
+      {
+        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
+                           "Can't assign value to non variable item. Parameter: " << param.first);
+      }
+
+      // check types compatibility
+      ScType const paramType = m_ctx.GetElementType(param.second);
+      if (paramType.IsVar())
+      {
+        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
+                           "Do not use variable as parameter value. Parameter: " << param.first);
+      }
+
+      if (!ScTemplateParams::CanAssignParam(item->m_typeValue, paramType))
+      {
+        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
+                           "Type of " << param.first << " is not compatible");
+      }
+
+      item->m_kind = ScTemplateArg::Kind::Addr;
+      item->m_typeValue = ScType::Unknown;
+      item->m_addrValue = param.second;
+    }
+    else
+    {
+      SC_THROW_EXCEPTION(utils::ExceptionItemNotFound,
+                         "Can't find replacement for the parameter " << param.first);
+    }
+  }
+
+  m_templateWithParams = ScTemplatePtrMake(std::move(newData));
 }

@@ -29,6 +29,11 @@ bool ScAddr::IsValid() const
   return !SC_ADDR_IS_EMPTY(m_realAddr);
 }
 
+ScAddr::operator bool() const
+{
+  return IsValid();
+}
+
 void ScAddr::Reset()
 {
   SC_ADDR_MAKE_EMPTY(m_realAddr);
@@ -54,8 +59,7 @@ ScRealAddr const & ScAddr::operator * () const
   return m_realAddr;
 }
 
-ScRealAddr const & ScAddr::GetRealAddr() const
+std::string ScAddr::ToString() const
 {
-  return m_realAddr;
+  return "&" + std::to_string(Hash());
 }
-

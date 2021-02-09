@@ -9,6 +9,7 @@
 
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_link.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 Translator::Translator(ScMemoryContext & ctx)
   : m_ctx(ctx)
@@ -25,20 +26,22 @@ void Translator::GenerateFormatInfo(ScAddr const & addr, std::string const & ext
   std::string const fmtStr = "format_" + ext;
 
   ScAddr const formatAddr = m_ctx.HelperResolveSystemIdtf(fmtStr, ScType::NodeConstClass);
-  
-  ScTemplate templ;
-  templ.TripleWithRelation(
-    addr,
-    ScType::EdgeDCommonVar,
-    formatAddr,
-    ScType::EdgeAccessVarPosPerm,
-    Keynodes::kNrelFormat()
-  );
 
-  ScTemplateGenResult genResult;
-  auto const res = m_ctx.HelperGenTemplate(templ, genResult);
-  if (!res)
-    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Error to generate format for sc-link: " << res.Msg());
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      addr,
+      ScType::EdgeDCommonVar,
+      formatAddr,
+      ScType::EdgeAccessVarPosPerm,
+      Keynodes::kNrelFormat())
+    .Make();
+
+  ScTemplateGenerate generator(m_ctx, *templ);
+  ScTemplateGenerate::Result result = generator.Do();
+  if (!result)
+  {
+    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Error to generate format for sc-link: " << generator.GetErrorMessage());
+  }
 }
 
 void Translator::GetFileContent(std::string const & fileName, std::string & outContent)
@@ -48,14 +51,14 @@ void Translator::GetFileContent(std::string const & fileName, std::string & outC
   {
     SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Can't open file " << fileName);
   }
-    
+
   outContent.assign((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
   ifs.close();
 }
 
 void Translator::Clean(ScMemoryContext & ctx)
 {
-  // remove global identifers 
+  // remove global identifers
   ScAddr const nrelSCsGlobalIdtf = ctx.HelperResolveSystemIdtf("nrel_scs_global_idtf");
   if (!nrelSCsGlobalIdtf.IsValid())
   {
@@ -63,22 +66,18 @@ void Translator::Clean(ScMemoryContext & ctx)
     return;
   }
 
-  ScTemplate templ;
-  templ.TripleWithRelation(
-    ScType::Unknown,
-    ScType::EdgeDCommonVar,
-    ScType::Link >> "_link",
-    ScType::EdgeAccessVarPosPerm,
-    nrelSCsGlobalIdtf);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      ScType::Unknown,
+      ScType::EdgeDCommonVar,
+      ScType::Link >> "_link",
+      ScType::EdgeAccessVarPosPerm,
+      nrelSCsGlobalIdtf)
+    .Make();
 
-  ScTemplateSearchResult res;
-  if (ctx.HelperSearchTemplate(templ, res))
-  {
-    res.ForEach([&ctx](ScTemplateSearchResultItem const & item)
-    {
-      ctx.EraseElement(item["_link"]);
-    });
-  }
+  ScTemplateSearch search(ctx, *templ);
+  for (ScTemplateNamedStruct const & res : search)
+    ctx.EraseElement(res["_link"]);
 }
 
 

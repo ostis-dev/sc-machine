@@ -1,13 +1,10 @@
-/*
-* This source file is part of an OSTIS project. For the latest info, see http://ostis.net
-* Distributed under the MIT License
-* (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
-*/
-
 #include "sc_agent.hpp"
 
 #include "../sc_debug.hpp"
 #include "../sc_wait.hpp"
+
+#include "../sc_template_builder.hpp"
+#include "../sc_template_search.hpp"
 
 namespace
 {
@@ -189,22 +186,25 @@ ScAddr ScAgentAction::GetCommandResultCodeAddr(ScMemoryContext & ctx, ScAddr con
   if (!resultAddr.IsValid())
     return ScAddr();
 
-  ScTemplate templ;
-  templ.Triple(
-    ScKeynodes::kScResult,
-    ScType::EdgeAccessVarPosPerm,
-    ScType::NodeVarClass >> "result_class");
-  templ.Triple(
-    "result_class",
-    ScType::EdgeAccessVarPosPerm,
-    resultAddr);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(
+      ScKeynodes::kScResult,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVarClass >> "result_class")
+    .Triple(
+      "result_class",
+      ScType::EdgeAccessVarPosPerm,
+      resultAddr)
+    .Make();
 
-  ScTemplateSearchResult searchResult;
-  if (!ctx.HelperSearchTemplate(templ, searchResult))
+  ScTemplateSearch search(ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  if (found == search.end())
     return ScAddr();
 
-  SC_ASSERT(searchResult.Size() == 1, ());
-  return searchResult[0]["result_class"];
+  ScAddr const result = found["result_class"];
+  SC_ASSERT(++found == search.end(), ());
+  return result;
 }
 
 ScAgentAction::State ScAgentAction::GetCommandState(ScMemoryContext & ctx, ScAddr const & cmdAddr)

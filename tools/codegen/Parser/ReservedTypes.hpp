@@ -7,7 +7,6 @@ namespace Props
 
 const std::string Body = "GenBody";
 const std::string Keynode = "Keynode";
-const std::string Template = "Template";
 const std::string ForceCreate = "ForceCreate";
 const std::string Agent = "Agent";
 const std::string AgentCommandClass = "CmdClass";

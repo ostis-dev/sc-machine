@@ -9,6 +9,7 @@
 #include "sc_debug.hpp"
 #include "sc_link.hpp"
 #include "sc_memory.hpp"
+#include "sc_templates.hpp"
 
 #include "scs/scs_parser.hpp"
 
@@ -100,25 +101,27 @@ private:
     auto const links = m_ctx.FindLinksByContent(idtf);
     for (ScAddr const & addr : links)
     {
-      ScTemplate templ;
+      ScTemplatePtr templ = ScTemplateBuilder()
+        .TripleWithRelation(
+          ScType::Unknown >> "_el",
+          ScType::EdgeDCommonVar,
+          addr,
+          ScType::EdgeAccessVarPosPerm,
+          m_kNrelSCsGlobalIdtf)
+        .Make();
 
-      templ.TripleWithRelation(
-        ScType::Unknown >> "_el",
-        ScType::EdgeDCommonVar,
-        addr,
-        ScType::EdgeAccessVarPosPerm,
-        m_kNrelSCsGlobalIdtf);
-
-      ScTemplateSearchResult searchResult;
-      if (m_ctx.HelperSearchTemplate(templ, searchResult))
+      ScTemplateSearch search(m_ctx, *templ);
+      ScTemplateSearch::Iterator found = search.begin();
+      if (found != search.end())
       {
-        if (result.IsValid() || searchResult.Size() > 1)
+        ScAddr const foundAddr = found["_el"];
+        if (result.IsValid() || (++found != search.end()))
         {
           SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
                              "There are more then 1 element with global identifier: " << idtf);
         }
 
-        result = searchResult[0]["_el"];
+        result = foundAddr;
       }
     }
 
@@ -173,7 +176,7 @@ private:
         {
           SetSCsGlobalIdtf(el.GetIdtf(), result);
         }
-        
+
       }
 
       SC_ASSERT(result.IsValid(), ());

@@ -3,6 +3,7 @@
 #include "sc-memory/sc_link.hpp"
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_scs_helper.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 #include "scs_test_utils.hpp"
 
@@ -26,12 +27,13 @@ TEST_F(SCsHelperTest, GenerateBySCs)
 
     EXPECT_TRUE(helper.GenerateBySCsText(t.first));
 
-    ScTemplate templ;
-    EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, t.second));
+    ScTemplatePtr templ = ScTemplateSCsBuilder(*m_ctx).Make(t.second);
+    EXPECT_TRUE(templ);
 
-    ScTemplateSearchResult result;
-    EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
-    EXPECT_EQ(result.Size(), 1u);
+    ScTemplateSearch search(*m_ctx, *templ);
+    ScTemplateSearch::Iterator result = search.begin();
+    EXPECT_NE(result, search.end());
+    EXPECT_EQ(++result, search.end());
   }
 }
 
@@ -42,16 +44,24 @@ TEST_F(SCsHelperTest, GenerateBySCs_FileURL)
   SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
   EXPECT_TRUE(helper.GenerateBySCsText(data));
 
-  ScTemplate templ;
-  EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, "x _-> _[];;"));
+  ScAddr const xAddr = m_ctx->HelperResolveSystemIdtf("x");
+  EXPECT_TRUE(xAddr.IsValid());
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(xAddr,
+            ScType::EdgeAccessVarPosPerm,
+            ScType::LinkVar >> "_link")
+    .Make();
+  EXPECT_TRUE(templ);
 
-  EXPECT_EQ(result.Size(), 1u);
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator result = search.begin();
+  EXPECT_NE(result, search.end());
 
-  ScAddr const linkAddr = result[0][2];
+  ScAddr const linkAddr = result["_link"];
   EXPECT_TRUE(linkAddr.IsValid());
+
+  EXPECT_EQ(++result, search.end());
 
   ScType const linkType = m_ctx->GetElementType(linkAddr);
   EXPECT_EQ(linkType, ScType::LinkConst);
@@ -96,15 +106,17 @@ TEST_F(SCsHelperTest, GenerateBySCs_NestedAliases)
   ScAddr const bAddr = m_ctx->HelperResolveSystemIdtf("b");
   EXPECT_TRUE(bAddr.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(
-          aAddr,
-          ScType::EdgeAccessVarPosPerm,
-          bAddr);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(aAddr,
+            ScType::EdgeAccessVarPosPerm,
+            bAddr)
+    .Make();
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
-  EXPECT_EQ(result.Size(), 2u);
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator result = search.begin();
+  EXPECT_NE(result, search.end());
+  EXPECT_NE(++result, search.end());
+  EXPECT_EQ(++result, search.end());
 }
 
 TEST_F(SCsHelperTest, GenerateBySCs_EdgeAlias)
@@ -123,17 +135,19 @@ TEST_F(SCsHelperTest, GenerateBySCs_EdgeAlias)
   ScAddr const cAddr = m_ctx->HelperResolveSystemIdtf("c");
   EXPECT_TRUE(cAddr.IsValid());
 
-  ScTemplate templ;
-  templ.TripleWithRelation(
-          cAddr,
-          ScType::EdgeAccessVarPosPerm,
-          bAddr,
-          ScType::EdgeAccessVarPosPerm,
-          aAddr);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      cAddr,
+      ScType::EdgeAccessVarPosPerm,
+      bAddr,
+      ScType::EdgeAccessVarPosPerm,
+      aAddr)
+    .Make();
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
-  EXPECT_EQ(result.Size(), 1u);
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator result = search.begin();
+  EXPECT_NE(result, search.end());
+  EXPECT_EQ(++result, search.end());
 }
 
 TEST_F(SCsHelperTest, GenerateBySCs_ContourAlias)
@@ -152,34 +166,33 @@ TEST_F(SCsHelperTest, GenerateBySCs_ContourAlias)
   ScAddr const zAddr = m_ctx->HelperResolveSystemIdtf("z");
   EXPECT_TRUE(zAddr.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(
-          zAddr,
-          ScType::EdgeAccessVarPosPerm,
-          ScType::NodeVarStruct >> "_contour");
-  templ.Triple(
-          "_contour",
-          ScType::EdgeAccessVarPosPerm,
-          xAddr);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(
+      zAddr,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVarStruct >> "_contour")
+    .Triple(
+      "_contour",
+      ScType::EdgeAccessVarPosPerm,
+      xAddr)
+    .Triple(
+      "_contour",
+      ScType::EdgeAccessVarPosPerm,
+      yAddr)
+    .Triple(
+      xAddr,
+      ScType::EdgeAccessVarPosPerm >> "_edge",
+      yAddr)
+    .Triple(
+      "_contour",
+      ScType::EdgeAccessVarPosPerm,
+      "_edge")
+    .Make();
 
-  templ.Triple(
-          "_contour",
-          ScType::EdgeAccessVarPosPerm,
-          yAddr);
-
-  templ.Triple(
-          xAddr,
-          ScType::EdgeAccessVarPosPerm >> "_edge",
-          yAddr);
-
-  templ.Triple(
-          "_contour",
-          ScType::EdgeAccessVarPosPerm,
-          "_edge");
-
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
-  EXPECT_EQ(result.Size(), 1u);
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator result = search.begin();
+  EXPECT_NE(result, search.end());
+  EXPECT_EQ(++result, search.end());
 }
 
 TEST_F(SCsHelperTest, GenerateBySCs_Contents)
@@ -201,17 +214,22 @@ TEST_F(SCsHelperTest, GenerateBySCs_Contents)
     SCsHelper helper(*m_ctx, std::make_shared<TestFileInterface>());
     EXPECT_TRUE(helper.GenerateBySCsText(data));
 
-    ScTemplate templ;
-    EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, keynode + " _-> _[];;"));
+    ScAddr const kAddr = m_ctx->HelperResolveSystemIdtf(keynode);
+    ScTemplatePtr templ = ScTemplateBuilder()
+        .Triple(
+          kAddr,
+          ScType::EdgeAccessVarPosPerm,
+          ScType::LinkVar >> "_link")
+        .Make();
 
-    ScTemplateSearchResult result;
-    EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+    ScTemplateSearch search(*m_ctx, *templ);
+    ScTemplateSearch::Iterator result = search.begin();
+    EXPECT_NE(result, search.end());
 
-    EXPECT_EQ(result.Size(), 1u);
-
-    ScAddr const linkAddr = result[0][2];
+    ScAddr const linkAddr = result["_link"];
     EXPECT_TRUE(linkAddr.IsValid());
 
+    EXPECT_EQ(++result, search.end());
     return linkAddr;
   };
 
@@ -311,19 +329,26 @@ TEST_F(SCsHelperTest, GenerateBySCs_Visibility_System)
   EXPECT_TRUE(zAddr.IsValid());
 
   {
-    ScTemplate templ;
-    templ.Triple(xAddr, ScType::EdgeAccessVarPosPerm, yAddr);
+    ScTemplatePtr templ = ScTemplateBuilder()
+        .Triple(
+          xAddr,
+          ScType::EdgeAccessVarPosPerm,
+          yAddr)
+        .Make();
 
-    ScTemplateSearchResult res;
-    EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
+    ScTemplateSearch search(*m_ctx, *templ);
+    EXPECT_NE(search.begin(), search.end());
   }
 
   {
-    ScTemplate templ;
-    templ.Triple(xAddr, ScType::EdgeAccessVarPosTemp, zAddr);
+    ScTemplatePtr templ = ScTemplateBuilder()
+        .Triple(xAddr,
+                ScType::EdgeAccessVarPosTemp,
+                zAddr)
+        .Make();
 
-    ScTemplateSearchResult res;
-    EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
+    ScTemplateSearch search(*m_ctx, *templ);
+    EXPECT_NE(search.begin(), search.end());
   }
 }
 
@@ -343,14 +368,22 @@ TEST_F(SCsHelperTest, GenerateBySCs_Visibility_Global)
   ScAddr const xAddr = m_ctx->HelperResolveSystemIdtf("x_global");
   EXPECT_TRUE(xAddr.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(xAddr, ScType::EdgeAccessVarPosPerm >> "_edge", ScType::Unknown >> "_trg");
+  ScTemplatePtr templ = ScTemplateBuilder()
+      .Triple(xAddr,
+              ScType::EdgeAccessVarPosPerm >> "_edge",
+              ScType::Unknown >> "_trg")
+      .Make();
 
-  ScTemplateSearchResult res;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
-  EXPECT_EQ(res.Size(), 2u);
-  EXPECT_EQ(res[0]["_trg"], res[1]["_trg"]);
-  EXPECT_NE(res[0]["_edge"], res[1]["_edge"]);
+  ScTemplateSearch search(*m_ctx, *templ);
+  std::vector<std::pair<ScAddr, ScAddr>> values;
+
+  for (auto const & it : search)
+    values.emplace_back(it["_trg"], it["_edge"]);
+
+  EXPECT_EQ(values.size(), 2u);
+
+  EXPECT_EQ(values[0].first, values[1].first);
+  EXPECT_NE(values[0].second, values[1].second);
 }
 
 TEST_F(SCsHelperTest, GenerateBySCs_Visibility_Local)
@@ -368,11 +401,17 @@ TEST_F(SCsHelperTest, GenerateBySCs_Visibility_Local)
   ScAddr const xAddr = m_ctx->HelperResolveSystemIdtf("x_local");
   EXPECT_TRUE(xAddr.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(xAddr, ScType::EdgeAccessVarPosPerm, ScType::Unknown >> "_trg");
+  ScTemplatePtr templ = ScTemplateBuilder()
+      .Triple(xAddr,
+              ScType::EdgeAccessVarPosPerm,
+              ScType::Unknown >> "_trg")
+      .Make();
 
-  ScTemplateSearchResult res;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, res));
-  EXPECT_EQ(res.Size(), 2u);
-  EXPECT_NE(res[0]["_trg"], res[1]["_trg"]);
+  ScTemplateSearch search(*m_ctx, *templ);
+  std::vector<ScAddr> values;
+  for (auto const & it : search)
+    values.push_back(it["_trg"]);
+
+  EXPECT_EQ(values.size(), 2u);
+  EXPECT_NE(values[0], values[1]);
 }

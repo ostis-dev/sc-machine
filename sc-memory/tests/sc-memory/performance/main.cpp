@@ -50,7 +50,7 @@ void BM_MemoryThreaded(benchmark::State & state)
   }
 }
 
-int constexpr kNodeIters = 1000000;
+int constexpr kNodeIters = 10000000;
 
 BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateNode)
   ->Threads(2)
@@ -72,12 +72,7 @@ BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateNode)
   ->Iterations(kNodeIters / 16)
   ->Unit(benchmark::TimeUnit::kMicrosecond);
 
-BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateNode)
-  ->Threads(32)
-  ->Iterations(kNodeIters / 32)
-  ->Unit(benchmark::TimeUnit::kMicrosecond);
-
-int constexpr kLinkIters = 7000;
+int constexpr kLinkIters = 25000;
 
 BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateLink)
   ->Threads(2)
@@ -98,12 +93,6 @@ BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateLink)
   ->Threads(16)
   ->Iterations(kLinkIters / 64)
   ->Unit(benchmark::TimeUnit::kMicrosecond);
-
-BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateLink)
-  ->Threads(32)
-  ->Iterations(kLinkIters / 128)
-  ->Unit(benchmark::TimeUnit::kMicrosecond);
-
 
 // ------------------------------------
 template <class BMType>
@@ -170,22 +159,57 @@ void BM_Template(benchmark::State & state)
   test.Shutdown();
 }
 
+// Template search
 BENCHMARK_TEMPLATE(BM_Template, TestTemplateSearchSmoke)
   ->Unit(benchmark::TimeUnit::kMicrosecond)
-  ->Arg(5)->Arg(50)->Arg(500);
+  ->Arg(5)->Iterations(500000);
+
+BENCHMARK_TEMPLATE(BM_Template, TestTemplateSearchSmoke)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(50)->Iterations(50000);
+
+BENCHMARK_TEMPLATE(BM_Template, TestTemplateSearchSmoke)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(500)->Iterations(5000);
 
 BENCHMARK_TEMPLATE(BM_Template, TestTemplateSearchComplex)
   ->Unit(benchmark::TimeUnit::kMicrosecond)
-  ->Arg(5)->Arg(50)->Arg(500);
+  ->Arg(5)->Iterations(1000);
+
+BENCHMARK_TEMPLATE(BM_Template, TestTemplateSearchComplex)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(50)->Iterations(100);
+
+BENCHMARK_TEMPLATE(BM_Template, TestTemplateSearchComplex)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(500)
+  ->Iterations(10);
 
 // SC-code base vs extended
 BENCHMARK_TEMPLATE(BM_Template, TestScCodeBase)
   ->Unit(benchmark::TimeUnit::kMicrosecond)
-  ->Arg(1000)->Arg(10000)->Arg(100000);
+  ->Arg(1000)
+  ->Iterations(500);
+
+BENCHMARK_TEMPLATE(BM_Template, TestScCodeBase)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(10000)->Iterations(50);
+
+BENCHMARK_TEMPLATE(BM_Template, TestScCodeBase)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(100000)->Iterations(5);
 
 BENCHMARK_TEMPLATE(BM_Template, TestScCodeExtended)
   ->Unit(benchmark::TimeUnit::kMicrosecond)
-  ->Arg(1000)->Arg(10000)->Arg(100000);
+  ->Arg(1000)->Iterations(1000);
+
+BENCHMARK_TEMPLATE(BM_Template, TestScCodeExtended)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(10000)->Iterations(100);
+
+BENCHMARK_TEMPLATE(BM_Template, TestScCodeExtended)
+  ->Unit(benchmark::TimeUnit::kMicrosecond)
+  ->Arg(100000)->Iterations(10);
 
 
 BENCHMARK_MAIN();

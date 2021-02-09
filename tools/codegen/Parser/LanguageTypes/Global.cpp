@@ -19,7 +19,7 @@ Global::Global(Cursor const & cursor, Namespace const & currentNamespace, Class 
 {
   auto displayName = m_metaData.GetNativeString(kMetaDisplayName);
   m_displayName = displayName.empty() ? m_qualifiedName : utils::GetQualifiedName(displayName, currentNamespace);
-  
+
   m_metaData.Check();
 }
 
@@ -38,11 +38,6 @@ void Global::GenerateInitCode(std::stringstream & outCode) const
                                       m_displayName,
                                       Field::GetForceType(m_metaData),
                                       outCode);
-  }
-  else if (m_metaData.HasProperty(Props::Template))
-  {
-    Field::GenerateTemplateBuildCode(m_metaData.GetNativeString(Props::Template),
-                                     m_displayName, outCode);
   }
 }
 

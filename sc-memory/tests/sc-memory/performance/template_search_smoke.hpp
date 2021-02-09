@@ -15,9 +15,11 @@ public:
       m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, node, trg);
     }
 
-    m_templ.Triple(
-          node,
-          ScType::EdgeAccessVarPosPerm,
-          ScType::NodeVarStruct);
+    m_templ = ScTemplateBuilder()
+        .Triple(
+            node,
+            ScType::EdgeAccessVarPosPerm,
+            ScType::NodeVarStruct)
+        .Make();
   }
 };

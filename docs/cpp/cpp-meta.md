@@ -155,23 +155,6 @@ static ScAddr m_device;
   </tr>
 
   <tr>
-    <td><strong>Template</strong></td>
-    <td>
-      <strong>Arguments:</strong>
-      <ul>
-        <li>String system identifier of template sc-structure in sc-memory</li>
-      </ul>
-      Specify that this member is a template. After module starts, this template will be parsed from sc-memory. So you will be able use it to search/generate constructions.
-      <br/>You can use this property just for members that has <strong>ScTemplate</strong> type.
-      <hr/>
-      <pre><code class="cpp hljs">
-SC_PROPERTY(Template("test_template"))
-ScTemplate m_testTemplate;
-      </code></pre>
-    </td>
-  </tr>
-
-  <tr>
     <td><strong>ForceCreate</strong></td>
     <td>
       <strong>Arguments:</strong>

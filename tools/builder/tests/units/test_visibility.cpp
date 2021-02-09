@@ -12,20 +12,22 @@ std::string GetIdtf(ScMemoryContext & ctx, ScAddr const& addr)
   ScAddr const nrelIdtf = ctx.HelperResolveSystemIdtf("nrel_idtf", ScType::NodeConstNoRole);
   EXPECT_TRUE(nrelIdtf.IsValid());
 
-  ScTemplate templ;
-  templ.TripleWithRelation(
-    addr,
-    ScType::EdgeDCommonVar,
-    ScType::Link >> "_link",
-    ScType::EdgeAccessVarPosPerm,
-    nrelIdtf);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .TripleWithRelation(
+      addr,
+      ScType::EdgeDCommonVar,
+      ScType::Link >> "_link",
+      ScType::EdgeAccessVarPosPerm,
+      nrelIdtf)
+    .Make();
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(ctx.HelperSearchTemplate(templ, result));
-  EXPECT_EQ(result.Size(), 1u);
+  ScTemplateSearch search(ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  EXPECT_NE(found, search.end());
 
-  ScAddr const linkAddr = result[0]["_link"];
+  ScAddr const linkAddr = found["_link"];
   EXPECT_TRUE(linkAddr.IsValid());
+  EXPECT_EQ(++found, search.end());
 
   ScLink link(ctx, linkAddr);
   EXPECT_TRUE(link.IsType<std::string>());
@@ -46,19 +48,20 @@ TEST_F(ScBuilderTest, visibility_sys_idtf)
   ScAddr const element = m_ctx->HelperResolveSystemIdtf("visibility_sys_idtf");
   EXPECT_TRUE(element.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(
-    visFirst,
-    ScType::EdgeAccessVarPosPerm,
-    element);
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(
+      visFirst,
+      ScType::EdgeAccessVarPosPerm,
+      element)
+    .Triple(
+      visSecond,
+      ScType::EdgeAccessVarPosPerm,
+      element)
+    .Make();
 
-  templ.Triple(
-    visSecond,
-    ScType::EdgeAccessVarPosPerm,
-    element);
-
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  EXPECT_NE(found, search.end());
 }
 
 TEST_F(ScBuilderTest, visibility_global)
@@ -69,23 +72,25 @@ TEST_F(ScBuilderTest, visibility_global)
   ScAddr const visSecond = m_ctx->HelperResolveSystemIdtf("visibility_second_global");
   EXPECT_TRUE(visSecond.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(
-    visFirst,
-    ScType::EdgeAccessVarPosTemp,
-    ScType::Node >> ".visibility_global");
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(
+      visFirst,
+      ScType::EdgeAccessVarPosTemp,
+      ScType::Node >> ".visibility_global")
+    .Triple(
+      visSecond,
+      ScType::EdgeAccessVarPosTemp,
+      ".visibility_global")
+    .Make();
 
-  templ.Triple(
-    visSecond,
-    ScType::EdgeAccessVarPosTemp,
-    ".visibility_global");
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  EXPECT_NE(found, search.end());
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
-  EXPECT_EQ(result.Size(), 1u);
-
-  ScAddr const element = result[0][".visibility_global"];
+  ScAddr const element = found[".visibility_global"];
   EXPECT_TRUE(element.IsValid());
+
+  EXPECT_EQ(++found, search.end());
 
   EXPECT_EQ(GetIdtf(*m_ctx, element), ".visibility_global");
 }
@@ -101,28 +106,28 @@ TEST_F(ScBuilderTest, visibility_local)
   ScAddr const visLocal = m_ctx->HelperResolveSystemIdtf("visibility_local");
   EXPECT_TRUE(visLocal.IsValid());
 
-  ScTemplate templ;
-  templ.Triple(
-    visLocal,
-    ScType::EdgeAccessVarPosPerm,
-    ScType::NodeVar >> "_local");
+  ScTemplatePtr templ = ScTemplateBuilder()
+    .Triple(
+      visLocal,
+      ScType::EdgeAccessVarPosPerm,
+      ScType::NodeVar >> "_local")
+    .Make();
 
-  ScTemplateSearchResult result;
-  EXPECT_TRUE(m_ctx->HelperSearchTemplate(templ, result));
-  EXPECT_EQ(result.Size(), 2u);
+  ScTemplateSearch search(*m_ctx, *templ);
+  ScTemplateSearch::Iterator found = search.begin();
+  EXPECT_NE(found, search.end());
 
-  std::map<std::string, ScAddr> elements;
-  for (size_t i = 0; i < result.Size(); ++i)
+  std::unordered_map<std::string, ScAddr> elements;
+  while (found != search.end())
   {
-    auto const & item = result[i];
-    ScAddr const a = item["_local"];
-
+    ScAddr const a = found["_local"];
     EXPECT_TRUE(a.IsValid());
 
     std::string const idtf = GetIdtf(*m_ctx, a);
     EXPECT_FALSE(idtf.empty());
 
-    elements[idtf] = a;
+    elements.insert({idtf, a});
+    ++found;
   }
 
   EXPECT_EQ(elements.size(), 2u);

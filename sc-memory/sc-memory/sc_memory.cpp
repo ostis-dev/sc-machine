@@ -236,6 +236,7 @@ bool ScMemoryContext::IsElement(ScAddr const & addr) const
 bool ScMemoryContext::EraseElement(ScAddr const & addr)
 {
   SC_ASSERT(IsValid(), ());
+  SC_ASSERT(addr.IsValid(), ());
   return sc_memory_element_free(m_context, *addr) == SC_RESULT_OK;
 }
 
@@ -445,31 +446,6 @@ ScAddr ScMemoryContext::HelperFindBySystemIdtf(std::string const & sysIdtf)
   SC_ASSERT(IsValid(), ());
   sc_helper_find_element_by_system_identifier(m_context, sysIdtf.c_str(), (sc_uint32)sysIdtf.size(), &result.m_realAddr);
   return result;
-}
-
-ScTemplate::Result ScMemoryContext::HelperGenTemplate(ScTemplate const & templ, ScTemplateGenResult & result, ScTemplateGenParams const & params, ScTemplateResultCode * resultCode)
-{
-  return templ.Generate(*this, result, params, resultCode);
-}
-
-ScTemplate::Result ScMemoryContext::HelperSearchTemplate(ScTemplate const & templ, ScTemplateSearchResult & result)
-{
-  return templ.Search(*this, result);
-}
-
-ScTemplate::Result ScMemoryContext::HelperSearchTemplateInStruct(ScTemplate const & templ, ScAddr const & scStruct, ScTemplateSearchResult & result)
-{
-  return templ.SearchInStruct(*this, scStruct, result);
-}
-
-ScTemplate::Result ScMemoryContext::HelperBuildTemplate(ScTemplate & templ, ScAddr const & templAddr)
-{
-  return templ.FromScTemplate(*this, templAddr);
-}
-
-ScTemplate::Result ScMemoryContext::HelperBuildTemplate(ScTemplate & templ, std::string const & scsText)
-{
-  return templ.FromScs(*this, scsText);
 }
 
 ScMemoryContext::Stat ScMemoryContext::CalculateStat() const

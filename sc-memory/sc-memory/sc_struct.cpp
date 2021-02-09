@@ -65,15 +65,6 @@ ScSet & ScSet::operator << (ScAddr const & elAddr)
   return *this;
 }
 
-ScSet & ScSet::operator << (ScTemplateGenResult const & res)
-{
-  size_t const res_num = res.Size();
-  for (size_t i = 0; i < res_num; ++i)
-    Append(res.m_result[i]);
-
-  return *this;
-}
-
 ScSet & ScSet::operator >> (ScAddr const & elAddr)
 {
   Remove(elAddr);

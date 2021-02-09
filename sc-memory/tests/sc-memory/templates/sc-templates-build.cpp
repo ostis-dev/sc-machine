@@ -2,13 +2,31 @@
 
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_struct.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 #include "sc_test.hpp"
 #include "template_test_utils.hpp"
 
-using ScTemplateBuildTest = ScTemplateTest;
+using ScTemplateBuidlerTest = ScTemplateTest;
+using ScTemplateStructBuidlerTest = ScTemplateTest;
 
-TEST_F(ScTemplateBuildTest, double_attrs)
+TEST_F(ScTemplateBuidlerTest, addrs_in_repls)
+{
+  ScAddr const addr = m_ctx->CreateNode(ScType::NodeConst);
+  EXPECT_TRUE(addr);
+
+  ScTemplatePtr templ = ScTemplateBuilder()
+      .Triple(addr >> "_x",
+              ScType::EdgeAccessVarNegPerm,
+              ScType::NodeVar)
+      .Make();
+
+  EXPECT_TRUE(templ);
+  EXPECT_TRUE(templ->HasReplacement("_x"));
+  EXPECT_TRUE(templ->HasReplacement(addr.ToString()));
+}
+
+TEST_F(ScTemplateStructBuidlerTest, double_attrs)
 {
   /**
    * addr1 _-> addr3:: addr4:: _addr2;;
@@ -37,8 +55,8 @@ TEST_F(ScTemplateBuildTest, double_attrs)
     for (auto const & a : addrs)
       st << a;
 
-    ScTemplate templ;
-    EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, structAddr));
+    ScTemplatePtr templ = ScTemplateStructBuilder(*m_ctx).Make(structAddr);
+    EXPECT_TRUE(templ);
   };
 
   testOrder({ addr1, addr2, addr3, addr4, edge1, edge2, edge3 });
@@ -46,8 +64,28 @@ TEST_F(ScTemplateBuildTest, double_attrs)
   testOrder({ addr1, addr2, addr3, addr4, edge2, edge1, edge3 });
 }
 
+TEST_F(ScTemplateStructBuidlerTest, addrs_in_repls)
+{
+  // create template in sc-memory
+  {
+    SCsHelper helper(*m_ctx, std::make_shared<DummyFileInterface>());
+    EXPECT_TRUE(helper.GenerateBySCsText("[* x _-> _y;; *] => nrel_system_identifier: [test_template_parameters_addrs];;"));
+  }
 
-TEST_F(ScTemplateBuildTest, edge_from_edge)
+  ScAddr const templAddr = m_ctx->HelperFindBySystemIdtf("test_template_parameters_addrs");
+  EXPECT_TRUE(templAddr.IsValid());
+
+  ScAddr const _yAddr = m_ctx->HelperFindBySystemIdtf("_y");
+  EXPECT_TRUE(_yAddr.IsValid());
+
+  ScTemplatePtr templ = ScTemplateStructBuilder(*m_ctx).Make(templAddr);
+  EXPECT_TRUE(templ);
+
+  EXPECT_TRUE(templ->HasReplacement("_y"));
+  EXPECT_TRUE(templ->HasReplacement(_yAddr.ToString()));
+}
+
+TEST_F(ScTemplateStructBuidlerTest, edge_from_edge)
 {
   /**
    * @edge1 = addr1 _-> _addr2;;
@@ -73,8 +111,8 @@ TEST_F(ScTemplateBuildTest, edge_from_edge)
     for (auto const & a : addrs)
       st << a;
 
-    ScTemplate templ;
-    EXPECT_TRUE(m_ctx->HelperBuildTemplate(templ, structAddr));
+    ScTemplatePtr templ = ScTemplateStructBuilder(*m_ctx).Make(structAddr);
+    EXPECT_TRUE(templ);
   };
 
   testOrder({ addr1, addr2, addr3, edge1, edge2 });

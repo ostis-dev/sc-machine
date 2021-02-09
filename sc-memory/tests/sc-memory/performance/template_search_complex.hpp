@@ -8,28 +8,29 @@ public:
   void Setup(size_t constrCount) override
   {
     ScAddr const node = m_ctx->CreateNode(ScType::NodeConstStruct);
-    m_templ.TripleWithRelation(
-          node,
-          ScType::EdgeDCommonVar,
-          ScType::NodeVarTuple >> "_tuple",
-          ScType::EdgeAccessVarPosPerm,
-          ScType::NodeVarNoRole);
-    m_templ.TripleWithRelation(
-          ScType::NodeVarClass,
-          ScType::EdgeDCommonVar,
-          "_tuple",
-          ScType::EdgeAccessVarPosPerm,
-          ScType::NodeVarNoRole);
-    m_templ.Triple(
-          ScType::NodeVarClass,
-          ScType::EdgeAccessVarPosPerm,
-          node);
+    m_templ = ScTemplateBuilder()
+        .TripleWithRelation(
+            node,
+            ScType::EdgeDCommonVar,
+            ScType::NodeVarTuple >> "_tuple",
+            ScType::EdgeAccessVarPosPerm,
+            ScType::NodeVarNoRole)
+        .TripleWithRelation(
+            ScType::NodeVarClass,
+            ScType::EdgeDCommonVar,
+            "_tuple",
+            ScType::EdgeAccessVarPosPerm,
+            ScType::NodeVarNoRole)
+        .Triple(
+            ScType::NodeVarClass,
+            ScType::EdgeAccessVarPosPerm,
+            node)
+        .Make();
 
     for (size_t i = 0; i < constrCount; ++i)
     {
-      ScTemplateGenResult result;
-      m_ctx->HelperGenTemplate(m_templ, result);
-      assert(result.Size() > 0);
+      ScTemplateGenerate::Result result = ScTemplateGenerate(*m_ctx, *m_templ).Do();
+      assert(result);
     }
   }
 };

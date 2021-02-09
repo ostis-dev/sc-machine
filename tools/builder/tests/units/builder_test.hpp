@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 #include "test_defines.hpp"
 

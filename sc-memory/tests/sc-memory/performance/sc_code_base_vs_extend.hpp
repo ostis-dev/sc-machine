@@ -17,15 +17,16 @@ public:
       m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, attr, edge);
     }
 
-    m_templ.TripleWithRelation(
+    m_templ = ScTemplateBuilder()
+        .TripleWithRelation(
           node,
           ScType::EdgeDCommonVar,
           ScType::NodeVarAbstract,
           ScType::EdgeAccessVarPosPerm,
-          attr);
+          attr)
+        .Make();
   }
 };
-
 
 class TestScCodeBase : public TestTemplate
 {
@@ -58,46 +59,41 @@ public:
       m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, attr, edge);
     }
 
-    m_templ.TripleWithRelation(
+    m_templ = ScTemplateBuilder()
+        .TripleWithRelation(
           node >> "_node",
           ScType::EdgeDCommonVar >> "_edge",
           ScType::NodeVarAbstract >> "_trg",
           ScType::EdgeAccessVarPosPerm,
-          attr >> "_attr");
-
-    m_templ.Triple(
+          attr >> "_attr")
+        .Triple(
           kConst,
           ScType::EdgeAccessVarPosPerm,
-          "_node");
-
-    m_templ.Triple(
+          "_node")
+        .Triple(
           kClass,
           ScType::EdgeAccessVarPosPerm,
-          "_node");
-
-    m_templ.Triple(
+          "_node")
+        .Triple(
           kConst,
           ScType::EdgeAccessVarPosPerm,
-          "_attr");
-
-    m_templ.Triple(
+          "_attr")
+        .Triple(
           kRole,
           ScType::EdgeAccessVarPosPerm,
-          "_attr");
-
-    m_templ.Triple(
+          "_attr")
+        .Triple(
           kAbstract,
           ScType::EdgeAccessVarPosPerm,
-          "_trg");
-
-    m_templ.Triple(
+          "_trg")
+        .Triple(
           kConst,
           ScType::EdgeAccessVarPosPerm,
-          "_trg");
-
-    m_templ.Triple(
+          "_trg")
+        .Triple(
           kConst,
           ScType::EdgeAccessVarPosPerm,
-          "_edge");
+          "_edge")
+        .Make();
   }
 };
