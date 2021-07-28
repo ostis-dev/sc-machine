@@ -53,6 +53,11 @@ void BM_MemoryThreaded(benchmark::State & state)
 int constexpr kNodeIters = 10000000;
 
 BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateNode)
+    ->Threads(1)
+    ->Iterations(kNodeIters)
+    ->Unit(benchmark::TimeUnit::kMicrosecond);
+
+BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateNode)
   ->Threads(2)
   ->Iterations(kNodeIters / 2)
   ->Unit(benchmark::TimeUnit::kMicrosecond);
@@ -72,7 +77,12 @@ BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateNode)
   ->Iterations(kNodeIters / 16)
   ->Unit(benchmark::TimeUnit::kMicrosecond);
 
-int constexpr kLinkIters = 25000;
+int constexpr kLinkIters = 2500;
+
+BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateLink)
+    ->Threads(1)
+    ->Iterations(kLinkIters)
+    ->Unit(benchmark::TimeUnit::kMicrosecond);
 
 BENCHMARK_TEMPLATE(BM_MemoryThreaded, TestCreateLink)
   ->Threads(2)
