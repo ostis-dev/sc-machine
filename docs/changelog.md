@@ -2,6 +2,7 @@
 
 - **Build system**:
    - Set project binaries path to root (#352)
+   - Support arm64 build
 
 - **Core**:
    - Fix issue with erasing empty sc-link
