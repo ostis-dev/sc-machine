@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 
+#include "sc_test.hpp"
+
 #include "sc-memory/sc_link.hpp"
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_struct.hpp"
-
-#include "sc_test.hpp"
 #include "template_test_utils.hpp"
 
 using ScTemplateSearchTest = ScTemplateTest;
@@ -14,11 +14,7 @@ TEST_F(ScTemplateSearchTest, empty)
   ScAddr const addr = m_ctx->CreateNode(ScType::NodeClass);
   EXPECT_TRUE(addr.IsValid());
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr,
-              ScType::EdgeAccessVarNegPerm,
-              ScType::NodeVar)
-      .Make();
+  ScTemplatePtr templ = ScTemplateBuilder().Triple(addr, ScType::EdgeAccessVarNegPerm, ScType::NodeVar).Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   EXPECT_EQ(search.begin(), search.end());
@@ -35,11 +31,8 @@ TEST_F(ScTemplateSearchTest, empty_end)
   ScAddr const edge = m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, addr, addr2);
   EXPECT_TRUE(edge);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr,
-              ScType::EdgeAccessVarPosPerm >> "_edge",
-              ScType::NodeVar)
-      .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(addr, ScType::EdgeAccessVarPosPerm >> "_edge", ScType::NodeVar).Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   ScTemplateSearch::Iterator it = search.begin();
@@ -50,7 +43,6 @@ TEST_F(ScTemplateSearchTest, empty_end)
   EXPECT_EQ(it, search.end());
   EXPECT_FALSE(it["_edge"]);
 }
-
 
 TEST_F(ScTemplateSearchTest, search_1)
 {
@@ -158,17 +150,14 @@ TEST_F(ScTemplateSearchTest, search_2)
 
   // now check search
   ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      addr >> "_addr",
-      ScType::EdgeDCommonVar >> "_edgeCommon",
-      ScType::Link >> "_link",
-      ScType::EdgeAccessVarPosPerm >> "_edgeAttr",
-      nrelMainIdtf >> "_nrelMainIdtf")
-    .Triple(
-      lang >> "_lang",
-      ScType::EdgeAccessVarPosPerm >> "_edgeLang",
-      "_link")
-    .Make();
+                            .TripleWithRelation(
+                                addr >> "_addr",
+                                ScType::EdgeDCommonVar >> "_edgeCommon",
+                                ScType::Link >> "_link",
+                                ScType::EdgeAccessVarPosPerm >> "_edgeAttr",
+                                nrelMainIdtf >> "_nrelMainIdtf")
+                            .Triple(lang >> "_lang", ScType::EdgeAccessVarPosPerm >> "_edgeLang", "_link")
+                            .Make();
 
   // search
   {
@@ -198,12 +187,8 @@ TEST_F(ScTemplateSearchTest, unknown_type)
   ScAddr const edge = m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, addr1, addr2);
   EXPECT_TRUE(edge.IsValid());
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .Triple(
-      addr1,
-      ScType::EdgeAccessVarPosPerm >> "edge",
-      ScType::Unknown >> "addr2")
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(addr1, ScType::EdgeAccessVarPosPerm >> "edge", ScType::Unknown >> "addr2").Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   ScTemplateSearch::Iterator found = search.begin();
@@ -288,30 +273,20 @@ TEST_F(ScTemplateSearchTest, links_with_relation)
     ++i;
   }
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      ScType::NodeVarTuple >> "_tuple",
-      ScType::EdgeDCommonVar,
-      deviceAddr,
-      ScType::EdgeAccessVarPosPerm,
-      nrelInstalledApp)
-    .Triple(
-      "_tuple",
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> "_app")
-    .TripleWithRelation(
-      "_app",
-      ScType::EdgeDCommonVar,
-      ScType::Link >> "_idtf",
-      ScType::EdgeAccessVarPosPerm,
-      nrelIdtf)
-    .TripleWithRelation(
-      "_app",
-      ScType::EdgeDCommonVar,
-      ScType::Link >> "_image",
-      ScType::EdgeAccessVarPosPerm,
-      nrelImage)
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .TripleWithRelation(
+              ScType::NodeVarTuple >> "_tuple",
+              ScType::EdgeDCommonVar,
+              deviceAddr,
+              ScType::EdgeAccessVarPosPerm,
+              nrelInstalledApp)
+          .Triple("_tuple", ScType::EdgeAccessVarPosPerm, ScType::NodeVar >> "_app")
+          .TripleWithRelation(
+              "_app", ScType::EdgeDCommonVar, ScType::Link >> "_idtf", ScType::EdgeAccessVarPosPerm, nrelIdtf)
+          .TripleWithRelation(
+              "_app", ScType::EdgeDCommonVar, ScType::Link >> "_image", ScType::EdgeAccessVarPosPerm, nrelImage)
+          .Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   ScTemplateSearch::Iterator found = search.begin();
@@ -355,15 +330,9 @@ TEST_F(ScTemplateSearchTest, result_deduplication)
   EXPECT_TRUE(a.IsValid());
 
   ScTemplatePtr templ = ScTemplateBuilder()
-    .Triple(
-      a >> "a",
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarMaterial >> "b")
-    .Triple(
-      "a",
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> "c")
-    .Make();
+                            .Triple(a >> "a", ScType::EdgeAccessVarPosPerm, ScType::NodeVarMaterial >> "b")
+                            .Triple("a", ScType::EdgeAccessVarPosPerm, ScType::NodeVar >> "c")
+                            .Make();
 
   ScTemplateGenerate::Result genResult = ScTemplateGenerate(*m_ctx, *templ).Do();
   EXPECT_TRUE(genResult);
@@ -398,21 +367,18 @@ TEST_F(ScTemplateSearchTest, parameters)
   ScAddr const rel2 = m_ctx->CreateNode(ScType::NodeConstNoRole);
   EXPECT_TRUE(rel2.IsValid());
 
-
   ScTemplatePtr templ = ScTemplateBuilder()
-      .TripleWithRelation(node,
-                          ScType::EdgeAccessVarPosPerm,
-                          ScType::NodeVarMaterial >> "_trg",
-                          ScType::EdgeAccessVarPosPerm,
-                          ScType::NodeVarNoRole >> "_rel")
-      .Make();
+                            .TripleWithRelation(
+                                node,
+                                ScType::EdgeAccessVarPosPerm,
+                                ScType::NodeVarMaterial >> "_trg",
+                                ScType::EdgeAccessVarPosPerm,
+                                ScType::NodeVarNoRole >> "_rel")
+                            .Make();
 
   {
     ScTemplateParams params;
-    params
-        .Add("_trg", target1)
-        .Add("_rel", rel1);
-
+    params.Add("_trg", target1).Add("_rel", rel1);
 
     ScTemplateGenerate::Result result = ScTemplateGenerate(*m_ctx, *templ).Do(params);
     EXPECT_TRUE(result);
@@ -420,10 +386,7 @@ TEST_F(ScTemplateSearchTest, parameters)
 
   {
     ScTemplateParams params;
-    params
-        .Add("_trg", target2)
-        .Add("_rel", rel2);
-
+    params.Add("_trg", target2).Add("_rel", rel2);
 
     ScTemplateGenerate::Result result = ScTemplateGenerate(*m_ctx, *templ).Do(params);
     EXPECT_TRUE(result);
@@ -490,7 +453,8 @@ TEST_F(ScTemplateSearchTest, parameters_addrs)
   // create template in sc-memory
   {
     SCsHelper helper(*m_ctx, std::make_shared<DummyFileInterface>());
-    EXPECT_TRUE(helper.GenerateBySCsText("[* x _-> _y;; *] => nrel_system_identifier: [test_template_parameters_addrs];;"));
+    EXPECT_TRUE(
+        helper.GenerateBySCsText("[* x _-> _y;; *] => nrel_system_identifier: [test_template_parameters_addrs];;"));
   }
 
   ScAddr const templAddr = m_ctx->HelperFindBySystemIdtf("test_template_parameters_addrs");
@@ -518,7 +482,6 @@ TEST_F(ScTemplateSearchTest, parameters_addrs)
 
 TEST_F(ScTemplateSearchTest, parameters_addrs_edge)
 {
-
 }
 
 TEST_F(ScTemplateSearchTest, parameters_invalid_assign_to_non_type)
@@ -529,19 +492,14 @@ TEST_F(ScTemplateSearchTest, parameters_invalid_assign_to_non_type)
   ScAddr const value = m_ctx->CreateNode(ScType::NodeConstAbstract);
   EXPECT_TRUE(value);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr >> "_addr",
-              ScType::EdgeAccessVarFuzPerm,
-              ScType::NodeVar)
-      .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(addr >> "_addr", ScType::EdgeAccessVarFuzPerm, ScType::NodeVar).Make();
 
   ScTemplateParams params;
   params.Add("_addr", value);
 
   ScTemplateSearch search(*m_ctx, *templ, params);
-  EXPECT_THROW(
-        search.begin(),
-        utils::ExceptionInvalidParams);
+  EXPECT_THROW(search.begin(), utils::ExceptionInvalidParams);
 }
 
 TEST_F(ScTemplateSearchTest, parameters_invalid_assign_variable_value)
@@ -552,19 +510,14 @@ TEST_F(ScTemplateSearchTest, parameters_invalid_assign_variable_value)
   ScAddr const value = m_ctx->CreateNode(ScType::NodeVarAbstract);
   EXPECT_TRUE(value);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr,
-              ScType::EdgeAccessVarFuzPerm,
-              ScType::NodeVar >> "_var")
-      .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(addr, ScType::EdgeAccessVarFuzPerm, ScType::NodeVar >> "_var").Make();
 
   ScTemplateParams params;
   params.Add("_var", value);
 
   ScTemplateSearch search(*m_ctx, *templ, params);
-  EXPECT_THROW(
-        search.begin(),
-        utils::ExceptionInvalidParams);
+  EXPECT_THROW(search.begin(), utils::ExceptionInvalidParams);
 }
 
 TEST_F(ScTemplateSearchTest, parameters_invalid_assign_non_compatible_type)
@@ -575,19 +528,14 @@ TEST_F(ScTemplateSearchTest, parameters_invalid_assign_non_compatible_type)
   ScAddr const value = m_ctx->CreateNode(ScType::NodeVarClass);
   EXPECT_TRUE(value);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr,
-              ScType::EdgeAccessVarFuzPerm,
-              ScType::NodeVar >> "_var")
-      .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(addr, ScType::EdgeAccessVarFuzPerm, ScType::NodeVar >> "_var").Make();
 
   ScTemplateParams params;
   params.Add("_var", value);
 
   ScTemplateSearch search(*m_ctx, *templ, params);
-  EXPECT_THROW(
-        search.begin(),
-        utils::ExceptionInvalidParams);
+  EXPECT_THROW(search.begin(), utils::ExceptionInvalidParams);
 }
 
 TEST_F(ScTemplateSearchTest, parameters_invalid_assign_non_existing)
@@ -598,17 +546,12 @@ TEST_F(ScTemplateSearchTest, parameters_invalid_assign_non_existing)
   ScAddr const value = m_ctx->CreateNode(ScType::NodeConstClass);
   EXPECT_TRUE(value);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr,
-              ScType::EdgeAccessVarFuzPerm,
-              ScType::NodeVar >> "_var")
-      .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(addr, ScType::EdgeAccessVarFuzPerm, ScType::NodeVar >> "_var").Make();
 
   ScTemplateParams params;
   params.Add("_non_exist", value);
 
   ScTemplateSearch search(*m_ctx, *templ, params);
-  EXPECT_THROW(
-        search.begin(),
-        utils::ExceptionItemNotFound);
+  EXPECT_THROW(search.begin(), utils::ExceptionItemNotFound);
 }

@@ -1,14 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/kpm/sc_agent.hpp"
-
-#include "test_sc_agent.hpp"
-
 #include "agents_test_utils.hpp"
+#include "sc-memory/kpm/sc_agent.hpp"
+#include "test_sc_agent.hpp"
 
 namespace
 {
-
 ScAddr CreateKeynode(ScMemoryContext & ctx, std::string const & name)
 {
   ScAddr const node = ctx.CreateNode(ScType::NodeConst);
@@ -18,8 +15,7 @@ ScAddr CreateKeynode(ScMemoryContext & ctx, std::string const & name)
   return node;
 }
 
-} // namespace
-
+}  // namespace
 
 TEST_F(ScAgentTest, ATestAction)
 {

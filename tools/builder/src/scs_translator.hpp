@@ -10,7 +10,6 @@
 
 class SCsTranslator : public Translator
 {
-
 public:
   explicit SCsTranslator(class ScMemoryContext & context);
   virtual ~SCsTranslator() = default;

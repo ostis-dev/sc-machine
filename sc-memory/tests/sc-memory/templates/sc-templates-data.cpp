@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_templates.hpp"
-
 #include "sc_test.hpp"
+
+#include "sc-memory/sc_templates.hpp"
 #include "template_test_utils.hpp"
 
 using ScTemplateDataTest = ScTemplateTest;
@@ -14,13 +14,9 @@ TEST_F(ScTemplateDataTest, smoke)
 
   ScTemplateData data;
 
-  data.AddTriple(addr1,
-                 ScType::EdgeAccessVarFuzPerm >> "_edge",
-                 addr2);
+  data.AddTriple(addr1, ScType::EdgeAccessVarFuzPerm >> "_edge", addr2);
 
-  data.AddTriple(ScType::NodeVarAbstract,
-                 ScType::EdgeAccessVarPosPerm,
-                 "_edge");
+  data.AddTriple(ScType::NodeVarAbstract, ScType::EdgeAccessVarPosPerm, "_edge");
 
   EXPECT_EQ(data.TriplesNum(), 2u);
 }
@@ -31,9 +27,7 @@ TEST_F(ScTemplateDataTest, Replacements)
   ScAddr const sourceAddr(21);
   ScAddr const targetAddr(43);
 
-  data.AddTriple(sourceAddr,
-                 ScType::EdgeAccessVarFuzPerm >> "_edge",
-                 targetAddr >> "addr2");
+  data.AddTriple(sourceAddr, ScType::EdgeAccessVarFuzPerm >> "_edge", targetAddr >> "addr2");
 
   EXPECT_TRUE(data.HasReplacement("_edge"));
   EXPECT_TRUE(data.HasReplacement("addr2"));
@@ -55,16 +49,10 @@ TEST_F(ScTemplateDataTest, Replacements)
 TEST_F(ScTemplateDataTest, build_error_double_replacements)
 {
   ScTemplateData data;
-  data.AddTriple(ScAddr(1),
-                 ScType::EdgeAccessVarPosPerm,
-                 ScType::NodeVarClass >> "_test");
+  data.AddTriple(ScAddr(1), ScType::EdgeAccessVarPosPerm, ScType::NodeVarClass >> "_test");
 
-  EXPECT_ANY_THROW(
-    data.AddTriple(ScType::NodeVarAbstract >> "_test",
-                   ScType::EdgeAccessVarFuzPerm,
-                   ScAddr(2)));
+  EXPECT_ANY_THROW(data.AddTriple(ScType::NodeVarAbstract >> "_test", ScType::EdgeAccessVarFuzPerm, ScAddr(2)));
 }
-
 
 TEST_F(ScTemplateDataTest, SetupReplAlias)
 {
@@ -75,9 +63,7 @@ TEST_F(ScTemplateDataTest, SetupReplAlias)
   std::string const repl = "_repl";
   std::string const alias = "_alias";
 
-  data.AddTriple(ScAddr(1),
-                 ScType::EdgeAccessVarFuzTemp >> repl,
-                 ScType::NodeVarAbstract);
+  data.AddTriple(ScAddr(1), ScType::EdgeAccessVarFuzTemp >> repl, ScType::NodeVarAbstract);
 
   EXPECT_FALSE(data.HasReplacement(alias));
   EXPECT_TRUE(data.HasReplacement(repl));

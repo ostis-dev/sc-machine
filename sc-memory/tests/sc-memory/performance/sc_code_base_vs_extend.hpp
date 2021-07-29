@@ -5,7 +5,6 @@
 class TestScCodeExtended : public TestTemplate
 {
 public:
-
   void Setup(size_t constrCount) override
   {
     ScAddr const node = m_ctx->CreateNode(ScType::NodeConstClass);
@@ -18,20 +17,15 @@ public:
     }
 
     m_templ = ScTemplateBuilder()
-        .TripleWithRelation(
-          node,
-          ScType::EdgeDCommonVar,
-          ScType::NodeVarAbstract,
-          ScType::EdgeAccessVarPosPerm,
-          attr)
-        .Make();
+                  .TripleWithRelation(
+                      node, ScType::EdgeDCommonVar, ScType::NodeVarAbstract, ScType::EdgeAccessVarPosPerm, attr)
+                  .Make();
   }
 };
 
 class TestScCodeBase : public TestTemplate
 {
 public:
-
   void Setup(size_t constrCount) override
   {
     ScAddr const kAbstract = m_ctx->CreateNode(ScType::NodeConst);
@@ -60,40 +54,19 @@ public:
     }
 
     m_templ = ScTemplateBuilder()
-        .TripleWithRelation(
-          node >> "_node",
-          ScType::EdgeDCommonVar >> "_edge",
-          ScType::NodeVarAbstract >> "_trg",
-          ScType::EdgeAccessVarPosPerm,
-          attr >> "_attr")
-        .Triple(
-          kConst,
-          ScType::EdgeAccessVarPosPerm,
-          "_node")
-        .Triple(
-          kClass,
-          ScType::EdgeAccessVarPosPerm,
-          "_node")
-        .Triple(
-          kConst,
-          ScType::EdgeAccessVarPosPerm,
-          "_attr")
-        .Triple(
-          kRole,
-          ScType::EdgeAccessVarPosPerm,
-          "_attr")
-        .Triple(
-          kAbstract,
-          ScType::EdgeAccessVarPosPerm,
-          "_trg")
-        .Triple(
-          kConst,
-          ScType::EdgeAccessVarPosPerm,
-          "_trg")
-        .Triple(
-          kConst,
-          ScType::EdgeAccessVarPosPerm,
-          "_edge")
-        .Make();
+                  .TripleWithRelation(
+                      node >> "_node",
+                      ScType::EdgeDCommonVar >> "_edge",
+                      ScType::NodeVarAbstract >> "_trg",
+                      ScType::EdgeAccessVarPosPerm,
+                      attr >> "_attr")
+                  .Triple(kConst, ScType::EdgeAccessVarPosPerm, "_node")
+                  .Triple(kClass, ScType::EdgeAccessVarPosPerm, "_node")
+                  .Triple(kConst, ScType::EdgeAccessVarPosPerm, "_attr")
+                  .Triple(kRole, ScType::EdgeAccessVarPosPerm, "_attr")
+                  .Triple(kAbstract, ScType::EdgeAccessVarPosPerm, "_trg")
+                  .Triple(kConst, ScType::EdgeAccessVarPosPerm, "_trg")
+                  .Triple(kConst, ScType::EdgeAccessVarPosPerm, "_edge")
+                  .Make();
   }
 };

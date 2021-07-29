@@ -6,7 +6,7 @@ TEST(scs_regression, issue_353)
 {
   std::string const data =
       "a -> [*"
-        "_x <- sc_node_class;;"
+      "_x <- sc_node_class;;"
       "*];;";
 
   scs::Parser parser;

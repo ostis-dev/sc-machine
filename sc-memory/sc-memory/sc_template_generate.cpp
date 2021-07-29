@@ -7,8 +7,7 @@
 class ScTemplateGenerateImpl
 {
 public:
-  ScTemplateGenerateImpl(ScMemoryContext & ctx,
-                         ScTemplate::Data const & templ)
+  ScTemplateGenerateImpl(ScMemoryContext & ctx, ScTemplate::Data const & templ)
     : m_ctx(ctx)
     , m_templ(templ)
   {
@@ -26,7 +25,8 @@ public:
     {
       ScTemplate::Data::Triple const & triple = m_templ.GetTriple(i);
       if (triple.edge.IsFixed())
-        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "You can't use fixed value for edge in triple for template generation");
+        SC_THROW_EXCEPTION(
+            utils::ExceptionInvalidParams, "You can't use fixed value for edge in triple for template generation");
     }
 
     if (!CheckParams(params))
@@ -38,7 +38,7 @@ public:
     auto const AddResult = [&resultBuilder, &result](ScAddr const & addr, std::string const & name)
     {
       if (name.empty())
-        return; // do nothing
+        return;  // do nothing
 
       if (!result.Has(name))
         resultBuilder.Add(name, addr);
@@ -107,9 +107,10 @@ public:
     return addr;
   }
 
-  ScAddr ResolveAddr(ScTemplateArg const & itemValue,
-                     ScTemplateParams const & params,
-                     ScTemplateNamedStruct const & result)
+  ScAddr ResolveAddr(
+      ScTemplateArg const & itemValue,
+      ScTemplateParams const & params,
+      ScTemplateNamedStruct const & result)
   {
     /// TODO: improve speed, because not all time we need to replace by params
     // replace by value from params
@@ -186,7 +187,6 @@ private:
 
   ScAddrVector m_createdElements;
 };
-
 
 ScTemplateGenerate::ScTemplateGenerate(ScMemoryContext & ctx, ScTemplate const & templ)
 {

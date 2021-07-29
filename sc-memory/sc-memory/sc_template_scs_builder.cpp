@@ -4,7 +4,6 @@
 #include "sc_template_builder_impl.hpp"
 
 #include "scs/scs_parser.hpp"
-
 #include "utils/sc_keynode_cache.hpp"
 
 ScTemplateSCsBuilder::ScTemplateSCsBuilder(ScMemoryContext & ctx)
@@ -74,9 +73,7 @@ ScTemplatePtr ScTemplateSCsBuilder::Make(std::string const & scsText)
 
     ScTemplateArg srcItem, edgeItem, trgItem;
 
-    if (!MakeTemplItem(src, srcItem) ||
-        !MakeTemplItem(edge, edgeItem) ||
-        !MakeTemplItem(trg, trgItem))
+    if (!MakeTemplItem(src, srcItem) || !MakeTemplItem(edge, edgeItem) || !MakeTemplItem(trg, trgItem))
     {
       return {};
     }

@@ -5,7 +5,9 @@
 class DummyFileInterface : public SCsFileInterface
 {
 public:
-  ~DummyFileInterface() override {}
+  ~DummyFileInterface() override
+  {
+  }
 
   ScStreamPtr GetFileContent(std::string const &) override
   {

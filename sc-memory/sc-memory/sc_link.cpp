@@ -1,4 +1,5 @@
 #include "sc_link.hpp"
+
 #include "sc_template_builder.hpp"
 #include "sc_template_search.hpp"
 
@@ -109,20 +110,14 @@ std::string ScLink::GetAsString() const
   return "";
 }
 
-
 bool ScLink::_DetermineTypeEdgeImpl(ScAddr & outEdge, ScAddr & outType) const
 {
   // set type
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .Triple(
-      ScKeynodes::kBinaryType,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVarClass >> "_type")
-    .Triple(
-      "_type",
-      ScType::EdgeAccessVarPosTemp >> "_edge",
-      m_addr)
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .Triple(ScKeynodes::kBinaryType, ScType::EdgeAccessVarPosPerm, ScType::NodeVarClass >> "_type")
+          .Triple("_type", ScType::EdgeAccessVarPosTemp >> "_edge", m_addr)
+          .Make();
 
   ScTemplateSearch search(m_ctx, *templ);
   auto it = search.begin();
@@ -136,4 +131,3 @@ bool ScLink::_DetermineTypeEdgeImpl(ScAddr & outEdge, ScAddr & outType) const
 
   return false;
 }
-

@@ -3,20 +3,25 @@
 #include "sc_addr.hpp"
 #include "sc_type.hpp"
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 class ScTemplateParams
 {
 public:
-
   using ContainerType = std::unordered_map<std::string, ScAddr>;
 
   _SC_EXTERN ScTemplateParams & Add(std::string const & key, ScAddr const & value);
   _SC_EXTERN ScTemplateParams & Add(ScAddr const & key, ScAddr const & value);
 
-  _SC_EXTERN ContainerType::const_iterator begin() const { return m_values.begin(); }
-  _SC_EXTERN ContainerType::const_iterator end() const { return m_values.end(); }
+  _SC_EXTERN ContainerType::const_iterator begin() const
+  {
+    return m_values.begin();
+  }
+  _SC_EXTERN ContainerType::const_iterator end() const
+  {
+    return m_values.end();
+  }
 
   //! Check if parameters are empty
   _SC_EXTERN bool IsEmpty() const;
@@ -32,8 +37,8 @@ public:
   _SC_EXTERN ScAddr TryGet(ScAddr const & addr) const;
 
   /// Operators that wrap TryGet methods
-  _SC_EXTERN ScAddr operator [] (std::string const & name) const;
-  _SC_EXTERN ScAddr operator [] (ScAddr const & addr) const;
+  _SC_EXTERN ScAddr operator[](std::string const & name) const;
+  _SC_EXTERN ScAddr operator[](ScAddr const & addr) const;
 
   /*! Check if template element with type `varType` can be replaced with
    *  parameter that have type `paramType`

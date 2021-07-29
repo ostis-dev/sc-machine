@@ -10,9 +10,8 @@ namespace n1
 {
 namespace n2
 {
-
 ScAddr TestObject::mTestKeynode3;
 ScTemplate TestObject::mTestTemplate2;
 
-} // namespace n2
-} // namespace n1
+}  // namespace n2
+}  // namespace n1

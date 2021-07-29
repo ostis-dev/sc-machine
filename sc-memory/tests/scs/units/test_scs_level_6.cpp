@@ -11,51 +11,37 @@ TEST(scs_level_6, set)
   EXPECT_TRUE(parser.Parse(data));
 
   TripleTester tester(parser);
-  tester({
-           {
-             { ScType::NodeConstTuple, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "a" }
-           },
-           {
-             { ScType::NodeConstTuple, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "c" }
-           },
-           {
-             { ScType::NodeConst, "b" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local }
-           },
-           {
-             { ScType::NodeConstTuple, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "f" }
-           },
-           {
-             { ScType::NodeConst, "d" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local }
-           },
-           {
-             { ScType::NodeConst, "e" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local }
-           }
-         });
+  tester(
+      {{{ScType::NodeConstTuple, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::NodeConst, "a"}},
+       {{ScType::NodeConstTuple, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::NodeConst, "c"}},
+       {{ScType::NodeConst, "b"},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}},
+       {{ScType::NodeConstTuple, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::NodeConst, "f"}},
+       {{ScType::NodeConst, "d"},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}},
+       {{ScType::NodeConst, "e"},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}}});
 }
 
 TEST(scs_level_6, smoke)
 {
   std::vector<std::string> data = {
-    "z -> [**];;",
-    "x -> [test*];;",
-    "@a = [\\[* r-> b;; *\\]];;",
-    "@alias = u;; @alias -> [* x -> [* y -> z;; *];; *];;",
-    "y <= nrel_main_idtf: [y*];;",
-    "a -> [* z -> [begin*];; *];;",
-    "a -> [* b -> c;; *];;"
-  };
+      "z -> [**];;",
+      "x -> [test*];;",
+      "@a = [\\[* r-> b;; *\\]];;",
+      "@alias = u;; @alias -> [* x -> [* y -> z;; *];; *];;",
+      "y <= nrel_main_idtf: [y*];;",
+      "a -> [* z -> [begin*];; *];;",
+      "a -> [* b -> c;; *];;"};
 
   for (auto const & d : data)
   {
@@ -181,7 +167,6 @@ TEST(scs_level_6, contour_empty)
   EXPECT_EQ(trg.GetType(), ScType::NodeConstStruct);
 }
 
-
 TEST(scs_level_6, contour_parse_error)
 {
   {
@@ -200,7 +185,6 @@ TEST(scs_level_6, contour_parse_error)
     EXPECT_FALSE(parser.Parse(data));
   }
 }
-
 
 TEST(scs_level_6, contour_simple)
 {
@@ -289,7 +273,6 @@ TEST(scs_level_6, contour_recursive)
     EXPECT_EQ(trg.GetType(), ScType::NodeConstStruct);
   }
 }
-
 
 TEST(scs_level_6, contout_with_content)
 {

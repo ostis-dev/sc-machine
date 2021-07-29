@@ -5,10 +5,10 @@
  */
 
 #include "translator.hpp"
-#include "keynodes.hpp"
 
-#include "sc-memory/sc_memory.hpp"
+#include "keynodes.hpp"
 #include "sc-memory/sc_link.hpp"
+#include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_templates.hpp"
 
 Translator::Translator(ScMemoryContext & ctx)
@@ -27,20 +27,18 @@ void Translator::GenerateFormatInfo(ScAddr const & addr, std::string const & ext
 
   ScAddr const formatAddr = m_ctx.HelperResolveSystemIdtf(fmtStr, ScType::NodeConstClass);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      addr,
-      ScType::EdgeDCommonVar,
-      formatAddr,
-      ScType::EdgeAccessVarPosPerm,
-      Keynodes::kNrelFormat())
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .TripleWithRelation(
+              addr, ScType::EdgeDCommonVar, formatAddr, ScType::EdgeAccessVarPosPerm, Keynodes::kNrelFormat())
+          .Make();
 
   ScTemplateGenerate generator(m_ctx, *templ);
   ScTemplateGenerate::Result result = generator.Do();
   if (!result)
   {
-    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Error to generate format for sc-link: " << generator.GetErrorMessage());
+    SC_THROW_EXCEPTION(
+        utils::ExceptionInvalidState, "Error to generate format for sc-link: " << generator.GetErrorMessage());
   }
 }
 
@@ -67,18 +65,15 @@ void Translator::Clean(ScMemoryContext & ctx)
   }
 
   ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      ScType::Unknown,
-      ScType::EdgeDCommonVar,
-      ScType::Link >> "_link",
-      ScType::EdgeAccessVarPosPerm,
-      nrelSCsGlobalIdtf)
-    .Make();
+                            .TripleWithRelation(
+                                ScType::Unknown,
+                                ScType::EdgeDCommonVar,
+                                ScType::Link >> "_link",
+                                ScType::EdgeAccessVarPosPerm,
+                                nrelSCsGlobalIdtf)
+                            .Make();
 
   ScTemplateSearch search(ctx, *templ);
   for (ScTemplateNamedStruct const & res : search)
     ctx.EraseElement(res["_link"]);
 }
-
-
-

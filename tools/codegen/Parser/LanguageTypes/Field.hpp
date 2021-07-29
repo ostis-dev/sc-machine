@@ -15,8 +15,11 @@ public:
 
   static std::string GetForceType(MetaDataManager const & metaData);
 
-  static void GenerateResolveKeynodeCode(std::string const & sysIdtf, std::string const & displayName,
-                                         std::string const & forceType, std::stringstream & outCode);
+  static void GenerateResolveKeynodeCode(
+      std::string const & sysIdtf,
+      std::string const & displayName,
+      std::string const & forceType,
+      std::stringstream & outCode);
 
   std::string const & GetDisplayName() const;
 

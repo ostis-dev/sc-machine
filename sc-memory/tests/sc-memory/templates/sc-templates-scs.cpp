@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_memory.hpp"
-
 #include "sc_test.hpp"
+
+#include "sc-memory/sc_memory.hpp"
 #include "template_test_utils.hpp"
 
 using ScTemplateSCsTest = ScTemplateTest;
@@ -25,12 +25,10 @@ TEST_F(ScTemplateSCsTest, build_fail)
 
 TEST_F(ScTemplateSCsTest, search)
 {
-  ScTemplatePtr genTempl = ScTemplateBuilder()
-    .Triple(
-      ScType::NodeVar >> "_a",
-      ScType::EdgeAccessVarPosPerm >> "_edge",
-      ScType::NodeVarTuple >> "b")
-    .Make();
+  ScTemplatePtr genTempl =
+      ScTemplateBuilder()
+          .Triple(ScType::NodeVar >> "_a", ScType::EdgeAccessVarPosPerm >> "_edge", ScType::NodeVarTuple >> "b")
+          .Make();
 
   ScTemplateGenerate::Result genResult = ScTemplateGenerate(*m_ctx, *genTempl).Do();
   EXPECT_TRUE(genResult);
@@ -67,12 +65,10 @@ TEST_F(ScTemplateSCsTest, generate)
   EXPECT_TRUE(genResult);
 
   // check
-  ScTemplatePtr searchTempl = ScTemplateBuilder()
-    .Triple(
-      cAddr >> "c1",
-      ScType::EdgeDCommonVar >> "_edge",
-      ScType::NodeVarAbstract >> "_b1")
-    .Make();
+  ScTemplatePtr searchTempl =
+      ScTemplateBuilder()
+          .Triple(cAddr >> "c1", ScType::EdgeDCommonVar >> "_edge", ScType::NodeVarAbstract >> "_b1")
+          .Make();
 
   ScTemplateSearch search(*m_ctx, *searchTempl);
   ScTemplateSearch::Iterator searchResult = search.begin();

@@ -2,17 +2,13 @@
 
 namespace sc
 {
-
 ScAddr ResolveRelationTuple(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr const & relAddr)
 {
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      ScType::NodeVarTuple >> "_tuple",
-      ScType::EdgeDCommonVar,
-      elAddr,
-      ScType::EdgeAccessVarPosPerm,
-      relAddr)
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .TripleWithRelation(
+              ScType::NodeVarTuple >> "_tuple", ScType::EdgeDCommonVar, elAddr, ScType::EdgeAccessVarPosPerm, relAddr)
+          .Make();
 
   ScTemplateSearch search(ctx, *templ);
   ScTemplateSearch::Iterator it = search.begin();
@@ -27,11 +23,10 @@ ScAddr ResolveRelationTuple(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr
   ScTemplateGenerate::Result const generated = generator.Do();
   if (!generated)
   {
-    SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
-                       "Can't create tuple");
+    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Can't create tuple");
   }
 
   return (*generated)["_tuple"];
 }
 
-} // namespace sc
+}  // namespace sc

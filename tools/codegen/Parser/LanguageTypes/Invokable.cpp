@@ -1,6 +1,6 @@
-#include "Cursor.hpp"
-
 #include "LanguageTypes/Invokable.hpp"
+
+#include "Cursor.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "memory_test.hpp"
-
 #include "sc-memory/sc_link.hpp"
 
 class TestCreateLink : public TestMemory

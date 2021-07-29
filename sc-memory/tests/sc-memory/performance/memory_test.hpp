@@ -43,7 +43,9 @@ public:
     return static_cast<bool>(m_ctx);
   }
 
-  virtual void Setup(size_t objectsNum) {}
+  virtual void Setup(size_t objectsNum)
+  {
+  }
 
 protected:
   std::unique_ptr<ScMemoryContext> m_ctx;

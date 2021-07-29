@@ -5,6 +5,7 @@
  */
 
 #include "sc_struct.hpp"
+
 #include "sc_memory.hpp"
 #include "sc_template.hpp"
 
@@ -59,19 +60,19 @@ bool ScSet::HasElement(ScAddr const & elAddr) const
   return m_context.HelperCheckEdge(m_addr, elAddr, ScType::EdgeAccessConstPosPerm);
 }
 
-ScSet & ScSet::operator << (ScAddr const & elAddr)
+ScSet & ScSet::operator<<(ScAddr const & elAddr)
 {
   Append(elAddr);
   return *this;
 }
 
-ScSet & ScSet::operator >> (ScAddr const & elAddr)
+ScSet & ScSet::operator>>(ScAddr const & elAddr)
 {
   Remove(elAddr);
   return *this;
 }
 
-ScAddr const & ScSet::operator * () const
+ScAddr const & ScSet::operator*() const
 {
   return m_addr;
 }

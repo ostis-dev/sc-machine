@@ -4,16 +4,17 @@
 #include <gtest/gtest.h>
 
 #include "sc-memory/sc_addr.hpp"
-#include "sc-memory/sc_type.hpp"
-
 #include "sc-memory/sc_debug.hpp"
-
+#include "sc-memory/sc_type.hpp"
 #include "sc-memory/scs/scs_parser.hpp"
 
 #define SPLIT_TRIPLE(t) \
-  auto const & src = parser.GetParsedElement(t.m_source); SC_UNUSED(src); \
-  auto const & edge = parser.GetParsedElement(t.m_edge); SC_UNUSED(edge); \
-  auto const & trg = parser.GetParsedElement(t.m_target); SC_UNUSED(trg);
+  auto const & src = parser.GetParsedElement(t.m_source); \
+  SC_UNUSED(src); \
+  auto const & edge = parser.GetParsedElement(t.m_edge); \
+  SC_UNUSED(edge); \
+  auto const & trg = parser.GetParsedElement(t.m_target); \
+  SC_UNUSED(trg);
 
 struct TripleElement
 {
@@ -59,12 +60,11 @@ struct TripleElement
   scs::Visibility m_visibility;
 };
 
-inline std::ostream & operator<< (std::ostream & out, TripleElement const & t)
+inline std::ostream & operator<<(std::ostream & out, TripleElement const & t)
 {
   out << "{ m_type: " << *t.m_type << ", m_idtf: \"" << t.m_idtf << "\", m_visibility: " << int(t.m_visibility) << " }";
   return out;
 }
-
 
 struct TripleResult
 {
@@ -110,14 +110,16 @@ struct TripleResult
   TripleElement m_target;
 };
 
-
 using ResultTriples = std::vector<TripleResult>;
 
 struct TripleTester
 {
-  explicit TripleTester(scs::Parser const & parser) : m_parser(parser) {}
+  explicit TripleTester(scs::Parser const & parser)
+    : m_parser(parser)
+  {
+  }
 
-  void operator() (ResultTriples const & resultTriples)
+  void operator()(ResultTriples const & resultTriples)
   {
     auto const & triples = m_parser.GetParsedTriples();
     EXPECT_EQ(triples.size(), resultTriples.size());

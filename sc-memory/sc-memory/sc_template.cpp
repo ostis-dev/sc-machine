@@ -5,26 +5,27 @@
  */
 
 #include "sc_template.hpp"
+
 #include "sc_memory.hpp"
 
 #include <algorithm>
 
-ScTemplateArg operator >> (ScAddr const & value, char const * replName)
+ScTemplateArg operator>>(ScAddr const & value, char const * replName)
 {
   return ScTemplateArg(value, replName);
 }
 
-ScTemplateArg operator >> (ScAddr const & value, std::string const & replName)
+ScTemplateArg operator>>(ScAddr const & value, std::string const & replName)
 {
   return ScTemplateArg(value, replName.c_str());
 }
 
-ScTemplateArg operator >> (ScType const & value, char const * replName)
+ScTemplateArg operator>>(ScType const & value, char const * replName)
 {
   return ScTemplateArg(value, replName);
 }
 
-ScTemplateArg operator >> (ScType const & value, std::string const & replName)
+ScTemplateArg operator>>(ScType const & value, std::string const & replName)
 {
   return ScTemplateArg(value, replName.c_str());
 }

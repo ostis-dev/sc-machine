@@ -1,28 +1,26 @@
 #include <gtest/gtest.h>
 
+#include "event_test_utils.hpp"
 #include "sc-memory/sc_event.hpp"
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_templates.hpp"
 #include "sc-memory/sc_timer.hpp"
 
-#include "event_test_utils.hpp"
-
 #include <atomic>
-#include <thread>
 #include <mutex>
+#include <thread>
 
 namespace
 {
 const double kTestTimeout = 5.0;
 
-template<typename EventClassT, typename PrepareF, typename EmitF>
+template <typename EventClassT, typename PrepareF, typename EmitF>
 void testEventsFuncT(ScMemoryContext & ctx, ScAddr const & addr, PrepareF prepare, EmitF emit)
 {
   prepare();
 
   volatile bool isDone = false;
-  auto const callback =
-      [&isDone](ScAddr const &, ScAddr const &, ScAddr const &)
+  auto const callback = [&isDone](ScAddr const &, ScAddr const &, ScAddr const &)
   {
     isDone = true;
     return true;
@@ -39,7 +37,7 @@ void testEventsFuncT(ScMemoryContext & ctx, ScAddr const & addr, PrepareF prepar
   EXPECT_TRUE(isDone);
 }
 
-} // namespace
+}  // namespace
 
 TEST_F(ScEventTest, AddInputEdge)
 {
@@ -158,11 +156,13 @@ TEST_F(ScEventTest, destroy_order)
   ScAddr const node = m_ctx->CreateNode(ScType::Unknown);
   EXPECT_TRUE(node.IsValid());
 
-  ScEventAddOutputEdge * evt = new ScEventAddOutputEdge(*m_ctx, node,
-    [](ScAddr const &, ScAddr const &, ScAddr const &)
-  {
-    return true;
-  });
+  ScEventAddOutputEdge * evt = new ScEventAddOutputEdge(
+      *m_ctx,
+      node,
+      [](ScAddr const &, ScAddr const &, ScAddr const &)
+      {
+        return true;
+      });
 
   m_ctx.reset();
 
@@ -175,19 +175,21 @@ TEST_F(ScEventTest, events_lock)
   ScAddr const node = m_ctx->CreateNode(ScType::NodeConst);
   ScAddr const node2 = m_ctx->CreateNode(ScType::NodeConst);
 
-  ScEventAddOutputEdge evt(*m_ctx, node,
-    [](ScAddr const & addr, ScAddr const &, ScAddr const &)
-  {
-    bool result = false;
-    ScMemoryContext localCtx(sc_access_lvl_make_min);
-    ScIterator3Ptr it = localCtx.Iterator3(addr, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
-    while (it->Next())
-      result = true;
+  ScEventAddOutputEdge evt(
+      *m_ctx,
+      node,
+      [](ScAddr const & addr, ScAddr const &, ScAddr const &)
+      {
+        bool result = false;
+        ScMemoryContext localCtx(sc_access_lvl_make_min);
+        ScIterator3Ptr it = localCtx.Iterator3(addr, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
+        while (it->Next())
+          result = true;
 
-    EXPECT_TRUE(result);
+        EXPECT_TRUE(result);
 
-    return result;
-  });
+        return result;
+      });
 
   for (size_t i = 0; i < 10000; i++)
     m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, node, node2);
@@ -214,12 +216,7 @@ TEST_F(ScEventTest, pend_events)
   ScTemplateBuilder builder;
   for (auto const & a : elements)
   {
-    builder.TripleWithRelation(
-      set1,
-      ScType::EdgeDCommonVar,
-      a,
-      ScType::EdgeAccessVarPosPerm,
-      rel);
+    builder.TripleWithRelation(set1, ScType::EdgeDCommonVar, a, ScType::EdgeAccessVarPosPerm, rel);
   }
 
   ScTemplatePtr templ = builder.Make();
@@ -227,37 +224,35 @@ TEST_F(ScEventTest, pend_events)
   std::atomic_uint eventsCount(0);
   std::atomic_uint passedCount(0);
 
-  ScEventAddOutputEdge evt(*m_ctx, set1,
-    [&passedCount, &eventsCount, &set1, &elements, &rel](ScAddr const &, ScAddr const &, ScAddr const &)
-  {
-    ScTemplateBuilder checkBuilder;
-    size_t step = 100;
-    size_t testNum = el_num / step - 1;
-    for (size_t i = 0; i < testNum; ++i)
-    {
-      checkBuilder.TripleWithRelation(
-        set1,
-        ScType::EdgeDCommonVar,
-        elements[i * step],
-        ScType::EdgeAccessVarPosPerm,
-        rel);
-    }
+  ScEventAddOutputEdge evt(
+      *m_ctx,
+      set1,
+      [&passedCount, &eventsCount, &set1, &elements, &rel](ScAddr const &, ScAddr const &, ScAddr const &)
+      {
+        ScTemplateBuilder checkBuilder;
+        size_t step = 100;
+        size_t testNum = el_num / step - 1;
+        for (size_t i = 0; i < testNum; ++i)
+        {
+          checkBuilder.TripleWithRelation(
+              set1, ScType::EdgeDCommonVar, elements[i * step], ScType::EdgeAccessVarPosPerm, rel);
+        }
 
-    ScTemplatePtr checkTempl = checkBuilder.Make();
+        ScTemplatePtr checkTempl = checkBuilder.Make();
 
-    ScMemoryContext localCtx(sc_access_lvl_make_min);
+        ScMemoryContext localCtx(sc_access_lvl_make_min);
 
-    ScTemplateSearch checkSearch(localCtx, *checkTempl);
-    ScTemplateSearch::Iterator found = checkSearch.begin();
-    EXPECT_TRUE(found != checkSearch.end());
+        ScTemplateSearch checkSearch(localCtx, *checkTempl);
+        ScTemplateSearch::Iterator found = checkSearch.begin();
+        EXPECT_TRUE(found != checkSearch.end());
 
-    if (++found == checkSearch.end())
-      passedCount.fetch_add(1);
+        if (++found == checkSearch.end())
+          passedCount.fetch_add(1);
 
-    eventsCount.fetch_add(1);
+        eventsCount.fetch_add(1);
 
-    return true;
-  });
+        return true;
+      });
 
   ScTemplateGenerate generator(*m_ctx, *templ);
   EXPECT_TRUE(generator.Do());

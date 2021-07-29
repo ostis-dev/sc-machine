@@ -9,7 +9,6 @@
 
 namespace sc
 {
-
 /* Create construction:
  * elAddr <= relAddr: {};;
  * If construction exist, then returns exist tuple addr; otherwise create new one.
@@ -25,14 +24,11 @@ _SC_EXTERN ScAddr ResolveRelationTuple(ScMemoryContext & ctx, ScAddr const & elA
 template <typename ValueType>
 ScAddr SetRelationValue(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr const & relAddr, ValueType const & value)
 {
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      elAddr,
-      ScType::EdgeDCommonVar,
-      ScType::LinkVar >> "_link",
-      ScType::EdgeAccessVarPosPerm,
-      relAddr)
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .TripleWithRelation(
+              elAddr, ScType::EdgeDCommonVar, ScType::LinkVar >> "_link", ScType::EdgeAccessVarPosPerm, relAddr)
+          .Make();
 
   ScAddr linkAddr;
   ScTemplateSearch search(ctx, *templ);
@@ -49,8 +45,7 @@ ScAddr SetRelationValue(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr con
 
     if (!linkAddr.IsValid())
     {
-      SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
-                         "Can't create value relation");
+      SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Can't create value relation");
     }
   }
 
@@ -60,4 +55,4 @@ ScAddr SetRelationValue(ScMemoryContext & ctx, ScAddr const & elAddr, ScAddr con
   return linkAddr;
 }
 
-} // namespace sc
+}  // namespace sc

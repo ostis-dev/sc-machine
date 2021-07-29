@@ -2,7 +2,6 @@
 
 #include "test_scs_utils.hpp"
 
-
 TEST(scs_common, ElementHandle)
 {
   scs::ElementHandle handle_err;
@@ -154,17 +153,18 @@ TEST(scs_common, const_var)
 
 TEST(scs_common, nodes)
 {
-  char const * data = "a -> b;;"
-                      "sc_node_tuple -> a;;"
-                      "sc_node_struct -> b;;"
-                      "sc_node_role_relation -> c;;"
-                      "c -> _d;;"
-                      "sc_node_norole_relation -> _d;;"
-                      "sc_node_class -> e;;"
-                      "e -> f;;"
-                      "sc_node_abstract -> f;;"
-                      "f -> g;;"
-                      "sc_node_material -> g;;";
+  char const * data =
+      "a -> b;;"
+      "sc_node_tuple -> a;;"
+      "sc_node_struct -> b;;"
+      "sc_node_role_relation -> c;;"
+      "c -> _d;;"
+      "sc_node_norole_relation -> _d;;"
+      "sc_node_class -> e;;"
+      "e -> f;;"
+      "sc_node_abstract -> f;;"
+      "f -> g;;"
+      "sc_node_material -> g;;";
 
   scs::Parser parser;
 
@@ -196,7 +196,6 @@ TEST(scs_common, nodes)
   }
 }
 
-
 TEST(scs_common, links)
 {
   std::string const data =
@@ -221,7 +220,6 @@ TEST(scs_common, links)
   EXPECT_FALSE(parser.GetParsedElement(triples[3].m_target).IsURL());
 }
 
-
 TEST(scs_common, backward_compatibility)
 {
   std::string const data = "a <- c;; a <- sc_node_not_relation;; b <- c;; b <- sc_node_not_binary_tuple;;";
@@ -238,11 +236,12 @@ TEST(scs_common, backward_compatibility)
 
 TEST(scs_common, edges)
 {
-  std::string const data = "x"
-                           "> _y; <> y4; ..> y5;"
-                           "<=> y7; _<=> y8; => y9; _=> y11;"
-                           "-> y2; _-> y13; -|> y15; _-|> y17; -/> y19; _-/> y21;"
-                           " ~> y23; _~> y25; ~|> y27; _~|> y29; ~/> y31; _~/> y33;;";
+  std::string const data =
+      "x"
+      "> _y; <> y4; ..> y5;"
+      "<=> y7; _<=> y8; => y9; _=> y11;"
+      "-> y2; _-> y13; -|> y15; _-|> y17; -/> y19; _-/> y21;"
+      " ~> y23; _~> y25; ~|> y27; _~|> y29; ~/> y31; _~/> y33;;";
 
   scs::Parser parser;
 
@@ -281,7 +280,6 @@ TEST(scs_common, edges)
     EXPECT_TRUE(CheckEdgeType(18, ScType::EdgeAccessVarFuzTemp));
   }
 }
-
 
 TEST(scs_common, type_error)
 {

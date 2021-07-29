@@ -72,14 +72,30 @@ IncludeCategories:
   - Regex:           '^<(gtest|gmock)/.*'
     Priority:        1
 
-  - Regex:           '^<sc-memory/*.*'
+  - Regex:           '^".*generated.*'
+    Priority:        70
+
+  - Regex:           '^<sc-memory/.*'
     Priority:        11
   
-  - Regex:           '^"sc_*.*'
+  - Regex:           '^"sc_.*'
     Priority:        21
-  
+
+  - Regex:           '^"\.\./.*'
+    Priority:        22
+
+  - Regex:           '^".*'
+    Priority:        23
+
+  - Regex:           '^<boost/.*'
+    Priority:        30
+
+  - Regex:           '^<.*'
+    Priority:        31
+    
   - Regex:           '.*'
     Priority:        100
+
 # IncludeIsMainRegex: '([-_](test|unittest))?$'
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash

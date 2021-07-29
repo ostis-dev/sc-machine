@@ -11,5 +11,8 @@
 class ExceptionFileNotFound final : public utils::ScException
 {
 public:
-  ExceptionFileNotFound(std::string const & description, std::string const & msg) : utils::ScException("Assert: " + description, msg) {}
+  ExceptionFileNotFound(std::string const & description, std::string const & msg)
+    : utils::ScException("Assert: " + description, msg)
+  {
+  }
 };

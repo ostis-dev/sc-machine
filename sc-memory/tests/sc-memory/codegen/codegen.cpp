@@ -1,9 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_object.hpp"
-
 #include "sc_test.hpp"
 
+#include "sc-memory/sc_object.hpp"
 #include "test_sc_object.hpp"
 
 using ScCodegenTest = ScMemoryTest;

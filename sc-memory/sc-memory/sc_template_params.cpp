@@ -26,7 +26,7 @@ ScAddr ScTemplateParams::TryGet(std::string const & name) const
 {
   auto const it = m_values.find(name);
   if (it != m_values.end())
-      return it->second;
+    return it->second;
 
   return {};
 }
@@ -36,12 +36,12 @@ ScAddr ScTemplateParams::TryGet(ScAddr const & addr) const
   return TryGet(addr.ToString());
 }
 
-ScAddr ScTemplateParams::operator [] (std::string const & name) const
+ScAddr ScTemplateParams::operator[](std::string const & name) const
 {
   return TryGet(name);
 }
 
-ScAddr ScTemplateParams::operator [] (ScAddr const & addr) const
+ScAddr ScTemplateParams::operator[](ScAddr const & addr) const
 {
   return TryGet(addr);
 }

@@ -9,23 +9,20 @@ public:
   {
     ScAddr const node = m_ctx->CreateNode(ScType::NodeConstStruct);
     m_templ = ScTemplateBuilder()
-        .TripleWithRelation(
-            node,
-            ScType::EdgeDCommonVar,
-            ScType::NodeVarTuple >> "_tuple",
-            ScType::EdgeAccessVarPosPerm,
-            ScType::NodeVarNoRole)
-        .TripleWithRelation(
-            ScType::NodeVarClass,
-            ScType::EdgeDCommonVar,
-            "_tuple",
-            ScType::EdgeAccessVarPosPerm,
-            ScType::NodeVarNoRole)
-        .Triple(
-            ScType::NodeVarClass,
-            ScType::EdgeAccessVarPosPerm,
-            node)
-        .Make();
+                  .TripleWithRelation(
+                      node,
+                      ScType::EdgeDCommonVar,
+                      ScType::NodeVarTuple >> "_tuple",
+                      ScType::EdgeAccessVarPosPerm,
+                      ScType::NodeVarNoRole)
+                  .TripleWithRelation(
+                      ScType::NodeVarClass,
+                      ScType::EdgeDCommonVar,
+                      "_tuple",
+                      ScType::EdgeAccessVarPosPerm,
+                      ScType::NodeVarNoRole)
+                  .Triple(ScType::NodeVarClass, ScType::EdgeAccessVarPosPerm, node)
+                  .Make();
 
     for (size_t i = 0; i < constrCount; ++i)
     {

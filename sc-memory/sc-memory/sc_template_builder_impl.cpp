@@ -5,20 +5,22 @@ ScTemplateBuilderImpl::ScTemplateBuilderImpl()
   m_templ.Reserve(4);
 }
 
-ScTemplateBuilderImpl & ScTemplateBuilderImpl::Triple(ScTemplateArg const & param1,
-                                                      ScTemplateArg const & param2,
-                                                      ScTemplateArg const & param3)
+ScTemplateBuilderImpl & ScTemplateBuilderImpl::Triple(
+    ScTemplateArg const & param1,
+    ScTemplateArg const & param2,
+    ScTemplateArg const & param3)
 {
   SC_ASSERT(!m_isDone, ("Call method after Make() is not allowed"));
   m_templ.AddTriple(param1, param2, param3);
   return *this;
 }
 
-ScTemplateBuilderImpl & ScTemplateBuilderImpl::TripleWithRelation(ScTemplateArg const & param1,
-                                                                  ScTemplateArg const & param2,
-                                                                  ScTemplateArg const & param3,
-                                                                  ScTemplateArg const & param4,
-                                                                  ScTemplateArg const & param5)
+ScTemplateBuilderImpl & ScTemplateBuilderImpl::TripleWithRelation(
+    ScTemplateArg const & param1,
+    ScTemplateArg const & param2,
+    ScTemplateArg const & param3,
+    ScTemplateArg const & param4,
+    ScTemplateArg const & param5)
 {
   SC_ASSERT(!m_isDone, ("Call method after Make() is not allowed"));
 

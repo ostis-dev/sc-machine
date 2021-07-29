@@ -1,9 +1,8 @@
-#include "Cursor.hpp"
-
-#include "MetaDataConfig.hpp"
-
-#include "LanguageTypes/Class.hpp"
 #include "LanguageTypes/Field.hpp"
+
+#include "Cursor.hpp"
+#include "LanguageTypes/Class.hpp"
+#include "MetaDataConfig.hpp"
 
 Field::Field(Cursor const & cursor, Namespace const & currentNamespace)
   : LanguageType(cursor, currentNamespace)
@@ -26,7 +25,6 @@ bool Field::isAccessible() const
 {
   bool const metaFlag = (m_accessModifier == CX_CXXPublic && !m_metaData.GetFlag(kMetaDisable));
   return m_hasExplicitGetter || m_hasExplicitSetter || metaFlag;
-
 }
 
 bool Field::isGetterAccessible() const
@@ -54,10 +52,8 @@ void Field::GenarateInitCode(std::stringstream & outCode) const
 {
   if (m_metaData.HasProperty(Props::Keynode))
   {
-    GenerateResolveKeynodeCode(m_metaData.GetNativeString(Props::Keynode),
-                               m_displayName,
-                               GetForceType(m_metaData),
-                               outCode);
+    GenerateResolveKeynodeCode(
+        m_metaData.GetNativeString(Props::Keynode), m_displayName, GetForceType(m_metaData), outCode);
   }
 }
 

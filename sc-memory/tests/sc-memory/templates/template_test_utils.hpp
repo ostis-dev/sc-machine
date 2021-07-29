@@ -1,12 +1,12 @@
 #pragma once
 
-#include "sc-memory/sc_memory.hpp"
-#include "sc-memory/sc_scs_helper.hpp"
-#include "sc-memory/sc_templates.hpp"
+#include <gtest/gtest.h>
 
 #include "sc_test.hpp"
 
-#include <gtest/gtest.h>
+#include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_scs_helper.hpp"
+#include "sc-memory/sc_templates.hpp"
 
 #include <algorithm>
 
@@ -14,7 +14,6 @@ using ScTemplateTest = ScMemoryTest;
 
 namespace
 {
-
 struct TestTemplParams
 {
   explicit TestTemplParams(ScMemoryContext & ctx)
@@ -22,14 +21,12 @@ struct TestTemplParams
   {
   }
 
-  bool operator () (ScTemplateArg param1, ScTemplateArg param2, ScTemplateArg param3)
+  bool operator()(ScTemplateArg param1, ScTemplateArg param2, ScTemplateArg param3)
   {
     bool catched = false;
     try
     {
-      ScTemplatePtr testTempl = ScTemplateBuilder()
-        .Triple(param1, param2, param3)
-        .Make();
+      ScTemplatePtr testTempl = ScTemplateBuilder().Triple(param1, param2, param3).Make();
 
       ScTemplateGenerate generator(m_ctx, *testTempl);
       EXPECT_TRUE(generator.Do());
@@ -46,7 +43,6 @@ struct TestTemplParams
 private:
   ScMemoryContext & m_ctx;
 };
-
 
 inline bool HasAddr(ScAddrVector const & v, ScAddr const & addr)
 {
@@ -69,4 +65,4 @@ protected:
   }
 };
 
-} // namespace
+}  // namespace
