@@ -1,0 +1,45 @@
+name: Coverage
+
+on:
+  push:
+    branches: [master]
+
+  pull_request:
+    branches: [master]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run_coverage:
+    name: Ubuntu latest, GCC, Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        id: install_deps
+        run: scripts/ci/install-deps.sh
+
+      - name: Build
+        id: run_cmake
+        env:
+          CC: gcc
+          CCX: g++
+          BUILD_TYPE: Release
+          SANITIZER_TYPE: none
+          COVERAGE: ON
+        run: scripts/ci/install-tests.sh
+
+      - name: Run tests
+        id: run_tests
+        run: scripts/ci/run-tests.sh
+
+      - name: Upload coverage reports to CodeCov
+        id: upload_coverage
+        working-directory: ${{github.workspace}}/build
+        run: bash <(curl -s https://codecov.io/bash)
