@@ -1,3 +1,7 @@
+# SC-machine
+
+[![CI](https://github.com/ostis-dev/sc-machine/actions/workflows/main.yml/badge.svg)](https://github.com/ostis-dev/sc-machine/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/ostis-dev/sc-machine/branch/master/graph/badge.svg?token=PqItjd03eH)](https://codecov.io/gh/ostis-dev/sc-machine)
 
 ## Documentation
 [http://ostis-dev.github.io/sc-machine/](http://ostis-dev.github.io/sc-machine/)
