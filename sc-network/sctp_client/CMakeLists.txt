@@ -14,10 +14,9 @@ endif()
 
 add_library(sctp-client SHARED ${SOURCES} ${HEADERS} ${SOCKET_SRC})
 
-target_include_directories(
-    sctp-client
-    PRIVATE ${SC_MEMORY_SRC}
-    PRIVATE ${GLIB2_INCLUDE_DIRS})
+target_include_directories(sctp-client
+                           PRIVATE ${SC_MEMORY_SRC}
+                           PRIVATE ${GLIB2_INCLUDE_DIRS})
 
 target_link_libraries(sctp-client sc-memory ${SOCKET_LIBS})
 

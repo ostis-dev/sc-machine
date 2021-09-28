@@ -18,12 +18,7 @@ option(SC_BUILD_ARM64 "Flag to build arm64" OFF)
 set(SC_USE_SANITIZER
     "none"
     CACHE STRING "Build with specified sanitizer")
-set_property(
-    CACHE SC_USE_SANITIZER
-    PROPERTY STRINGS
-             none
-             address
-             memory)
+set_property(CACHE SC_USE_SANITIZER PROPERTY STRINGS none address memory)
 
 message("Sanitizer: ${SC_USE_SANITIZER}")
 
@@ -88,11 +83,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3") # Optimize
         set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s") # Strip binary
     endif()
-elseif(
-    NOT
-    CMAKE_CXX_COMPILER_ID
-    MATCHES
-    "MSVC")
+elseif(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif()
 
@@ -184,19 +175,14 @@ elseif(${WIN32})
 
     include_directories("${BOOST_PATH}/include" "${LIBCURL_INCLUDE_DIRS}")
 
-    link_directories(
-        "${SC_MACHINE_THIRDPARTY_PATH}/clang/lib"
-        "${GLIB_PATH}/lib/v110/x64/Release/dynamic/"
-        "${PACKAGES_PATH}/boost_filesystem-${MSVC_SUFFIX}.${BOOST_VERSION}/lib/native/address-model-64/lib/"
-        "${PACKAGES_PATH}/boost_system-${MSVC_SUFFIX}.${BOOST_VERSION}/lib/native/address-model-64/lib/"
-        "${PACKAGES_PATH}/boost_program_options-${MSVC_SUFFIX}.${BOOST_VERSION}/lib/native/address-model-64/lib/")
+    link_directories("${SC_MACHINE_THIRDPARTY_PATH}/clang/lib"
+                     "${GLIB_PATH}/lib/v110/x64/Release/dynamic/"
+                     "${PACKAGES_PATH}/boost_filesystem-${MSVC_SUFFIX}.${BOOST_VERSION}/lib/native/address-model-64/lib/"
+                     "${PACKAGES_PATH}/boost_system-${MSVC_SUFFIX}.${BOOST_VERSION}/lib/native/address-model-64/lib/"
+                     "${PACKAGES_PATH}/boost_program_options-${MSVC_SUFFIX}.${BOOST_VERSION}/lib/native/address-model-64/lib/"
+    )
 
-    set(GLIB2_LIBRARIES
-        "gio-2.0.lib"
-        "glib-2.0.lib"
-        "gmodule-2.0.lib"
-        "gobject-2.0.lib"
-        "gthread-2.0.lib")
+    set(GLIB2_LIBRARIES "gio-2.0.lib" "glib-2.0.lib" "gmodule-2.0.lib" "gobject-2.0.lib" "gthread-2.0.lib")
 
     add_definitions(-DSC_PLATFORM_WIN)
 

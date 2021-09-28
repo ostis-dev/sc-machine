@@ -1,9 +1,4 @@
-macro(
-    sc_codegen_ex
-    Target
-    SrcPath
-    OutputPath)
-
+macro(sc_codegen_ex Target SrcPath OutputPath)
     # Fetch all include directories for the project target
     get_target_property(DIRECTORIES ${Target} INCLUDE_DIRECTORIES)
 
@@ -12,10 +7,9 @@ macro(
         set(META_FLAGS ${META_FLAGS} "-I${DIRECTORY}")
     endforeach()
 
-    get_property(
-        dirs
-        DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        PROPERTY INCLUDE_DIRECTORIES)
+    get_property(dirs
+                 DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                 PROPERTY INCLUDE_DIRECTORIES)
     foreach(dir ${dirs})
         set(META_FLAGS ${META_FLAGS} "-I${dir}")
     endforeach()
@@ -32,25 +26,24 @@ macro(
     endif()
 
     if(MSVC)
-        add_custom_command(
-            PRE_BUILD TARGET ${Target}
-            COMMAND call "${SC_CODEGEN_TOOL}" --target "${Target}" --source "${SrcPath}" --output "${OutputPath}"
-                    --flags "${META_FLAGS}" --build_dir "${CMAKE_CURRENT_BINARY_DIR}" --cache)
+        add_custom_command(PRE_BUILD TARGET ${Target}
+                           COMMAND call "${SC_CODEGEN_TOOL}" --target "${Target}" --source "${SrcPath}" --output
+                                   "${OutputPath}" --flags "${META_FLAGS}" --build_dir "${CMAKE_CURRENT_BINARY_DIR}"
+                                   --cache)
     else()
         file(GLOB_RECURSE HEADER_FILES "${SrcPath}/*.hpp")
 
         set(CACHE_FILE "${CMAKE_CURRENT_BINARY_DIR}/${Target}.gen_cache")
-        add_custom_command(
-            OUTPUT ${CACHE_FILE}
-            COMMAND "${SC_CODEGEN_TOOL}" --target "${Target}" --source "${SrcPath}" --output "${OutputPath}" --build_dir
-                    "${CMAKE_CURRENT_BINARY_DIR}" --flags "'${META_FLAGS}'" --cache
-            DEPENDS ${HEADER_FILES})
+        add_custom_command(OUTPUT ${CACHE_FILE}
+                           COMMAND "${SC_CODEGEN_TOOL}" --target "${Target}" --source "${SrcPath}" --output
+                                   "${OutputPath}" --build_dir "${CMAKE_CURRENT_BINARY_DIR}" --flags "'${META_FLAGS}'"
+                                   --cache
+                           DEPENDS ${HEADER_FILES})
 
         set(SUB_TARGET "${Target}-GenerateCode")
-        add_custom_target(
-            ${SUB_TARGET}
-            DEPENDS ${CACHE_FILE}
-            SOURCES ${HEADER_FILES})
+        add_custom_target(${SUB_TARGET}
+                          DEPENDS ${CACHE_FILE}
+                          SOURCES ${HEADER_FILES})
 
         add_dependencies(${SUB_TARGET} sc-code-generator)
         add_dependencies(${Target} ${SUB_TARGET})

@@ -1,25 +1,24 @@
-#[[
-- Try to find GLib2
-Once done this will define
-
-GLIB2_FOUND - system has GLib2
-GLIB2_INCLUDE_DIRS - the GLib2 include directory
-GLIB2_LIBRARIES - Link these to use GLib2
-
-HAVE_GLIB_GREGEX_H  glib has gregex.h header and
-                    supports g_regex_match_simple
-
-Copyright (c) 2006 Andreas Schneider <mail@cynapses.org>
-Copyright (c) 2006 Philippe Bernery <philippe.bernery@gmail.com>
-Copyright (c) 2007 Daniel Gollub <gollub@b1-systems.de>
-Copyright (c) 2007 Alban Browaeys <prahal@yahoo.com>
-Copyright (c) 2008 Michael Bell <michael.bell@web.de>
-Copyright (c) 2008-2009 Bjoern Ricks <bjoern.ricks@googlemail.com>
-
-Redistribution and use is allowed according to the terms of the New
-BSD license.
-For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-]]
+# - Try to find GLib2
+# Once done this will define
+#
+#  GLIB2_FOUND - system has GLib2
+#  GLIB2_INCLUDE_DIRS - the GLib2 include directory
+#  GLIB2_LIBRARIES - Link these to use GLib2
+#
+#  HAVE_GLIB_GREGEX_H  glib has gregex.h header and
+#                      supports g_regex_match_simple
+#
+#  Copyright (c) 2006 Andreas Schneider <mail@cynapses.org>
+#  Copyright (c) 2006 Philippe Bernery <philippe.bernery@gmail.com>
+#  Copyright (c) 2007 Daniel Gollub <gollub@b1-systems.de>
+#  Copyright (c) 2007 Alban Browaeys <prahal@yahoo.com>
+#  Copyright (c) 2008 Michael Bell <michael.bell@web.de>
+#  Copyright (c) 2008-2009 Bjoern Ricks <bjoern.ricks@googlemail.com>
+#
+#  Redistribution and use is allowed according to the terms of the New
+#  BSD license.
+#  For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+#
 
 if(GLIB2_LIBRARIES AND GLIB2_INCLUDE_DIRS)
     # In cache already
@@ -49,41 +48,30 @@ else(GLIB2_LIBRARIES AND GLIB2_INCLUDE_DIRS)
 
     # Look for glib2 include dir and libraries w/o pkgconfig
     if(NOT GLIB2_FOUND AND NOT PKG_CONFIG_FOUND)
-        find_path(
-            _glibconfig_include_DIR
-            NAMES glibconfig.h
-            PATHS /opt/gnome/lib64
-                  /opt/gnome/lib
-                  /opt/lib/
-                  /opt/local/lib
-                  /sw/lib/
-                  /usr/lib64
-                  /usr/lib
-                  /usr/local/include
-                  /usr/local/lib
-                  ${CMAKE_LIBRARY_PATH}
-            PATH_SUFFIXES glib-2.0/include)
+        find_path(_glibconfig_include_DIR
+                  NAMES glibconfig.h
+                  PATHS /opt/gnome/lib64
+                        /opt/gnome/lib
+                        /opt/lib/
+                        /opt/local/lib
+                        /sw/lib/
+                        /usr/lib64
+                        /usr/lib
+                        /usr/local/include
+                        /usr/local/lib
+                        ${CMAKE_LIBRARY_PATH}
+                  PATH_SUFFIXES glib-2.0/include)
 
-        find_path(
-            _glib2_include_DIR
-            NAMES glib.h
-            PATHS /opt/gnome/include
-                  /opt/local/include
-                  /sw/include
-                  /usr/include
-                  /usr/local/include
-            PATH_SUFFIXES glib-2.0)
+        find_path(_glib2_include_DIR
+                  NAMES glib.h
+                  PATHS /opt/gnome/include /opt/local/include /sw/include /usr/include /usr/local/include
+                  PATH_SUFFIXES glib-2.0)
 
         # MESSAGE(STATUS "Glib headers: ${_glib2_include_DIR}")
 
-        find_library(
-            _glib2_link_DIR
-            NAMES glib-2.0 glib
-            PATHS /opt/gnome/lib
-                  /opt/local/lib
-                  /sw/lib
-                  /usr/lib
-                  /usr/local/lib)
+        find_library(_glib2_link_DIR
+                     NAMES glib-2.0 glib
+                     PATHS /opt/gnome/lib /opt/local/lib /sw/lib /usr/lib /usr/local/lib)
         if(_glib2_include_DIR AND _glib2_link_DIR)
             set(_glib2_FOUND TRUE)
         endif()
@@ -98,23 +86,13 @@ else(GLIB2_LIBRARIES AND GLIB2_INCLUDE_DIRS)
 
         # Handle dependencies libintl
         if(NOT LIBINTL_FOUND)
-            find_path(
-                LIBINTL_INCLUDE_DIR
-                NAMES libintl.h
-                PATHS /opt/gnome/include
-                      /opt/local/include
-                      /sw/include
-                      /usr/include
-                      /usr/local/include)
+            find_path(LIBINTL_INCLUDE_DIR
+                      NAMES libintl.h
+                      PATHS /opt/gnome/include /opt/local/include /sw/include /usr/include /usr/local/include)
 
-            find_library(
-                LIBINTL_LIBRARY
-                NAMES intl
-                PATHS /opt/gnome/lib
-                      /opt/local/lib
-                      /sw/lib
-                      /usr/local/lib
-                      /usr/lib)
+            find_library(LIBINTL_LIBRARY
+                         NAMES intl
+                         PATHS /opt/gnome/lib /opt/local/lib /sw/lib /usr/local/lib /usr/lib)
 
             if(LIBINTL_LIBRARY AND LIBINTL_INCLUDE_DIR)
                 set(LIBINTL_FOUND TRUE)
@@ -123,26 +101,20 @@ else(GLIB2_LIBRARIES AND GLIB2_INCLUDE_DIRS)
 
         # libiconv
         if(NOT LIBICONV_FOUND)
-            find_path(
-                LIBICONV_INCLUDE_DIR
-                NAMES iconv.h
-                PATHS /opt/gnome/include
-                      /opt/local/include
-                      /opt/local/include
-                      /sw/include
-                      /sw/include
-                      /usr/local/include
-                      /usr/include
-                PATH_SUFFIXES glib-2.0)
+            find_path(LIBICONV_INCLUDE_DIR
+                      NAMES iconv.h
+                      PATHS /opt/gnome/include
+                            /opt/local/include
+                            /opt/local/include
+                            /sw/include
+                            /sw/include
+                            /usr/local/include
+                            /usr/include
+                      PATH_SUFFIXES glib-2.0)
 
-            find_library(
-                LIBICONV_LIBRARY
-                NAMES iconv
-                PATHS /opt/gnome/lib
-                      /opt/local/lib
-                      /sw/lib
-                      /usr/lib
-                      /usr/local/lib)
+            find_library(LIBICONV_LIBRARY
+                         NAMES iconv
+                         PATHS /opt/gnome/lib /opt/local/lib /sw/lib /usr/lib /usr/local/lib)
 
             if(LIBICONV_LIBRARY AND LIBICONV_INCLUDE_DIR)
                 set(LIBICONV_FOUND TRUE)

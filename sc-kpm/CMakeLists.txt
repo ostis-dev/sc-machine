@@ -23,9 +23,4 @@ if(${SC_KPM_SCP})
     add_dependencies(sc-kpm scp)
 endif()
 
-add_dependencies(
-    sc-kpm
-    sc-kpm-common
-    sc-ui
-    sc-search
-    sc-utils)
+add_dependencies(sc-kpm sc-kpm-common sc-ui sc-search sc-utils)

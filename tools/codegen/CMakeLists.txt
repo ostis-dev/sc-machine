@@ -1,10 +1,6 @@
 set(SC_CODEGEN_DIR "${SC_TOOLS_DIR}/codegen")
 
-file(
-    GLOB_RECURSE
-    SOURCES
-    "Parser/*.cpp"
-    "Parser/*.hpp")
+file(GLOB_RECURSE SOURCES "Parser/*.cpp" "Parser/*.hpp")
 
 add_executable(sc-code-generator ${SOURCES})
 

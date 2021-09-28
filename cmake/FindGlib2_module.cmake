@@ -1,11 +1,10 @@
-#[[
-- Try to find GLib2Module
-Once done this will define
-
-GLIB2_MODULE_FOUND - system has GLib2
-GLIB2_MODULE_INCLUDE_DIRS - the GLib2 include directory
-GLIB2_MODULE_LIBRARIES - Link these to use GLib2
-]]
+# - Try to find GLib2Module
+# Once done this will define
+#
+#  GLIB2_MODULE_FOUND - system has GLib2
+#  GLIB2_MODULE_INCLUDE_DIRS - the GLib2 include directory
+#  GLIB2_MODULE_LIBRARIES - Link these to use GLib2
+#
 
 if(GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS)
     # In cache already
@@ -22,26 +21,16 @@ else(GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS)
 
     # Look for glib2 include dir and libraries w/o pkgconfig
     if(NOT GLIB2_MODULE_FOUND AND NOT PKG_CONFIG_FOUND)
-        find_path(
-            _glib2_module_include_DIR
-            NAMES gmodule.h
-            PATHS /opt/gnome/include
-                  /opt/local/include
-                  /sw/include
-                  /usr/include
-                  /usr/local/include
-            PATH_SUFFIXES glib-2.0)
+        find_path(_glib2_module_include_DIR
+                  NAMES gmodule.h
+                  PATHS /opt/gnome/include /opt/local/include /sw/include /usr/include /usr/local/include
+                  PATH_SUFFIXES glib-2.0)
 
         # MESSAGE(STATUS "Glib headers: ${_glib2_include_DIR}")
 
-        find_library(
-            _glib2_module_link_DIR
-            NAMES gmodule-2.0 gmodule
-            PATHS /opt/gnome/lib
-                  /opt/local/lib
-                  /sw/lib
-                  /usr/lib
-                  /usr/local/lib)
+        find_library(_glib2_module_link_DIR
+                     NAMES gmodule-2.0 gmodule
+                     PATHS /opt/gnome/lib /opt/local/lib /sw/lib /usr/lib /usr/local/lib)
         if(_glib2_module_include_DIR AND _glib2_module_link_DIR)
             set(_glib2_module_FOUND TRUE)
         endif()

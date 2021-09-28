@@ -6,11 +6,10 @@ set(HEADERS "sc_keynodes.h" "sc_common_types.h")
 
 add_library(sc-kpm-common SHARED ${SOURCES} ${HEADERS})
 
-target_include_directories(
-    sc-kpm-common
-    PRIVATE ${SC_COMMON_SRC}
-    PRIVATE ${SC_MEMORY_SRC}
-    PRIVATE ${GLIB2_INCLUDE_DIRS})
+target_include_directories(sc-kpm-common
+                           PRIVATE ${SC_COMMON_SRC}
+                           PRIVATE ${SC_MEMORY_SRC}
+                           PRIVATE ${GLIB2_INCLUDE_DIRS})
 
 add_dependencies(sc-kpm-common sc-core)
 
