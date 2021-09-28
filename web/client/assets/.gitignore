@@ -1,2 +1,4 @@
+bundle.*
+
 sc-memory-web.js
 editor.worker.js

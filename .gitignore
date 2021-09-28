@@ -18,3 +18,4 @@ manifest.json
 __pycache__
 .DS_store
 .antlr
+.cache
