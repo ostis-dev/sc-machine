@@ -1,0 +1,13 @@
+line_width: 120
+tab_size: 4
+separate_fn_name_with_space: false
+dangle_parens: false
+min_prefix_chars: 120
+enable_markup: false
+
+additional_commands:
+  make_tests_from_folder:
+    kwargs:
+      NAME: "*"
+      DEPENDS: "*"
+      INCLUDES: "*"

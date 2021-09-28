@@ -1,22 +1,19 @@
 function(make_tests_from_folder folder)
+    set(SINGLE_ARGS NAME)
+    set(MULTI_ARGS DEPENDS INCLUDES ARGUMENTS)
+    cmake_parse_arguments(TEST "" "${SINGLE_ARGS}" "${MULTI_ARGS}" ${ARGN})
 
-  set (SINGLE_ARGS NAME)
-  set (MULTI_ARGS DEPENDS INCLUDES ARGUMENTS)
+    set(target "${TEST_NAME}")
 
-  cmake_parse_arguments(TEST "" "${SINGLE_ARGS}" "${MULTI_ARGS}" ${ARGN})
+    message(STATUS "Create test ${target}")
 
-  set (target "${TEST_NAME}")
+    file(GLOB_RECURSE SOURCES "${folder}/*.cpp" "${folder}/*.hpp")
 
-  message(STATUS "Create test ${target}")
+    add_executable(${target} ${SOURCES})
 
-  file (GLOB_RECURSE SOURCES 
-        "${folder}/*.cpp"
-        "${folder}/*.hpp")
+    target_link_libraries(${target} gtest ${TEST_DEPENDS})
 
-  add_executable(${target} ${SOURCES})
-  target_link_libraries(${target} gtest ${TEST_DEPENDS})
-  target_include_directories(${target} PRIVATE ${TEST_INCLUDES})
+    target_include_directories(${target} PRIVATE ${TEST_INCLUDES})
 
-  add_test(NAME ${target} COMMAND ${target} ${TEST_ARGUMENTS})
-
+    add_test(NAME ${target} COMMAND ${target} ${TEST_ARGUMENTS})
 endfunction()

@@ -6,78 +6,54 @@
 #  GLIB2_MODULE_LIBRARIES - Link these to use GLib2
 #
 
-IF (GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS )
-  # in cache already
-  SET(GLIB2_MODULE_FOUND TRUE)
+if(GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS)
+    # In cache already
+    set(GLIB2_MODULE_FOUND TRUE)
+else(GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS)
+    include(FindPkgConfig)
 
-ELSE (GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS )
+    # Glib
+    if(GLIB2_MODULE_FIND_REQUIRED)
+        set(_pkgconfig_REQUIRED "REQUIRED")
+    else(GLIB2_MODULE_FIND_REQUIRED)
+        set(_pkgconfig_REQUIRED "")
+    endif()
 
-  INCLUDE(FindPkgConfig)
+    # Look for glib2 include dir and libraries w/o pkgconfig
+    if(NOT GLIB2_MODULE_FOUND AND NOT PKG_CONFIG_FOUND)
+        find_path(_glib2_module_include_DIR
+                  NAMES gmodule.h
+                  PATHS /opt/gnome/include /opt/local/include /sw/include /usr/include /usr/local/include
+                  PATH_SUFFIXES glib-2.0)
 
-  ## Glib
-  IF ( GLIB2_MODULE_FIND_REQUIRED )
-    SET( _pkgconfig_REQUIRED "REQUIRED" )
-  ELSE ( GLIB2_MODULE_FIND_REQUIRED )
-    SET( _pkgconfig_REQUIRED "" )
-  ENDIF ( GLIB2_MODULE_FIND_REQUIRED )
+        # MESSAGE(STATUS "Glib headers: ${_glib2_include_DIR}")
 
-  # Look for glib2 include dir and libraries w/o pkgconfig
-  IF ( NOT GLIB2_MODULE_FOUND AND NOT PKG_CONFIG_FOUND )
-    FIND_PATH(
-      _glib2_module_include_DIR
-    NAMES
-      gmodule.h
-    PATHS
-      /opt/gnome/include
-      /opt/local/include
-      /sw/include
-      /usr/include
-      /usr/local/include
-    PATH_SUFFIXES
-      glib-2.0
-    )
+        find_library(_glib2_module_link_DIR
+                     NAMES gmodule-2.0 gmodule
+                     PATHS /opt/gnome/lib /opt/local/lib /sw/lib /usr/lib /usr/local/lib)
+        if(_glib2_module_include_DIR AND _glib2_module_link_DIR)
+            set(_glib2_module_FOUND TRUE)
+        endif()
 
-    #MESSAGE(STATUS "Glib headers: ${_glib2_include_DIR}")
+        if(_glib2_module_FOUND)
+            set(GLIB2_MODULE_INCLUDE_DIRS ${_glib2_module_include_DIR})
+            set(GLIB2_MODULE_LIBRARIES ${_glib2_module_link_DIR})
+            set(GLIB2_MODULE_FOUND TRUE)
+        else(_glib2_module_FOUND)
+            set(GLIB2_MODULE_FOUND FALSE)
+        endif()
+    endif()
 
-    FIND_LIBRARY(
-      _glib2_module_link_DIR
-    NAMES
-      gmodule-2.0
-      gmodule
-    PATHS
-      /opt/gnome/lib
-      /opt/local/lib
-      /sw/lib
-      /usr/lib
-      /usr/local/lib
-    )
-    IF ( _glib2_module_include_DIR AND _glib2_module_link_DIR )
-        SET ( _glib2_module_FOUND TRUE )
-    ENDIF ( _glib2_module_include_DIR AND _glib2_module_link_DIR )
+    if(GLIB2_MODULE_FOUND)
+        if(NOT GLIB2_MODULE_FIND_QUIETLY)
+            message(STATUS "Found GLib2 module: ${GLIB2_MODULE_LIBRARIES} ${GLIB2_MODULE_INCLUDE_DIRS}")
+        endif()
+    else(GLIB2_MODULE_FOUND)
+        if(GLIB2_MODEUL_FIND_REQUIRED)
+            message(SEND_ERROR "Could not find GLib2 module")
+        endif()
+    endif()
 
-
-    IF ( _glib2_module_FOUND )
-        SET ( GLIB2_MODULE_INCLUDE_DIRS ${_glib2_module_include_DIR})
-        SET ( GLIB2_MODULE_LIBRARIES ${_glib2_module_link_DIR} )
-        SET ( GLIB2_MODULE_FOUND TRUE )
-    ELSE ( _glib2_module_FOUND )
-        SET ( GLIB2_MODULE_FOUND FALSE )
-    ENDIF ( _glib2_module_FOUND )
-
-  ENDIF ( NOT GLIB2_MODULE_FOUND AND NOT PKG_CONFIG_FOUND )
-  ##
-
-  IF (GLIB2_MODULE_FOUND)
-    IF (NOT GLIB2_MODULE_FIND_QUIETLY)
-      MESSAGE (STATUS "Found GLib2 module: ${GLIB2_MODULE_LIBRARIES} ${GLIB2_MODULE_INCLUDE_DIRS}")
-    ENDIF (NOT GLIB2_MODULE_FIND_QUIETLY)
-  ELSE (GLIB2_MODULE_FOUND)
-    IF (GLIB2_MODEUL_FIND_REQUIRED)
-      MESSAGE (SEND_ERROR "Could not find GLib2 module")
-    ENDIF (GLIB2_MODULE_FIND_REQUIRED)
-  ENDIF (GLIB2_MODULE_FOUND)
-
-  # show the GLIB2_MODULE_INCLUDE_DIRS and GLIB2_MODULE_LIBRARIES variables only in the advanced view
-  MARK_AS_ADVANCED(GLIB2_MODULE_INCLUDE_DIRS GLIB2_MODULE_LIBRARIES)
-
-ENDIF (GLIB2_MODULE_LIBRARIES AND GLIB2_MODULE_INCLUDE_DIRS)
+    # Show the GLIB2_MODULE_INCLUDE_DIRS and GLIB2_MODULE_LIBRARIES variables only in the advanced view
+    mark_as_advanced(GLIB2_MODULE_INCLUDE_DIRS GLIB2_MODULE_LIBRARIES)
+endif()
