@@ -1,8 +1,11 @@
 name: CI
 
 on:
+  push:
+    branches: [master]
+
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,7 +24,7 @@ jobs:
           # A regex pattern to check if a commit message is valid.
           pattern: "((\\[(builder|changelog|ci|cmake|codegen|core|doc|docs|git|sc-kpm|sc-memory|sc-network|sc-server|scripts|scs|test|tests|thirdparty|web)\\])+(.)+)|(Review fixes)$"
           # Expression flags change how the expression is interpreted.
-          flags: # optional, default is gm
+          flags: "" # optional, default is gm
           # A error message which will be returned in case of an error.
           error: "One of commit messages or PR title have incorrect formatting. Please read the documentation: https://github.com/ostis-dev/sc-machine/blob/master/docs/dev/pr.md"
           # Setting this input to true will exclude the Pull Request title from the check.
@@ -41,53 +44,33 @@ jobs:
       matrix:
         config:
           - {
-            name: "Ubuntu latest, GCC, Debug",
-            os: ubuntu-latest,
-            build_type: "Debug",
-            sanitizer: "none",
-            cc: "gcc",
-            cxx: "g++"
-          }
+              name: "Ubuntu latest, GCC, Debug",
+              os: ubuntu-latest,
+              build_type: "Debug",
+              cc: "gcc",
+              cxx: "g++",
+            }
           - {
-            name: "Ubuntu latest, GCC, Release",
-            os: ubuntu-latest,
-            build_type: "Release",
-            sanitizer: "none",
-            cc: "gcc",
-            cxx: "g++"
-          }
+              name: "Ubuntu latest, GCC, Release",
+              os: ubuntu-latest,
+              build_type: "Release",
+              cc: "gcc",
+              cxx: "g++",
+            }
           - {
-            name: "Ubuntu latest, Clang, Debug",
-            os: ubuntu-latest,
-            build_type: "Debug",
-            sanitizer: "none",
-            cc: "clang",
-            cxx: "clang++"
-          }
+              name: "Ubuntu latest, Clang, Debug",
+              os: ubuntu-latest,
+              build_type: "Debug",
+              cc: "clang",
+              cxx: "clang++",
+            }
           - {
-            name: "Ubuntu latest, Clang, Release",
-            os: ubuntu-latest,
-            build_type: "Release",
-            sanitizer: "none",
-            cc: "clang",
-            cxx: "clang++"
-          }
-          - {
-            name: "Ubuntu latest, Clang, Sanitizer - address",
-            os: ubuntu-latest,
-            build_type: "Release",
-            sanitizer: "address",
-            cc: "clang",
-            cxx: "clang++"
-          }
-          - {
-            name: "Ubuntu latest, Clang, Sanitizer - memory",
-            os: ubuntu-latest,
-            build_type: "Release",
-            sanitizer: "memory",
-            cc: "clang",
-            cxx: "clang++"
-          }
+              name: "Ubuntu latest, Clang, Release",
+              os: ubuntu-latest,
+              build_type: "Release",
+              cc: "clang",
+              cxx: "clang++",
+            }
 
     steps:
       - name: Checkout
@@ -105,10 +88,10 @@ jobs:
           CC: ${{ matrix.config.cc }}
           CCX: ${{ matrix.config.cxx }}
           BUILD_TYPE: ${{ matrix.config.build_type }}
-          SANITIZER_TYPE: $${{ matrix.config.sanitizer }}
+          SANITIZER_TYPE: none
+          COVERAGE: OFF
         run: scripts/ci/install-tests.sh
 
       - name: Run tests
         id: run_tests
         run: scripts/ci/run-tests.sh
-
