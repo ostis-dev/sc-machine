@@ -35,11 +35,24 @@ jobs:
           COVERAGE: ON
         run: scripts/ci/install-tests.sh
 
+      - name: Prepare coverage
+        id: prepare_coverage
+        run: scripts/ci/prepare-coverage.sh
+
       - name: Run tests
         id: run_tests
         run: scripts/ci/run-tests.sh
 
-      - name: Upload coverage reports to CodeCov
-        id: upload_coverage
-        working-directory: ${{github.workspace}}/build
-        run: bash <(curl -s https://codecov.io/bash)
+      - name: Export coverage report
+        id: export_coverage
+        run: scripts/ci/export-coverage.sh
+
+      - name: Upload coverage report to CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          directory: ${{github.workspace}}/build
+          files: coverage.info
+          flags: unittests
+          fail_ci_if_error: true
+          name: codecov-umbrella
+          verbose: true
