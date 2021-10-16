@@ -30,17 +30,17 @@ target_include_directories(sc-memory
       PRIVATE ${SC_MACHINE_ANTRL_DIR}/runtime/src
       PUBLIC ${SC_MEMORY_SRC})
 
-if (${WIN32})
+if (WIN32)
   target_link_libraries(sc-memory
                         sc-core ${LIBCURL_LIBRARIES}
                         antlr4_static)
-elseif (${UNIX})
+elseif (UNIX)
   target_link_libraries(sc-memory
                         sc-core
                         antlr4_static
                         ${LIBCURL_LIBRARIES}
                         ${Boost_LIBRARIES})
-endif(${WIN32})
+endif()
 
 sc_codegen_ex(sc-memory ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/generated")
 add_dependencies(sc-memory 

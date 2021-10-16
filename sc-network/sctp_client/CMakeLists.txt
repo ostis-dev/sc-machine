@@ -9,7 +9,7 @@ set (HEADERS
         "sctpISocket.hpp"
         )
 
-if (${WIN32})
+if (WIN32)
     set (SOCKET_SRC
         "sockets/winSocket.cpp"
         "sockets/winSocket.hpp"
@@ -33,6 +33,6 @@ target_include_directories(sctp-client
 target_link_libraries(sctp-client sc-memory ${SOCKET_LIBS})
 target_compile_definitions(sctp-client PUBLIC "-DSC_MEMORY_SELF_BUILD")
 
-if (${WIN32})
+if (WIN32)
 add_subdirectory(test)
 endif ()

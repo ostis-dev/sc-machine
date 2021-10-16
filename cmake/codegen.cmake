@@ -18,7 +18,7 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
         set(META_FLAGS ${META_FLAGS} 
             "-IC:/Program Files (x86)/Microsoft Visual Studio ${VS_VERSION}/VC/include"
         )
-    elseif (${UNIX})
+    elseif (UNIX)
         set(META_FLAGS ${META_FLAGS}
             "-I${LIBCLANG_LIBDIR}/clang/${LIBCLANG_VERSION_STRING}/include/"
         )
@@ -67,8 +67,8 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
     # clean stage
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES CACHE_FILE)
 
-endmacro(sc_codegen_ex)
+endmacro()
 
 macro(sc_codegen Target SrcPath)
     sc_codegen_ex(${Target} ${SrcPath} "${CMAKE_CURRENT_BINARY_DIR}/${Target}_gen")
-endmacro(sc_codegen)
+endmacro()
