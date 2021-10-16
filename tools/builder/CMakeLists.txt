@@ -1,5 +1,5 @@
 
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.h" "src/*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.h" "src/*.hpp")
 
 if (WIN32)
   set (BOOST_LIBS_LIST )

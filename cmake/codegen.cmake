@@ -40,7 +40,7 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
             --cache
         )
     else()
-        file(GLOB_RECURSE HEADER_FILES "${SrcPath}/*.hpp")
+        file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS "${SrcPath}/*.hpp")
 
         set (CACHE_FILE "${CMAKE_CURRENT_BINARY_DIR}/${Target}.gen_cache")
         add_custom_command(

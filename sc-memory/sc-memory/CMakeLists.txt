@@ -21,7 +21,7 @@ set (SOURCES_PARSER
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.h"
       )
 
-file(GLOB_RECURSE SOURCES "*.cpp" "*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp" "*.hpp")
 
 add_library (sc-memory SHARED ${SOURCES} ${SOURCES_PARSER})
 

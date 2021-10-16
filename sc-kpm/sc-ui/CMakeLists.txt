@@ -1,4 +1,4 @@
-file(GLOB_RECURSE SOURCES "*.cpp" "*.h")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp" "*.h")
 
 add_library (sc-ui SHARED ${SOURCES})
 

@@ -1,6 +1,6 @@
 set (SC_CODEGEN_DIR "${SC_TOOLS_DIR}/codegen")
 
-file(GLOB_RECURSE SOURCES "Parser/*.cpp" "Parser/*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "Parser/*.cpp" "Parser/*.hpp")
 
 add_executable(sc-code-generator ${SOURCES})
 target_include_directories(sc-code-generator PRIVATE ${SC_CODEGEN_DIR}/Parser)
