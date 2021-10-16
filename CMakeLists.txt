@@ -1,6 +1,7 @@
+cmake_minimum_required (VERSION 3.16 FATAL_ERROR)
+
 project (sc-machine)
 site_name (www.ostis.net)
-cmake_minimum_required (VERSION 2.8)
 
 include (CTest)
 include (CheckCCompilerFlag)
