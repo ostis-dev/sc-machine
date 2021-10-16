@@ -1,22 +1,7 @@
 
-set (SOURCES
-	"main.cpp"
-	"sctpClient.cpp"
-	"sctpCommand.cpp"
-	"sctpServer.cpp"
-	"sctpStatistic.cpp"
-	"sctpEventManager.cpp"
-	)
-	
-set (HEADERS
-	"sctpClient.h"
-	"sctpCommand.h"
-	"sctpServer.h"
-	"sctpStatistic.h"
-	"sctpEventManager.h"
-	)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp" "*.h")
 
-add_executable(sctp-server ${SOURCES} ${HEADERS})
+add_executable(sctp-server ${SOURCES})
 
 target_include_directories(sctp-server
 	PRIVATE ${SC_MEMORY_SRC} 

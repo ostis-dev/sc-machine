@@ -14,16 +14,16 @@ add_custom_target(SCsParser ALL
       SOURCES "scs/scs.g4"
 )
 
-set (SOURCES_PARSER
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp" "*.hpp")
+
+set (SOURCES ${SOURCES}
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsLexer.cpp"
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsLexer.h"
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.cpp"
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.h"
       )
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp" "*.hpp")
-
-add_library (sc-memory SHARED ${SOURCES} ${SOURCES_PARSER})
+add_library (sc-memory SHARED ${SOURCES})
 
 target_include_directories(sc-memory
       PRIVATE ${GLIB2_INCLUDE_DIRS}

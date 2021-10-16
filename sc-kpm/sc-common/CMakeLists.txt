@@ -1,16 +1,9 @@
 
 set(SC_COMMON_SRC ${CMAKE_CURRENT_LIST_DIR})
 
-set (SOURCES
-	"sc_keynodes.c"
-	)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.c" "*.h")
 
-set (HEADERS
-	"sc_keynodes.h"
-	"sc_common_types.h"
-	)
-
-add_library(sc-kpm-common SHARED ${SOURCES} ${HEADERS})
+add_library(sc-kpm-common SHARED ${SOURCES})
 
 target_include_directories(sc-kpm-common
 	PRIVATE ${SC_COMMON_SRC}
