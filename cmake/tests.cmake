@@ -9,12 +9,10 @@ function(make_tests_from_folder folder)
 
   message(STATUS "Create test ${target}")
 
-  file (GLOB_RECURSE SOURCES 
-        "${folder}/*.cpp"
-        "${folder}/*.hpp")
+  file (GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "${folder}/*.cpp" "${folder}/*.hpp")
 
   add_executable(${target} ${SOURCES})
-  target_link_libraries(${target} gtest ${TEST_DEPENDS})
+  target_link_libraries(${target} PRIVATE gtest_main gmock ${TEST_DEPENDS})
   target_include_directories(${target} PRIVATE ${TEST_INCLUDES})
 
   add_test(NAME ${target} COMMAND ${target} ${TEST_ARGUMENTS})
