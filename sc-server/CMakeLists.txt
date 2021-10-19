@@ -2,13 +2,11 @@ set (SC_SERVER_DIR "${SC_MACHINE_ROOT}/sc-server")
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
 
-if (WIN32)
-  set (BOOST_LIBS_LIST )
-elseif (APPLE)
+if (APPLE)
   set (BOOST_LIBS_LIST
     Boost::program_options
     )
-else()
+elseif(UNIX)
   set (BOOST_LIBS_LIST
     boost_program_options
     )

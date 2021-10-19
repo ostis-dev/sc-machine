@@ -1,16 +1,13 @@
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.h" "src/*.hpp")
 
-if (WIN32)
-  set (BOOST_LIBS_LIST )
-
-elseif (APPLE)
+if (APPLE)
   set (BOOST_LIBS_LIST
         Boost::filesystem 
         Boost::program_options 
         Boost::system
     )
-else()
+elseif(UNIX)
   set (BOOST_LIBS_LIST
          boost_filesystem 
          boost_program_options 
