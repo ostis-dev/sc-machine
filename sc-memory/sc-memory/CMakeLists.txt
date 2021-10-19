@@ -1,10 +1,8 @@
-set (SC_MACHINE_ANTRL_DIR "${SC_MACHINE_THIRDPARTY_PATH}/antlr")
-
 add_custom_command(OUTPUT "${CMAKE_CURRENT_LIST_DIR}/scs/scsLexer.cpp"
                           "${CMAKE_CURRENT_LIST_DIR}/scs/scsLexer.h"
                           "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.cpp"
                           "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.h"
-      COMMAND "${Java_JAVA_EXECUTABLE}" -jar "${SC_MACHINE_ANTRL_DIR}/antlr-4.7.1-complete.jar" scs.g4 -no-listener -package scs
+      COMMAND "${Java_JAVA_EXECUTABLE}" -jar "${ANTLR_JAR}" scs.g4 -no-listener -package scs
       WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/scs"
       DEPENDS scs/scs.g4
 )
@@ -27,12 +25,11 @@ add_library (sc-memory SHARED ${SOURCES})
 
 target_include_directories(sc-memory
       PRIVATE ${GLIB2_INCLUDE_DIRS}
-      PRIVATE ${SC_MACHINE_ANTRL_DIR}/runtime/src
       PUBLIC ${SC_MEMORY_SRC})
 
 target_link_libraries(sc-memory
                       sc-core
-                      antlr4_static
+                      sc_machine_antlr
                       ${LIBCURL_LIBRARIES}
                       ${Boost_LIBRARIES})
 
@@ -40,7 +37,7 @@ sc_codegen_ex(sc-memory ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}
 add_dependencies(sc-memory 
   sc-core
   sc-code-generator
-  antlr4_static
+  sc_machine_antlr
   SCsParser)
 
 target_compile_definitions(sc-memory PRIVATE "-DSC_MEMORY_SELF_BUILD")
