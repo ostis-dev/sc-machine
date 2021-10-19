@@ -11,5 +11,7 @@ target_include_directories(sc-kpm-common
 	)
 
 add_dependencies(sc-kpm-common sc-core)
-target_link_libraries(sc-kpm-common sc-core PkgConfig::glib)
+target_link_libraries(sc-kpm-common 
+	PUBLIC sc-core 
+	PRIVATE PkgConfig::glib)
 target_compile_definitions(sc-kpm-common PUBLIC "-DSC_KPM_COMMON_SELF_BUILD")

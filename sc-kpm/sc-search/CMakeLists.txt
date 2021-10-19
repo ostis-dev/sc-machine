@@ -7,4 +7,6 @@ target_include_directories(sc-search
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
   )
 add_dependencies(sc-search sc-memory sc-kpm-common)
-target_link_libraries(sc-search sc-kpm-common PkgConfig::glib)
+target_link_libraries(sc-search 
+  PUBLIC sc-kpm-common 
+  PRIVATE PkgConfig::glib)

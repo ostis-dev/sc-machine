@@ -3,7 +3,9 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.h" "src/*.hpp")
 
 add_executable(sc-builder ${SOURCES})
 target_include_directories(sc-builder PRIVATE ${SC_MEMORY_SRC})
-target_link_libraries(sc-builder sc-core sc-memory Boost::filesystem Boost::program_options Boost::system PkgConfig::glib)
+target_link_libraries(sc-builder 
+  PUBLIC sc-core sc-memory
+  PRIVATE Boost::filesystem Boost::program_options Boost::system PkgConfig::glib)
 
 add_dependencies(sc-builder sc-code-generator sc-kpm sc-memory)
 

@@ -2,4 +2,4 @@ file (GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.cpp" "
 
 add_executable(sc-memory-performance-test ${SOURCES})
 
-target_link_libraries(sc-memory-performance-test PUBLIC sc-memory benchmark::benchmark)
+target_link_libraries(sc-memory-performance-test PRIVATE sc-memory benchmark::benchmark)

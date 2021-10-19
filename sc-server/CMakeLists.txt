@@ -4,7 +4,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
 
 add_executable(sc-server ${SOURCES})
 target_include_directories(sc-server PRIVATE ${SC_MEMORY_SRC})
-target_link_libraries(sc-server sc-memory Boost::program_options PkgConfig::glib)
+target_link_libraries(sc-server PRIVATE sc-memory Boost::program_options PkgConfig::glib)
 
 add_dependencies(sc-server
   sc-kpm

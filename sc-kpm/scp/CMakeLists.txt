@@ -18,4 +18,6 @@ target_include_directories(scp
   )
 add_dependencies(scp sc-core)
 
-target_link_libraries(scp sc-core PkgConfig::glib)
+target_link_libraries(scp 
+  PUBLIC sc-core 
+  PRIVATE PkgConfig::glib)
