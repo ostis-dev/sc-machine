@@ -23,15 +23,16 @@ set (SOURCES ${SOURCES}
 
 add_library (sc-memory SHARED ${SOURCES})
 
-target_include_directories(sc-memory
-      PRIVATE ${GLIB2_INCLUDE_DIRS}
-      PUBLIC ${SC_MEMORY_SRC})
+target_include_directories(sc-memory PUBLIC ${SC_MEMORY_SRC})
 
 target_link_libraries(sc-memory
                       sc-core
                       sc_machine_antlr
-                      ${LIBCURL_LIBRARIES}
-                      ${Boost_LIBRARIES})
+                      curl
+                      Boost::program_options 
+                      Boost::filesystem 
+                      Boost::system
+                      PkgConfig::glib)
 
 sc_codegen_ex(sc-memory ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/generated")
 add_dependencies(sc-memory 

@@ -12,11 +12,6 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
           set(META_FLAGS ${META_FLAGS} "-I${dir}")
     endforeach()
 
-
-    set(META_FLAGS ${META_FLAGS}
-        "-I${LIBCLANG_LIBDIR}/clang/${LIBCLANG_VERSION_STRING}/include/"
-    )
-
     file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS "${SrcPath}/*.hpp")
 
     set (CACHE_FILE "${CMAKE_CURRENT_BINARY_DIR}/${Target}.gen_cache")

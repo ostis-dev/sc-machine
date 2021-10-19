@@ -7,15 +7,12 @@ if (WIN32)
     set (SOCKET_LIBS )
 else ()
     set (SOURCES ${SOURCES} "sockets/glibSocket.cpp" "sockets/glibSocket.hpp")
-    set (SOCKET_LIBS  ${GLIB2_LIBRARIES})
+    set (SOCKET_LIBS PkgConfig::glib PkgConfig::gmodule)
 endif()
 
 add_library (sctp-client SHARED ${SOURCES})
 
-target_include_directories(sctp-client
-  PRIVATE ${SC_MEMORY_SRC}
-  PRIVATE ${GLIB2_INCLUDE_DIRS}
-  )
+target_include_directories(sctp-client PRIVATE ${SC_MEMORY_SRC})
 target_link_libraries(sctp-client sc-memory ${SOCKET_LIBS})
 target_compile_definitions(sctp-client PUBLIC "-DSC_MEMORY_SELF_BUILD")
 

@@ -94,45 +94,25 @@ message ("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 message ("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 # CMake modules
-set(CMAKE_MODULE_PATH "${SC_MACHINE_ROOT}/cmake")
+set(CMAKE_MODULE_PATH "${SC_MACHINE_ROOT}/cmake/modules")
 
 # Dependencies
-find_package(Java)
+find_package(Java REQUIRED)
+find_package(LibClang REQUIRED)
 find_package(RocksDB REQUIRED)
-if (NOT DEFINED LIBCLANG_LIBRARIES OR NOT DEFINED LIBCLANG_CXXFLAGS OR NOT DEFINED LIBCLANG_LIBDIR)
-    find_package(LibClang REQUIRED)
-endif ()
+find_package(CURL REQUIRED)
 
-# OS-specific dependencies
-if (APPLE)
-    set(Boost_USE_STATIC_LIBS ON)
-    find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem program_options)
+# Boost
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem program_options)
 
-    find_package(PkgConfig REQUIRED)
-    pkg_search_module(GLIB2 REQUIRED glib-2.0)
-    pkg_search_module(GLIB2_MODULE REQUIRED gmodule-2.0)
+# GLib
+include(FindPkgConfig)
+pkg_check_modules(glib REQUIRED IMPORTED_TARGET glib-2.0)
+pkg_check_modules(gmodule REQUIRED IMPORTED_TARGET gmodule-2.0)
 
-    set (GLIB2_LIBRARIES ${GLIB_LDFLAGS} ${GLIB2_MODULE_LDFLAGS})
-
-    find_package(curl REQUIRED)
-    find_package(RocksDB REQUIRED)
-
-    set (LIBCURL_LIBRARIES ${CURL_LIBRARIES})
-
-    include_directories("${CMAKE_OSX_SYSROOT}/usr/include")
-
-elseif (UNIX)
-
-    include(FindPkgConfig)
-    pkg_check_modules (GLIB2 REQUIRED glib-2.0)
-    pkg_check_modules (GLIB2_MODULE REQUIRED gmodule-2.0)
-
-    set (GLIB2_INCLUDE_DIRS "${GLIB2_INCLUDE_DIRS}" "/usr/lib/x86_64-linux-gnu/glib-2.0/include/" "${GLIB2_MODULE}")
-    set (GLIB2_LIBRARIES "${GLIB2_LIBRARIES}" "${GLIB2_MODULE_LIBRARIES}")
-    
-    pkg_check_modules(LIBCURL REQUIRED libcurl)
-
-    # std::thread support
+# std::thread support
+if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif()
 
