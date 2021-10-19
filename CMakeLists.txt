@@ -1,6 +1,7 @@
+cmake_minimum_required (VERSION 3.16 FATAL_ERROR)
+
 project (sc-machine)
 site_name (www.ostis.net)
-cmake_minimum_required (VERSION 2.8)
 
 include (CTest)
 include (CheckCCompilerFlag)
@@ -29,9 +30,9 @@ if(SC_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0 -g")
 endif()
 
-if (${SC_BUILD_ARM64})
+if (SC_BUILD_ARM64)
     check_c_compiler_flag("-arch arm64" IS_ARM64_SUPPORTED)
-    if (${IS_ARM64_SUPPORTED})
+    if (IS_ARM64_SUPPORTED)
         set (CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "Used architecture" FORCE)
         message ("-- Architecture: arm64")
     else()
@@ -40,9 +41,9 @@ if (${SC_BUILD_ARM64})
 endif()
 
 # codegen
-if (${UNIX})
+if (UNIX)
     set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
-elseif (${WIN32})
+elseif (WIN32)
     set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator.exe")
 endif()
 include("${SC_MACHINE_ROOT}/cmake/codegen.cmake")
@@ -61,30 +62,30 @@ foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
     string( TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG )
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${SC_BIN_PATH} )
     set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${SC_BIN_PATH} )
-endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
+endforeach()
 
 set(SC_MEMORY_SRC "${SC_MACHINE_ROOT}/sc-memory")
 
-if (${SC_USE_SANITIZER} STREQUAL "address")
+if (SC_USE_SANITIZER STREQUAL "address")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -O1 -fno-omit-frame-pointer")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -O1 -fno-omit-frame-pointer")
-elseif (${SC_USE_SANITIZER} STREQUAL "memory")
+elseif (SC_USE_SANITIZER STREQUAL "memory")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics -std=c++17")
-    if (${SC_USE_SANITIZER} STREQUAL "none" AND NOT SC_COVERAGE)
+    if (SC_USE_SANITIZER STREQUAL "none" AND NOT SC_COVERAGE)
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
     endif()
 
-    if(${SC_AUTO_TEST})
+    if(SC_AUTO_TEST)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdeprecated-declarations")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
-    if (${SC_USE_SANITIZER} STREQUAL "none" AND NOT SC_COVERAGE)
+    if (SC_USE_SANITIZER STREQUAL "none" AND NOT SC_COVERAGE)
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")        ## Optimize
         set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s")  ## Strip binary
     endif()
@@ -102,7 +103,7 @@ message ("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 message ("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 # find dependencies
-if (${APPLE})
+if (APPLE)
     set(Boost_USE_STATIC_LIBS ON)
     find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem program_options)
 
@@ -123,7 +124,7 @@ if (${APPLE})
 
     include_directories("${CMAKE_OSX_SYSROOT}/usr/include")
 
-elseif (${UNIX})
+elseif (UNIX)
     find_package(RocksDB REQUIRED)
 
     include(FindPkgConfig)
@@ -142,15 +143,15 @@ elseif (${UNIX})
     # for std::thread support
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-elseif (${WIN32})
+elseif (WIN32)
 
     set(PACKAGES_PATH "${CMAKE_BINARY_DIR}/packages")
 
-    if (${MSVC_VERSION} EQUAL 1800)
+    if (MSVC_VERSION EQUAL 1800)
         set (MSVC_SUFFIX "vc120")
-    elseif (${MSVC_VERSION} EQUAL 1900)
+    elseif (MSVC_VERSION EQUAL 1900)
         set (MSVC_SUFFIX "vc140")
-    elseif (${MSVC_VERSION} GREATER_EQUAL 1911)
+    elseif (MSVC_VERSION GREATER_EQUAL 1911)
         set (MSVC_SUFFIX "vc141")
     endif()
 
@@ -214,7 +215,7 @@ elseif (${WIN32})
             )
     file(COPY ${WIN_RUNTIME_LIBRARIES} DESTINATION "${SC_BIN_PATH}")
 
-endif(${APPLE})
+endif()
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.ini.in ${CMAKE_CURRENT_LIST_DIR}/bin/config.ini)
 
@@ -229,6 +230,6 @@ add_subdirectory(${SC_MACHINE_ROOT}/sc-kpm)
 add_subdirectory(${SC_MACHINE_ROOT}/sc-server)
 add_subdirectory(${SC_MACHINE_ROOT}/tools)
 
-if (${SC_BUILD_SCTP})
+if (SC_BUILD_SCTP)
     add_subdirectory(${SC_MACHINE_ROOT}/sc-network)
 endif()

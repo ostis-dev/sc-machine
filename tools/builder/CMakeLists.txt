@@ -1,10 +1,10 @@
 
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.h" "src/*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.h" "src/*.hpp")
 
-if (${WIN32})
+if (WIN32)
   set (BOOST_LIBS_LIST )
 
-elseif (${APPLE})
+elseif (APPLE)
   set (BOOST_LIBS_LIST
         Boost::filesystem 
         Boost::program_options 
@@ -16,7 +16,7 @@ else()
          boost_program_options 
          boost_system
       )
-endif (${WIN32})
+endif ()
   
 add_executable(sc-builder ${SOURCES})
 target_include_directories(sc-builder 

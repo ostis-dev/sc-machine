@@ -14,33 +14,33 @@ add_custom_target(SCsParser ALL
       SOURCES "scs/scs.g4"
 )
 
-set (SOURCES_PARSER
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp" "*.hpp")
+
+set (SOURCES ${SOURCES}
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsLexer.cpp"
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsLexer.h"
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.cpp"
       "${CMAKE_CURRENT_LIST_DIR}/scs/scsParser.h"
       )
 
-file(GLOB_RECURSE SOURCES "*.cpp" "*.hpp")
-
-add_library (sc-memory SHARED ${SOURCES} ${SOURCES_PARSER})
+add_library (sc-memory SHARED ${SOURCES})
 
 target_include_directories(sc-memory
       PRIVATE ${GLIB2_INCLUDE_DIRS}
       PRIVATE ${SC_MACHINE_ANTRL_DIR}/runtime/src
       PUBLIC ${SC_MEMORY_SRC})
 
-if (${WIN32})
+if (WIN32)
   target_link_libraries(sc-memory
                         sc-core ${LIBCURL_LIBRARIES}
                         antlr4_static)
-elseif (${UNIX})
+elseif (UNIX)
   target_link_libraries(sc-memory
                         sc-core
                         antlr4_static
                         ${LIBCURL_LIBRARIES}
                         ${Boost_LIBRARIES})
-endif(${WIN32})
+endif()
 
 sc_codegen_ex(sc-memory ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/generated")
 add_dependencies(sc-memory 

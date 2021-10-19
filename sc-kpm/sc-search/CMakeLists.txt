@@ -1,4 +1,4 @@
-file(GLOB_RECURSE SOURCES "*.c" "*.cpp" "*.h" "*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.c" "*.cpp" "*.h" "*.hpp")
 
 add_library (sc-search SHARED ${SOURCES})
 
