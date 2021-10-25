@@ -28,6 +28,7 @@ protected:
     , m_ctx(ctx)
   {
     m_kNrelSCsGlobalIdtf = m_ctx.HelperResolveSystemIdtf("nrel_scs_global_idtf", ScType::NodeConstNoRole);
+    m_kNrelFormat = m_ctx.HelperResolveSystemIdtf("nrel_format", ScType::NodeConstNoRole);
     SC_ASSERT(m_kNrelSCsGlobalIdtf.IsValid(), ());
   }
 
@@ -161,6 +162,8 @@ private:
         {
           result = m_ctx.CreateLink(type);
           SetupLinkContent(result, el);
+          if (el.IsURL())
+            GenerateFormatInfo(result, el.GetValue());
         }
         else
         {
@@ -267,12 +270,24 @@ private:
     }
   }
 
+  void GenerateFormatInfo(ScAddr const & addr, std::string const & fileName)
+  {
+    int pos = fileName.find_last_of('.');
+    std::string const fmtStr = "format_" + fileName.substr(pos + 1);
+
+    ScAddr const formatAddr = m_ctx.HelperResolveSystemIdtf(fmtStr, ScType::NodeConstClass);
+
+    ScAddr edge = m_ctx.CreateEdge(ScType::EdgeDCommonConst, addr, formatAddr);
+    m_ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, m_kNrelFormat, edge);
+  }
+
 private:
   SCsFileInterfacePtr m_fileInterface;
   ScMemoryContext & m_ctx;
 
   std::unordered_map<std::string, ScAddr> m_idtfCache;
   ScAddr m_kNrelSCsGlobalIdtf;
+  ScAddr m_kNrelFormat;
 };
 
 } // namespace impl
