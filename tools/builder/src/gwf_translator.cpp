@@ -6,18 +6,15 @@
 
 #include "gwf_translator.hpp"
 
+#include "base64/base64.h"
+#include "sc-memory/sc_memory.hpp"
+#include "tinyxml/tinyxml2.h"
 #include "utils.hpp"
 
-#include "base64/base64.h"
-#include "tinyxml/tinyxml2.h"
-
-#include "sc-memory/sc_memory.hpp"
-
+#include <assert.h>
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
-
-#include <assert.h>
 
 std::string const sEdge = "arc";
 std::string const sPair = "pair";
@@ -41,7 +38,7 @@ bool GwfTranslator::TranslateImpl(Params const & params)
   if (error != tinyxml2::XML_SUCCESS)
     PARSE_ERROR(params.m_fileName, -1, doc.GetErrorStr2());
 
-  tinyxml2::XMLElement *root = doc.FirstChildElement("GWF");
+  tinyxml2::XMLElement * root = doc.FirstChildElement("GWF");
   if (!root)
     PARSE_ERROR(params.m_fileName, -1, "Can't find root element");
 
@@ -50,12 +47,12 @@ bool GwfTranslator::TranslateImpl(Params const & params)
     PARSE_ERROR(params.m_fileName, -1, "Can't find static sector");
 
   // collect elements
-  std::vector<tinyxml2::XMLElement*> nodes;
-  std::vector<tinyxml2::XMLElement*> edges;
-  std::vector<tinyxml2::XMLElement*> buses;
-  std::vector<tinyxml2::XMLElement*> all;
+  std::vector<tinyxml2::XMLElement *> nodes;
+  std::vector<tinyxml2::XMLElement *> edges;
+  std::vector<tinyxml2::XMLElement *> buses;
+  std::vector<tinyxml2::XMLElement *> all;
 
-  tinyxml2::XMLElement *el = root->FirstChildElement();
+  tinyxml2::XMLElement * el = root->FirstChildElement();
   while (el)
   {
     all.push_back(el);
@@ -78,7 +75,7 @@ bool GwfTranslator::TranslateImpl(Params const & params)
   std::unordered_map<std::string, ScAddr> idMap;
 
   // create all nodes
-  std::vector<tinyxml2::XMLElement*>::iterator it, itEnd = nodes.end();
+  std::vector<tinyxml2::XMLElement *>::iterator it, itEnd = nodes.end();
   for (it = nodes.begin(); it != itEnd; ++it)
   {
     el = *it;
@@ -96,7 +93,7 @@ bool GwfTranslator::TranslateImpl(Params const & params)
       if (addr.IsValid())
       {
         idMap[id] = addr;
-        continue;    // skip elements that already exists
+        continue;  // skip elements that already exists
       }
     }
   }
@@ -106,7 +103,7 @@ bool GwfTranslator::TranslateImpl(Params const & params)
 //    if (el->Name() == sContour)
 //    {
 //      AppendScAddr(m_ctx.CreateNode(ScType::NodeConstStruct, idtf);
-//    } 
+//    }
 //    else
 //    {
 //      tinyxml2::XMLElement *content = el->FirstChildElement("content");
@@ -118,12 +115,12 @@ bool GwfTranslator::TranslateImpl(Params const & params)
 //        std::string const strType = el->Attribute("type");
 //        ScAddr const addr = m_ctx.CreateNode(ConvertType(strType));
 //        appendScAddr(addr, idtf);
-//      } 
+//      }
 //      else
 //      {
 //        // need to create link
 //        ScAddr const addr = m_ctx.CreateLink();
-//        
+//
 //        // setup content
 //        std::string data = content->GetText();
 //        if (content->IntAttribute("type") == 4)
@@ -226,7 +223,7 @@ ScAddr GwfTranslator::GetScAddr(std::string const & idtf)
 {
   return {};
 }
-//bool GwfTranslator::getScAddr(const String &idtf, sc_addr &addr)
+// bool GwfTranslator::getScAddr(const String &idtf, sc_addr &addr)
 //{
 //  tStringAddrMap::iterator it = mLocalIdtfAddrs.find(idtf);
 //  if (it != mLocalIdtfAddrs.end())
@@ -249,7 +246,8 @@ ScAddr GwfTranslator::GetScAddr(std::string const & idtf)
 //    return true;
 //  }
 //
-//  if (sc_helper_find_element_by_system_identifier(mContext, idtf.c_str(), (sc_uint32)idtf.size(), &addr) == SC_RESULT_OK)
+//  if (sc_helper_find_element_by_system_identifier(mContext, idtf.c_str(), (sc_uint32)idtf.size(), &addr) ==
+//  SC_RESULT_OK)
 //    return true;
 //
 //  return false;
@@ -359,6 +357,6 @@ ScType GwfTranslator::ConvertType(std::string const & type)
 
   if (type == "arc/var/pos/temp")
     return ScType::EdgeAccessVarPosTemp;
-              
+
   return ScType();
 }

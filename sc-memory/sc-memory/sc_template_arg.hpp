@@ -120,7 +120,7 @@ struct ScTemplateArg
   std::string m_replacementName;
 };
 
-_SC_EXTERN ScTemplateArg operator >> (ScAddr const & value, char const * replName);
-_SC_EXTERN ScTemplateArg operator >> (ScAddr const & value, std::string const & replName);
-_SC_EXTERN ScTemplateArg operator >> (ScType const & value, char const * replName);
-_SC_EXTERN ScTemplateArg operator >> (ScType const & value, std::string const & replName);
+_SC_EXTERN ScTemplateArg operator>>(ScAddr const & value, char const * replName);
+_SC_EXTERN ScTemplateArg operator>>(ScAddr const & value, std::string const & replName);
+_SC_EXTERN ScTemplateArg operator>>(ScType const & value, char const * replName);
+_SC_EXTERN ScTemplateArg operator>>(ScType const & value, std::string const & replName);

@@ -1,10 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_link.hpp"
-#include "sc-memory/sc_memory.hpp"
-
 #include "sc_test.hpp"
 
+#include "sc-memory/sc_link.hpp"
+#include "sc-memory/sc_memory.hpp"
 
 TEST_F(ScMemoryTest, LinkContent)
 {

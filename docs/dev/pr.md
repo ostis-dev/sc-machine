@@ -19,6 +19,7 @@ Possible tags:
   * `[codegen]` - changes in code generator
   * `[core]` - changes in `sc-storage` code
   * `[doc]` or `[docs]` - update documentation
+  * `[format]` - changes in code formatting
   * `[git]` - changes in git configuration
   * `[sc-kpm]` - changes in `sc-kpm` code
   * `[sc-memory]` - changes in `sc-memory` code

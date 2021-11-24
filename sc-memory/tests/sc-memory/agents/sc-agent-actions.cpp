@@ -1,10 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_wait.hpp"
-
-#include "test_action.hpp"
-
 #include "agents_test_utils.hpp"
+#include "sc-memory/sc_wait.hpp"
+#include "test_action.hpp"
 
 ScAddr ATestActionEmit::ms_keynodeParam1;
 ScAddr ATestActionEmit::ms_keynodeParam2;
@@ -31,16 +29,18 @@ TEST_F(ScAgentTest, action_emit)
 
   testInitLock.Lock();
   ScAddr const cmd = ScAgentAction::CreateCommand(
-    *m_ctx,
-    ATestActionEmit::GetCommandClassAddr(),
-    { ATestActionEmit::ms_keynodeParam1, ATestActionEmit::ms_keynodeParam2 });
+      *m_ctx,
+      ATestActionEmit::GetCommandClassAddr(),
+      {ATestActionEmit::ms_keynodeParam1, ATestActionEmit::ms_keynodeParam2});
 
   SC_CHECK(cmd.IsValid(), ());
 
   ScWaitActionFinished waiter(*m_ctx, cmd);
-  waiter.SetOnWaitStartDelegate([&]() {
-    ScAgentAction::InitiateCommand(*m_ctx, cmd);
-  });
+  waiter.SetOnWaitStartDelegate(
+      [&]()
+      {
+        ScAgentAction::InitiateCommand(*m_ctx, cmd);
+      });
   waiter.Wait();
   SC_CHECK_EQUAL(ScAgentAction::GetCommandResultCode(*m_ctx, cmd), SC_RESULT_OK, ());
 

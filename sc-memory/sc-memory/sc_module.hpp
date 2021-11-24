@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include "sc_object.hpp"
 #include "sc_addr.hpp"
+#include "sc_object.hpp"
+
 #include "kpm/sc_agent.hpp"
 
 #include "generated/sc_module.generated.hpp"

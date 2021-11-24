@@ -1,11 +1,10 @@
-#include "Cursor.hpp"
-
-#include "MetaDataConfig.hpp"
-#include "MetaUtils.hpp"
-
 #include "LanguageTypes/Global.hpp"
+
+#include "Cursor.hpp"
 #include "LanguageTypes/Class.hpp"
 #include "LanguageTypes/Field.hpp"
+#include "MetaDataConfig.hpp"
+#include "MetaUtils.hpp"
 
 Global::Global(Cursor const & cursor, Namespace const & currentNamespace, Class * parent)
   : LanguageType(cursor, currentNamespace)
@@ -30,14 +29,11 @@ bool Global::ShouldCompile() const
 
 void Global::GenerateInitCode(std::stringstream & outCode) const
 {
-
   /// TODO: merge with field code generation
   if (m_metaData.HasProperty(Props::Keynode))
   {
-    Field::GenerateResolveKeynodeCode(m_metaData.GetNativeString(Props::Keynode),
-                                      m_displayName,
-                                      Field::GetForceType(m_metaData),
-                                      outCode);
+    Field::GenerateResolveKeynodeCode(
+        m_metaData.GetNativeString(Props::Keynode), m_displayName, Field::GetForceType(m_metaData), outCode);
   }
 }
 

@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_templates.hpp"
-
 #include "sc_test.hpp"
+
+#include "sc-memory/sc_templates.hpp"
 
 using ScTemplateParamsTest = ScMemoryTest;
 
@@ -30,16 +30,14 @@ TEST_F(ScTemplateParamsTest, Iterator)
   ScAddr const test1(34234);
   ScAddr const test2(3422234);
 
-  params
-      .Add("test1", test1)
-      .Add("test2", test2);
+  params.Add("test1", test1).Add("test2", test2);
 
   size_t counter = 0;
   EXPECT_FALSE(params.IsEmpty());
   for (auto const & it : params)
   {
     counter++;
-    EXPECT_TRUE( it.second == test1 || it.second == test2 );
+    EXPECT_TRUE(it.second == test1 || it.second == test2);
   }
 
   EXPECT_EQ(counter, 2u);
@@ -86,4 +84,3 @@ TEST_F(ScTemplateParamsTest, CanAssignParam)
   EXPECT_FALSE(ScTemplateParams::CanAssignParam(ScType::EdgeUCommonVar, ScType::EdgeDCommonConst));
   EXPECT_FALSE(ScTemplateParams::CanAssignParam(ScType::EdgeUCommonVar, ScType::EdgeAccessConstPosPerm));
 }
-

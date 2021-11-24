@@ -7,7 +7,6 @@
 #pragma once
 
 #include "sc-memory/sc_type.hpp"
-
 #include "sc-memory/scs/scs_types.hpp"
 
 #include <limits>
@@ -15,14 +14,13 @@
 
 namespace scs
 {
-
 typedef uint32_t ElementID;
 
 enum class Visibility : uint8_t
 {
-  Local,          // just in one file
-  Global,         // in whole knowledge base, but without system idtf
-  System          // system idtf
+  Local,   // just in one file
+  Global,  // in whole knowledge base, but without system idtf
+  System   // system idtf
 };
 
 class ParsedElement
@@ -30,11 +28,12 @@ class ParsedElement
   friend class Parser;
 
 public:
-  explicit ParsedElement(std::string const & idtf,
-                         ScType const & type = ScType(),
-                         bool isReversed = false,
-                         std::string const & value = "",
-                         bool isURL = false);
+  explicit ParsedElement(
+      std::string const & idtf,
+      ScType const & type = ScType(),
+      bool isReversed = false,
+      std::string const & value = "",
+      bool isURL = false);
 
   _SC_EXTERN std::string const & GetIdtf() const;
   _SC_EXTERN ScType const & GetType() const;
@@ -52,10 +51,10 @@ protected:
 protected:
   std::string m_idtf;
   ScType m_type;
-  Visibility m_visibility; // cached value, to prevent each time check
-  bool m_isReversed : 1;   // flag used just for an edges
-  std::string m_value;  // string representation of content/link value
-  bool m_isURL : 1;     // flag used to determine if ScLink value is an URL
+  Visibility m_visibility;  // cached value, to prevent each time check
+  bool m_isReversed : 1;    // flag used just for an edges
+  std::string m_value;      // string representation of content/link value
+  bool m_isURL : 1;         // flag used to determine if ScLink value is an URL
 };
 
 class ElementHandle
@@ -66,13 +65,13 @@ public:
   _SC_EXTERN ElementHandle(ElementID id, bool isLocal);
   _SC_EXTERN ElementHandle(ElementHandle const & other) = default;
 
-  _SC_EXTERN ElementID operator * () const;
+  _SC_EXTERN ElementID operator*() const;
   _SC_EXTERN bool IsLocal() const;
   _SC_EXTERN bool IsValid() const;
-  _SC_EXTERN bool operator == (ElementHandle const & other) const;
-  _SC_EXTERN bool operator != (ElementHandle const & other) const;
-  _SC_EXTERN ElementHandle & operator = (ElementHandle const & other);
-  _SC_EXTERN bool operator < (ElementHandle const & other) const;
+  _SC_EXTERN bool operator==(ElementHandle const & other) const;
+  _SC_EXTERN bool operator!=(ElementHandle const & other) const;
+  _SC_EXTERN ElementHandle & operator=(ElementHandle const & other);
+  _SC_EXTERN bool operator<(ElementHandle const & other) const;
 
 private:
   static const ElementID INVALID_ID = std::numeric_limits<ElementID>::max();
@@ -81,23 +80,19 @@ private:
   bool m_isLocal;
 };
 
-
 struct ParsedTriple
 {
   ElementHandle const m_source;
   ElementHandle const m_edge;
   ElementHandle const m_target;
 
-  ParsedTriple(ElementHandle const & s,
-               ElementHandle const & e,
-               ElementHandle const & t)
+  ParsedTriple(ElementHandle const & s, ElementHandle const & e, ElementHandle const & t)
     : m_source(s)
     , m_edge(e)
     , m_target(t)
   {
   }
 };
-
 
 class Parser
 {
@@ -130,7 +125,6 @@ public:
   }
 
 protected:
-
   ParsedElement & GetParsedElementRef(ElementHandle const & elID);
 
   ElementHandle ResolveAlias(std::string const & name);
@@ -149,11 +143,12 @@ protected:
   void ProcessAssign(std::string const & alias, ElementHandle const & value);
 
 private:
-  ElementHandle AppendElement(std::string idtf,
-                              ScType const & type = ScType(),
-                              bool isConnectorReversed = false,
-                              std::string const & value = "",
-                              bool isURL = false);
+  ElementHandle AppendElement(
+      std::string idtf,
+      ScType const & type = ScType(),
+      bool isConnectorReversed = false,
+      std::string const & value = "",
+      bool isURL = false);
 
   std::string GenerateNodeIdtf();
   std::string GenerateEdgeIdtf();
@@ -161,9 +156,8 @@ private:
   std::string GenerateContourIdtf();
 
 private:
-
   ParsedElementVector m_parsedElements;
-  ParsedElementVector m_parsedElementsLocal;   // just elements that has a local visibility
+  ParsedElementVector m_parsedElementsLocal;  // just elements that has a local visibility
   std::stack<std::pair<size_t, size_t>> m_contourElementsStack;
   std::stack<size_t> m_contourTriplesStack;
 
@@ -176,4 +170,4 @@ private:
   uint32_t m_idtfCounter;
 };
 
-}
+}  // namespace scs

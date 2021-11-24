@@ -11,11 +11,12 @@
 
 namespace sctp
 {
-
 class ISocket
 {
 public:
-  virtual ~ISocket() {}
+  virtual ~ISocket()
+  {
+  }
 
   virtual bool Connect(std::string const & host, std::string const & port) = 0;
   virtual void Disconnect() = 0;
@@ -37,14 +38,14 @@ public:
   template <typename Type>
   int WriteType(Type const & value)
   {
-    return Write((void*)&value, sizeof(Type));
+    return Write((void *)&value, sizeof(Type));
   }
 
   template <typename Type>
   int ReadType(Type const & value)
   {
-    return Read((void*)&value, sizeof(Type));
+    return Read((void *)&value, sizeof(Type));
   }
 };
 
-}
+}  // namespace sctp

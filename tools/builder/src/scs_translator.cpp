@@ -15,11 +15,10 @@
 
 namespace impl
 {
-
 class FileProvider : public SCsFileInterface
 {
 public:
-  explicit FileProvider(std::string const& parentPath)
+  explicit FileProvider(std::string const & parentPath)
     : m_parentPath(parentPath)
   {
   }
@@ -52,8 +51,7 @@ public:
     }
     else
     {
-      SC_THROW_EXCEPTION(utils::ExceptionParseError,
-                         "Can't process file content by url " << fileURL);
+      SC_THROW_EXCEPTION(utils::ExceptionParseError, "Can't process file content by url " << fileURL);
     }
 
     return {};
@@ -63,7 +61,7 @@ private:
   std::string m_parentPath;
 };
 
-} // namespace impl
+}  // namespace impl
 
 SCsTranslator::SCsTranslator(ScMemoryContext & context)
   : Translator(context)
@@ -76,7 +74,7 @@ bool SCsTranslator::TranslateImpl(Params const & params)
   GetFileContent(params.m_fileName, data);
 
   SCsHelper scs(m_ctx, std::make_shared<impl::FileProvider>(params.m_fileName));
-  
+
   if (!scs.GenerateBySCsText(data))
   {
     SC_THROW_EXCEPTION(utils::ExceptionParseError, scs.GetLastError());

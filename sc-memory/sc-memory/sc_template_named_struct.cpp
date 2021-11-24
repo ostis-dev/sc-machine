@@ -15,7 +15,7 @@ bool ScTemplateNamedStruct::Has(std::string const & name) const
   return (m_names.find(name) != m_names.end());
 }
 
-ScAddr const & ScTemplateNamedStruct::operator [] (std::string const & name) const
+ScAddr const & ScTemplateNamedStruct::operator[](std::string const & name) const
 {
   auto const it = m_names.find(name);
   if (it != m_names.end())
@@ -55,7 +55,7 @@ void ScTemplateNamedStruct::Builder::Add(ScAddr const & addr)
   uint64_t const hash = addr.Hash();
   if (m_addrs.find(hash) == m_addrs.end())
   {
-    m_addrs.insert({ hash, m_struct.m_elements.size() });
+    m_addrs.insert({hash, m_struct.m_elements.size()});
     m_struct.m_elements.push_back(addr);
   }
 }
@@ -64,20 +64,19 @@ void ScTemplateNamedStruct::Builder::Add(std::string const & name, ScAddr const 
 {
   if (m_struct.m_names.find(name) != m_struct.m_names.end())
   {
-    SC_THROW_EXCEPTION(utils::ExceptionInvalidState,
-                       "Name " << name << " already exists");
+    SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Name " << name << " already exists");
   }
 
   uint64_t const hash = addr.Hash();
   auto const it = m_addrs.find(hash);
   if (it == m_addrs.end())
   {
-    m_struct.m_names.insert({ name, m_struct.m_elements.size() });
-    m_addrs.insert({ hash, m_struct.m_elements.size() });
+    m_struct.m_names.insert({name, m_struct.m_elements.size()});
+    m_addrs.insert({hash, m_struct.m_elements.size()});
     m_struct.m_elements.push_back(addr);
   }
   else
   {
-    m_struct.m_names.insert({ name, it->second });
+    m_struct.m_names.insert({name, it->second});
   }
 }

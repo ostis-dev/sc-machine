@@ -1,12 +1,14 @@
 /*
-* This source file is part of an OSTIS project. For the latest info, see http://ostis.net
-* Distributed under the MIT License
-* (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
-*/
+ * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
+ * Distributed under the MIT License
+ * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
+ */
 
 #include "sc_log.hpp"
-#include "../sc_debug.hpp"
+
 #include "sc_lock.hpp"
+
+#include "../sc_debug.hpp"
 
 #include <ctime>
 #include <iomanip>
@@ -14,17 +16,13 @@
 
 namespace
 {
-
 // should be synced with ScLog::Type
-const char * kTypeToStr[] = {
-    "Debug", "Info", "Warning", "Error"
-};
+const char * kTypeToStr[] = {"Debug", "Info", "Warning", "Error"};
 
-} // namespace
+}  // namespace
 
 namespace utils
 {
-
 ScLock gLock;
 ScLog * ScLog::ms_instance = nullptr;
 
@@ -65,7 +63,7 @@ void ScLog::Shutdown()
 void ScLog::Message(ScLog::Type type, std::string const & msg, ScConsole::Color color /*= ScConsole::Color::White*/)
 {
   if (m_isMuted && type != Type::Error)
-    return; // do nothing on mute
+    return;  // do nothing on mute
 
   utils::ScLockScope lock(gLock);
   if (m_mode <= type)
@@ -75,15 +73,14 @@ void ScLog::Message(ScLog::Type type, std::string const & msg, ScConsole::Color 
     std::tm tm = *std::localtime(&t);
 
     std::stringstream ss;
-    ss << "[" << std::setw(2) << std::setfill('0') << tm.tm_hour
-       << ":" << std::setw(2) << std::setfill('0') << tm.tm_min
-       << ":" << std::setw(2) << std::setfill('0') << tm.tm_sec << "]["
-       << kTypeToStr[int(type)] << "]: ";
+    ss << "[" << std::setw(2) << std::setfill('0') << tm.tm_hour << ":" << std::setw(2) << std::setfill('0')
+       << tm.tm_min << ":" << std::setw(2) << std::setfill('0') << tm.tm_sec << "][" << kTypeToStr[int(type)] << "]: ";
 
     ScConsole::SetColor(ScConsole::Color::White);
     std::cout << ss.str();
     ScConsole::SetColor(color);
-    std::cout << msg << std::endl;;
+    std::cout << msg << std::endl;
+    ;
     ScConsole::ResetColor();
 
     m_fileStream << ss.str() << msg;
@@ -96,4 +93,4 @@ void ScLog::SetMuted(bool value)
   m_isMuted = value;
 }
 
-} // namespace utils
+}  // namespace utils

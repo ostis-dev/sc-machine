@@ -9,10 +9,11 @@
 class ScTemplateSearchImpl
 {
 public:
-  ScTemplateSearchImpl(ScTemplate::Data const & templ,
-                       ScMemoryContext & context,
-                       ScAddr const & scStruct,
-                       ScTemplateNamedStruct & result)
+  ScTemplateSearchImpl(
+      ScTemplate::Data const & templ,
+      ScMemoryContext & context,
+      ScAddr const & scStruct,
+      ScTemplateNamedStruct & result)
     : m_templ(templ)
     , m_context(context)
     , m_struct(scStruct)
@@ -48,9 +49,9 @@ public:
       static const size_t kScoreOther = 1;
 
       /** First of all we need to calculate scores for all triples
-        * (more scores - should be search first).
-        * Also need to store all replacements that need to be resolved
-        */
+       * (more scores - should be search first).
+       * Also need to store all replacements that need to be resolved
+       */
       std::vector<uint8_t> tripleScores(m_templ.TriplesNum());
       std::unordered_map<std::string, std::vector<size_t>> replDependMap;
       for (size_t i = 0; i < m_templ.TriplesNum(); ++i)
@@ -62,7 +63,7 @@ public:
           if (constr.edge.IsAddr() && constr.source.IsAssign() && constr.target.IsAssign())
             score += kScoreEdge;
           else if (constr.source.IsAddr() && constr.edge.IsAssign() && constr.target.IsAddr())
-            score += kScoreOther * 2; // should be a sum of (f_a_a and a_a_f)
+            score += kScoreOther * 2;  // should be a sum of (f_a_a and a_a_f)
           else if (constr.source.IsAddr() || constr.target.IsAddr())
             score += kScoreOther;
 
@@ -85,10 +86,13 @@ public:
       }
 
       // sort by scores
-      std::sort(preCache.begin(), preCache.end(), [&](size_t a, size_t b)
-      {
-        return (tripleScores[a] > tripleScores[b]);
-      });
+      std::sort(
+          preCache.begin(),
+          preCache.end(),
+          [&](size_t a, size_t b)
+          {
+            return (tripleScores[a] > tripleScores[b]);
+          });
 
       // now we need to append triples, in order, when previous resolve replacement for a next one
       std::vector<size_t> & cache = m_state.processOrder;
@@ -109,7 +113,7 @@ public:
         // get resolved replacements by the last triple
         std::vector<std::string> resolvedReplacements;
         resolvedReplacements.reserve(3);
-        for (auto const & value : { triple.source, triple.edge, triple.target })
+        for (auto const & value : {triple.source, triple.edge, triple.target})
         {
           if (!value.m_replacementName.empty())
             resolvedReplacements.emplace_back(value.m_replacementName);
@@ -217,66 +221,48 @@ public:
     {
       if (!edgeAddr.IsValid())
       {
-        if (targetAddr.IsValid()) // F_A_F
+        if (targetAddr.IsValid())  // F_A_F
         {
-          return m_context.Iterator3(
-                sourceAddr,
-                PrepareType(triple.edge.m_typeValue),
-                targetAddr);
+          return m_context.Iterator3(sourceAddr, PrepareType(triple.edge.m_typeValue), targetAddr);
         }
-        else // F_A_A
+        else  // F_A_A
         {
           return m_context.Iterator3(
-                sourceAddr,
-                PrepareType(triple.edge.m_typeValue),
-                PrepareType(triple.target.m_typeValue));
+              sourceAddr, PrepareType(triple.edge.m_typeValue), PrepareType(triple.target.m_typeValue));
         }
       }
       else
       {
-        if (targetAddr.IsValid()) // F_F_F
+        if (targetAddr.IsValid())  // F_F_F
         {
-          return m_context.Iterator3(
-                sourceAddr,
-                edgeAddr,
-                targetAddr);
+          return m_context.Iterator3(sourceAddr, edgeAddr, targetAddr);
         }
-        else // F_F_A
+        else  // F_F_A
         {
-          return m_context.Iterator3(
-                sourceAddr,
-                edgeAddr,
-                PrepareType(triple.target.m_typeValue));
+          return m_context.Iterator3(sourceAddr, edgeAddr, PrepareType(triple.target.m_typeValue));
         }
       }
     }
     else if (targetAddr.IsValid())
     {
-      if (edgeAddr.IsValid()) // A_F_F
+      if (edgeAddr.IsValid())  // A_F_F
       {
-        return m_context.Iterator3(
-              PrepareType(triple.source.m_typeValue),
-              edgeAddr,
-              targetAddr);
+        return m_context.Iterator3(PrepareType(triple.source.m_typeValue), edgeAddr, targetAddr);
       }
-      else // A_A_F
+      else  // A_A_F
       {
         return m_context.Iterator3(
-              PrepareType(triple.source.m_typeValue),
-              PrepareType(triple.edge.m_typeValue),
-              targetAddr);
+            PrepareType(triple.source.m_typeValue), PrepareType(triple.edge.m_typeValue), targetAddr);
       }
     }
-    else if (edgeAddr.IsValid() && !targetAddr.IsValid()) // A_F_A
+    else if (edgeAddr.IsValid() && !targetAddr.IsValid())  // A_F_A
     {
       return m_context.Iterator3(
-            PrepareType(triple.source.m_typeValue),
-            edgeAddr,
-            PrepareType(triple.target.m_typeValue));
+          PrepareType(triple.source.m_typeValue), edgeAddr, PrepareType(triple.target.m_typeValue));
     }
 
     //// unknown iterator type
-    //SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Unknown iterator type");
+    // SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Unknown iterator type");
 
     return ScIterator3Ptr();
   }
@@ -321,7 +307,7 @@ public:
       auto it = m_repls.find(item.m_replacementName);
       if (it == m_repls.end())
       {
-        m_repls[item.m_replacementName] = { addr, 1 };
+        m_repls[item.m_replacementName] = {addr, 1};
       }
       else
       {
@@ -333,7 +319,7 @@ public:
   bool DoIter()
   {
     if (m_state.isFinished)
-      return false; // do nothing
+      return false;  // do nothing
 
     bool found = false;
     do
@@ -376,16 +362,13 @@ public:
           ScAddr const addr3 = it->Get(2);
 
           // check if search in structure
-          if (m_struct.IsValid() &&
-              (!CheckInStruct(addr1) ||
-               !CheckInStruct(addr2) ||
-               !CheckInStruct(addr3)))
+          if (m_struct.IsValid() && (!CheckInStruct(addr1) || !CheckInStruct(addr2) || !CheckInStruct(addr3)))
           {
-              continue;
+            continue;
           }
 
           auto const res = m_usedEdges.insert(addr2);
-          if (!res.second) // don't iterate the same edge twicely
+          if (!res.second)  // don't iterate the same edge twicely
             continue;
 
           m_state.edges[orderIndex] = addr2;
@@ -415,17 +398,18 @@ public:
           break;
         }
 
-        if (isFinished) // finish iterator
+        if (isFinished)  // finish iterator
         {
           m_state.iterators.pop();
           m_state.newIteration = false;
         }
       }
-      else // special checks and search
+      else  // special checks and search
       {
         SC_THROW_EXCEPTION(utils::ExceptionInvalidState, "Invalid state during template search");
       }
-    } while (!found && !m_state.iterators.empty());
+    }
+    while (!found && !m_state.iterators.empty());
 
     if (m_state.iterators.empty())
       m_state.isFinished = true;
@@ -461,29 +445,26 @@ private:
   };
   std::unordered_map<std::string, ReplCounter> m_repls;
 
-
-
   InternalState m_state;
   ScTemplateNamedStruct & m_result;
 };
 
-
-bool ScTemplateSearch::Iterator::operator == (Iterator const & other) const
+bool ScTemplateSearch::Iterator::operator==(Iterator const & other) const
 {
   return (m_index == other.m_index);
 }
 
-bool ScTemplateSearch::Iterator::operator != (Iterator const & other) const
+bool ScTemplateSearch::Iterator::operator!=(Iterator const & other) const
 {
   return !(*this == other);
 }
 
-ScTemplateSearch::Iterator & ScTemplateSearch::Iterator::operator ++ ()
+ScTemplateSearch::Iterator & ScTemplateSearch::Iterator::operator++()
 {
   auto const result = m_search.DoIter();
   if (result)
   {
-    m_index = (m_index + 1) % kEndIndex; // don't use maximum index
+    m_index = (m_index + 1) % kEndIndex;  // don't use maximum index
   }
   else
   {
@@ -494,7 +475,7 @@ ScTemplateSearch::Iterator & ScTemplateSearch::Iterator::operator ++ ()
   return *this;
 }
 
-ScTemplateNamedStruct const & ScTemplateSearch::Iterator::operator * () const
+ScTemplateNamedStruct const & ScTemplateSearch::Iterator::operator*() const
 {
   return m_struct;
 }
@@ -511,10 +492,11 @@ ScAddr ScTemplateSearch::Iterator::operator[](ScAddr const & addr) const
 
 // --------------------------------------
 
-ScTemplateSearch::ScTemplateSearch(ScMemoryContext & ctx,
-                                   ScTemplate const & templ,
-                                   ScTemplateParams const & params /* = {} */,
-                                   ScAddr const & structAddr /* =  ScAddr::Empty */)
+ScTemplateSearch::ScTemplateSearch(
+    ScMemoryContext & ctx,
+    ScTemplate const & templ,
+    ScTemplateParams const & params /* = {} */,
+    ScAddr const & structAddr /* =  ScAddr::Empty */)
   : m_ctx(ctx)
   , m_template(templ)
   , m_structAddr(structAddr)
@@ -533,10 +515,7 @@ ScTemplateSearch::Iterator ScTemplateSearch::begin()
   ApplyParameters();
 
   m_impl = std::make_unique<ScTemplateSearchImpl>(
-        m_templateWithParams ? m_templateWithParams->GetData() : m_template.GetData(),
-        m_ctx,
-        m_structAddr,
-        m_result);
+      m_templateWithParams ? m_templateWithParams->GetData() : m_template.GetData(), m_ctx, m_structAddr, m_result);
 
   m_impl->Reset();
   if (m_impl->DoIter())
@@ -552,13 +531,13 @@ ScTemplateSearch::Iterator ScTemplateSearch::end()
 
 std::pair<ScTemplateNamedStruct const &, bool> ScTemplateSearch::DoStep()
 {
-  return { m_result, m_impl->DoIter() };
+  return {m_result, m_impl->DoIter()};
 }
 
 void ScTemplateSearch::ApplyParameters()
 {
   if (m_params.IsEmpty())
-    return; // do nothing
+    return;  // do nothing
 
   // Create new template
   ScTemplate::Data newData = m_template.GetData();
@@ -571,27 +550,27 @@ void ScTemplateSearch::ApplyParameters()
     {
       if (!item->IsType())
       {
-        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                           "Please assign values just only to type items of template. Parameter: " << param.first);
+        SC_THROW_EXCEPTION(
+            utils::ExceptionInvalidParams,
+            "Please assign values just only to type items of template. Parameter: " << param.first);
       }
-      else if (!item->m_typeValue.IsVar()) // this case is impossible because of template builder checks
+      else if (!item->m_typeValue.IsVar())  // this case is impossible because of template builder checks
       {
-        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                           "Can't assign value to non variable item. Parameter: " << param.first);
+        SC_THROW_EXCEPTION(
+            utils::ExceptionInvalidParams, "Can't assign value to non variable item. Parameter: " << param.first);
       }
 
       // check types compatibility
       ScType const paramType = m_ctx.GetElementType(param.second);
       if (paramType.IsVar())
       {
-        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                           "Do not use variable as parameter value. Parameter: " << param.first);
+        SC_THROW_EXCEPTION(
+            utils::ExceptionInvalidParams, "Do not use variable as parameter value. Parameter: " << param.first);
       }
 
       if (!ScTemplateParams::CanAssignParam(item->m_typeValue, paramType))
       {
-        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                           "Type of " << param.first << " is not compatible");
+        SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "Type of " << param.first << " is not compatible");
       }
 
       item->m_kind = ScTemplateArg::Kind::Addr;
@@ -600,8 +579,7 @@ void ScTemplateSearch::ApplyParameters()
     }
     else
     {
-      SC_THROW_EXCEPTION(utils::ExceptionItemNotFound,
-                         "Can't find replacement for the parameter " << param.first);
+      SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Can't find replacement for the parameter " << param.first);
     }
   }
 

@@ -1,9 +1,11 @@
 #pragma once
 
-#include "LanguageType.hpp"
 #include "Invokable.hpp"
+#include "LanguageType.hpp"
 
-class Constructor final : public LanguageType, public Invokable
+class Constructor final
+  : public LanguageType
+  , public Invokable
 {
 public:
   Constructor(Cursor const & cursor, Namespace const & currentNamespace, class Class * parent);

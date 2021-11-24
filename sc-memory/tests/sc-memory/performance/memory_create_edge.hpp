@@ -7,9 +7,8 @@ class TestCreateEdge : public TestMemory
 public:
   void Run()
   {
-    m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm,
-                      m_nodes[rand() % m_nodes.size()],
-                      m_nodes[rand() % m_nodes.size()]);
+    m_ctx->CreateEdge(
+        ScType::EdgeAccessConstPosPerm, m_nodes[rand() % m_nodes.size()], m_nodes[rand() % m_nodes.size()]);
   }
 
   void Setup(size_t elementsNum) override

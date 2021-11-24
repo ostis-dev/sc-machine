@@ -1,11 +1,10 @@
 #pragma once
 
-#include "LanguageType.hpp"
-
 #include "Constructor.hpp"
 #include "Field.hpp"
 #include "Function.hpp"
 #include "Global.hpp"
+#include "LanguageType.hpp"
 #include "Method.hpp"
 
 #include <memory>
@@ -13,7 +12,7 @@
 
 struct BaseClass
 {
-  BaseClass(const Cursor &cursor);
+  BaseClass(const Cursor & cursor);
 
   bool IsNative() const;
 
@@ -30,7 +29,7 @@ class Class : public LanguageType
   friend class Field;
 
 public:
-  Class(const Cursor &cursor, const Namespace &currentNamespace);
+  Class(const Cursor & cursor, const Namespace & currentNamespace);
 
   bool ShouldGenerate(void) const;
   bool IsAgent() const;

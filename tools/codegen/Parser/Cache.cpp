@@ -1,10 +1,11 @@
 #include "Cache.hpp"
+
 #include "Sha256.hpp"
+
+#include <boost/filesystem/operations.hpp>
 
 #include <fstream>
 #include <streambuf>
-
-#include <boost/filesystem/operations.hpp>
 
 SourceCache::SourceCache(std::string const & path, std::string const & targetName)
   : m_cacheFileName(path + "/" + targetName + ".gen_cache")
@@ -57,7 +58,7 @@ void SourceCache::CheckGenerator(std::string const & fileName)
   if (it != m_cache.end())
   {
     if (it->second == checksum)
-      return; // generator doesn't changed
+      return;  // generator doesn't changed
   }
 
   // clear cache, because of new generator

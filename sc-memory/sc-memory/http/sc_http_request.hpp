@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../sc_defines.hpp"
 #include "sc_http_response.hpp"
+
+#include "../sc_defines.hpp"
 
 #include <string>
 #include <vector>
 
-class  ScHttpRequest
+class ScHttpRequest
 {
 public:
-
   enum class Type : uint8_t
   {
     GET,

@@ -5,14 +5,13 @@
  */
 
 #include "sc_memory.hpp"
-#include "sc_keynodes.hpp"
-#include "sc_utils.hpp"
-#include "sc_stream.hpp"
 
-#include "kpm/sc_agent.hpp"
+#include "sc_keynodes.hpp"
+#include "sc_stream.hpp"
+#include "sc_utils.hpp"
 
 #include "http/sc_http.hpp"
-
+#include "kpm/sc_agent.hpp"
 #include "utils/sc_log.hpp"
 
 #include <atomic>
@@ -30,18 +29,26 @@ extern "C"
 
 namespace
 {
-
 GMutex gContextMutex;
 struct ContextMutexLock
 {
-  ContextMutexLock() { g_mutex_lock(&gContextMutex); }
-  ~ContextMutexLock() { g_mutex_unlock(&gContextMutex); }
+  ContextMutexLock()
+  {
+    g_mutex_lock(&gContextMutex);
+  }
+  ~ContextMutexLock()
+  {
+    g_mutex_unlock(&gContextMutex);
+  }
 };
 
 bool gIsLogMuted = false;
 
-void _logPrintHandler(gchar const * /* log_domain */, GLogLevelFlags log_level,
-  gchar const * message, gpointer /* user_data */)
+void _logPrintHandler(
+    gchar const * /* log_domain */,
+    GLogLevelFlags log_level,
+    gchar const * message,
+    gpointer /* user_data */)
 {
   if (gIsLogMuted)
     return;
@@ -69,9 +76,9 @@ void _logPrintHandler(gchar const * /* log_domain */, GLogLevelFlags log_level,
   };
 }
 
-std::atomic_int gContextCounter = { 0 };
+std::atomic_int gContextCounter = {0};
 
-} // namespace
+}  // namespace
 
 // ------------------
 
@@ -246,7 +253,7 @@ ScAddr ScMemoryContext::CreateNode(ScType const & type)
   return ScAddr(sc_memory_node_new(m_context, *type));
 }
 
-ScAddr ScMemoryContext::CreateLink(ScType const & type/* = ScType::LinkConst */)
+ScAddr ScMemoryContext::CreateLink(ScType const & type /* = ScType::LinkConst */)
 {
   SC_ASSERT(type == ScType::LinkConst || type == ScType::LinkVar, ());
   SC_ASSERT(IsValid(), ());
@@ -300,7 +307,8 @@ ScAddr ScMemoryContext::GetEdgeTarget(ScAddr const & edgeAddr) const
 bool ScMemoryContext::GetEdgeInfo(ScAddr const & edgeAddr, ScAddr & outSourceAddr, ScAddr & outTargetAddr) const
 {
   SC_ASSERT(IsValid(), ());
-  if (sc_memory_get_arc_info(m_context, *edgeAddr, &outSourceAddr.m_realAddr, &outTargetAddr.m_realAddr) != SC_RESULT_OK)
+  if (sc_memory_get_arc_info(m_context, *edgeAddr, &outSourceAddr.m_realAddr, &outTargetAddr.m_realAddr) !=
+      SC_RESULT_OK)
   {
     outSourceAddr.Reset();
     outTargetAddr.Reset();
@@ -371,13 +379,16 @@ bool ScMemoryContext::Save()
   return (sc_memory_save(m_context) == SC_RESULT_OK);
 }
 
-bool ScMemoryContext::HelperResolveSystemIdtf(std::string const & sysIdtf, ScAddr & outAddr, ScType const & type/* = ScType()*/)
+bool ScMemoryContext::HelperResolveSystemIdtf(
+    std::string const & sysIdtf,
+    ScAddr & outAddr,
+    ScType const & type /* = ScType()*/)
 {
   outAddr = HelperResolveSystemIdtf(sysIdtf, type);
   return outAddr.IsValid();
 }
 
-ScAddr ScMemoryContext::HelperResolveSystemIdtf(std::string const & sysIdtf, ScType const & type/* = ScType()*/)
+ScAddr ScMemoryContext::HelperResolveSystemIdtf(std::string const & sysIdtf, ScType const & type /* = ScType()*/)
 {
   SC_ASSERT(IsValid(), ());
   ScAddr resultAddr = HelperFindBySystemIdtf(sysIdtf);
@@ -385,8 +396,7 @@ ScAddr ScMemoryContext::HelperResolveSystemIdtf(std::string const & sysIdtf, ScT
   {
     if (!type.IsNode())
     {
-      SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                         "You should provide any of ScType::Node... value as a type");
+      SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "You should provide any of ScType::Node... value as a type");
     }
 
     resultAddr = CreateNode(type);
@@ -399,7 +409,8 @@ ScAddr ScMemoryContext::HelperResolveSystemIdtf(std::string const & sysIdtf, ScT
 bool ScMemoryContext::HelperSetSystemIdtf(std::string const & sysIdtf, ScAddr const & addr)
 {
   SC_ASSERT(IsValid(), ());
-  return (sc_helper_set_system_identifier(m_context, *addr, sysIdtf.c_str(), (sc_uint32)sysIdtf.size()) == SC_RESULT_OK);
+  return (
+      sc_helper_set_system_identifier(m_context, *addr, sysIdtf.c_str(), (sc_uint32)sysIdtf.size()) == SC_RESULT_OK);
 }
 
 std::string ScMemoryContext::HelperGetSystemIdtf(ScAddr const & addr)
@@ -437,14 +448,17 @@ bool ScMemoryContext::HelperCheckEdge(ScAddr const & begin, ScAddr end, ScType c
 bool ScMemoryContext::HelperFindBySystemIdtf(std::string const & sysIdtf, ScAddr & outAddr)
 {
   SC_ASSERT(IsValid(), ());
-  return (sc_helper_find_element_by_system_identifier(m_context, sysIdtf.c_str(), (sc_uint32)sysIdtf.size(), &outAddr.m_realAddr) == SC_RESULT_OK);
+  return (
+      sc_helper_find_element_by_system_identifier(
+          m_context, sysIdtf.c_str(), (sc_uint32)sysIdtf.size(), &outAddr.m_realAddr) == SC_RESULT_OK);
 }
 
 ScAddr ScMemoryContext::HelperFindBySystemIdtf(std::string const & sysIdtf)
 {
   ScAddr result;
   SC_ASSERT(IsValid(), ());
-  sc_helper_find_element_by_system_identifier(m_context, sysIdtf.c_str(), (sc_uint32)sysIdtf.size(), &result.m_realAddr);
+  sc_helper_find_element_by_system_identifier(
+      m_context, sysIdtf.c_str(), (sc_uint32)sysIdtf.size(), &result.m_realAddr);
   return result;
 }
 

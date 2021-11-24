@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
+#include "sc_test.hpp"
+
 #include "sc-memory/sc_common_templ.hpp"
 #include "sc-memory/sc_memory.hpp"
-
-#include "sc_test.hpp"
 
 using ScCommonTemplTest = ScMemoryTest;
 
@@ -14,14 +14,11 @@ TEST_F(ScCommonTemplTest, ResolveRelationTuple)
 
   ScAddr const tuple = sc::ResolveRelationTuple(*m_ctx, el, relAddr);
   {
-    ScTemplatePtr templ = ScTemplateBuilder()
-        .TripleWithRelation(
-            ScType::NodeVarTuple >> "_tuple",
-            ScType::EdgeDCommonVar,
-            el,
-            ScType::EdgeAccessVarPosPerm,
-            relAddr)
-        .Make();
+    ScTemplatePtr templ =
+        ScTemplateBuilder()
+            .TripleWithRelation(
+                ScType::NodeVarTuple >> "_tuple", ScType::EdgeDCommonVar, el, ScType::EdgeAccessVarPosPerm, relAddr)
+            .Make();
 
     ScTemplateSearch search(*m_ctx, *templ);
     ScTemplateSearch::Iterator result = search.begin();
@@ -42,14 +39,11 @@ TEST_F(ScCommonTemplTest, SetRelationValue)
   ScAddr const relAddr1 = m_ctx->CreateNode(ScType::NodeConstNoRole);
   ScAddr const linkAddr1 = sc::SetRelationValue(*m_ctx, el, relAddr1, value1);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .TripleWithRelation(
-          el,
-          ScType::EdgeDCommonVar,
-          ScType::Link >> "_link",
-          ScType::EdgeAccessVarPosPerm,
-          relAddr1)
-      .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .TripleWithRelation(
+              el, ScType::EdgeDCommonVar, ScType::Link >> "_link", ScType::EdgeAccessVarPosPerm, relAddr1)
+          .Make();
 
   ScLink link(*m_ctx, linkAddr1);
 

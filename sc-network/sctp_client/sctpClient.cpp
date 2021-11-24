@@ -5,11 +5,11 @@
  */
 
 #include "sctpClient.hpp"
+
 #include "sctpTypes.hpp"
 
 namespace sctp
 {
-
 sc_uint8 mIterRange;
 sc_uint32 mResultCount;
 sc_uint32 mCurrentResult;
@@ -37,7 +37,7 @@ ScAddr Iterator::getValue(sc_uint8 idx) const
 {
   SC_ASSERT(mCurrentResult > 0, ());
   sc_uint32 const offset = (mCurrentResult - 1) * sizeof(ScRealAddr) * mIterRange + sizeof(ScRealAddr) * idx;
-  return ScAddr(*((ScRealAddr*)(mBuffer.get() + offset)));
+  return ScAddr(*((ScRealAddr *)(mBuffer.get() + offset)));
 }
 
 // -----------------------------------------
@@ -81,7 +81,6 @@ _SC_EXTERN bool Client::IsElement(ScAddr const & addr)
     if (m_socketImpl->ReadType(res) == sizeof(ResultHeader))
       return (res.resultCode == SCTP_RESULT_OK);
   }
-
 
   return false;
 }
@@ -319,5 +318,4 @@ bool Client::ReadResultHeader(ResultHeader & outHeader)
   return false;
 }
 
-
-}
+}  // namespace sctp

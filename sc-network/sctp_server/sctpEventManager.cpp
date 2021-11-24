@@ -5,6 +5,7 @@
  */
 
 #include "sctpEventManager.h"
+
 #include "sctpCommand.h"
 
 extern "C"
@@ -12,7 +13,7 @@ extern "C"
 #include "sc-core/sc-store/sc_event.h"
 }
 
-sctpEventManager* sctpEventManager::msInstance = 0;
+sctpEventManager * sctpEventManager::msInstance = 0;
 
 sctpEventManager::sctpEventManager()
   : mLastEventId(1)
@@ -26,7 +27,7 @@ sctpEventManager::~sctpEventManager()
   msInstance = 0;
 }
 
-sctpEventManager* sctpEventManager::getSingleton()
+sctpEventManager * sctpEventManager::getSingleton()
 {
   return msInstance;
 }
@@ -45,7 +46,7 @@ void sctpEventManager::shutdown()
   tScEventsMap::iterator it, itEnd = mEvents.end();
   for (it = mEvents.begin(); it != itEnd; ++it)
   {
-    sEventData *evt = it->second;
+    sEventData * evt = it->second;
     sc_event_destroy(evt->event);
     delete evt;
   }
@@ -53,15 +54,19 @@ void sctpEventManager::shutdown()
   mEvents.clear();
 }
 
-bool sctpEventManager::createEvent(sc_memory_context *ctx, sc_event_type type, sc_addr addr, sctpCommand *cmd, tEventId &event)
+bool sctpEventManager::createEvent(
+    sc_memory_context * ctx,
+    sc_event_type type,
+    sc_addr addr,
+    sctpCommand * cmd,
+    tEventId & event)
 {
   QMutexLocker locker(&mEventsMutex);
-
 
   if (!_getAvailableEventId(event))
     return false;
 
-  sEventData *evt = new sEventData();
+  sEventData * evt = new sEventData();
 
   evt->cmd = cmd;
   evt->id = event;
@@ -93,7 +98,7 @@ bool sctpEventManager::destroyEvent(tEventId event)
   return true;
 }
 
-bool sctpEventManager::_getAvailableEventId(tEventId &eventId)
+bool sctpEventManager::_getAvailableEventId(tEventId & eventId)
 {
   tEventId start = mLastEventId;
   eventId = start + 1;
@@ -110,8 +115,7 @@ bool sctpEventManager::_getAvailableEventId(tEventId &eventId)
   return false;
 }
 
-
-sc_result sctpEventManager::_eventsCallback(const sc_event *event, sc_addr arg)
+sc_result sctpEventManager::_eventsCallback(const sc_event * event, sc_addr arg)
 {
   QMutexLocker locker(&sctpEventManager::msInstance->mEventsMutex);
 
@@ -121,7 +125,7 @@ sc_result sctpEventManager::_eventsCallback(const sc_event *event, sc_addr arg)
   if (it == sctpEventManager::msInstance->mEvents.end())
     return SC_RESULT_ERROR_INVALID_STATE;
 
-  sEventData *evt = it->second;
+  sEventData * evt = it->second;
   Q_ASSERT(evt && evt->cmd);
   Q_ASSERT(event == evt->event);
 

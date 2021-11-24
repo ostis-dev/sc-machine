@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 
+#include "sc_test.hpp"
+
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_struct.hpp"
 #include "sc-memory/sc_templates.hpp"
-
-#include "sc_test.hpp"
 #include "template_test_utils.hpp"
 
 using ScTemplateBuidlerTest = ScTemplateTest;
@@ -15,11 +15,7 @@ TEST_F(ScTemplateBuidlerTest, addrs_in_repls)
   ScAddr const addr = m_ctx->CreateNode(ScType::NodeConst);
   EXPECT_TRUE(addr);
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-      .Triple(addr >> "_x",
-              ScType::EdgeAccessVarNegPerm,
-              ScType::NodeVar)
-      .Make();
+  ScTemplatePtr templ = ScTemplateBuilder().Triple(addr >> "_x", ScType::EdgeAccessVarNegPerm, ScType::NodeVar).Make();
 
   EXPECT_TRUE(templ);
   EXPECT_TRUE(templ->HasReplacement("_x"));
@@ -59,9 +55,9 @@ TEST_F(ScTemplateStructBuidlerTest, double_attrs)
     EXPECT_TRUE(templ);
   };
 
-  testOrder({ addr1, addr2, addr3, addr4, edge1, edge2, edge3 });
-  testOrder({ edge3, edge2, edge1, addr4, addr3, addr2, addr1 });
-  testOrder({ addr1, addr2, addr3, addr4, edge2, edge1, edge3 });
+  testOrder({addr1, addr2, addr3, addr4, edge1, edge2, edge3});
+  testOrder({edge3, edge2, edge1, addr4, addr3, addr2, addr1});
+  testOrder({addr1, addr2, addr3, addr4, edge2, edge1, edge3});
 }
 
 TEST_F(ScTemplateStructBuidlerTest, addrs_in_repls)
@@ -69,7 +65,8 @@ TEST_F(ScTemplateStructBuidlerTest, addrs_in_repls)
   // create template in sc-memory
   {
     SCsHelper helper(*m_ctx, std::make_shared<DummyFileInterface>());
-    EXPECT_TRUE(helper.GenerateBySCsText("[* x _-> _y;; *] => nrel_system_identifier: [test_template_parameters_addrs];;"));
+    EXPECT_TRUE(
+        helper.GenerateBySCsText("[* x _-> _y;; *] => nrel_system_identifier: [test_template_parameters_addrs];;"));
   }
 
   ScAddr const templAddr = m_ctx->HelperFindBySystemIdtf("test_template_parameters_addrs");
@@ -115,7 +112,7 @@ TEST_F(ScTemplateStructBuidlerTest, edge_from_edge)
     EXPECT_TRUE(templ);
   };
 
-  testOrder({ addr1, addr2, addr3, edge1, edge2 });
-  testOrder({ edge2, edge1, addr3, addr2, addr1 });
-  testOrder({ addr1, addr2, addr3, edge2, edge1 });
+  testOrder({addr1, addr2, addr3, edge1, edge2});
+  testOrder({edge2, edge1, addr3, addr2, addr1});
+  testOrder({addr1, addr2, addr3, edge2, edge1});
 }

@@ -13,7 +13,6 @@
 class Translator
 {
 public:
-
   struct Params
   {
     //! Name of file to translate
@@ -21,7 +20,7 @@ public:
     //! Flag to generate format information based on file extensions
     bool m_autoFormatInfo;
   };
-      
+
   explicit Translator(class ScMemoryContext & context);
   virtual ~Translator() = default;
 
@@ -49,4 +48,3 @@ protected:
   //! Pointer to memory context
   class ScMemoryContext & m_ctx;
 };
-

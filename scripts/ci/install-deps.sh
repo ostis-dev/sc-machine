@@ -16,4 +16,4 @@ packagelist=(
   python3-setuptools
 )
 sudo apt-get update
-sudo apt-get install ${packagelist[@]}
+sudo apt-get install -y ${packagelist[@]}

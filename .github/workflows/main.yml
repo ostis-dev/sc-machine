@@ -19,7 +19,7 @@ jobs:
         uses: GsActions/commit-message-checker@v1
         with:
           # A regex pattern to check if a commit message is valid.
-          pattern: "((\\[(builder|changelog|ci|cmake|codegen|core|doc|docs|git|sc-kpm|sc-memory|sc-network|sc-server|scripts|scs|test|tests|thirdparty|web)\\])+(.)+)|(Review fixes)$"
+          pattern: "((\\[(builder|changelog|ci|cmake|codegen|core|doc|docs|format|git|sc-kpm|sc-memory|sc-network|sc-server|scripts|scs|test|tests|thirdparty|web)\\])+(.)+)|(Review fixes)$"
           # Expression flags change how the expression is interpreted.
           flags: "" # optional, default is gm
           # A error message which will be returned in case of an error.
@@ -32,6 +32,19 @@ jobs:
           checkAllCommitMessages: true # optional, default is false
           # you must provide GITHUB_TOKEN to this input if checkAllCommitMessages is true
           accessToken: ${{ secrets.GITHUB_TOKEN }} # optional, default is false
+  
+  check_formatting:
+    name: Check code formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Check
+        id: check_formatting
+        run: scripts/ci/check-formatting.sh
+
   run_tests:
     name: ${{matrix.config.name}}
     runs-on: ${{matrix.config.os}}

@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_memory.hpp"
-
 #include "sc_test.hpp"
+
+#include "sc-memory/sc_memory.hpp"
 
 class ScIterator3Test : public ScMemoryTest
 {
@@ -51,7 +51,6 @@ TEST_F(ScIterator3Test, f_a_f)
   EXPECT_EQ(iter3->Get(1), m_edge);
   EXPECT_EQ(iter3->Get(2), m_target);
 }
-
 
 TEST_F(ScIterator3Test, f_a_a)
 {

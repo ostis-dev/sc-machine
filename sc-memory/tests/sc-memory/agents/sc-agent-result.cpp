@@ -1,12 +1,10 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_wait.hpp"
-
 #include "agents_test_utils.hpp"
+#include "sc-memory/sc_wait.hpp"
+#include "test_sc_agent_result.hpp"
 
 #include <thread>
-
-#include "test_sc_agent_result.hpp"
 
 ScAddr ATestResultOk::ms_keynodeTestResultOk;
 
@@ -30,19 +28,17 @@ TEST_F(ScAgentTest, ATestResultOk)
 
     ScAddr const cmdAddr = ctx.CreateNode(ScType::NodeConst);
     EXPECT_TRUE(cmdAddr.IsValid());
-    ScAddr const edge = ctx.CreateEdge(
-      ScType::EdgeAccessConstPosPerm,
-      ATestResultOk::ms_keynodeTestResultOk,
-      cmdAddr);
+    ScAddr const edge = ctx.CreateEdge(ScType::EdgeAccessConstPosPerm, ATestResultOk::ms_keynodeTestResultOk, cmdAddr);
 
     EXPECT_TRUE(edge.IsValid());
 
     ScWaitActionFinished waiter(ctx, cmdAddr);
-    waiter.SetOnWaitStartDelegate([&cmdAddr]()
-    {
-      ScMemoryContext ctxLocal(sc_access_lvl_make_min, "ATestResultOk_init");
-      ScAgentAction::InitiateCommand(ctxLocal, cmdAddr);
-    });
+    waiter.SetOnWaitStartDelegate(
+        [&cmdAddr]()
+        {
+          ScMemoryContext ctxLocal(sc_access_lvl_make_min, "ATestResultOk_init");
+          ScAgentAction::InitiateCommand(ctxLocal, cmdAddr);
+        });
     EXPECT_TRUE(waiter.Wait());
 
     // check result

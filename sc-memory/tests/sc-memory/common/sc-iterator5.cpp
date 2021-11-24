@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_memory.hpp"
-
 #include "sc_test.hpp"
+
+#include "sc-memory/sc_memory.hpp"
 
 class ScIterator5Test : public ScMemoryTest
 {
@@ -56,11 +56,7 @@ TEST_F(ScIterator5Test, smoke)
 TEST_F(ScIterator5Test, a_a_f_a_a)
 {
   ScIterator5Ptr const iter5 = m_ctx->Iterator5(
-    ScType::Node,
-    ScType::EdgeAccessConstPosPerm,
-    m_target,
-    ScType::EdgeAccessConstPosPerm,
-    ScType::Node);
+      ScType::Node, ScType::EdgeAccessConstPosPerm, m_target, ScType::EdgeAccessConstPosPerm, ScType::Node);
 
   EXPECT_TRUE(iter5->Next());
 
@@ -73,12 +69,8 @@ TEST_F(ScIterator5Test, a_a_f_a_a)
 
 TEST_F(ScIterator5Test, a_a_f_a_f)
 {
-  ScIterator5Ptr const iter5 = m_ctx->Iterator5(
-    ScType::Node,
-    ScType::EdgeAccessConstPosPerm,
-    m_target,
-    ScType::EdgeAccessConstPosPerm,
-    m_attr);
+  ScIterator5Ptr const iter5 =
+      m_ctx->Iterator5(ScType::Node, ScType::EdgeAccessConstPosPerm, m_target, ScType::EdgeAccessConstPosPerm, m_attr);
 
   EXPECT_TRUE(iter5->Next());
 
@@ -92,11 +84,7 @@ TEST_F(ScIterator5Test, a_a_f_a_f)
 TEST_F(ScIterator5Test, f_a_a_a_a)
 {
   ScIterator5Ptr const iter5 = m_ctx->Iterator5(
-    m_source,
-    ScType::EdgeAccessConstPosPerm,
-    ScType::Node,
-    ScType::EdgeAccessConstPosPerm,
-    ScType::Node);
+      m_source, ScType::EdgeAccessConstPosPerm, ScType::Node, ScType::EdgeAccessConstPosPerm, ScType::Node);
 
   EXPECT_TRUE(iter5->Next());
 
@@ -109,12 +97,8 @@ TEST_F(ScIterator5Test, f_a_a_a_a)
 
 TEST_F(ScIterator5Test, f_a_a_a_f)
 {
-  ScIterator5Ptr const iter5 = m_ctx->Iterator5(
-    m_source,
-    ScType::EdgeAccessConstPosPerm,
-    ScType::Node,
-    ScType::EdgeAccessConstPosPerm,
-    m_attr);
+  ScIterator5Ptr const iter5 =
+      m_ctx->Iterator5(m_source, ScType::EdgeAccessConstPosPerm, ScType::Node, ScType::EdgeAccessConstPosPerm, m_attr);
 
   EXPECT_TRUE(iter5->Next());
 
@@ -128,11 +112,7 @@ TEST_F(ScIterator5Test, f_a_a_a_f)
 TEST_F(ScIterator5Test, f_a_f_a_a)
 {
   ScIterator5Ptr const iter5 = m_ctx->Iterator5(
-    m_source,
-    ScType::EdgeAccessConstPosPerm,
-    m_target,
-    ScType::EdgeAccessConstPosPerm,
-    ScType::Node);
+      m_source, ScType::EdgeAccessConstPosPerm, m_target, ScType::EdgeAccessConstPosPerm, ScType::Node);
 
   EXPECT_TRUE(iter5->Next());
 
@@ -145,12 +125,8 @@ TEST_F(ScIterator5Test, f_a_f_a_a)
 
 TEST_F(ScIterator5Test, f_a_f_a_f)
 {
-  ScIterator5Ptr const iter5 = m_ctx->Iterator5(
-    m_source,
-    ScType::EdgeAccessConstPosPerm,
-    m_target,
-    ScType::EdgeAccessConstPosPerm,
-    m_attr);
+  ScIterator5Ptr const iter5 =
+      m_ctx->Iterator5(m_source, ScType::EdgeAccessConstPosPerm, m_target, ScType::EdgeAccessConstPosPerm, m_attr);
 
   EXPECT_TRUE(iter5->Next());
 

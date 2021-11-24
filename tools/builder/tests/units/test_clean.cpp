@@ -1,9 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "builder_test.hpp"
 #include "sc-memory/sc_link.hpp"
 #include "sc-memory/sc_templates.hpp"
-
-#include "builder_test.hpp"
 
 TEST_F(ScBuilderTest, clean_global_idtfs)
 {
@@ -11,13 +10,13 @@ TEST_F(ScBuilderTest, clean_global_idtfs)
   EXPECT_TRUE(nrelSCsIdtf.IsValid());
 
   ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      ScType::Unknown,
-      ScType::EdgeDCommonVar,
-      ScType::Link >> "_link",
-      ScType::EdgeAccessVarPosPerm,
-      nrelSCsIdtf)
-    .Make();
+                            .TripleWithRelation(
+                                ScType::Unknown,
+                                ScType::EdgeDCommonVar,
+                                ScType::Link >> "_link",
+                                ScType::EdgeAccessVarPosPerm,
+                                nrelSCsIdtf)
+                            .Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   EXPECT_EQ(search.begin(), search.end());

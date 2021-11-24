@@ -1,7 +1,7 @@
 #pragma once
 
-#include "sc_template_arg.hpp"
 #include "sc_debug.hpp"
+#include "sc_template_arg.hpp"
 
 class ScTemplateData
 {
@@ -71,16 +71,14 @@ public:
     auto const it = m_repl.find(replName);
     if (it != m_repl.end())
     {
-      m_repl.insert({ newAlias, it->second });
+      m_repl.insert({newAlias, it->second});
       return true;
     }
 
     return false;
   }
 
-  inline void AddTriple(ScTemplateArg const & src,
-                        ScTemplateArg const & edge,
-                        ScTemplateArg const & trg)
+  inline void AddTriple(ScTemplateArg const & src, ScTemplateArg const & edge, ScTemplateArg const & trg)
   {
     if (!edge.m_replacementName.empty() &&
         (edge.m_replacementName == src.m_replacementName || edge.m_replacementName == trg.m_replacementName))
@@ -89,20 +87,18 @@ public:
     }
 
     std::array<size_t, 3> triple;
-    std::array<ScTemplateArg const *, 3> elements = { &src, &edge, &trg };
+    std::array<ScTemplateArg const *, 3> elements = {&src, &edge, &trg};
     for (size_t i = 0; i < elements.size(); ++i)
     {
       size_t & tripleIndex = triple[i];
       ScTemplateArg const & value = *(elements[i]);
 
-      if (value.m_kind == ScTemplateArg::Kind::Type &&
-          value.m_typeValue.IsConst())
+      if (value.m_kind == ScTemplateArg::Kind::Type && value.m_typeValue.IsConst())
       {
         SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "Using of constant types in template is restricted");
       }
 
-      if (value.m_kind == ScTemplateArg::Kind::Addr &&
-          !value.m_addrValue.IsValid())
+      if (value.m_kind == ScTemplateArg::Kind::Addr && !value.m_addrValue.IsValid())
       {
         SC_THROW_EXCEPTION(utils::ExceptionInvalidParams, "ScAddr is empty");
       }
@@ -111,8 +107,8 @@ public:
       {
         if (m_repl.find(value.m_replacementName) != m_repl.end())
         {
-          SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                             "Replacement " << value.m_replacementName << " already exists");
+          SC_THROW_EXCEPTION(
+              utils::ExceptionInvalidParams, "Replacement " << value.m_replacementName << " already exists");
         }
       }
 
@@ -123,9 +119,9 @@ public:
         if (it == m_repl.end())
         {
           tripleIndex = m_elements.size();
-          m_repl.insert({ sAddr, tripleIndex });
+          m_repl.insert({sAddr, tripleIndex});
           if (value.HasReplacementName())
-            m_repl.insert({ value.m_replacementName, tripleIndex });
+            m_repl.insert({value.m_replacementName, tripleIndex});
 
           m_elements.emplace_back(value);
         }
@@ -138,7 +134,7 @@ public:
       {
         tripleIndex = m_elements.size();
         if (value.HasReplacementName())
-          m_repl.insert({ value.m_replacementName, tripleIndex });
+          m_repl.insert({value.m_replacementName, tripleIndex});
 
         m_elements.emplace_back(value);
       }
@@ -147,15 +143,15 @@ public:
         auto const it = m_repl.find(value.m_replacementName);
         if (it == m_repl.end())
         {
-          SC_THROW_EXCEPTION(utils::ExceptionInvalidParams,
-                             "There are no parameter with name " << value.m_replacementName);
+          SC_THROW_EXCEPTION(
+              utils::ExceptionInvalidParams, "There are no parameter with name " << value.m_replacementName);
         }
         else
         {
           tripleIndex = it->second;
         }
       }
-    } // for
+    }  // for
 
     m_triples.emplace_back(std::move(triple));
   }
@@ -169,9 +165,7 @@ public:
     SC_ASSERT(indecies[1] < m_elements.size(), ());
     SC_ASSERT(indecies[2] < m_elements.size(), ());
 
-    return { m_elements[indecies[0]],
-             m_elements[indecies[1]],
-             m_elements[indecies[2]] };
+    return {m_elements[indecies[0]], m_elements[indecies[1]], m_elements[indecies[2]]};
   }
 
   ReplacementsMap const & Replacements() const

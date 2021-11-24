@@ -6,8 +6,8 @@
 
 #include "sc-memory/scs/scs_parser.hpp"
 
-#include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_debug.hpp"
+#include "sc-memory/sc_memory.hpp"
 
 #include <limits>
 
@@ -16,13 +16,16 @@
 
 #if SC_DEBUG_MODE
 /// TODO: @deniskoronchik: make as cmake parameter
-#   define SCS_DEBUG_TOKEN 1
+#  define SCS_DEBUG_TOKEN 1
 #endif
 
 #if SCS_DEBUG_TOKEN
-#   define DEBUG_TOKEN(__msg) { std::cout << __msg << std::endl; }
+#  define DEBUG_TOKEN(__msg) \
+    { \
+      std::cout << __msg << std::endl; \
+    }
 #else
-#   define DEBUG_TOKEN(__msg)
+#  define DEBUG_TOKEN(__msg)
 #endif
 
 #include "scsLexer.h"
@@ -32,7 +35,6 @@
 
 namespace
 {
-
 bool IsLevel1Idtf(std::string const & idtf)
 {
   return (idtf.find('#') != std::string::npos);
@@ -53,12 +55,11 @@ std::string UnescapeContent(std::string const & content)
     {
       auto const nextSymbol = result[pos + 1];
       if (nextSymbol == '\\' || nextSymbol == '[' || nextSymbol == ']')
-        result.replace(pos, 2, { nextSymbol });
+        result.replace(pos, 2, {nextSymbol});
     }
 
     ++pos;
   }
-
 
   return result;
 }
@@ -66,44 +67,63 @@ std::string UnescapeContent(std::string const & content)
 class ErrorListener : public antlr4::ANTLRErrorListener
 {
 protected:
-  void syntaxError(antlr4::Recognizer *, antlr4::Token *, size_t line,
-                   size_t charPositionInLine, std::string const & msg, std::exception_ptr) override
+  void syntaxError(
+      antlr4::Recognizer *,
+      antlr4::Token *,
+      size_t line,
+      size_t charPositionInLine,
+      std::string const & msg,
+      std::exception_ptr) override
   {
-    SC_THROW_EXCEPTION(utils::ExceptionParseError, "Parse error at line " << line << "," << charPositionInLine << ": " << msg);
+    SC_THROW_EXCEPTION(
+        utils::ExceptionParseError, "Parse error at line " << line << "," << charPositionInLine << ": " << msg);
   }
 
-  void reportAmbiguity(antlr4::Parser *, antlr4::dfa::DFA const &, size_t, size_t, bool,
-                       antlrcpp::BitSet const &, antlr4::atn::ATNConfigSet *) override
+  void reportAmbiguity(
+      antlr4::Parser *,
+      antlr4::dfa::DFA const &,
+      size_t,
+      size_t,
+      bool,
+      antlrcpp::BitSet const &,
+      antlr4::atn::ATNConfigSet *) override
   {
     SC_THROW_EXCEPTION(utils::ExceptionParseError, "reportAmbiguity");
   }
 
-
-  void reportAttemptingFullContext(antlr4::Parser *, antlr4::dfa::DFA const &, size_t, size_t,
-                                   antlrcpp::BitSet const &, antlr4::atn::ATNConfigSet *) override
+  void reportAttemptingFullContext(
+      antlr4::Parser *,
+      antlr4::dfa::DFA const &,
+      size_t,
+      size_t,
+      antlrcpp::BitSet const &,
+      antlr4::atn::ATNConfigSet *) override
   {
     SC_THROW_EXCEPTION(utils::ExceptionParseError, "reportAttemptingFullContext");
   }
 
-
-  void reportContextSensitivity(antlr4::Parser *, antlr4::dfa::DFA const &, size_t, size_t,
-                                size_t, antlr4::atn::ATNConfigSet *) override
+  void reportContextSensitivity(
+      antlr4::Parser *,
+      antlr4::dfa::DFA const &,
+      size_t,
+      size_t,
+      size_t,
+      antlr4::atn::ATNConfigSet *) override
   {
     SC_THROW_EXCEPTION(utils::ExceptionParseError, "reportContextSensitivity");
   }
-
 };
 
-}
+}  // namespace
 
 namespace scs
 {
-
-ParsedElement::ParsedElement(std::string const & idtf,
-                             ScType const & type,
-                             bool isReversed,
-                             std::string const & value /* = "" */,
-                             bool isURL /* = false */)
+ParsedElement::ParsedElement(
+    std::string const & idtf,
+    ScType const & type,
+    bool isReversed,
+    std::string const & value /* = "" */,
+    bool isURL /* = false */)
   : m_idtf(idtf)
   , m_type(type)
   , m_visibility(Visibility::System)
@@ -202,7 +222,7 @@ ElementHandle::ElementHandle(ElementID id, bool isLocal)
 {
 }
 
-ElementID ElementHandle::operator * () const
+ElementID ElementHandle::operator*() const
 {
   SC_ASSERT(IsValid(), ());
   return m_id;
@@ -218,31 +238,30 @@ bool ElementHandle::IsValid() const
   return m_id != INVALID_ID;
 }
 
-bool ElementHandle::operator == (ElementHandle const & other) const
+bool ElementHandle::operator==(ElementHandle const & other) const
 {
   return (m_id == other.m_id) && (m_isLocal == other.m_isLocal);
 }
 
-bool ElementHandle::operator != (ElementHandle const & other) const
+bool ElementHandle::operator!=(ElementHandle const & other) const
 {
   return !(*this == other);
 }
 
-ElementHandle & ElementHandle::operator = (ElementHandle const & other)
+ElementHandle & ElementHandle::operator=(ElementHandle const & other)
 {
   m_id = other.m_id;
   m_isLocal = other.m_isLocal;
   return *this;
 }
 
-bool ElementHandle::operator < (ElementHandle const & other) const
+bool ElementHandle::operator<(ElementHandle const & other) const
 {
   if (m_id == other.m_id)
     return m_isLocal < other.m_isLocal;
 
   return m_id < other.m_id;
 }
-
 
 // ---------------------------------------
 
@@ -294,8 +313,9 @@ ParsedElement & Parser::GetParsedElementRef(ElementHandle const & elID)
 
   if (*elID >= container.size())
   {
-    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound,
-                       std::string("ElementId{") + std::to_string(*elID) + ", " + std::to_string(elID.IsLocal()) + "}");
+    SC_THROW_EXCEPTION(
+        utils::ExceptionItemNotFound,
+        std::string("ElementId{") + std::to_string(*elID) + ", " + std::to_string(elID.IsLocal()) + "}");
   }
 
   return container[*elID];
@@ -307,8 +327,9 @@ ParsedElement const & Parser::GetParsedElement(ElementHandle const & elID) const
 
   if (*elID >= container.size())
   {
-    SC_THROW_EXCEPTION(utils::ExceptionItemNotFound,
-                       std::string("ElementId{") + std::to_string(*elID) + ", " + std::to_string(elID.IsLocal()) + "}");
+    SC_THROW_EXCEPTION(
+        utils::ExceptionItemNotFound,
+        std::string("ElementId{") + std::to_string(*elID) + ", " + std::to_string(elID.IsLocal()) + "}");
   }
 
   return container[*elID];
@@ -349,11 +370,12 @@ std::string Parser::GenerateContourIdtf()
   return std::string("..contour_") + std::to_string(m_idtfCounter++);
 }
 
-ElementHandle Parser::AppendElement(std::string idtf,
-                                    ScType const & type,
-                                    bool isConnectorReversed,
-                                    std::string const & value /* = "" */,
-                                    bool isURL /* = false */)
+ElementHandle Parser::AppendElement(
+    std::string idtf,
+    ScType const & type,
+    bool isConnectorReversed,
+    std::string const & value /* = "" */,
+    bool isURL /* = false */)
 {
   SC_CHECK_GREAT(idtf.size(), 0, ());
   if (TypeResolver::IsUnnamed(idtf))
@@ -432,8 +454,7 @@ void Parser::ProcessTriple(ElementHandle const & source, ElementHandle const & e
       }
       else
       {
-        SC_THROW_EXCEPTION(utils::ExceptionParseError,
-                           "Can't merge types for element " + targetEl.GetIdtf());
+        SC_THROW_EXCEPTION(utils::ExceptionParseError, "Can't merge types for element " + targetEl.GetIdtf());
       }
 
       if (!m_contourTriplesStack.empty())
@@ -542,4 +563,4 @@ void Parser::ProcessContourEnd(ElementHandle const & contourHandle)
   }
 }
 
-}
+}  // namespace scs

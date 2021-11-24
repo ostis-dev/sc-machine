@@ -1,7 +1,7 @@
 ﻿#include "sc_progress.hpp"
 
-#include "sc_log.hpp"
 #include "sc_console.hpp"
+#include "sc_log.hpp"
 
 #include <algorithm>
 #include <iostream>
@@ -23,7 +23,7 @@ ScProgress::ScProgress(std::string const & title, size_t stepsNum, size_t width)
 
 void ScProgress::PrintStatus(size_t passedStep)
 {
-  m_passedSteps = passedStep + 1; // to correctly work with for (0; N);
+  m_passedSteps = passedStep + 1;  // to correctly work with for (0; N);
   // calculate status
   float progress = (float)(m_passedSteps + 1) / (float)m_stepsNum;
   m_isComplete = (progress >= 1.f);
@@ -47,4 +47,4 @@ void ScProgress::PrintStatus(size_t passedStep)
     std::cout << std::endl;
 }
 
-} // namespace utils
+}  // namespace utils

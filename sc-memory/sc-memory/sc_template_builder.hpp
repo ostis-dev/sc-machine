@@ -15,9 +15,10 @@ public:
    *  \param edge Edge element definition
    *  \param target Target element definition
    */
-  _SC_EXTERN ScTemplateBuilder & Triple(ScTemplateArg const & source,
-                                        ScTemplateArg const & edge,
-                                        ScTemplateArg const & target);
+  _SC_EXTERN ScTemplateBuilder & Triple(
+      ScTemplateArg const & source,
+      ScTemplateArg const & edge,
+      ScTemplateArg const & target);
 
   /*! \brief Adds 5-element construction into template.
    *  This is equal to `Triple` function calls:
@@ -36,11 +37,12 @@ public:
    *  \param attrEdge Definition of edge that goes from attribute
    *  \param attr Definition of attribute
    */
-  _SC_EXTERN ScTemplateBuilder & TripleWithRelation(ScTemplateArg const & source,
-                                                    ScTemplateArg const & edge,
-                                                    ScTemplateArg const & target,
-                                                    ScTemplateArg const & attrEdge,
-                                                    ScTemplateArg const & attr);
+  _SC_EXTERN ScTemplateBuilder & TripleWithRelation(
+      ScTemplateArg const & source,
+      ScTemplateArg const & edge,
+      ScTemplateArg const & target,
+      ScTemplateArg const & attrEdge,
+      ScTemplateArg const & attr);
 
   /*! \brief Makes template based on appended triples
    *  \return Returns pointer to created template

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <clang-c/Index.h>
-
 #include <string>
 
 class Cursor;
@@ -9,7 +8,7 @@ class Cursor;
 class CursorType
 {
 public:
-  CursorType(const CXType &handle);
+  CursorType(const CXType & handle);
 
   std::string GetDisplayName(void) const;
 

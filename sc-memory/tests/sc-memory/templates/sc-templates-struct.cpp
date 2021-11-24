@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
+#include "sc_test.hpp"
+
 #include "sc-memory/sc_memory.hpp"
 #include "sc-memory/sc_struct.hpp"
-
-#include "sc_test.hpp"
 #include "template_test_utils.hpp"
 
 using ScTemplateSearchInStructTest = ScTemplateTest;
@@ -55,16 +55,16 @@ TEST_F(ScTemplateSearchInStructTest, search_in_struct)
   EXPECT_TRUE(testStructAddr.IsValid());
 
   /*   y ---> u
-  *   ^
-  *   | <--- z
-  *   x
-  *   | <--- s
-  *   v
-  *   g
-  * scs: x -> z: y; s: g;; y -> u;;
-  */
-  ScAddr tyAddr, txAddr, tgAddr, tuAddr, tzAddr, tsAddr,
-         tyuEdgeAddr, txyEdgeAddr, txgEdgeAddr, tzxyEdgeAddr, tsxgEdgeAddr;
+   *   ^
+   *   | <--- z
+   *   x
+   *   | <--- s
+   *   v
+   *   g
+   * scs: x -> z: y; s: g;; y -> u;;
+   */
+  ScAddr tyAddr, txAddr, tgAddr, tuAddr, tzAddr, tsAddr, tyuEdgeAddr, txyEdgeAddr, txgEdgeAddr, tzxyEdgeAddr,
+      tsxgEdgeAddr;
 
   ScStruct testStruct(*m_ctx, testStructAddr);
   {
@@ -100,11 +100,8 @@ TEST_F(ScTemplateSearchInStructTest, search_in_struct)
     tsxgEdgeAddr = m_ctx->CreateEdge(ScType::EdgeAccessConstPosPerm, tsAddr, txgEdgeAddr);
     EXPECT_TRUE(tsxgEdgeAddr.IsValid());
 
-    testStruct << tyAddr << txAddr << tgAddr
-               << tuAddr << tzAddr << tsAddr
-               << tyuEdgeAddr << txyEdgeAddr
-               << txgEdgeAddr << tzxyEdgeAddr
-               << tsxgEdgeAddr;
+    testStruct << tyAddr << txAddr << tgAddr << tuAddr << tzAddr << tsAddr << tyuEdgeAddr << txyEdgeAddr << txgEdgeAddr
+               << tzxyEdgeAddr << tsxgEdgeAddr;
   }
 
   // add extra edges that not included into struct
@@ -131,4 +128,3 @@ TEST_F(ScTemplateSearchInStructTest, search_in_struct)
     EXPECT_EQ(count, 2u);
   }
 }
-

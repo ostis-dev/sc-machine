@@ -10,28 +10,15 @@ TEST(scs_level_4, simple_1)
   EXPECT_TRUE(parser.Parse(data));
 
   TripleTester tester(parser);
-  tester({
-           {
-             { ScType::NodeConst, "a" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "c" }
-           },
-           {
-             { ScType::NodeConst, "b" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local }
-           },
-           {
-             { ScType::NodeConst, "a" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "d" }
-           },
-           {
-             { ScType::NodeConst, "b" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local }
-           }
-         });
+  tester(
+      {{{ScType::NodeConst, "a"}, {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}, {ScType::NodeConst, "c"}},
+       {{ScType::NodeConst, "b"},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}},
+       {{ScType::NodeConst, "a"}, {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}, {ScType::NodeConst, "d"}},
+       {{ScType::NodeConst, "b"},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}}});
 
   auto const & triples = parser.GetParsedTriples();
 
@@ -49,33 +36,24 @@ TEST(scs_level_4, simple_2)
   EXPECT_TRUE(parser.Parse(data));
 
   TripleTester tester(parser);
-  tester({
-           {
-             { ScType::NodeConst, "a" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "c" }
-           },
-           {
-             { ScType::NodeConst, "b" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-           },
-           {
-             { ScType::NodeConst, "f" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "a" }
-           },
-           {
-             { ScType::NodeConst, "d" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-           },
-           {
-             { ScType::NodeConst, "e" },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosPerm, scs::Visibility::Local },
-           }
-         });
+  tester(
+      {{{ScType::NodeConst, "a"}, {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}, {ScType::NodeConst, "c"}},
+       {
+           {ScType::NodeConst, "b"},
+           {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+           {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+       },
+       {{ScType::NodeConst, "f"}, {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local}, {ScType::NodeConst, "a"}},
+       {
+           {ScType::NodeConst, "d"},
+           {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+           {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+       },
+       {
+           {ScType::NodeConst, "e"},
+           {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+           {ScType::EdgeAccessConstPosPerm, scs::Visibility::Local},
+       }});
 
   auto const & triples = parser.GetParsedTriples();
 

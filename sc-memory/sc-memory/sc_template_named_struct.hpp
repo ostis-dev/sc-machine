@@ -3,8 +3,8 @@
 #include "sc_addr.hpp"
 #include "sc_defines.hpp"
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class ScTemplateNamedStruct
@@ -29,7 +29,7 @@ public:
   _SC_EXTERN ScTemplateNamedStruct(NamesMap && names, ScAddrVector && elements);
 
   _SC_EXTERN bool Has(std::string const & name) const;
-  _SC_EXTERN ScAddr const & operator [] (std::string const & name) const;
+  _SC_EXTERN ScAddr const & operator[](std::string const & name) const;
 
   _SC_EXTERN bool IsEmpty() const;
   _SC_EXTERN void Clear();
@@ -40,4 +40,3 @@ private:
   NamesMap m_names;
   ScAddrVector m_elements;
 };
-

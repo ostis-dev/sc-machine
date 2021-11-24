@@ -1,25 +1,20 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_link.hpp"
-
 #include "builder_test.hpp"
+#include "sc-memory/sc_link.hpp"
 
 namespace
 {
-
-std::string GetIdtf(ScMemoryContext & ctx, ScAddr const& addr)
+std::string GetIdtf(ScMemoryContext & ctx, ScAddr const & addr)
 {
   ScAddr const nrelIdtf = ctx.HelperResolveSystemIdtf("nrel_idtf", ScType::NodeConstNoRole);
   EXPECT_TRUE(nrelIdtf.IsValid());
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .TripleWithRelation(
-      addr,
-      ScType::EdgeDCommonVar,
-      ScType::Link >> "_link",
-      ScType::EdgeAccessVarPosPerm,
-      nrelIdtf)
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder()
+          .TripleWithRelation(
+              addr, ScType::EdgeDCommonVar, ScType::Link >> "_link", ScType::EdgeAccessVarPosPerm, nrelIdtf)
+          .Make();
 
   ScTemplateSearch search(ctx, *templ);
   ScTemplateSearch::Iterator found = search.begin();
@@ -35,7 +30,7 @@ std::string GetIdtf(ScMemoryContext & ctx, ScAddr const& addr)
   return link.Get<std::string>();
 };
 
-} // namespace
+}  // namespace
 
 TEST_F(ScBuilderTest, visibility_sys_idtf)
 {
@@ -49,15 +44,9 @@ TEST_F(ScBuilderTest, visibility_sys_idtf)
   EXPECT_TRUE(element.IsValid());
 
   ScTemplatePtr templ = ScTemplateBuilder()
-    .Triple(
-      visFirst,
-      ScType::EdgeAccessVarPosPerm,
-      element)
-    .Triple(
-      visSecond,
-      ScType::EdgeAccessVarPosPerm,
-      element)
-    .Make();
+                            .Triple(visFirst, ScType::EdgeAccessVarPosPerm, element)
+                            .Triple(visSecond, ScType::EdgeAccessVarPosPerm, element)
+                            .Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   ScTemplateSearch::Iterator found = search.begin();
@@ -73,15 +62,9 @@ TEST_F(ScBuilderTest, visibility_global)
   EXPECT_TRUE(visSecond.IsValid());
 
   ScTemplatePtr templ = ScTemplateBuilder()
-    .Triple(
-      visFirst,
-      ScType::EdgeAccessVarPosTemp,
-      ScType::Node >> ".visibility_global")
-    .Triple(
-      visSecond,
-      ScType::EdgeAccessVarPosTemp,
-      ".visibility_global")
-    .Make();
+                            .Triple(visFirst, ScType::EdgeAccessVarPosTemp, ScType::Node >> ".visibility_global")
+                            .Triple(visSecond, ScType::EdgeAccessVarPosTemp, ".visibility_global")
+                            .Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   ScTemplateSearch::Iterator found = search.begin();
@@ -106,12 +89,8 @@ TEST_F(ScBuilderTest, visibility_local)
   ScAddr const visLocal = m_ctx->HelperResolveSystemIdtf("visibility_local");
   EXPECT_TRUE(visLocal.IsValid());
 
-  ScTemplatePtr templ = ScTemplateBuilder()
-    .Triple(
-      visLocal,
-      ScType::EdgeAccessVarPosPerm,
-      ScType::NodeVar >> "_local")
-    .Make();
+  ScTemplatePtr templ =
+      ScTemplateBuilder().Triple(visLocal, ScType::EdgeAccessVarPosPerm, ScType::NodeVar >> "_local").Make();
 
   ScTemplateSearch search(*m_ctx, *templ);
   ScTemplateSearch::Iterator found = search.begin();

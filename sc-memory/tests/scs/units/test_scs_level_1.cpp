@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "sc-memory/scs/scs_parser.hpp"
-
 #include "test_scs_utils.hpp"
 
 TEST(scs_level_1, dummy)

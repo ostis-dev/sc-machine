@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "sc-memory/sc_link.hpp"
-
 #include "builder_test.hpp"
+#include "sc-memory/sc_link.hpp"
 
 TEST_F(ScBuilderTest, file_relative)
 {

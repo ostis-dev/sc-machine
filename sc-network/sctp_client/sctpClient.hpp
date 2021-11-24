@@ -9,16 +9,12 @@
 #include "sc-memory/sc_addr.hpp"
 #include "sc-memory/sc_stream.hpp"
 #include "sc-memory/sc_utils.hpp"
-
-#include "sctpTypes.hpp"
 #include "sctpISocket.hpp"
-
-
+#include "sctpTypes.hpp"
 
 namespace sctp
 {
-
-#define SCTP_ADDR_SIZE      (sizeof(ScRealAddr))
+#define SCTP_ADDR_SIZE (sizeof(ScRealAddr))
 
 struct RequestHeader
 {
@@ -64,7 +60,6 @@ struct RequestSetLinkContent
   // data appends later (because it has dynamic size)
 };
 
-
 /// ------------
 struct ResultHeader
 {
@@ -73,7 +68,6 @@ struct ResultHeader
   uint8_t resultCode;
   uint32_t resultSize;
 };
-
 
 class Iterator
 {
@@ -96,134 +90,179 @@ private:
 
 SHARED_PTR_TYPE(Iterator)
 
-
-
 template <typename ParamType1, typename ParamType2, typename ParamType3>
-sc_uint32 Iterator3ParamsT(char * buffer, ParamType1 const & param1, ParamType2 const & param2, ParamType3 const & param3);
+sc_uint32 Iterator3ParamsT(
+    char * buffer,
+    ParamType1 const & param1,
+    ParamType2 const & param2,
+    ParamType3 const & param3);
 
-template<> sc_uint32 Iterator3ParamsT<ScAddr, sc_type, sc_type>(char * buffer, ScAddr const & param1, sc_type const & param2, sc_type const & param3)
+template <>
+sc_uint32 Iterator3ParamsT<ScAddr, sc_type, sc_type>(
+    char * buffer,
+    ScAddr const & param1,
+    sc_type const & param2,
+    sc_type const & param3)
 {
   buffer[0] = SCTP_ITERATOR_3F_A_A;
-  ScRealAddr * addrBuff = (ScRealAddr*)(buffer + 1);
+  ScRealAddr * addrBuff = (ScRealAddr *)(buffer + 1);
   *addrBuff = *param1;
   ++addrBuff;
-  sc_type * typeBuff = (sc_type*)addrBuff;
+  sc_type * typeBuff = (sc_type *)addrBuff;
   *typeBuff = param2;
   ++typeBuff;
   *typeBuff = param3;
 
-  return 1 + sizeof(ScRealAddr) + sizeof(sc_type)* 2;
+  return 1 + sizeof(ScRealAddr) + sizeof(sc_type) * 2;
 }
 
-template<> sc_uint32 Iterator3ParamsT<ScAddr, sc_type, ScAddr>(char * buffer, ScAddr const & param1, sc_type const & param2, ScAddr const & param3)
+template <>
+sc_uint32 Iterator3ParamsT<ScAddr, sc_type, ScAddr>(
+    char * buffer,
+    ScAddr const & param1,
+    sc_type const & param2,
+    ScAddr const & param3)
 {
   buffer[0] = SCTP_ITERATOR_3F_A_F;
-  ScRealAddr * addrBuff = (ScRealAddr*)(buffer + 1);
+  ScRealAddr * addrBuff = (ScRealAddr *)(buffer + 1);
   *addrBuff = *param1;
   ++addrBuff;
-  sc_type * typeBuff = (sc_type*)addrBuff;
+  sc_type * typeBuff = (sc_type *)addrBuff;
   *typeBuff = param2;
   ++typeBuff;
-  addrBuff = (ScRealAddr*)typeBuff;
+  addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param3;
 
   return 1 + sizeof(ScRealAddr) * 2 + sizeof(sc_type);
 }
 
-template<> sc_uint32 Iterator3ParamsT<sc_type, sc_type, ScAddr>(char * buffer, sc_type const & param1, sc_type const & param2, ScAddr const & param3)
+template <>
+sc_uint32 Iterator3ParamsT<sc_type, sc_type, ScAddr>(
+    char * buffer,
+    sc_type const & param1,
+    sc_type const & param2,
+    ScAddr const & param3)
 {
   buffer[0] = SCTP_ITERATOR_3A_A_F;
-  sc_type * typeBuff = (sc_type*)(buffer + 1);
+  sc_type * typeBuff = (sc_type *)(buffer + 1);
   *typeBuff = param1;
   ++typeBuff;
   *typeBuff = param2;
   ++typeBuff;
-  ScRealAddr * addrBuff = (ScRealAddr*)typeBuff;
+  ScRealAddr * addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param3;
 
   return 1 + sizeof(ScRealAddr) + sizeof(sc_type) * 2;
 }
 
-
 template <typename ParamType1, typename ParamType2, typename ParamType3, typename ParamType4, typename ParamType5>
-sc_uint32 Iterator5ParamsT(char * buffer, ParamType1 const & param1, ParamType2 const & param2, ParamType3 const & param3, ParamType4 const & param4, ParamType5 const & param5);
+sc_uint32 Iterator5ParamsT(
+    char * buffer,
+    ParamType1 const & param1,
+    ParamType2 const & param2,
+    ParamType3 const & param3,
+    ParamType4 const & param4,
+    ParamType5 const & param5);
 
-
-template <> sc_uint32 Iterator5ParamsT<ScAddr, sc_type, sc_type, sc_type, ScAddr>
-(char * buffer, ScAddr const & param1, sc_type const & param2, sc_type const & param3, sc_type const & param4, ScAddr const & param5)
+template <>
+sc_uint32 Iterator5ParamsT<ScAddr, sc_type, sc_type, sc_type, ScAddr>(
+    char * buffer,
+    ScAddr const & param1,
+    sc_type const & param2,
+    sc_type const & param3,
+    sc_type const & param4,
+    ScAddr const & param5)
 {
   buffer[0] = SCTP_ITERATOR_5F_A_A_A_F;
-  ScRealAddr * addrBuff = (ScRealAddr*)(buffer + 1);
+  ScRealAddr * addrBuff = (ScRealAddr *)(buffer + 1);
   *addrBuff = *param1;
   ++addrBuff;
-  sc_type * typeBuff = (sc_type*)addrBuff;
+  sc_type * typeBuff = (sc_type *)addrBuff;
   *typeBuff = param2;
   ++typeBuff;
   *typeBuff = param3;
   ++typeBuff;
   *typeBuff = param4;
   ++typeBuff;
-  addrBuff = (ScRealAddr*)typeBuff;
+  addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param5;
 
   return 1 + sizeof(ScRealAddr) * 2 + sizeof(sc_type) * 3;
 }
 
-template <> sc_uint32 Iterator5ParamsT<sc_type, sc_type, ScAddr, sc_type, ScAddr>
-(char * buffer, sc_type const & param1, sc_type const & param2, ScAddr const & param3, sc_type const & param4, ScAddr const & param5)
+template <>
+sc_uint32 Iterator5ParamsT<sc_type, sc_type, ScAddr, sc_type, ScAddr>(
+    char * buffer,
+    sc_type const & param1,
+    sc_type const & param2,
+    ScAddr const & param3,
+    sc_type const & param4,
+    ScAddr const & param5)
 {
   buffer[0] = SCTP_ITERATOR_5A_A_F_A_F;
-  sc_type * typeBuff = (sc_type*)(buffer + 1);
+  sc_type * typeBuff = (sc_type *)(buffer + 1);
   *typeBuff = param1;
   ++typeBuff;
   *typeBuff = param2;
   ++typeBuff;
-  ScRealAddr * addrBuff = (ScRealAddr*)typeBuff;
+  ScRealAddr * addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param3;
   ++addrBuff;
-  typeBuff = (sc_type*)addrBuff;
+  typeBuff = (sc_type *)addrBuff;
   *typeBuff = param4;
   ++typeBuff;
-  addrBuff = (ScRealAddr*)typeBuff;
+  addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param5;
 
   return 1 + sizeof(ScRealAddr) * 2 + sizeof(sc_type) * 3;
 }
 
-template <> sc_uint32 Iterator5ParamsT<ScAddr, sc_type, ScAddr, sc_type, ScAddr>
-(char * buffer, ScAddr const & param1, sc_type const & param2, ScAddr const & param3, sc_type const & param4, ScAddr const & param5)
+template <>
+sc_uint32 Iterator5ParamsT<ScAddr, sc_type, ScAddr, sc_type, ScAddr>(
+    char * buffer,
+    ScAddr const & param1,
+    sc_type const & param2,
+    ScAddr const & param3,
+    sc_type const & param4,
+    ScAddr const & param5)
 {
   buffer[0] = SCTP_ITERATOR_5F_A_F_A_F;
-  ScRealAddr * addrBuff = (ScRealAddr*)(buffer + 1);
+  ScRealAddr * addrBuff = (ScRealAddr *)(buffer + 1);
   *addrBuff = *param1;
   ++addrBuff;
-  sc_type * typeBuff = (sc_type*)addrBuff;
+  sc_type * typeBuff = (sc_type *)addrBuff;
   *typeBuff = param2;
   ++typeBuff;
-  addrBuff = (ScRealAddr*)typeBuff;
+  addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param3;
-  typeBuff = (sc_type*)addrBuff;
+  typeBuff = (sc_type *)addrBuff;
   *typeBuff = param4;
   ++typeBuff;
-  addrBuff = (ScRealAddr*)typeBuff;
+  addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param5;
 
   return 1 + sizeof(ScRealAddr) * 3 + sizeof(sc_type) * 2;
 }
 
-template <> sc_uint32 Iterator5ParamsT<sc_type, sc_type, ScAddr, sc_type, sc_type>
-(char * buffer, sc_type const & param1, sc_type const & param2, ScAddr const & param3, sc_type const & param4, sc_type const & param5)
+template <>
+sc_uint32 Iterator5ParamsT<sc_type, sc_type, ScAddr, sc_type, sc_type>(
+    char * buffer,
+    sc_type const & param1,
+    sc_type const & param2,
+    ScAddr const & param3,
+    sc_type const & param4,
+    sc_type const & param5)
 {
   buffer[0] = SCTP_ITERATOR_5A_A_F_A_A;
-  sc_type * typeBuff = (sc_type*)(buffer + 1);
+  sc_type * typeBuff = (sc_type *)(buffer + 1);
   *typeBuff = param1;
   ++typeBuff;
   *typeBuff = param2;
   ++typeBuff;
-  ScRealAddr * addrBuff = (ScRealAddr*)typeBuff;
+  ScRealAddr * addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param3;
   ++addrBuff;
-  typeBuff = (sc_type*)addrBuff;
+  typeBuff = (sc_type *)addrBuff;
   *typeBuff = param4;
   ++typeBuff;
   *typeBuff = param5;
@@ -231,14 +270,20 @@ template <> sc_uint32 Iterator5ParamsT<sc_type, sc_type, ScAddr, sc_type, sc_typ
   return 1 + sizeof(ScRealAddr) + sizeof(sc_type) * 4;
 }
 
-template <> sc_uint32 Iterator5ParamsT<ScAddr, sc_type, sc_type, sc_type, sc_type>
-(char * buffer, ScAddr const & param1, sc_type const & param2, sc_type const & param3, sc_type const & param4, sc_type const & param5)
+template <>
+sc_uint32 Iterator5ParamsT<ScAddr, sc_type, sc_type, sc_type, sc_type>(
+    char * buffer,
+    ScAddr const & param1,
+    sc_type const & param2,
+    sc_type const & param3,
+    sc_type const & param4,
+    sc_type const & param5)
 {
   buffer[0] = SCTP_ITERATOR_5F_A_A_A_A;
-  ScRealAddr * addrBuff = (ScRealAddr*)(buffer + 1);
+  ScRealAddr * addrBuff = (ScRealAddr *)(buffer + 1);
   *addrBuff = *param1;
   ++addrBuff;
-  sc_type * typeBuff = (sc_type*)addrBuff;
+  sc_type * typeBuff = (sc_type *)addrBuff;
   *typeBuff = param2;
   ++typeBuff;
   *typeBuff = param3;
@@ -250,20 +295,26 @@ template <> sc_uint32 Iterator5ParamsT<ScAddr, sc_type, sc_type, sc_type, sc_typ
   return 1 + sizeof(ScRealAddr) + sizeof(sc_type) * 4;
 }
 
-template <> sc_uint32 Iterator5ParamsT<ScAddr, sc_type, ScAddr, sc_type, sc_type>
-(char * buffer, ScAddr const & param1, sc_type const & param2, ScAddr const & param3, sc_type const & param4, sc_type const & param5)
+template <>
+sc_uint32 Iterator5ParamsT<ScAddr, sc_type, ScAddr, sc_type, sc_type>(
+    char * buffer,
+    ScAddr const & param1,
+    sc_type const & param2,
+    ScAddr const & param3,
+    sc_type const & param4,
+    sc_type const & param5)
 {
   buffer[0] = SCTP_ITERATOR_5F_A_F_A_A;
-  ScRealAddr * addrBuff = (ScRealAddr*)(buffer + 1);
+  ScRealAddr * addrBuff = (ScRealAddr *)(buffer + 1);
   *addrBuff = *param1;
   ++addrBuff;
-  sc_type * typeBuff = (sc_type*)addrBuff;
+  sc_type * typeBuff = (sc_type *)addrBuff;
   *typeBuff = param2;
   ++typeBuff;
-  addrBuff = (ScRealAddr*)typeBuff;
+  addrBuff = (ScRealAddr *)typeBuff;
   *addrBuff = *param3;
   ++addrBuff;
-  typeBuff = (sc_type*)addrBuff;
+  typeBuff = (sc_type *)addrBuff;
   *typeBuff = param4;
   ++typeBuff;
   *typeBuff = param5;
@@ -294,8 +345,8 @@ public:
   _SC_EXTERN sc_type GetElementType(ScAddr const & addr);
 
   /*! Change subtype of sc-element (subtype & sc_type_element_mask == 0).
-     * Return true, if there are no any errors; otherwise return false.
-     */
+   * Return true, if there are no any errors; otherwise return false.
+   */
   _SC_EXTERN bool SetElementSubtype(ScAddr const & addr, sc_type subtype);
 
   _SC_EXTERN bool GetArcInfo(ScAddr const & arcAddr, ScAddr & outBegin, ScAddr & outEnd) const;
@@ -345,7 +396,8 @@ public:
 
   /// TODO: possible merge 3 and 5 iterator in one template function
   template <typename ParamType1, typename ParamType2, typename ParamType3, typename ParamType4, typename ParamType5>
-  _SC_EXTERN IteratorPtr Iterator5(ParamType1 param1, ParamType2 param2, ParamType3 param3, ParamType4 param4, ParamType5 param5)
+  _SC_EXTERN IteratorPtr
+  Iterator5(ParamType1 param1, ParamType2 param2, ParamType3 param3, ParamType4 param4, ParamType5 param5)
   {
     char buffer[128];
     sc_uint32 paramsSize = Iterator5ParamsT(buffer, param1, param2, param3, param4, param5);
@@ -381,7 +433,6 @@ public:
     return IteratorPtr();
   }
 
-
 private:
   bool WriteSctpHeader(RequestHeader const & header);
   /// Buffer must have a correct size
@@ -389,9 +440,8 @@ private:
 
   ///! TODO : Iterators
 private:
-
   mutable sc_uint32 m_cmdIdCounter;
   ISocket * m_socketImpl;
 };
 
-}
+}  // namespace sctp

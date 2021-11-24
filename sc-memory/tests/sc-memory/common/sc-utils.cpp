@@ -70,7 +70,6 @@ TEST(StringUtils, ParseNumbers)
     EXPECT_EQ(resultInt32, 32);
   }
 
-
   {
     int64_t resultInt64;
     EXPECT_TRUE(utils::StringUtils::ParseNumber("64", resultInt64));

@@ -1,9 +1,11 @@
 #pragma once
 
-#include "LanguageType.hpp"
 #include "Invokable.hpp"
+#include "LanguageType.hpp"
 
-class Method final : public LanguageType, public Invokable
+class Method final
+  : public LanguageType
+  , public Invokable
 {
 public:
   Method(Cursor const & cursor, Namespace const & currentNamespace);

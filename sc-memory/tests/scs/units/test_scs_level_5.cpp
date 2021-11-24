@@ -11,28 +11,19 @@ TEST(scs_level_5, simple)
   EXPECT_TRUE(parser.Parse(data));
 
   TripleTester tester(parser);
-  tester({
-           {
-             { ScType::NodeConst, "item" },
-             { ScType::EdgeAccessConstFuzPerm, scs::Visibility::Local },
-             { ScType::NodeConst, "subitem" }
-           },
-           {
-             { ScType::NodeConst, "subitem2" },
-             { ScType::EdgeDCommonConst, scs::Visibility::Local },
-             { ScType::NodeConst, "item" }
-           },
-           {
-             { ScType::NodeConst, "set" },
-             { ScType::EdgeAccessConstPosTemp, scs::Visibility::Local },
-             { ScType::NodeConst, "item" }
-           },
-           {
-             { ScType::NodeConst, "attr" },
-             { ScType::EdgeAccessVarPosPerm, scs::Visibility::Local },
-             { ScType::EdgeAccessConstPosTemp, scs::Visibility::Local }
-           }
-         });
+  tester(
+      {{{ScType::NodeConst, "item"},
+        {ScType::EdgeAccessConstFuzPerm, scs::Visibility::Local},
+        {ScType::NodeConst, "subitem"}},
+       {{ScType::NodeConst, "subitem2"},
+        {ScType::EdgeDCommonConst, scs::Visibility::Local},
+        {ScType::NodeConst, "item"}},
+       {{ScType::NodeConst, "set"},
+        {ScType::EdgeAccessConstPosTemp, scs::Visibility::Local},
+        {ScType::NodeConst, "item"}},
+       {{ScType::NodeConst, "attr"},
+        {ScType::EdgeAccessVarPosPerm, scs::Visibility::Local},
+        {ScType::EdgeAccessConstPosTemp, scs::Visibility::Local}}});
 
   auto const & triples = parser.GetParsedTriples();
   EXPECT_EQ(triples.size(), 4u);

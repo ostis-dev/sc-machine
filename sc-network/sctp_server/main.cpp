@@ -4,12 +4,14 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
-#include <QtCore/QCoreApplication>
-#include "sctpServer.h"
-
 #include <sc-memory/utils/sc_signal_handler.hpp>
 
-int main(int argc, char *argv[]) try
+#include "sctpServer.h"
+
+#include <QtCore/QCoreApplication>
+
+int main(int argc, char * argv[])
+try
 {
   QCoreApplication a(argc, argv);
 
@@ -27,7 +29,7 @@ int main(int argc, char *argv[]) try
   if (!server.start(config))
     exit(1);
 
-  //QObject::connect(&a, SIGNAL(aboutToQuit()), &server, SLOT(stop()));
+  // QObject::connect(&a, SIGNAL(aboutToQuit()), &server, SLOT(stop()));
 
   return a.exec();
 }

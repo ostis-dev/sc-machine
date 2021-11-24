@@ -7,7 +7,6 @@
 #include <limits>
 #include <string>
 
-
 class ScTemplateSearchImpl;
 
 /*!
@@ -16,28 +15,25 @@ class ScTemplateSearchImpl;
 class ScTemplateSearch final
 {
 public:
- class Iterator
- {
+  class Iterator
+  {
     friend class ScTemplateSearch;
 
   protected:
     static size_t const kEndIndex = std::numeric_limits<size_t>::max();
 
-    Iterator(ScTemplateSearchImpl & search,
-             ScTemplateNamedStruct & namedStruct,
-             size_t idx = kEndIndex)
-     : m_search(search)
-     , m_struct(namedStruct)
-     , m_index(idx)
+    Iterator(ScTemplateSearchImpl & search, ScTemplateNamedStruct & namedStruct, size_t idx = kEndIndex)
+      : m_search(search)
+      , m_struct(namedStruct)
+      , m_index(idx)
     {
     }
 
   public:
-
-    bool operator == (Iterator const & other) const;
-    bool operator != (Iterator const & other) const;
-    Iterator & operator ++ ();
-    ScTemplateNamedStruct const & operator * () const;
+    bool operator==(Iterator const & other) const;
+    bool operator!=(Iterator const & other) const;
+    Iterator & operator++();
+    ScTemplateNamedStruct const & operator*() const;
 
     ScAddr operator[](std::string const & name) const;
     ScAddr operator[](ScAddr const & addr) const;
@@ -49,10 +45,11 @@ public:
     size_t m_index = std::numeric_limits<size_t>::max();
   };
 
-  ScTemplateSearch(ScMemoryContext & ctx,
-                   ScTemplate const & templ,
-                   ScTemplateParams const & params = {},
-                   ScAddr const & structAddr = ScAddr::Empty);
+  ScTemplateSearch(
+      ScMemoryContext & ctx,
+      ScTemplate const & templ,
+      ScTemplateParams const & params = {},
+      ScAddr const & structAddr = ScAddr::Empty);
   ~ScTemplateSearch();
 
   Iterator begin();

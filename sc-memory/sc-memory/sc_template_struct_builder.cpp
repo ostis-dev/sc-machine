@@ -5,7 +5,6 @@
 
 namespace
 {
-
 class ObjectInfo
 {
 public:
@@ -18,10 +17,19 @@ public:
   {
   }
 
-  inline bool IsEdge() const { return m_type.IsEdge(); }
+  inline bool IsEdge() const
+  {
+    return m_type.IsEdge();
+  }
 
-  inline ObjectInfo const * GetSource() const { return m_source; }
-  inline ObjectInfo const * GetTarget() const { return m_target; }
+  inline ObjectInfo const * GetSource() const
+  {
+    return m_source;
+  }
+  inline ObjectInfo const * GetTarget() const
+  {
+    return m_target;
+  }
 
   inline std::string GetIdtf() const
   {
@@ -33,20 +41,34 @@ public:
 
     return {};
   }
-  inline ScAddr const & GetAddr() const { return m_addr; }
-  inline ScType const & GetType() const { return m_type; }
-  inline ScAddr::HashType GetAddrHash() const { return m_addr.Hash(); }
+  inline ScAddr const & GetAddr() const
+  {
+    return m_addr;
+  }
+  inline ScType const & GetType() const
+  {
+    return m_type;
+  }
+  inline ScAddr::HashType GetAddrHash() const
+  {
+    return m_addr.Hash();
+  }
 
-  inline void SetSource(ObjectInfo * src) { m_source = src; }
-  inline void SetTarget(ObjectInfo * trg) { m_target = trg; }
+  inline void SetSource(ObjectInfo * src)
+  {
+    m_source = src;
+  }
+  inline void SetTarget(ObjectInfo * trg)
+  {
+    m_target = trg;
+  }
 
   inline uint32_t CalculateEdgeRank() const
   {
     SC_ASSERT(IsEdge(), ());
     SC_ASSERT(m_source, ());
     SC_ASSERT(m_target, ());
-    return (m_source->GetType().IsConst() ? 1 : 0) +
-           (m_target->GetType().IsConst() ? 1 : 0);
+    return (m_source->GetType().IsConst() ? 1 : 0) + (m_target->GetType().IsConst() ? 1 : 0);
   }
 
 private:
@@ -85,7 +107,7 @@ public:
     return false;
   }
 
-  bool operator() (size_t const indexA, size_t const indexB) const
+  bool operator()(size_t const indexA, size_t const indexB) const
   {
     ObjectInfo const & objA = m_objects[indexA];
     ObjectInfo const & objB = m_objects[indexB];
@@ -116,8 +138,7 @@ private:
   ObjectVector const & m_objects;
 };
 
-} // namespace
-
+}  // namespace
 
 ScTemplateStructBuilder::ScTemplateStructBuilder(ScMemoryContext & ctx)
   : m_ctx(ctx)
@@ -146,10 +167,7 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
   objects.reserve(128);
 
   size_t index = 0;
-  ScIterator3Ptr iter = m_ctx.Iterator3(
-        structAddr,
-        ScType::EdgeAccessConstPosPerm,
-        ScType::Unknown);
+  ScIterator3Ptr iter = m_ctx.Iterator3(structAddr, ScType::EdgeAccessConstPosPerm, ScType::Unknown);
 
   while (iter->Next())
   {
@@ -158,7 +176,7 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
 
     auto const it = addrToObjectIndex.find(objHash);
     if (it != addrToObjectIndex.end())
-      continue; // object already exist
+      continue;  // object already exist
 
     addrToObjectIndex[objHash] = objects.size();
 
@@ -195,9 +213,9 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
     auto const itSrc = addrToObjectIndex.find(src.Hash());
     if (itSrc == addrToObjectIndex.end())
     {
-      m_errorMessage = "Source element " + std::to_string(src.Hash()) +
-          " of edge " + std::to_string(obj.GetAddrHash()) +
-          " is not a part of the same structure " + std::to_string(structAddr.Hash());
+      m_errorMessage = "Source element " + std::to_string(src.Hash()) + " of edge " +
+                       std::to_string(obj.GetAddrHash()) + " is not a part of the same structure " +
+                       std::to_string(structAddr.Hash());
 
       return {};
     }
@@ -205,9 +223,9 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
     auto const itTrg = addrToObjectIndex.find(trg.Hash());
     if (itTrg == addrToObjectIndex.end())
     {
-      m_errorMessage = "Target element " + std::to_string(trg.Hash()) +
-          " of edge " + std::to_string(obj.GetAddrHash()) +
-          " is not a part of the same structure " + std::to_string(structAddr.Hash());
+      m_errorMessage = "Target element " + std::to_string(trg.Hash()) + " of edge " +
+                       std::to_string(obj.GetAddrHash()) + " is not a part of the same structure " +
+                       std::to_string(structAddr.Hash());
 
       return {};
     }
@@ -216,9 +234,9 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
     ObjectInfo * trgObj = &(objects[itTrg->second]);
 
     if (srcObj->IsEdge())
-      edgeDependMap.insert({ obj.GetAddr().Hash(), srcObj->GetAddr().Hash() });
+      edgeDependMap.insert({obj.GetAddr().Hash(), srcObj->GetAddr().Hash()});
     if (trgObj->IsEdge())
-      edgeDependMap.insert({ obj.GetAddr().Hash(), srcObj->GetAddr().Hash() });
+      edgeDependMap.insert({obj.GetAddr().Hash(), srcObj->GetAddr().Hash()});
 
     obj.SetSource(srcObj);
     obj.SetTarget(trgObj);
@@ -254,43 +272,31 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
         if (trgType.IsConst())  // F_A_F
         {
           m_builder->Triple(
-                src->GetAddr() >> WrapIdtf(*src),
-                edge.GetType() >> WrapIdtf(edge),
-                trg->GetAddr() >> WrapIdtf(*trg));
+              src->GetAddr() >> WrapIdtf(*src), edge.GetType() >> WrapIdtf(edge), trg->GetAddr() >> WrapIdtf(*trg));
         }
         else
         {
-          if (m_builder->HasReplacement(trg->GetIdtf())) // F_A_F
+          if (m_builder->HasReplacement(trg->GetIdtf()))  // F_A_F
+          {
+            m_builder->Triple(src->GetAddr() >> WrapIdtf(*src), edge.GetType() >> WrapIdtf(edge), trg->GetIdtf());
+          }
+          else  // F_A_A
           {
             m_builder->Triple(
-                  src->GetAddr() >> WrapIdtf(*src),
-                  edge.GetType() >> WrapIdtf(edge),
-                  trg->GetIdtf());
-          }
-          else // F_A_A
-          {
-             m_builder->Triple(
-                   src->GetAddr() >> WrapIdtf(*src),
-                   edge.GetType() >> WrapIdtf(edge),
-                   trgType >> WrapIdtf(*trg));
+                src->GetAddr() >> WrapIdtf(*src), edge.GetType() >> WrapIdtf(edge), trgType >> WrapIdtf(*trg));
           }
         }
       }
       else if (trgType.IsConst())
       {
-        if (m_builder->HasReplacement(src->GetIdtf())) // F_A_F
+        if (m_builder->HasReplacement(src->GetIdtf()))  // F_A_F
         {
-          m_builder->Triple(
-                src->GetIdtf(),
-                edge.GetType() >> WrapIdtf(edge),
-                trg->GetAddr() >> WrapIdtf(*trg));
+          m_builder->Triple(src->GetIdtf(), edge.GetType() >> WrapIdtf(edge), trg->GetAddr() >> WrapIdtf(*trg));
         }
-        else // A_A_F
+        else  // A_A_F
         {
           m_builder->Triple(
-                srcType >> WrapIdtf(*src),
-                edge.GetType() >> WrapIdtf(edge),
-                trg->GetAddr() >> WrapIdtf(*trg));
+              srcType >> WrapIdtf(*src), edge.GetType() >> WrapIdtf(edge), trg->GetAddr() >> WrapIdtf(*trg));
         }
       }
       else
@@ -298,39 +304,27 @@ ScTemplatePtr ScTemplateStructBuilder::Make(ScAddr const & structAddr)
         bool const srcRepl = m_builder->HasReplacement(src->GetIdtf());
         bool const trgRepl = m_builder->HasReplacement(trg->GetIdtf());
 
-        if (srcRepl && trgRepl) // F_A_F
+        if (srcRepl && trgRepl)  // F_A_F
         {
-          m_builder->Triple(
-                src->GetIdtf(),
-                edge.GetType() >> WrapIdtf(edge),
-                trg->GetIdtf());
+          m_builder->Triple(src->GetIdtf(), edge.GetType() >> WrapIdtf(edge), trg->GetIdtf());
         }
-        else if (!srcRepl && trgRepl) // A_A_F
+        else if (!srcRepl && trgRepl)  // A_A_F
         {
-          m_builder->Triple(
-                srcType >> WrapIdtf(*src),
-                edge.GetType() >> WrapIdtf(edge),
-                trg->GetIdtf());
+          m_builder->Triple(srcType >> WrapIdtf(*src), edge.GetType() >> WrapIdtf(edge), trg->GetIdtf());
         }
-        else if (srcRepl && !trgRepl) // F_A_A
+        else if (srcRepl && !trgRepl)  // F_A_A
         {
-          m_builder->Triple(
-                src->GetIdtf(),
-                edge.GetType() >> WrapIdtf(edge),
-                trgType >> WrapIdtf(*trg));
+          m_builder->Triple(src->GetIdtf(), edge.GetType() >> WrapIdtf(edge), trgType >> WrapIdtf(*trg));
         }
         else
         {
-          m_builder->Triple(
-                srcType >> WrapIdtf(*src),
-                edge.GetType() >> WrapIdtf(edge),
-                trgType >> WrapIdtf(*trg));
+          m_builder->Triple(srcType >> WrapIdtf(*src), edge.GetType() >> WrapIdtf(edge), trgType >> WrapIdtf(*trg));
         }
       }
 
       // Add addr aliases
       /// TODO: Implement this in better way
-      std::array<ObjectInfo const *, 3> elements = { src, &edge, trg };
+      std::array<ObjectInfo const *, 3> elements = {src, &edge, trg};
       for (ObjectInfo const * e : elements)
       {
         SC_ASSERT(e->GetAddr(), ());
